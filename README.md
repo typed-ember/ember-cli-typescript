@@ -1,27 +1,31 @@
 # ember-cli-typescript
 
-This README outlines the details of collaborating on this Ember addon.
+Enable typescript preprocessing on Ember 2.x apps.
 
-## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-cli-typescript`
-* `npm install`
-* `bower install`
+## One time setup
 
-## Running
+To use install dependencies
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+    npm install --save-dev typescript@2.1 # Older versions are not supported
+    npm install --save-dev ember-cli-typescript
+    npm install --save-dev @types/ember
 
-## Running Tests
+Create a tsconfig.json file:
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+    ember generate ember-cli-typescript
 
-## Building
+## Incremental adoption
 
-* `ember build`
+Rename the files you want to check from `.js` to `.ts`.
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+## VSCode setup
+
+Create the file `.vscode/settings.json` with the following content:
+
+```json
+// Place your settings in this file to overwrite default and user settings.
+{
+    "typescript.tsdk" : "node_modules/typescript/lib"
+}
+```
