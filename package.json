@@ -1,17 +1,26 @@
 {
   "name": "ember-cli-typescript",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Allow ember apps to use typescript files.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "typescript"
   ],
   "license": "MIT",
-  "author": "",
+  "author": "Marius Seritan",
+  "contributors": [
+    "David Gardiner",
+    "Philip Bjorge"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "repository": "https://github.com/emberwatch/ember-cli-typescript.git",
+  "bugs": {
+    "url": "https://github.com/emberwatch/ember-cli-typescript"
+  },
+  "homepage": "https://github.com/emberwatch/ember-cli-typescript",
   "scripts": {
     "build": "ember build",
     "start": "ember server",

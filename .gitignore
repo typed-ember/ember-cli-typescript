@@ -16,3 +16,6 @@
 npm-debug.log*
 testem.log
 yarn.lock
+
+# TypeScript
+jsconfig.json
