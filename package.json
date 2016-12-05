@@ -27,7 +27,15 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "ember-cli-babel": "^5.1.7"
+    "@types/ember": "^2.7.34",
+    "broccoli-funnel": "^1.0.6",
+    "broccoli-merge-trees": "^1.1.4",
+    "broccoli-plugin": "^1.2.1",
+    "broccoli-stew": "^1.4.0",
+    "broccoli-typescript-compiler": "^1.0.1",
+    "debug": "^2.2.0",
+    "ember-cli-babel": "^5.1.7",
+    "typescript": "^2.1.0"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
@@ -52,16 +60,6 @@
   },
   "engines": {
     "node": ">= 0.12.0"
-  },
-  "dependencies": {
-    "@types/ember": "^2.7.34",
-    "broccoli-typescript-compiler": "^1.0.1",
-    "typescript": "^2.1.0",
-    "broccoli-funnel": "^1.0.6",
-    "broccoli-merge-trees": "^1.1.4",
-    "broccoli-plugin": "^1.2.1",
-    "debug": "^2.2.0",
-    "ember-cli-babel": "^5.1.7"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
