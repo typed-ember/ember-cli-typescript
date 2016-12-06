@@ -11,6 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{ts-component}}`);
 
-  assert.equal(this.$().text().replace(/\s+/g,' ').trim(), 'ts-component.hbs Component defines someValue property as: from component');
-  
+  assert.equal(this.$().text().replace(/\s+/g,' ').trim(), 'ts-component.hbs Component defines someValue property as: from component Ts helper: my type of help Js helper: js please help me');
 });

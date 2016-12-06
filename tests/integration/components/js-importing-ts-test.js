@@ -11,6 +11,6 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{js-importing-ts}}`);
 
-  assert.equal(this.$().text().trim(), 'js-importing-ts.hbs\nfalse');
+  assert.equal(this.$().text().replace(/\s+/g,' ').trim(), 'js-importing-ts.hbs false Ts helper: my type of help Js helper: js please help me');
 
 });
