@@ -27,17 +27,16 @@
     "test": "ember try:each"
   },
   "dependencies": {
-    "@types/ember": "^2.7.34",
     "broccoli-funnel": "^1.0.6",
     "broccoli-merge-trees": "^1.1.4",
     "broccoli-plugin": "^1.2.1",
     "broccoli-stew": "^1.4.0",
     "broccoli-typescript-compiler": "^1.0.1",
     "debug": "^2.2.0",
-    "ember-cli-babel": "^5.1.7",
-    "typescript": "^2.1.0"
+    "ember-cli-babel": "^5.1.7"
   },
   "devDependencies": {
+    "@types/ember": "^2.7.34",
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
     "ember-cli": "2.10.0",
@@ -56,7 +55,12 @@
     "ember-export-application-global": "^1.0.5",
     "ember-load-initializers": "^0.5.1",
     "ember-resolver": "^2.0.3",
-    "loader.js": "^4.0.10"
+    "loader.js": "^4.0.10",
+    "typescript": "^2.1.0"
+  },
+  "peerDependencies": {
+    "@types/ember": "^2.7.34",
+    "typescript": "^2.1.0"
   },
   "engines": {
     "node": ">= 0.12.0"

@@ -3,17 +3,12 @@
 Enable typescript preprocessing on Ember 2.x apps.
 
 
-## One time setup
+## Installation
 
-To use install dependencies
+```
+ember install "ember-cli-typescript@emberwatch/ember-cli-typescript"
+```
 
-    npm install --save-dev typescript@2.1 # Older versions are not supported
-    npm install --save-dev ember-cli-typescript
-    npm install --save-dev @types/ember
-
-Create a tsconfig.json file:
-
-    ember generate ember-cli-typescript
 
 ## Incremental adoption
 

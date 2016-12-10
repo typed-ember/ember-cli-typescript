@@ -22,6 +22,12 @@ module.exports = {
 
   normalizeEntityName: function() {
     // Entity name is optional right now, creating this hook avoids an error.
+  },
+
+  afterInstall: function() {
+    return this.addPackagesToProject([
+      { name: 'typescript', target: '^2.1' },
+      { name: '@types/ember', target: '^2.7.34' }
+    ]);
   }
 }
-
