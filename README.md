@@ -46,15 +46,16 @@ This addon takes the following approach to allow this dual use:
 
 - before calling broccoli the addon removes "outDir" and sets "noEmit" and "includes"
 
-
-Please let us know if this does not satisfy your use cases by opening issues on this repo.
-
 ### Customization ###
 
 You can customize this file further for your use case. For example to see the
 output of the compilation in a separate folder you are welcome to set and
 outDir and set noEmit to false. Then VS Code and tsc will generate files here
 while the broccoli pipeline will use its own temp folder.
+
+Please see the wiki for additional how to tips from other users or to add 
+your own tips. If an use case is frequent enough we can codify in the plugin.
+https://github.com/emberwatch/ember-cli-typescript/wiki/tsconfig-how-to
 
 
 ## Incremental adoption
