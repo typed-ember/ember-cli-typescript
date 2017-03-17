@@ -21,7 +21,7 @@ module.exports = {
 
   setupPreprocessorRegistry: function(type, registry) {
     try {
-      var plugin = new TsPreprocessor({includeExtensions: ['.ts','.js']});
+      var plugin = new TsPreprocessor({includeExtensions: ['.ts','.d.ts','.js']});
       registry.add('js', plugin);
     } catch ( ex ) {
       console.log( "Missing or invalid tsconfig.json, please fix or run `ember generate ember-cli-typescript`." );
