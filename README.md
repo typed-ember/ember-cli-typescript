@@ -60,10 +60,10 @@ https://github.com/emberwatch/ember-cli-typescript/wiki/tsconfig-how-to
 
 ## Incremental adoption
 
-If you porting an existing app to typescript you can install this addon and
+If you are porting an existing app to TypeScript, you can install this addon and
 migrate your files incrementally by changing their extensions from `.js` to
 `.ts`.  A good approach is to start at your leaf files and then work your way
-up. As typescript starts to find errors make sure to celebrate your (small)
+up. As TypeScript starts to find errors, make sure to celebrate your (small)
 wins with your team, specially if some people are not convinced yet. We would also
 love to hear your stories.
 
