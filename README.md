@@ -14,7 +14,7 @@ In addition to ember-cli-typescript, the following files are required:
 You can setup all of these at once with:
 
 ```
-ember install "ember-cli-typescript@emberwatch/ember-cli-typescript"
+ember install ember-cli-typescript
 ```
 
 All dependencies will be added to your package.json, and you're ready to roll!
