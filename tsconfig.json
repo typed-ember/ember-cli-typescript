@@ -6,9 +6,7 @@
     "noEmitOnError": true,
     "baseUrl": ".",
     "paths": {
-      "ember": ["node_modules/at-types-ember"],
-      "npm:*": ["local-types/*"],
-      "*": ["local-types/*"]
+      // @types all included implicitly
     }
   },
   "include": [

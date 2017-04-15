@@ -3,15 +3,16 @@
     "target": "ES6",
     "allowJs": true,
     "moduleResolution": "node",
-    "noEmitOnError": true,
+    "noEmitOnError": false,
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "npm:*": ["local-types/*"],
-      "*": ["local-types/*"]
+      "<%= dasherizedPackageName %>/tests/*": ["tests/*"],
+      "<%= dasherizedPackageName %>/*": ["app/*"]
     }
   },
   "include": [
-    "app/**/*"
+    "app/**/*",
+    "tests/**/*"
   ]
 }
