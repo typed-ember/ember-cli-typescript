@@ -18,8 +18,8 @@ module.exports = {
 
     if (result.indexOf(tsconfigPattern) > -1) {
       return 'tsconfig.json';
-    } else if (result.indexOf('/app/') > -1) {
-      var pos = result.indexOf('/app/');
+    } else if (result.indexOf(appPattern) > -1) {
+      var pos = result.indexOf(appPattern);
       return result.substring(pos + 1);
     }
   },
