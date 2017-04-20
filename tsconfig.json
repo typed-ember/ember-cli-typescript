@@ -5,9 +5,7 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "baseUrl": ".",
-    "paths": {
-      // @types all included implicitly
-    }
+    "paths": {}
   },
   "include": [
     "app/**/*"
