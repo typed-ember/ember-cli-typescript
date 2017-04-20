@@ -19,7 +19,3 @@ yarn.lock
 
 # TypeScript
 jsconfig.json
-
-# JetBrains
-.idea
-*.iml
