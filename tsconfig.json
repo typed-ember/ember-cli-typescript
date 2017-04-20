@@ -5,11 +5,7 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "baseUrl": ".",
-    "paths": {
-      "ember": ["node_modules/at-types-ember"],
-      "npm:*": ["local-types/*"],
-      "*": ["local-types/*"]
-    }
+    "paths": {}
   },
   "include": [
     "app/**/*"
