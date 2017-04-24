@@ -9,4 +9,7 @@ export default config;
  */
 declare namespace config {
   export var environment: any;
+  export var modulePrefix: String;
+  export var podModulePrefix: String;
+  export var locationType: String;
 }
