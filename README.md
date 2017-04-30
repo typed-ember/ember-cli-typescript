@@ -19,14 +19,13 @@ ember install ember-cli-typescript
 
 All dependencies will be added to your package.json, and you're ready to roll!
 
-## Configuration file
+## Configuration file notes
 
+If you make changes to the paths included in your `tsconfig.json`, you will need to restart the server to take the changes into account.
 
 ### Problem ###
 
-The configuration file is used by both Ember
-CLI/[broccoli](http://broccolijs.com/) and [VS
-Code](http://code.visualstudio.com/)/`tsc` command line compiler.
+The configuration file is used by both Ember CLI/[broccoli](http://broccolijs.com/) and [VS Code](http://code.visualstudio.com/)/`tsc` command line compiler.
 
 Broccoli controls the inputs and the output folder of the various build steps
 that make the Ember build pipeline. Its expectation are impacted by Typescript
