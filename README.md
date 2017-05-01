@@ -98,3 +98,60 @@ Create the file `.vscode/settings.json` with the following content:
     "typescript.tsdk" : "node_modules/typescript/lib"
 }
 ```
+
+## Not (yet) supported
+
+While TS works nicely for many things in Ember, there are a number of corners
+where it *won't* help you out. These are worth being aware of. Some of them are
+just a matter of further work on updating the [typings]; others are a matter of
+further support landing in TypeScript itself.
+
+[typings]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember
+
+Here is the short list of things which do *not* work yet.
+
+### Extending from framework entities using `class` syntax
+
+```js
+export default MyComponent extends Ember.Component {
+}
+``` 
+
+### Type safety when invoking actions
+
+```ts
+actions: {
+   turnWheel(degrees: number) {
+      ...
+   }
+}
+``` 
+
+```hbs
+<!-- TypeScript compiler won't detect this type mismatch -->
+<button onclick={{action 'turnWheel' 'NOT-A-NUMBER'}}> Click Me </button>
+```
+
+```js
+// TypeScript compiler won't detect this type mismatch
+this.send('turnWheel', 'ALSO-NOT-A-NUMBER');
+```
+
+### Type safety when invoking KVO compliant accessors or mutators
+
+```ts
+Ember.Object.extend({
+  urls: <string[]> null,
+  port: 4200,
+  init() {
+     this._super(...arguments);
+     this.set('urls', []);
+  },
+  foo() {
+    // TypeScript won't detect these type mismatches
+    this.get('urls').addObject(51);
+    this.set('port', 3000);
+  }
+});
+``` 
+
