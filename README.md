@@ -58,7 +58,7 @@ We want to allow you to change unrelated properties in the tsconfig file.
 
 This addon takes the following approach to allow this dual use:
 
-- is starts with the following [blueprint](https://github.com/emberwatch/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json)
+- it starts with the following [blueprint](https://github.com/emberwatch/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json)
 
 - the generated tsconfig file does not set "outDir" and sets "noEmit" to true.
   This allows you to run vscode and tsc without creating `.js` files throughout
