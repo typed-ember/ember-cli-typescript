@@ -31,7 +31,8 @@ module.exports = {
   afterInstall: function() {
     return this.addPackagesToProject([
       { name: 'typescript', target: '^2.1' },
-      { name: '@types/ember', target: '^2.7.34' }
+      { name: '@types/ember', target: '^2.7.41' },
+      { name: '@types/rsvp', target: '^3.3.0' }
     ]);
   }
 }
