@@ -31,6 +31,16 @@ Babel) needs to be specified in the `dependencies`, not `devDependencies`, to
 use it for developing the add-on itself: that's how its compiled output can be
 used in consuming apps or add-ons.
 
+### :warning: Warning: install size
+
+This is a WIP :construction: part of the add-on, and it *will* make a dramatic
+difference in the size of your add-on in terms of installation. (It won't affect
+the size of the add-on after build, of course!)
+
+We're working on making a solution that lets us ship generated typings and
+compiled JavaScript instead of shipping the entire TypeScript compiler toolchain
+for add-ons. If you're using ember-cli-typescript in an add-on, you might add a
+note to your users about the install size until we get that sorted out!
 
 ## Configuration file notes
 
