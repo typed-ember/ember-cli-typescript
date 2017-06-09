@@ -83,7 +83,7 @@ example to see the output of the compilation in a separate folder you are
 welcome to set and outDir and set noEmit to false. Then VS Code and tsc will
 generate files here while the broccoli pipeline will use its own temp folder.
 
-Please see [the wiki] for additional how to tips from other users or to add 
+Please see [the wiki] for additional how to tips from other users or to add
 your own tips. If an use case is frequent enough we can codify in the plugin.
 
 [the wiki]: https://github.com/emberwatch/ember-cli-typescript/wiki/tsconfig-how-to
@@ -125,7 +125,7 @@ Here is the short list of things which do *not* work yet.
 ```js
 export default MyComponent extends Ember.Component {
 }
-``` 
+```
 
 ### Type safety when invoking actions
 
@@ -135,7 +135,7 @@ actions: {
       ...
    }
 }
-``` 
+```
 
 ```hbs
 <!-- TypeScript compiler won't detect this type mismatch -->
@@ -163,5 +163,24 @@ Ember.Object.extend({
     this.set('port', 3000);
   }
 });
-``` 
+```
 
+
+### The TypeDefs I need to reference are not in node_modules/@types
+
+By default `ember-cli-typescript` loads up any type defs found in node_modules/@types. If the type defs you need are not found here you can register a custom `path` in the tsconfig.json file
+
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "paths": {
+      "welp/*": ["app/*"],
+      "redux": ["node_modules/redux/index.d.ts"]
+    }
+  },
+  "include": [
+    "**/*.ts"
+  ]
+}
+```
