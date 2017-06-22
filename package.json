@@ -32,7 +32,7 @@
     "broccoli-plugin": "^1.2.1",
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^1.4.0",
-    "broccoli-typescript-compiler": "^1.0.1",
+    "broccoli-typescript-compiler": "beta",
     "debug": "^2.2.0",
     "ember-cli-babel": "^6.3.0"
   },
