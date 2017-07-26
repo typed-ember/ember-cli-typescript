@@ -1,14 +1,15 @@
 {
   "name": "ember-cli-typescript",
-  "version": "0.5.0",
+  "version": "1.0.0-beta.1",
   "description": "Allow ember apps to use typescript files.",
   "keywords": [
     "ember-addon",
     "typescript"
   ],
   "license": "MIT",
-  "author": "Marius Seritan",
+  "author": "Chris Krycho <chris@chriskrycho.com> (http://www.chriskrycho.com)",
   "contributors": [
+    "Marius Seritan",
     "David Gardiner",
     "Philip Bjorge"
   ],
@@ -32,12 +33,12 @@
     "broccoli-plugin": "^1.2.1",
     "broccoli-source": "^1.1.0",
     "broccoli-stew": "^1.4.0",
-    "broccoli-typescript-compiler": "beta",
+    "broccoli-typescript-compiler": "^2.0.0",
     "debug": "^2.2.0",
     "ember-cli-babel": "^6.3.0"
   },
   "devDependencies": {
-    "@types/ember": "^2.7.34",
+    "@types/ember": "^2.7.43",
     "broccoli-asset-rev": "^2.4.5",
     "ember-cli": "^2.13.3",
     "ember-cli-app-version": "^2.0.0",
@@ -57,11 +58,10 @@
     "ember-resolver": "^4.0.0",
     "ember-source": "~2.13.3",
     "loader.js": "^4.2.3",
-    "typescript": "^2.4.1"
+    "typescript": "^2.4.2"
   },
   "peerDependencies": {
-    "@types/ember": "^2.7.34",
-    "typescript": "^2.4.1"
+    "typescript": "^2.4.2"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
