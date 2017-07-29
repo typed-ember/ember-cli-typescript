@@ -5,16 +5,17 @@
     "moduleResolution": "node",
     "noEmitOnError": false,
     "noEmit": true,
-    "baseUrl": ".",
-    "outDir": "dist",
     "sourceMap": true,
+    "baseUrl": ".",
     "paths": {
       "<%= dasherizedPackageName %>/tests/*": ["tests/*"],
       "<%= dasherizedPackageName %>/*": ["app/*"]
     }
   },
-  "include": [
-    "app/**/*",
-    "tests/**/*"
+  "exclude": [
+    "tmp",
+    "dist",
+    "node_modules",
+    "bower_components"
   ]
 }

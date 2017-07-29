@@ -28,6 +28,7 @@
     "test": "ember try:each"
   },
   "dependencies": {
+    "broccoli-debug": "^0.6.3",
     "broccoli-funnel": "^1.0.6",
     "broccoli-merge-trees": "^1.1.4",
     "broccoli-plugin": "^1.2.1",
