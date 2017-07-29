@@ -1,16 +1,18 @@
-var path = require('path');
+/* eslint-env node */
+
+const path = require('path');
 
 module.exports = {
   description: 'Initialize files needed for typescript compilation',
 
-  files: function() {
+  files() {
     return [
       path.join(this.path, 'files', 'tsconfig.json'),
-      path.join(this.path, 'files', 'app', 'config', 'environment.d.ts')
+      path.join(this.path, 'files', 'app', 'config', 'environment.d.ts'),
     ];
   },
 
-  mapFile: function() {
+  mapFile() {
     const result = this._super.mapFile.apply(this, arguments);
 
     const tsconfigPattern = `${path.sep}tsconfig.json`;
@@ -24,15 +26,16 @@ module.exports = {
     }
   },
 
-  normalizeEntityName: function() {
+  normalizeEntityName() {
     // Entity name is optional right now, creating this hook avoids an error.
   },
 
-  afterInstall: function() {
+  afterInstall() {
     return this.addPackagesToProject([
-      { name: 'typescript', target: '^2.1' },
-      { name: '@types/ember', target: '^2.7.41' },
-      { name: '@types/rsvp', target: '^3.3.0' }
+      { name: 'typescript', target: '^2.4.2' },
+      { name: '@types/ember', target: '^2.7.43' },
+      { name: '@types/rsvp', target: '^3.3.0' },
+      { name: '@types/ember-testing-helpers' },
     ]);
-  }
-}
+  },
+};
