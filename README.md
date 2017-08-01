@@ -1,5 +1,8 @@
 # ember-cli-typescript
 
+[![*nix build status](https://travis-ci.org/emberwatch/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/emberwatch/ember-cli-typescript)
+[![Windows build status](https://ci.appveyor.com/api/projects/status/pjilqv1xo3o9auon/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
+
 Use TypeScript in your Ember 2.x apps!
 
 
@@ -50,16 +53,18 @@ to restart the server to take the changes into account.
 ### Quirks with `tsconfig.json`
 
 Additionally, depending on what you're doing, you may notice that your tweaks to
-`tsconfig.json` don't get picked up by the compiler at all.
+`tsconfig.json` aren't applied *exactly* as you might expect.
 
 #### The Problem
 
-The configuration file is used by both Ember CLI/[broccoli](http://broccolijs.com/)
-and `tsc` command line compiler (used by e.g. [VS Code](http://code.visualstudio.com/),
-JetBrains IDEs, etc.).
+The configuration file is used by both Ember CLI (via [broccoli]) and the `tsc`
+command line compiler (used by e.g. [VS Code], JetBrains IDEs, etc.).
+
+[broccoli]: http://broccolijs.com/
+[VS Code]: http://code.visualstudio.com/
 
 Broccoli controls the inputs and the output folder of the various build steps
-that make the Ember build pipeline. Its expectation are impacted by Typescript
+that make the Ember build pipeline. Its expectation are impacted by TypeScript
 configuration properties like "include", "exclude", "outFile", "outDir".
 
 We want to allow you to change unrelated properties in the tsconfig file.
@@ -68,13 +73,18 @@ We want to allow you to change unrelated properties in the tsconfig file.
 
 This addon takes the following approach to allow this dual use:
 
-- it starts with the following [blueprint](https://github.com/emberwatch/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json)
+- it starts with the default [blueprint].
 
 - the generated tsconfig file does not set "outDir" and sets "noEmit" to true.
   This allows you to run vscode and tsc without creating `.js` files throughout
   your codebase.
 
-- before calling broccoli the addon removes "outDir" and sets "noEmit" and "includes"
+- before calling broccoli the addon removes any configured `outDir`, sets the
+  `noEmit` option to false (so that the compiler will emit files for consumption
+  by your app!), and removes all values set for `include`, since we use Broccoli
+  to manage the build pipeline directly.
+
+[blueprint]: https://github.com/emberwatch/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json
 
 ### Customization
 
@@ -95,41 +105,33 @@ If you are porting an existing app to TypeScript, you can install this addon and
 migrate your files incrementally by changing their extensions from `.js` to
 `.ts`.  A good approach is to start at your leaf files and then work your way
 up. As TypeScript starts to find errors, make sure to celebrate your (small)
-wins with your team, specially if some people are not convinced yet. We would also
-love to hear your stories.
+wins with your team, specially if some people are not convinced yet. We would
+also love to hear your stories!
 
-## VSCode setup
+You may also find the blog series ["Typing Your Ember"][typing-your-ember]
+helpful as it walks you through not only how to install but how to most
+effectively use TypeScript in an Ember app today, and gives some important info
+on the background and roadmap for the project.
 
-Create the file `.vscode/settings.json` with the following content:
-
-```json
-// Place your settings in this file to overwrite default and user settings.
-{
-    "typescript.tsdk" : "node_modules/typescript/lib"
-}
-```
+[typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
 ## Not (yet) supported
 
 While TS works nicely for many things in Ember, there are a number of corners
-where it *won't* help you out. These are worth being aware of. Some of them are
-just a matter of further work on updating the [typings]; others are a matter of
-further support landing in TypeScript itself.
+where it *won't* help you out. Some of them are just a matter of further work on
+updating the [typings]; others are a matter of further support landing in
+TypeScript itself.
 
 [typings]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember
 
 Here is the short list of things which do *not* work yet.
 
-### Extending from framework entities using `class` syntax
-
-```js
-export default MyComponent extends Ember.Component {
-}
-```
-
 ### Type safety when invoking actions
 
-```ts
+TypeScript won't detect a mismatch between this action and the corresponding
+call in the template:
+
+```typescript
 actions: {
    turnWheel(degrees: number) {
       ...
@@ -138,21 +140,26 @@ actions: {
 ```
 
 ```hbs
-<!-- TypeScript compiler won't detect this type mismatch -->
 <button onclick={{action 'turnWheel' 'NOT-A-NUMBER'}}> Click Me </button>
 ```
 
-```js
+Likewise, it won't notice a problem when you use `send`:
+
+```typescript
 // TypeScript compiler won't detect this type mismatch
 this.send('turnWheel', 'ALSO-NOT-A-NUMBER');
 ```
 
 ### Type safety when invoking KVO compliant accessors or mutators
 
-```ts
+When you use `Ember.get` or `Ember.set`, TypeScript won't (yet!) warn you that
+you're using the wrong type. So in `foo()` here, this will pass the compiler but
+be wrong at runtime:
+
+```typescript
 Ember.Object.extend({
   urls: <string[]> null,
-  port: 4200,
+  port: 4200,  // number
   init() {
      this._super(...arguments);
      this.set('urls', []);
@@ -160,15 +167,17 @@ Ember.Object.extend({
   foo() {
     // TypeScript won't detect these type mismatches
     this.get('urls').addObject(51);
-    this.set('port', 3000);
+    this.set('port', '3000');
   }
 });
 ```
 
 
-### The TypeDefs I need to reference are not in node_modules/@types
+### The type definitions I need to reference are not in `node_modules/@types`
 
-By default `ember-cli-typescript` loads up any type defs found in node_modules/@types. If the type defs you need are not found here you can register a custom `path` in the tsconfig.json file
+By default `ember-cli-typescript` loads up any type defs found in
+`node_modules/@types`. If the type defs you need are not found here you can
+register a custom `path` in the tsconfig.json file:
 
 ```json
 // tsconfig.json
@@ -178,9 +187,6 @@ By default `ember-cli-typescript` loads up any type defs found in node_modules/@
       "welp/*": ["app/*"],
       "redux": ["node_modules/redux/index.d.ts"]
     }
-  },
-  "include": [
-    "**/*.ts"
-  ]
+  }
 }
 ```
