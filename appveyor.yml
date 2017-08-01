@@ -37,3 +37,8 @@ build: off
 
 # Set build version format here instead of in the admin panel.
 version: "{build}"
+
+# We build PRs, but don't trigger separate builds for the PR from the branch.
+branches:
+  only:
+    - master
