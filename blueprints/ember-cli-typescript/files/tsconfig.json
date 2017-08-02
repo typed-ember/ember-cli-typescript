@@ -9,7 +9,12 @@
     "baseUrl": ".",
     "paths": {
       "<%= dasherizedPackageName %>/tests/*": ["tests/*"],
-      "<%= dasherizedPackageName %>/*": ["app/*"]
+      "<%= dasherizedPackageName %>/*": [
+        "app/*"<%
+inRepoAddons.forEach(function(path) { %>,
+        "<%= path %>/app/*"<%
+}) %>
+      ]
     }
   },
   "exclude": [

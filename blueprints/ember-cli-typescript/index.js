@@ -26,6 +26,12 @@ module.exports = {
     }
   },
 
+  locals() {
+    return {
+      inRepoAddons: (this.project.pkg['ember-addon'] || {}).paths || []
+    };
+  },
+
   normalizeEntityName() {
     // Entity name is optional right now, creating this hook avoids an error.
   },
