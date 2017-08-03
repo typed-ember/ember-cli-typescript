@@ -35,6 +35,7 @@ script:
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO test --skip-cleanup
+  - yarn run nodetest
 
 # We build PRs, but don't trigger separate builds for the PR from the branch.
 branches:
