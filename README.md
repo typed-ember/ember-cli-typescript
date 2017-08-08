@@ -137,6 +137,36 @@ like to try those out, please see instructions in that repo!
 Here is the short list of things which do *not* work yet in the version of the
 typings published on DefinitelyTyped.
 
+### Some `import`s don't resolve
+
+You'll frequently see errors for imports which TypeScript doesn't know how to
+resolve. For example, if you use `htmlbars-inline-precompile`:
+
+```typescript
+import hbs from 'htmlbars-inline-precompile';
+```
+
+You'll see an error, because there aren't yet type definitions for it. You may
+see the same with some addons as well. These won't stop the build from working;
+they just mean TypeScript doesn't know where to find those.
+
+Writing these missing type definitions is a great way to pitch in! Jump in
+\#topic-typescript on the Ember Slack and we'll be happy to help you.
+
+### `extends` gives errors
+
+You'll see quite a few errors like this when calling `.extends()` on an existing
+Ember type:
+
+> Class 'FooController' incorrectly extends base class 'Controller'.
+> Type '{ bar(): void; }' has no properties in common with type 'ActionHash'
+
+This is a symptom of the current, out-of-date types. The new typings we're
+working on will solve these.
+
+In the meantime, note that your application will still build just fine even with
+these errors... they'll just be annoying.
+
 ### Type safety when invoking actions
 
 TypeScript won't detect a mismatch between this action and the corresponding
