@@ -5,15 +5,15 @@
 Use TypeScript in your Ember 2.x apps!
 
 
-## Installation
+## Installing/Upgrading
 
 Just run:
 
 ```
-ember install ember-cli-typescript
+ember install ember-cli-typescript@1
 ```
 
-All dependencies will be added to your `package.json`, and you're ready to roll!
+All dependencies will be added to your `package.json`, and you're ready to roll! (If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
 
 In addition to ember-cli-typescript, the following are installed:
 
@@ -24,13 +24,6 @@ In addition to ember-cli-typescript, the following are installed:
     + [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers)
 - Files:
     + [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-
-### Upgrading
-
-1. Update `package.json` for `ember-cli-typescript` to `^1.0.0`.
-2. Run `yarn` or `npm install`.
-3. Run `ember g ember-cli-typescript` to update the generated files (`tsconfig.json` in particular), and review the changes before committing. If you've made specific customizations, you may want to merge them; see the [Notes on `tsconfig.json`](https://github.com/typed-ember/ember-cli-typescript/tree/v1.0.0#notes-on-tsconfigjson) in the README.
-
 
 ## Notes on `tsconfig.json`
 
