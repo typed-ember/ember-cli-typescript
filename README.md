@@ -29,7 +29,7 @@ In addition to ember-cli-typescript, the following are installed:
 
 1. Update `package.json` for `ember-cli-typescript` to `^1.0.0`.
 2. Run `yarn` or `npm install`.
-3. Run `ember g ember-cli-tylescript` to update the generated files (`tsconfig.json` in particular), and review the changes before committing. If you've made specific customizations, you may want to merge them; see the [Notes on `tsconfig.json`](https://github.com/typed-ember/ember-cli-typescript/tree/v1.0.0#notes-on-tsconfigjson) in the README.
+3. Run `ember g ember-cli-typescript` to update the generated files (`tsconfig.json` in particular), and review the changes before committing. If you've made specific customizations, you may want to merge them; see the [Notes on `tsconfig.json`](https://github.com/typed-ember/ember-cli-typescript/tree/v1.0.0#notes-on-tsconfigjson) in the README.
 
 
 ## Notes on `tsconfig.json`
