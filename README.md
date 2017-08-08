@@ -1,8 +1,6 @@
 # ember-cli-typescript
 
-[![*nix build status](https://travis-ci.org/emberwatch/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/emberwatch/ember-cli-typescript)
-[![Windows build status](https://ci.appveyor.com/api/projects/status/pjilqv1xo3o9auon/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
-[![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+[![*nix build status](https://travis-ci.org/emberwatch/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/emberwatch/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/pjilqv1xo3o9auon/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
 Use TypeScript in your Ember 2.x apps!
 
@@ -114,6 +112,12 @@ If you want to experiment with this in the meantime, you can do so, but please
 give users fair warning about the increased size. To enable TypeScript for your
 addon, simple move `ember-cli-typescript` from `devDependencies` to
 `dependencies` in your `package.json`.
+
+## New modules API
+
+Note: the new modules API is not yet supported by the official typings (which
+are distinct from this addon, though we install them). We hope to have support
+for them shortly!
 
 ## Not (yet) supported
 
