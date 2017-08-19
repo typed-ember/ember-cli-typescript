@@ -24,7 +24,9 @@ module.exports = {
     }
 
     try {
-      registry.add('js', new TsPreprocessor());
+      registry.add('js', new TsPreprocessor({
+        ui: this.ui
+      }));
     } catch (ex) {
       this.ui.write(
         'Missing or invalid tsconfig.json, please fix or run `ember generate ember-cli-typescript`.'
