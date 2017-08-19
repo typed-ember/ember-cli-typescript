@@ -1,5 +1,7 @@
 /* eslint-env node */
 
+const SilentError = require('silent-error');
+
 let TsPreprocessor;
 try {
   TsPreprocessor = require('./lib/typescript-preprocessor');
@@ -28,10 +30,7 @@ module.exports = {
         ui: this.ui
       }));
     } catch (ex) {
-      this.ui.write(
-        'Missing or invalid tsconfig.json, please fix or run `ember generate ember-cli-typescript`.'
-      );
-      this.ui.write('  ' + ex.toString());
+      throw new SilentError(`Missing or invalid tsconfig.json, please fix or run \`ember generate ember-cli-typescript\`.\n${ex}`);
     }
   },
 };
