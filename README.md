@@ -74,11 +74,6 @@ welcome to set `"outDir"` to some path and set `"noEmit"` to `false`. Then tools
 which use the TypeScript compiler will generate files at that location, while
 the broccoli pipeline will continue to use its own temp folder.
 
-Please see [the wiki] for additional how to tips from other users or to add
-your own tips. If an use case is frequent enough we can codify in the plugin.
-
-[the wiki]: https://github.com/emberwatch/ember-cli-typescript/wiki/tsconfig-how-to
-
 ## Incremental adoption
 
 If you are porting an existing app to TypeScript, you can install this addon and
