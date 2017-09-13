@@ -14,7 +14,9 @@ Just run:
 ember install ember-cli-typescript@1
 ```
 
-All dependencies will be added to your `package.json`, and you're ready to roll! (If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
+All dependencies will be added to your `package.json`, and you're ready to roll!
+(If you're upgrading from a previous release, you should check to merge any
+tweaks you've made to `tsconfig.json`.
 
 In addition to ember-cli-typescript, the following are installed:
 
@@ -93,9 +95,9 @@ on the background and roadmap for the project.
 
 ## :construction: Using ember-cli-typescript with Ember CLI addons
 
-**:warning: Warning: this is *not* currently recommended. This is a WIP part of the
-add-on, and it *will* make a dramatic difference in the size of your add-on in
-terms of installation. The upcoming 1.1 release will enable a much better
+**:warning: Warning: this is *not* currently recommended. This is a WIP part of
+the add-on, and it *will* make a dramatic difference in the size of your add-on
+in terms of installation. The upcoming 1.1 release will enable a much better
 experience for consumers of your addon.**
 
 We're working on making a solution that lets us ship generated typings and
