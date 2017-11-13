@@ -5,7 +5,6 @@ const path = require('path');
 const SilentError = require('silent-error');
 const TsPreprocessor = require('./lib/typescript-preprocessor');
 
-
 module.exports = {
   name: 'ember-cli-typescript',
 
@@ -18,18 +17,23 @@ module.exports = {
 
       this.ui.writeInfoLine(
         'Skipping TypeScript preprocessing as there is no tsconfig.json. ' +
-        '(If this is during installation of the add-on, this is as expected. If it is ' +
-        'while building, serving, or testing the application, this is an error.)'
+          '(If this is during installation of the add-on, this is as expected. If it is ' +
+          'while building, serving, or testing the application, this is an error.)'
       );
       return;
     }
 
     try {
-      registry.add('js', new TsPreprocessor({
-        ui: this.ui
-      }));
+      registry.add(
+        'js',
+        new TsPreprocessor({
+          ui: this.ui,
+        })
+      );
     } catch (ex) {
-      throw new SilentError(`Failed to instantiate TypeScript preprocessor, probably due to an invalid tsconfig.json. Please fix or run \`ember generate ember-cli-typescript\`.\n${ex}`);
+      throw new SilentError(
+        `Failed to instantiate TypeScript preprocessor, probably due to an invalid tsconfig.json. Please fix or run \`ember generate ember-cli-typescript\`.\n${ex}`
+      );
     }
   },
 };
