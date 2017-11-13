@@ -28,7 +28,7 @@ module.exports = {
 
   locals() {
     return {
-      inRepoAddons: (this.project.pkg['ember-addon'] || {}).paths || []
+      inRepoAddons: (this.project.pkg['ember-addon'] || {}).paths || [],
     };
   },
 
@@ -38,10 +38,10 @@ module.exports = {
 
   afterInstall() {
     return this.addPackagesToProject([
-      { name: 'typescript', target: '^2.4.2' },
-      { name: '@types/ember', target: '^2.7.43' },
-      { name: '@types/rsvp', target: '^3.3.0' },
-      { name: '@types/ember-testing-helpers' },
+      { name: 'typescript', target: 'latest' },
+      { name: '@types/ember', target: 'latest' },
+      { name: '@types/rsvp', target: 'latest' },
+      { name: '@types/ember-testing-helpers', target: 'latest' },
     ]);
   },
 };

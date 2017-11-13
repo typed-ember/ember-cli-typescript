@@ -1,10 +1,11 @@
 # ember-cli-typescript
 
-[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status (master)](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
- [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
-
 Use TypeScript in your Ember 2.x apps!
 
+[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
+ [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+
+(👆that failing Travis build [is a lie](https://travis-ci.org/typed-ember/ember-cli-typescript). The Ember CLI issue, related to ember-try, is [here](https://github.com/ember-cli/ember-try/issues/161).)
 
 ## Installing/Upgrading
 
@@ -14,7 +15,9 @@ Just run:
 ember install ember-cli-typescript@1
 ```
 
-All dependencies will be added to your `package.json`, and you're ready to roll! (If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
+All dependencies will be added to your `package.json`, and you're ready to roll!
+(If you're upgrading from a previous release, you should check to merge any
+tweaks you've made to `tsconfig.json`.
 
 In addition to ember-cli-typescript, the following are installed:
 
@@ -91,11 +94,17 @@ on the background and roadmap for the project.
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
+## Environment configuration typings
+
+Along with the @types/ files mentioned above, ember-cli-typescript adds a
+starter interface for `config/environment.js` in `config/environment.d.ts`.
+This interface will likely require some changes to match your app.
+
 ## :construction: Using ember-cli-typescript with Ember CLI addons
 
-**:warning: Warning: this is *not* currently recommended. This is a WIP part of the
-add-on, and it *will* make a dramatic difference in the size of your add-on in
-terms of installation. The upcoming 1.1 release will enable a much better
+**:warning: Warning: this is *not* currently recommended. This is a WIP part of
+the add-on, and it *will* make a dramatic difference in the size of your add-on
+in terms of installation. The upcoming 1.1 release will enable a much better
 experience for consumers of your addon.**
 
 We're working on making a solution that lets us ship generated typings and
@@ -108,12 +117,6 @@ give users fair warning about the increased size. To enable TypeScript for your
 addon, simple move `ember-cli-typescript` from `devDependencies` to
 `dependencies` in your `package.json`.
 
-## New modules API
-
-Note: the new modules API is not yet supported by the official typings (which
-are distinct from this addon, though we install them). We hope to have support
-for them shortly!
-
 ## Not (yet) supported
 
 While TS already works nicely for many things in Ember, there are a number of
@@ -123,11 +126,11 @@ landing in TypeScript itself.
 
 [existing typings]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember
 
-We are hard at work (and would welcome your help!) [writing new typings] for
-Ember which can give correct types for Ember's custom object model. If you'd
-like to try those out, please see instructions in that repo!
+We are hard at work (and would welcome your help!) [writing new
+typings][ember-typings] for Ember and the surrounding ecosystem. If you'd like
+to try those out, please see instructions in [that repo][ember-typings]!
 
-[writing new typings]: https://github.com/typed-ember/ember-typings
+[ember-typings]: https://github.com/typed-ember/ember-typings
 
 Here is the short list of things which do *not* work yet in the version of the
 typings published on DefinitelyTyped.
@@ -135,32 +138,19 @@ typings published on DefinitelyTyped.
 ### Some `import`s don't resolve
 
 You'll frequently see errors for imports which TypeScript doesn't know how to
-resolve. For example, if you use `htmlbars-inline-precompile`:
+resolve. For example, if you use Ember Concurrency today and try to import its
+`task` helper:
 
 ```typescript
-import hbs from 'htmlbars-inline-precompile';
+import { task }  from 'ember-concurrency';
 ```
 
 You'll see an error, because there aren't yet type definitions for it. You may
-see the same with some addons as well. These won't stop the build from working;
-they just mean TypeScript doesn't know where to find those.
+see the same with some addons as well. **These won't stop the build from
+working;** they just mean TypeScript doesn't know where to find those.
 
 Writing these missing type definitions is a great way to pitch in! Jump in
 \#topic-typescript on the Ember Slack and we'll be happy to help you.
-
-### `extends` gives errors
-
-You'll see quite a few errors like this when calling `.extends()` on an existing
-Ember type:
-
-> Class 'FooController' incorrectly extends base class 'Controller'.
-> Type '{ bar(): void; }' has no properties in common with type 'ActionHash'
-
-This is a symptom of the current, out-of-date types. The new typings we're
-working on will solve these.
-
-In the meantime, note that your application will still build just fine even with
-these errors... they'll just be annoying.
 
 ### Type safety when invoking actions
 
@@ -187,31 +177,6 @@ Likewise, it won't notice a problem when you use the `send` method:
 // TypeScript compiler won't detect this type mismatch
 this.send('turnWheel', 'ALSO-NOT-A-NUMBER');
 ```
-
-### Type safety with `Ember.get`, `Ember.set`, etc.
-
-When you use `Ember.get` or `Ember.set`, TypeScript won't yet warn you that
-you're using the wrong type. So in `foo()` here, this will compile but be
-wrong at runtime:
-
-```typescript
-Ember.Object.extend({
-  urls: <string[]> null,
-  port: 4200,  // number
-
-  init() {
-     this._super(...arguments);
-     this.set('urls', []);
-  },
-
-  foo() {
-    // TypeScript won't detect these type mismatches
-    this.get('urls').addObject(51);
-    this.set('port', '3000');
-  },
-});
-```
-
 
 ### The type definitions I need to reference are not in `node_modules/@types`
 

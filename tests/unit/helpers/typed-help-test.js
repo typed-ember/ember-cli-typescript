@@ -1,4 +1,3 @@
-
 import { typedHelp } from 'dummy/helpers/typed-help';
 import { module, test } from 'qunit';
 
@@ -9,4 +8,3 @@ test('it works', function(assert) {
   let result = typedHelp([42]);
   assert.ok(result);
 });
-
