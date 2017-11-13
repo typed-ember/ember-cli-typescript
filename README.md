@@ -14,7 +14,9 @@ Just run:
 ember install ember-cli-typescript@1
 ```
 
-All dependencies will be added to your `package.json`, and you're ready to roll! (If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
+All dependencies will be added to your `package.json`, and you're ready to roll!
+(If you're upgrading from a previous release, you should check to merge any
+tweaks you've made to `tsconfig.json`.
 
 In addition to ember-cli-typescript, the following are installed:
 
@@ -91,11 +93,17 @@ on the background and roadmap for the project.
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
+## Environment configuration typings
+
+Along with the @types/ files mentioned above, ember-cli-typescript adds a
+starter interface for `config/environment.js` in `config/environment.d.ts`.
+This interface will likely require some changes to match your app.
+
 ## :construction: Using ember-cli-typescript with Ember CLI addons
 
-**:warning: Warning: this is *not* currently recommended. This is a WIP part of the
-add-on, and it *will* make a dramatic difference in the size of your add-on in
-terms of installation. The upcoming 1.1 release will enable a much better
+**:warning: Warning: this is *not* currently recommended. This is a WIP part of
+the add-on, and it *will* make a dramatic difference in the size of your add-on
+in terms of installation. The upcoming 1.1 release will enable a much better
 experience for consumers of your addon.**
 
 We're working on making a solution that lets us ship generated typings and
@@ -108,12 +116,6 @@ give users fair warning about the increased size. To enable TypeScript for your
 addon, simple move `ember-cli-typescript` from `devDependencies` to
 `dependencies` in your `package.json`.
 
-## New modules API
-
-Note: the new modules API is not yet supported by the official typings (which
-are distinct from this addon, though we install them). We hope to have support
-for them shortly!
-
 ## Not (yet) supported
 
 While TS already works nicely for many things in Ember, there are a number of
@@ -123,14 +125,22 @@ landing in TypeScript itself.
 
 [existing typings]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember
 
-We are hard at work (and would welcome your help!) [writing new typings] for
-Ember which can give correct types for Ember's custom object model. If you'd
-like to try those out, please see instructions in that repo!
+We are hard at work (and would welcome your help!) [writing new
+typings][ember-typings] for Ember and the surrounding ecosystem, which can give
+correct types for Ember's custom object model and things which build on it (e.g.
+ember-data). If you'd like to try those out, please see instructions in [that
+repo][ember-typings]!
 
-[writing new typings]: https://github.com/typed-ember/ember-typings
+[ember-typings]: https://github.com/typed-ember/ember-typings
 
 Here is the short list of things which do *not* work yet in the version of the
 typings published on DefinitelyTyped.
+
+### New modules API
+
+Note: the new modules API is not yet supported by the official typings (which
+are distinct from this addon, though we install them). We do have experimental
+support for them in the [ember-typings] repository, and it works quite well!
 
 ### Some `import`s don't resolve
 

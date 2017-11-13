@@ -2,7 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 moduleForComponent('js-importing-ts', 'Integration | Component | js importing ts', {
-  integration: true
+  integration: true,
 });
 
 test('it renders', function(assert) {
@@ -11,6 +11,11 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{js-importing-ts}}`);
 
-  assert.equal(this.$().text().replace(/\s+/g,' ').trim(), 'js-importing-ts.hbs false Ts helper: my type of help Js helper: js please help me');
-
+  assert.equal(
+    this.$()
+      .text()
+      .replace(/\s+/g, ' ')
+      .trim(),
+    'js-importing-ts.hbs false Ts helper: my type of help Js helper: js please help me'
+  );
 });
