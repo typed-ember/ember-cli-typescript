@@ -1,4 +1,3 @@
-
 import { jsHelp } from 'dummy/helpers/js-help';
 import { module, test } from 'qunit';
 
@@ -9,4 +8,3 @@ test('it works', function(assert) {
   let result = jsHelp([42]);
   assert.ok(result);
 });
-

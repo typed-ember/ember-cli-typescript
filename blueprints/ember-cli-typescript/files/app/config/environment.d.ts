@@ -12,4 +12,5 @@ declare namespace config {
   var modulePrefix: string;
   var podModulePrefix: string;
   var locationType: string;
+  var rootURL: string;
 }

@@ -91,6 +91,12 @@ on the background and roadmap for the project.
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
+## Environment configuration typings
+
+Along with the @types/ files mentioned above, ember-cli-typescript adds a
+starter interface for `config/environment.js` in `config/environment.d.ts`.
+This interface will likely require some changes to match your app.
+
 ## :construction: Using ember-cli-typescript with Ember CLI addons
 
 **:warning: Warning: this is *not* currently recommended. This is a WIP part of the
