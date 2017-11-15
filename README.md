@@ -28,6 +28,15 @@ In addition to ember-cli-typescript, the following are installed:
     + [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers)
 - Files:
     + [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+    
+## Ember support
+
+ember-cli-typescript runs its test suite against the 2.4 LTS, the 2.8 LTS, the
+current release, the beta branch, and the canary branch. It's also in active use
+in several large applications. Any breakage for upcoming releases *should* be
+detected and fixed ahead of those releases, but you can help us guarantee that by
+running your own Ember.js+TypeScript app with beta and canary turned on and let us
+know if you run into issues with upcoming Ember.js releases.
 
 ## Notes on `tsconfig.json`
 
