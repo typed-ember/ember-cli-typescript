@@ -4,6 +4,7 @@
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "noImplicitThis": true,
     "noEmitOnError": false,
     "noEmit": true,
     "sourceMap": true,
