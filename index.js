@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const SilentError = require('silent-error');
 const TsPreprocessor = require('./lib/typescript-preprocessor');
+const TsFastIncrementalPreprocessor = require('./lib/typescript-fast-incremental-preprocessor');
 
 module.exports = {
   name: 'ember-cli-typescript',
@@ -23,10 +24,17 @@ module.exports = {
       return;
     }
 
+    // TODO: how to check the environment?
+    const isDevelopment = true;
+
+    const Preprocessor = isDevelopment
+      ? TsFastIncrementalPreprocessor
+      : TsPreprocessor;
+
     try {
       registry.add(
         'js',
-        new TsPreprocessor({
+        new Preprocessor({
           ui: this.ui,
         })
       );
