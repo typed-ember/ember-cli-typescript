@@ -13,7 +13,7 @@ module.exports = {
   name: 'ember-cli-typescript',
 
   _isRunningServeTS() {
-    return true; // TODO: how to know?
+    return this.project._isRunningServeTS;
   },
 
   _inRepoAddons() {
@@ -88,7 +88,7 @@ module.exports = {
       return;
     }
 
-    if (this._isRunningServeTS()) {
+    if (type === 'self' || this._isRunningServeTS()) {
       // TODO: still need to compile TS addons
       return;
     }
