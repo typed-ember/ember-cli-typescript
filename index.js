@@ -40,7 +40,7 @@ module.exports = {
 
     // funnel will fail if the directory doesn't exist
     roots.forEach(root => {
-      mkdirp.sync(path.join('.e-c-ts'), root);
+      mkdirp.sync(path.join('.e-c-ts', root));
     });
 
     const ts = funnel('.e-c-ts', {
