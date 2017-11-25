@@ -4,10 +4,74 @@ const fs = require('fs');
 const path = require('path');
 const SilentError = require('silent-error');
 const TsPreprocessor = require('./lib/typescript-preprocessor');
-const TsFastIncrementalPreprocessor = require('./lib/typescript-fast-incremental-preprocessor');
+const ServeTS = require('./lib/serve-ts');
+const funnel = require('broccoli-funnel');
+const mergeTrees = require('broccoli-merge-trees');
+const mkdirp = require('mkdirp');
 
 module.exports = {
   name: 'ember-cli-typescript',
+
+  _isRunningServeTS() {
+    return true; // TODO: how to know?
+  },
+
+  _inRepoAddons() {
+    const pkg = this.project.pkg;
+    if (!pkg || !pkg['ember-addon'] || !pkg['ember-addon'].paths) {
+      return [];
+    }
+
+    return pkg['ember-addon'].paths;
+  },
+
+  includedCommands() {
+    return {
+      'serve-ts': ServeTS
+    };
+  },
+
+  treeForApp(tree) {
+    if (!this._isRunningServeTS()) {
+      return tree;
+    }
+
+    const roots = ['.', ...this._inRepoAddons()].map(root => path.join(root, 'app'));
+
+    // funnel will fail if the directory doesn't exist
+    roots.forEach(root => {
+      mkdirp.sync(path.join('.e-c-ts'), root);
+    });
+
+    const ts = funnel('.e-c-ts', {
+      exclude: ['tests'],
+      getDestinationPath(relativePath) {
+        const prefix = roots.find(root => relativePath.startsWith(root));
+        if (prefix) {
+          // strip any app/ or lib/in-repo-addon/app/ prefix
+          return relativePath.substr(prefix.length + 1);
+        }
+
+        return relativePath;
+      }
+    });
+
+    return mergeTrees([ tree, ts ]);
+  },
+
+  treeForTestSupport(tree) {
+    if (!this._isRunningServeTS()) {
+      return tree;
+    }
+
+    const tests = path.join('.e-c-ts', 'tests');
+
+    // funnel will fail if the directory doesn't exist
+    mkdirp.sync(tests);
+
+    const ts = funnel(tests);
+    return tree ? mergeTrees([ tree, ts ]) : ts;
+  },
 
   setupPreprocessorRegistry(type, registry) {
     if (!fs.existsSync(path.join(this.project.root, 'tsconfig.json'))) {
@@ -24,17 +88,15 @@ module.exports = {
       return;
     }
 
-    // TODO: how to check the environment?
-    const isDevelopment = true;
-
-    const Preprocessor = isDevelopment
-      ? TsFastIncrementalPreprocessor
-      : TsPreprocessor;
+    if (this._isRunningServeTS()) {
+      // TODO: still need to compile TS addons
+      return;
+    }
 
     try {
       registry.add(
         'js',
-        new Preprocessor({
+        new TsPreprocessor({
           ui: this.ui,
         })
       );
