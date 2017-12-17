@@ -24,6 +24,7 @@ inRepoAddons.forEach(function(path) { %>,
     "tmp",
     "dist",
     "node_modules",
-    "bower_components"
+    "bower_components",
+    "blueprints"
   ]
 }
