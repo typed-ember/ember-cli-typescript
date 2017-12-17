@@ -1,3 +1,4 @@
+'use strict';
 /* eslint-env node */
 
 const fs = require('fs');
@@ -32,7 +33,9 @@ module.exports = {
       );
     } catch (ex) {
       throw new SilentError(
-        `Failed to instantiate TypeScript preprocessor, probably due to an invalid tsconfig.json. Please fix or run \`ember generate ember-cli-typescript\`.\n${ex}`
+        `Failed to instantiate TypeScript preprocessor, probably due to an invalid tsconfig.json. Please fix or run \`ember generate ember-cli-typescript\`.\n${
+          ex
+        }`
       );
     }
   },
