@@ -7,7 +7,5 @@
     "baseUrl": ".",
     "paths": {}
   },
-  "include": [
-    "**/*"
-  ]
+  "include": ["**/*"]
 }

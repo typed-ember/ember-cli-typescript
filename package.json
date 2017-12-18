@@ -2,17 +2,10 @@
   "name": "ember-cli-typescript",
   "version": "1.0.6",
   "description": "Allow ember apps to use typescript files.",
-  "keywords": [
-    "ember-addon",
-    "typescript"
-  ],
+  "keywords": ["ember-addon", "typescript"],
   "license": "MIT",
   "author": "Chris Krycho <chris@chriskrycho.com> (http://www.chriskrycho.com)",
-  "contributors": [
-    "Marius Seritan",
-    "David Gardiner",
-    "Philip Bjorge"
-  ],
+  "contributors": ["Marius Seritan", "David Gardiner", "Philip Bjorge"],
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -41,7 +34,8 @@
     "silent-error": "^1.1.0"
   },
   "devDependencies": {
-    "@types/ember": "^2.7.43",
+    "@types/ember": "*",
+    "@types/node": "*",
     "broccoli-asset-rev": "^2.4.5",
     "ember-cli": "~2.17.1",
     "ember-cli-app-version": "^2.0.0",
@@ -74,9 +68,7 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "before": [
-      "ember-cli-babel"
-    ]
+    "before": ["ember-cli-babel"]
   },
   "prettier": {
     "printWidth": 100,

@@ -19,12 +19,13 @@
   dependencies:
     "@glimmer/di" "^0.2.0"
 
-"@types/ember@^2.7.43":
-  version "2.7.43"
-  resolved "https://registry.yarnpkg.com/@types/ember/-/ember-2.7.43.tgz#24c4ffa0b05f121d3bf6687dd2ac481213ff1074"
+"@types/ember@*":
+  version "2.8.3"
+  resolved "https://registry.yarnpkg.com/@types/ember/-/ember-2.8.3.tgz#f6a8549b727d752f6e4e0aeb6074b460a309aa79"
   dependencies:
     "@types/handlebars" "*"
     "@types/jquery" "*"
+    "@types/rsvp" "*"
 
 "@types/handlebars@*":
   version "4.0.35"
@@ -33,6 +34,14 @@
 "@types/jquery@*":
   version "3.2.10"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.10.tgz#0e3da7ad6481a1cdf48af39ff00a990afeb8018b"
+
+"@types/node@*":
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.1.tgz#4ec3020bcdfe2abffeef9ba3fbf26fca097514b5"
+
+"@types/rsvp@*":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@types/rsvp/-/rsvp-4.0.0.tgz#6c59d84bb5ea8a4fd11ec3d7aa748710e0e5e373"
 
 abbrev@1:
   version "1.1.0"

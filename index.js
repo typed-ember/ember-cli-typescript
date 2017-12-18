@@ -1,3 +1,4 @@
+// @ts-check
 /* eslint-env node */
 
 const fs = require('fs');
@@ -27,7 +28,7 @@ module.exports = {
 
   includedCommands() {
     return {
-      'serve-ts': ServeTS
+      'serve-ts': ServeTS,
     };
   },
 
@@ -53,10 +54,10 @@ module.exports = {
         }
 
         return relativePath;
-      }
+      },
     });
 
-    return mergeTrees([ tree, ts ]);
+    return mergeTrees([tree, ts]);
   },
 
   treeForTestSupport(tree) {
@@ -70,7 +71,7 @@ module.exports = {
     mkdirp.sync(tests);
 
     const ts = funnel(tests);
-    return tree ? mergeTrees([ tree, ts ]) : ts;
+    return tree ? mergeTrees([tree, ts]) : ts;
   },
 
   setupPreprocessorRegistry(type, registry) {
