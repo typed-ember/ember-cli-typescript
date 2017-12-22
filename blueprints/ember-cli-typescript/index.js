@@ -1,3 +1,5 @@
+import { existsSync } from 'fs';
+
 /* eslint-env node */
 
 const path = require('path');
@@ -36,7 +38,11 @@ module.exports = {
     // Entity name is optional right now, creating this hook avoids an error.
   },
 
-  afterInstall() {
+  async afterInstall() {
+    if (existsSync('.gitignore')) {
+      await this.insertIntoFile('.gitignore', '\n# Ember CLI TypeScript\n.e-c-ts');
+    }
+
     return this.addPackagesToProject([
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
