@@ -31,7 +31,8 @@
     "broccoli-typescript-compiler": "^2.1.1",
     "debug": "^2.2.0",
     "ember-cli-babel": "^6.6.0",
-    "silent-error": "^1.1.0"
+    "silent-error": "^1.1.0",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "@types/ember": "*",
