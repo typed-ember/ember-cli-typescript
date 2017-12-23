@@ -1,7 +1,6 @@
-import { existsSync } from 'fs';
-
 /* eslint-env node */
 
+const { existsSync } = require('fs');
 const path = require('path');
 
 module.exports = {
