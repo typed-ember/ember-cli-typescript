@@ -37,15 +37,15 @@ module.exports = {
     // Entity name is optional right now, creating this hook avoids an error.
   },
 
-  async afterInstall() {
+  afterInstall() {
     if (existsSync('.gitignore')) {
-      await this.insertIntoFile('.gitignore', '\n# Ember CLI TypeScript\n.e-c-ts');
+      this.insertIntoFile('.gitignore', '\n# Ember CLI TypeScript\n.e-c-ts');
     }
 
     if (existsSync('.vscode/settings.json')) {
       // NOTE: this may or may not actually work -- it assumes that
       // `"tmp:": true` is in fact set.
-      await this.insertIntoFile('.vscode/settings.json', '",\n.e-c-ts": true', {
+      this.insertIntoFile('.vscode/settings.json', '",\n.e-c-ts": true', {
         after: '"tmp": true',
       });
     }
