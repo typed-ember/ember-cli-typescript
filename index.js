@@ -32,12 +32,40 @@ module.exports = {
     };
   },
 
-  treeForApp(tree) {
-    if (!this._isRunningServeTS()) {
-      return tree;
+  // Stolen from ember-cli-mirage.
+  included() {
+    let app;
+
+    // If the addon has the _findHost() method (in ember-cli >= 2.7.0), we'll just
+    // use that.
+    if (typeof this._findHost === 'function') {
+      app = this._findHost();
+    } else {
+      // Otherwise, we'll use this implementation borrowed from the _findHost()
+      // method in ember-cli.
+      let current = this;
+      do {
+        app = current.app || app;
+      } while (current.parent.parent && (current = current.parent));
     }
 
-    const roots = ['.', ...this._inRepoAddons()].map(root => path.join(root, 'app'));
+    this.app = app;
+
+    this._super.included.apply(this, arguments);
+  },
+
+  treeForApp(tree) {
+    const typesDirPath = path.resolve(this.app.project.root, 'types');
+    const typesDirExists = fs.existsSync(typesDirPath);
+    const trees = [tree].concat(typesDirExists ? funnel(typesDirPath, { destDir: 'types' }) : []);
+
+    if (!this._isRunningServeTS()) {
+      return mergeTrees(trees);
+    }
+
+    const roots = ['.', ...(typesDirExists ? [typesDirPath] : []), ...this._inRepoAddons()].map(
+      root => path.join(root, 'app')
+    );
 
     // funnel will fail if the directory doesn't exist
     roots.forEach(root => {
