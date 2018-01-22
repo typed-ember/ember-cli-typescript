@@ -55,17 +55,23 @@ module.exports = {
   },
 
   treeForApp(tree) {
-    const typesDirPath = path.resolve(this.app.project.root, 'types');
-    const typesDirExists = fs.existsSync(typesDirPath);
-    const trees = [tree].concat(typesDirExists ? funnel(typesDirPath, { destDir: 'types' }) : []);
+    const { include } = JSON.parse(
+      fs.readFileSync(path.resolve(this.app.project.root, 'tsconfig.json'), { encoding: 'utf8' })
+    );
+
+    const includes = ['types']
+      .concat(include ? include : [])
+      .reduce((unique, entry) => (unique.indexOf(entry) === -1 ? unique.concat(entry) : unique), [])
+      .map(p => path.resolve(this.app.project.root, p))
+      .filter(fs.existsSync);
+
+    const additionalTrees = includes.map(p => funnel(p, { destDir: p }));
 
     if (!this._isRunningServeTS()) {
-      return mergeTrees(trees);
+      return mergeTrees([tree, ...additionalTrees]);
     }
 
-    const roots = ['.', ...(typesDirExists ? [typesDirPath] : []), ...this._inRepoAddons()].map(
-      root => path.join(root, 'app')
-    );
+    const roots = ['.', ...includes, ...this._inRepoAddons()].map(root => path.join(root, 'app'));
 
     // funnel will fail if the directory doesn't exist
     roots.forEach(root => {
