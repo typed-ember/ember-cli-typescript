@@ -20,11 +20,8 @@ inRepoAddons.forEach(function(path) { %>,
       ]
     }
   },
-  "exclude": [
-    "tmp",
-    "dist",
-    "node_modules",
-    "bower_components",
-    "blueprints"
+  "include": [
+    "app",
+    "tests"
   ]
 }

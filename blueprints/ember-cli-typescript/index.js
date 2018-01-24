@@ -38,22 +38,6 @@ module.exports = {
   },
 
   afterInstall() {
-    if (existsSync('.gitignore')) {
-      this.insertIntoFile('.gitignore', '\n# Ember CLI TypeScript\n.e-c-ts');
-    }
-
-    if (existsSync('.vscode/settings.json')) {
-      // NOTE: this may or may not actually work -- it assumes that
-      // `"tmp:": true` is in fact set.
-      this.insertIntoFile('.vscode/settings.json', '",\n.e-c-ts": true', {
-        after: '"tmp": true',
-      });
-    }
-
-    // TODO: same for Atom
-    // TODO: same for Sublime
-    // TODO: same for IntelliJ
-
     return this.addPackagesToProject([
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
