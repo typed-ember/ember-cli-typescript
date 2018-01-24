@@ -2,6 +2,7 @@
 /* eslint-env node */
 
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 const SilentError = require('silent-error');
 const TsPreprocessor = require('./lib/typescript-preprocessor');
@@ -17,6 +18,16 @@ module.exports = {
     return this.project._isRunningServeTS;
   },
 
+  _tempDir() {
+    if (!this.project._tsTempDir) {
+      const tempDir = path.join(os.tmpdir(), `e-c-ts-${process.pid}`);
+      this.project._tsTempDir = tempDir;
+      mkdirp.sync(tempDir);
+    }
+
+    return this.project._tsTempDir;
+  },
+
   _inRepoAddons() {
     const pkg = this.project.pkg;
     if (!pkg || !pkg['ember-addon'] || !pkg['ember-addon'].paths) {
@@ -28,7 +39,7 @@ module.exports = {
 
   includedCommands() {
     return {
-      'serve-ts': buildServeCommand(this.project),
+      'serve-ts': buildServeCommand(this.project, this._tempDir()),
     };
   },
 
@@ -75,10 +86,10 @@ module.exports = {
 
     // funnel will fail if the directory doesn't exist
     roots.forEach(root => {
-      mkdirp.sync(path.join('.e-c-ts', root));
+      mkdirp.sync(path.join(this._tempDir(), root));
     });
 
-    const ts = funnel('.e-c-ts', {
+    const ts = funnel(this._tempDir(), {
       exclude: ['tests'],
       getDestinationPath(relativePath) {
         const prefix = roots.find(root => relativePath.startsWith(root));
@@ -99,7 +110,7 @@ module.exports = {
       return tree;
     }
 
-    const tests = path.join('.e-c-ts', 'tests');
+    const tests = path.join(this._tempDir(), 'tests');
 
     // funnel will fail if the directory doesn't exist
     mkdirp.sync(tests);
