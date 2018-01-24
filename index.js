@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const SilentError = require('silent-error');
 const TsPreprocessor = require('./lib/typescript-preprocessor');
-const ServeTS = require('./lib/serve-ts');
+const buildServeCommand = require('./lib/serve-ts');
 const funnel = require('broccoli-funnel');
 const mergeTrees = require('broccoli-merge-trees');
 const mkdirp = require('mkdirp');
@@ -28,7 +28,7 @@ module.exports = {
 
   includedCommands() {
     return {
-      'serve-ts': ServeTS,
+      'serve-ts': buildServeCommand(this.project),
     };
   },
 
@@ -71,7 +71,7 @@ module.exports = {
       return mergeTrees([tree, ...additionalTrees]);
     }
 
-    const roots = ['.', ...includes, ...this._inRepoAddons()].map(root => path.join(root, 'app'));
+    const roots = ['.', ...includes, ...this._inRepoAddons()].map(root => path.join(root, 'app/'));
 
     // funnel will fail if the directory doesn't exist
     roots.forEach(root => {
@@ -84,7 +84,7 @@ module.exports = {
         const prefix = roots.find(root => relativePath.startsWith(root));
         if (prefix) {
           // strip any app/ or lib/in-repo-addon/app/ prefix
-          return relativePath.substr(prefix.length + 1);
+          return relativePath.substr(prefix.length);
         }
 
         return relativePath;
