@@ -8,7 +8,6 @@ const SilentError = require('silent-error');
 const TsPreprocessor = require('./lib/typescript-preprocessor');
 const buildServeCommand = require('./lib/serve-ts');
 const funnel = require('broccoli-funnel');
-const mergeTrees = require('broccoli-merge-trees');
 const mkdirp = require('mkdirp');
 
 module.exports = {
@@ -65,22 +64,19 @@ module.exports = {
     this._super.included.apply(this, arguments);
   },
 
-  treeForApp(tree) {
-    const { include } = JSON.parse(
+  treeForApp() {
+    if (!this._isRunningServeTS()) {
+      return;
+    }
+
+    const config = JSON.parse(
       fs.readFileSync(path.resolve(this.app.project.root, 'tsconfig.json'), { encoding: 'utf8' })
     );
 
-    const includes = ['types']
-      .concat(include ? include : [])
+    const includes = config.include
       .reduce((unique, entry) => (unique.indexOf(entry) === -1 ? unique.concat(entry) : unique), [])
       .map(p => path.resolve(this.app.project.root, p))
-      .filter(fs.existsSync);
-
-    const additionalTrees = includes.map(p => funnel(p, { destDir: p }));
-
-    if (!this._isRunningServeTS()) {
-      return mergeTrees([tree, ...additionalTrees]);
-    }
+      .filter(p => fs.existsSync(p));
 
     const roots = ['.', ...includes, ...this._inRepoAddons()].map(root => path.join(root, 'app/'));
 
@@ -102,12 +98,12 @@ module.exports = {
       },
     });
 
-    return mergeTrees([tree, ts]);
+    return ts;
   },
 
-  treeForTestSupport(tree) {
+  treeForTestSupport() {
     if (!this._isRunningServeTS()) {
-      return tree;
+      return;
     }
 
     const tests = path.join(this._tempDir(), 'tests');
@@ -115,8 +111,7 @@ module.exports = {
     // funnel will fail if the directory doesn't exist
     mkdirp.sync(tests);
 
-    const ts = funnel(tests);
-    return tree ? mergeTrees([tree, ts]) : ts;
+    return tests;
   },
 
   setupPreprocessorRegistry(type, registry) {
