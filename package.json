@@ -2,10 +2,17 @@
   "name": "ember-cli-typescript",
   "version": "1.0.6",
   "description": "Allow ember apps to use typescript files.",
-  "keywords": ["ember-addon", "typescript"],
+  "keywords": [
+    "ember-addon",
+    "typescript"
+  ],
   "license": "MIT",
   "author": "Chris Krycho <chris@chriskrycho.com> (http://www.chriskrycho.com)",
-  "contributors": ["Marius Seritan", "David Gardiner", "Philip Bjorge"],
+  "contributors": [
+    "Marius Seritan",
+    "David Gardiner",
+    "Philip Bjorge"
+  ],
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -26,13 +33,14 @@
     "broccoli-funnel": "^1.0.6",
     "broccoli-merge-trees": "^1.1.4",
     "broccoli-plugin": "^1.2.1",
-    "broccoli-source": "^1.1.0",
     "broccoli-stew": "^1.4.0",
-    "broccoli-typescript-compiler": "^2.1.1",
     "debug": "^2.2.0",
-    "ember-cli-babel": "^6.6.0",
-    "silent-error": "^1.1.0",
-    "rimraf": "^2.6.2"
+    "execa": "^0.9.0",
+    "mkdirp": "^0.5.1",
+    "resolve": "^1.5.0",
+    "rimraf": "^2.6.2",
+    "rsvp": "^4.8.1",
+    "symlink-or-copy": "^1.1.8"
   },
   "devDependencies": {
     "@types/ember": "*",
@@ -40,6 +48,7 @@
     "broccoli-asset-rev": "^2.4.5",
     "ember-cli": "~2.17.1",
     "ember-cli-app-version": "^2.0.0",
+    "ember-cli-babel": "^6.6.0",
     "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^2.0.0",
     "ember-cli-eslint": "^4.2.1",
@@ -69,7 +78,9 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
-    "before": ["ember-cli-babel"]
+    "before": [
+      "ember-cli-babel"
+    ]
   },
   "prettier": {
     "printWidth": 100,
