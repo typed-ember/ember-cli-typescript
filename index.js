@@ -1,150 +1,42 @@
 // @ts-check
 /* eslint-env node */
 
-const fs = require('fs');
-const os = require('os');
-const path = require('path');
-const SilentError = require('silent-error');
-const TsPreprocessor = require('./lib/typescript-preprocessor');
-const buildServeCommand = require('./lib/serve-ts');
-const funnel = require('broccoli-funnel');
-const mkdirp = require('mkdirp');
+const IncrementalTypescriptCompiler = require('./lib/incremental-typescript-compiler');
 
 module.exports = {
   name: 'ember-cli-typescript',
 
-  _isRunningServeTS() {
-    return this.project._isRunningServeTS;
-  },
-
-  _tempDir() {
-    if (!this.project._tsTempDir) {
-      const tempDir = path.join(os.tmpdir(), `e-c-ts-${process.pid}`);
-      this.project._tsTempDir = tempDir;
-      mkdirp.sync(tempDir);
-    }
-
-    return this.project._tsTempDir;
-  },
-
-  _inRepoAddons() {
-    const pkg = this.project.pkg;
-    if (!pkg || !pkg['ember-addon'] || !pkg['ember-addon'].paths) {
-      return [];
-    }
-
-    return pkg['ember-addon'].paths;
-  },
-
-  includedCommands() {
-    return {
-      'serve-ts': buildServeCommand(this.project, this._tempDir()),
-    };
-  },
-
-  // Stolen from ember-cli-mirage.
-  included() {
-    let app;
-
-    // If the addon has the _findHost() method (in ember-cli >= 2.7.0), we'll just
-    // use that.
-    if (typeof this._findHost === 'function') {
-      app = this._findHost();
-    } else {
-      // Otherwise, we'll use this implementation borrowed from the _findHost()
-      // method in ember-cli.
-      let current = this;
-      do {
-        app = current.app || app;
-      } while (current.parent.parent && (current = current.parent));
-    }
-
-    this.app = app;
-
+  included(includer) {
     this._super.included.apply(this, arguments);
+
+    if (includer === this.app) {
+      this.compiler = new IncrementalTypescriptCompiler(this.project);
+      this.compiler.launch();
+    }
   },
 
   treeForApp() {
-    if (!this._isRunningServeTS()) {
-      return;
+    if (this.compiler) {
+      this.compiler.treeForAddons();
+      return this._super.treeForApp.call(this, this.compiler.treeForApp());
     }
+  },
 
-    const config = JSON.parse(
-      fs.readFileSync(path.resolve(this.app.project.root, 'tsconfig.json'), { encoding: 'utf8' })
-    );
-
-    const includes = config.include
-      .reduce((unique, entry) => (unique.indexOf(entry) === -1 ? unique.concat(entry) : unique), [])
-      .map(p => path.resolve(this.app.project.root, p))
-      .filter(p => fs.existsSync(p));
-
-    const roots = ['.', ...includes, ...this._inRepoAddons()].map(root => path.join(root, 'app/'));
-
-    // funnel will fail if the directory doesn't exist
-    roots.forEach(root => {
-      mkdirp.sync(path.join(this._tempDir(), root));
-    });
-
-    const ts = funnel(this._tempDir(), {
-      exclude: ['tests'],
-      getDestinationPath(relativePath) {
-        const prefix = roots.find(root => relativePath.startsWith(root));
-        if (prefix) {
-          // strip any app/ or lib/in-repo-addon/app/ prefix
-          return relativePath.substr(prefix.length);
-        }
-
-        return relativePath;
-      },
-    });
-
-    return ts;
+  treeForAddon() {
+    if (this.compiler) {
+      // We manually invoke Babel here rather than calling _super because we're returning
+      // content on behalf of addons that aren't ember-cli-typescript, and the _super impl
+      // would namespace all the files under our own name.
+      let babel = this.project.addons.find(addon => addon.name === 'ember-cli-babel');
+      let tree = this.compiler.treeForAddons();
+      return babel.transpileTree(tree);
+    }
   },
 
   treeForTestSupport() {
-    if (!this._isRunningServeTS()) {
-      return;
+    if (this.compiler) {
+      let tree = this.compiler.treeForTests();
+      return this._super.treeForTestSupport.call(this, tree);
     }
-
-    const tests = path.join(this._tempDir(), 'tests');
-
-    // funnel will fail if the directory doesn't exist
-    mkdirp.sync(tests);
-
-    return tests;
-  },
-
-  setupPreprocessorRegistry(type, registry) {
-    if (!fs.existsSync(path.join(this.project.root, 'tsconfig.json'))) {
-      // Do nothing; we just won't have the plugin available. This means that if you
-      // somehow end up in a state where it doesn't load, the preprocessor *will*
-      // fail, but this is necessary because the preprocessor depends on packages
-      // which aren't installed until the default blueprint is run
-
-      this.ui.writeInfoLine(
-        'Skipping TypeScript preprocessing as there is no tsconfig.json. ' +
-          '(If this is during installation of the add-on, this is as expected. If it is ' +
-          'while building, serving, or testing the application, this is an error.)'
-      );
-      return;
-    }
-
-    if (type === 'self' || this._isRunningServeTS()) {
-      // TODO: still need to compile TS addons
-      return;
-    }
-
-    try {
-      registry.add(
-        'js',
-        new TsPreprocessor({
-          ui: this.ui,
-        })
-      );
-    } catch (ex) {
-      throw new SilentError(
-        `Failed to instantiate TypeScript preprocessor, probably due to an invalid tsconfig.json. Please fix or run \`ember generate ember-cli-typescript\`.\n${ex}`
-      );
-    }
-  },
+  }
 };
