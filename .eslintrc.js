@@ -2,12 +2,13 @@ module.exports = {
   root: true,
   parserOptions: {
     ecmaVersion: 2017,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   extends: 'eslint:recommended',
   env: {
-    browser: true
+    browser: true,
+    node: true,
+    mocha: true,
   },
-  rules: {
-  }
+  rules: {},
 };
