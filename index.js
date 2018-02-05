@@ -10,7 +10,7 @@ module.exports = {
     this._super.included.apply(this, arguments);
 
     if (includer === this.app) {
-      this.compiler = new IncrementalTypescriptCompiler(this.project);
+      this.compiler = new IncrementalTypescriptCompiler(this.app, this.project);
       this.compiler.launch();
     }
   },

@@ -5,7 +5,12 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*"]
+    }
   },
-  "include": ["**/*"]
+  "include": [
+    "tests"
+  ]
 }
