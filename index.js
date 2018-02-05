@@ -17,8 +17,8 @@ module.exports = {
 
   treeForApp() {
     if (this.compiler) {
-      this.compiler.treeForAddons();
-      return this._super.treeForApp.call(this, this.compiler.treeForApp());
+      let tree = this.compiler.treeForApp();
+      return this._super.treeForApp.call(this, tree);
     }
   },
 

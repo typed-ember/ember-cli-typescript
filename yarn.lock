@@ -214,10 +214,6 @@ arr-flatten@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/arr-flatten/-/arr-flatten-1.1.0.tgz#36048bbff4e7b47e136644316c99669ea5ae91f1"
 
-array-binsearch@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/array-binsearch/-/array-binsearch-1.0.1.tgz#35586dca04ca9ab259c4c4708435acd1babb08ad"
-
 array-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/array-equal/-/array-equal-1.0.0.tgz#8c2a5ef2472fd9ea742b04c77a75093ba2757c93"
@@ -1709,20 +1705,6 @@ broccoli-stew@^1.2.0, broccoli-stew@^1.3.3, broccoli-stew@^1.4.0:
     rsvp "^3.0.16"
     symlink-or-copy "^1.1.8"
     walk-sync "^0.3.0"
-
-broccoli-typescript-compiler@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/broccoli-typescript-compiler/-/broccoli-typescript-compiler-2.1.1.tgz#3d40d277c4804305cb8d4cd779137e44a4c16419"
-  dependencies:
-    array-binsearch "^1.0.1"
-    broccoli-funnel "^1.2.0"
-    broccoli-merge-trees "^2.0.0"
-    broccoli-plugin "^1.2.1"
-    fs-tree-diff "^0.5.2"
-    heimdalljs "0.3.3"
-    md5-hex "^2.0.0"
-    typescript "~2.6.1"
-    walk-sync "^0.3.2"
 
 broccoli-uglify-sourcemap@^2.0.0:
   version "2.0.1"
@@ -3892,12 +3874,6 @@ heimdalljs-logger@^0.1.7:
     debug "^2.2.0"
     heimdalljs "^0.2.0"
 
-heimdalljs@0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/heimdalljs/-/heimdalljs-0.3.3.tgz#e92d2c6f77fd46d5bf50b610d28ad31755054d0b"
-  dependencies:
-    rsvp "~3.2.1"
-
 heimdalljs@^0.2.0, heimdalljs@^0.2.1, heimdalljs@^0.2.3:
   version "0.2.5"
   resolved "https://registry.yarnpkg.com/heimdalljs/-/heimdalljs-0.2.5.tgz#6aa54308eee793b642cff9cf94781445f37730ac"
@@ -5618,6 +5594,10 @@ rsvp@^4.6.1, rsvp@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.7.0.tgz#dc1b0b1a536f7dec9d2be45e0a12ad4197c9fd96"
 
+rsvp@^4.8.1:
+  version "4.8.1"
+  resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-4.8.1.tgz#168addb3963222de37ee351b70e3876bdb2ac285"
+
 rsvp@~3.0.6:
   version "3.0.21"
   resolved "https://registry.yarnpkg.com/rsvp/-/rsvp-3.0.21.tgz#49c588fe18ef293bcd0ab9f4e6756e6ac433359f"
@@ -6271,10 +6251,6 @@ typedarray@^0.0.6:
 typescript@^2.4.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
-
-typescript@~2.6.1:
-  version "2.6.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
 uc.micro@^1.0.1, uc.micro@^1.0.3:
   version "1.0.3"
