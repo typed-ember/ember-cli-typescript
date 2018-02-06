@@ -1,35 +1,39 @@
 /* eslint-env node */
 
-const { existsSync } = require('fs');
 const path = require('path');
+const stringify = require('json-stringify-pretty-compact');
 
 module.exports = {
   description: 'Initialize files needed for typescript compilation',
 
-  files() {
-    return [
-      path.join(this.path, 'files', 'tsconfig.json'),
-      path.join(this.path, 'files', 'app', 'config', 'environment.d.ts'),
-    ];
-  },
-
-  mapFile() {
-    const result = this._super.mapFile.apply(this, arguments);
-
-    const tsconfigPattern = `${path.sep}tsconfig.json`;
-    const appPattern = `${path.sep}app${path.sep}`;
-
-    if (result.indexOf(tsconfigPattern) > -1) {
-      return 'tsconfig.json';
-    } else if (result.indexOf(appPattern) > -1) {
-      var pos = result.indexOf(appPattern);
-      return result.substring(pos + 1);
-    }
-  },
-
   locals() {
+    let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
+    let isAddon = this.project.isEmberCLIAddon();
+
     return {
-      inRepoAddons: (this.project.pkg['ember-addon'] || {}).paths || [],
+      additionalIncludes: [isAddon && 'addon', ...inRepoAddons].filter(Boolean),
+      pathsFor: dasherizedName => {
+        let appName = isAddon ? 'dummy' : dasherizedName;
+        let paths = {
+          [`${appName}/tests/*`]: ['tests/*'],
+          [`${appName}/*`]: ['app/*'],
+        };
+
+        if (isAddon) {
+          paths[dasherizedName] = ['addon'];
+          paths[`${dasherizedName}/*`] = ['addon/*'];
+          paths[`${appName}/*`].unshift('tests/dummy/app/*');
+        }
+
+        for (let addon of inRepoAddons) {
+          let addonName = path.basename(addon);
+          paths[addonName] = [`${addon}/addon`];
+          paths[`${addonName}/*`] = [`${addon}/addon/*`];
+          paths[`${appName}/*`].push(`${addon}/app/*`);
+        }
+
+        return stringify(paths).replace(/\n|$/g, '\n    ');
+      },
     };
   },
 

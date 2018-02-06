@@ -15,6 +15,15 @@ module.exports = {
     }
   },
 
+  includedCommands() {
+    if (this.project.isEmberCLIAddon()) {
+      return {
+        'ts:precompile': require('./lib/commands/precompile'),
+        'ts:clean': require('./lib/commands/clean'),
+      };
+    }
+  },
+
   treeForApp() {
     if (this.compiler) {
       let tree = this.compiler.treeForApp();
@@ -38,5 +47,5 @@ module.exports = {
       let tree = this.compiler.treeForTests();
       return this._super.treeForTestSupport.call(this, tree);
     }
-  }
+  },
 };
