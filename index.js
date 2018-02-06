@@ -1,41 +1,42 @@
+// @ts-check
 /* eslint-env node */
 
-const fs = require('fs');
-const path = require('path');
-const SilentError = require('silent-error');
-const TsPreprocessor = require('./lib/typescript-preprocessor');
+const IncrementalTypescriptCompiler = require('./lib/incremental-typescript-compiler');
 
 module.exports = {
   name: 'ember-cli-typescript',
 
-  setupPreprocessorRegistry(type, registry) {
-    if (!fs.existsSync(path.join(this.project.root, 'tsconfig.json'))) {
-      // Do nothing; we just won't have the plugin available. This means that if you
-      // somehow end up in a state where it doesn't load, the preprocessor *will*
-      // fail, but this is necessary because the preprocessor depends on packages
-      // which aren't installed until the default blueprint is run
+  included(includer) {
+    this._super.included.apply(this, arguments);
 
-      this.ui.writeInfoLine(
-        'Skipping TypeScript preprocessing as there is no tsconfig.json. ' +
-          '(If this is during installation of the add-on, this is as expected. If it is ' +
-          'while building, serving, or testing the application, this is an error.)'
-      );
-      return;
-    }
-
-    try {
-      registry.add(
-        'js',
-        new TsPreprocessor({
-          ui: this.ui,
-        })
-      );
-    } catch (ex) {
-      throw new SilentError(
-        `Failed to instantiate TypeScript preprocessor, probably due to an invalid tsconfig.json. Please fix or run \`ember generate ember-cli-typescript\`.\n${
-          ex
-        }`
-      );
+    if (includer === this.app) {
+      this.compiler = new IncrementalTypescriptCompiler(this.app, this.project);
+      this.compiler.launch();
     }
   },
+
+  treeForApp() {
+    if (this.compiler) {
+      let tree = this.compiler.treeForApp();
+      return this._super.treeForApp.call(this, tree);
+    }
+  },
+
+  treeForAddon() {
+    if (this.compiler) {
+      // We manually invoke Babel here rather than calling _super because we're returning
+      // content on behalf of addons that aren't ember-cli-typescript, and the _super impl
+      // would namespace all the files under our own name.
+      let babel = this.project.addons.find(addon => addon.name === 'ember-cli-babel');
+      let tree = this.compiler.treeForAddons();
+      return babel.transpileTree(tree);
+    }
+  },
+
+  treeForTestSupport() {
+    if (this.compiler) {
+      let tree = this.compiler.treeForTests();
+      return this._super.treeForTestSupport.call(this, tree);
+    }
+  }
 };
