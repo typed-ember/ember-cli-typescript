@@ -18,14 +18,50 @@ describe('Acceptance: ember-cli-typescript generator', function() {
     return emberNew()
       .then(() => emberGenerate(args))
       .then(() => {
+        const pkg = file('package.json');
+        expect(pkg).to.exist;
+
+        const pkgJson = JSON.parse(pkg.content);
+        expect(pkgJson.scripts.prepack).to.be.undefined;
+        expect(pkgJson.scripts.postpack).to.be.undefined;
+
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
 
-        const json = JSON.parse(tsconfig.content);
-        expect(json.compilerOptions.paths).to.deep.equal({
+        const tsconfigJson = JSON.parse(tsconfig.content);
+        expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
           'my-app/tests/*': ['tests/*'],
           'my-app/*': ['app/*'],
         });
+
+        expect(tsconfigJson.include).to.deep.equal(['app', 'tests']);
+      });
+  });
+
+  it('basic addon', function() {
+    const args = ['ember-cli-typescript'];
+
+    return emberNew({ target: 'addon' })
+      .then(() => emberGenerate(args))
+      .then(() => {
+        const pkg = file('package.json');
+        expect(pkg).to.exist;
+
+        const pkgJson = JSON.parse(pkg.content);
+        expect(pkgJson.scripts.prepack).to.equal('ember ts:precompile');
+        expect(pkgJson.scripts.postpack).to.equal('ember ts:clean');
+
+        const tsconfig = file('tsconfig.json');
+        expect(tsconfig).to.exist;
+
+        const tsconfigJson = JSON.parse(tsconfig.content);
+        expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
+          'dummy/tests/*': ['tests/*'],
+          'my-addon': ['addon'],
+          'my-addon/*': ['addon/*'],
+        });
+
+        expect(tsconfigJson.include).to.deep.equal(['addon', 'tests']);
       });
   });
 
@@ -50,7 +86,13 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(json.compilerOptions.paths).to.deep.equal({
           'my-app/tests/*': ['tests/*'],
           'my-app/*': ['app/*', 'lib/my-addon-1/app/*', 'lib/my-addon-2/app/*'],
+          'my-addon-1': ['lib/my-addon-1/addon'],
+          'my-addon-1/*': ['lib/my-addon-1/addon/*'],
+          'my-addon-2': ['lib/my-addon-2/addon'],
+          'my-addon-2/*': ['lib/my-addon-2/addon/*'],
         });
+
+        expect(json.include).to.deep.equal(['app', 'tests', 'lib/my-addon-1', 'lib/my-addon-2']);
       });
   });
 });

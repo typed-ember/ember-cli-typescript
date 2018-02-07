@@ -7,6 +7,14 @@ const stringify = require('json-stringify-pretty-compact');
 module.exports = {
   description: 'Initialize files needed for typescript compilation',
 
+  install(options) {
+    if (options.project.isEmberCLIAddon()) {
+      options.dummy = true;
+    }
+
+    return this._super.install.apply(this, arguments);
+  },
+
   locals() {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let isAddon = this.project.isEmberCLIAddon();
@@ -33,6 +41,7 @@ module.exports = {
           let addonName = path.basename(addon);
           paths[addonName] = [`${addon}/addon`];
           paths[`${addonName}/*`] = [`${addon}/addon/*`];
+          paths[`${appName}/*`] = (paths[`${appName}/*`] || []).concat(`${addon}/app/*`);
         }
 
         return stringify(paths).replace(/\n/g, '\n    ');
