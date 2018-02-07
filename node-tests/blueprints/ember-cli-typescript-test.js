@@ -57,6 +57,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const tsconfigJson = JSON.parse(tsconfig.content);
         expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
           'dummy/tests/*': ['tests/*'],
+          'dummy/*': ['tests/dummy/app/*'],
           'my-addon': ['addon'],
           'my-addon/*': ['addon/*'],
         });

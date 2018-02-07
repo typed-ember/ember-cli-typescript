@@ -28,7 +28,9 @@ module.exports = {
           [`${appName}/tests/*`]: ['tests/*'],
         };
 
-        if (!isAddon) {
+        if (isAddon) {
+          paths[`${appName}/*`] = ['tests/dummy/app/*'];
+        } else {
           paths[`${appName}/*`] = ['app/*'];
         }
 
@@ -41,7 +43,7 @@ module.exports = {
           let addonName = path.basename(addon);
           paths[addonName] = [`${addon}/addon`];
           paths[`${addonName}/*`] = [`${addon}/addon/*`];
-          paths[`${appName}/*`] = (paths[`${appName}/*`] || []).concat(`${addon}/app/*`);
+          paths[`${appName}/*`].push(`${addon}/app/*`);
         }
 
         return stringify(paths).replace(/\n/g, '\n    ');
