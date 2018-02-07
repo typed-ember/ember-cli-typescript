@@ -36,7 +36,6 @@
     "broccoli-stew": "^1.4.0",
     "debug": "^2.2.0",
     "execa": "^0.9.0",
-    "json-stringify-pretty-compact": "^1.1.0",
     "mkdirp": "^0.5.1",
     "resolve": "^1.5.0",
     "rimraf": "^2.6.2",

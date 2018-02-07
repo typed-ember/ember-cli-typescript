@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const stringify = require('json-stringify-pretty-compact');
 
 module.exports = {
   description: 'Initialize files needed for typescript compilation',
@@ -46,7 +45,7 @@ module.exports = {
           paths[`${appName}/*`].push(`${addon}/app/*`);
         }
 
-        return stringify(paths).replace(/\n/g, '\n    ');
+        return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
       },
     };
   },
