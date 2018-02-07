@@ -13,7 +13,7 @@ module.exports = {
     let includes = [isAddon ? 'addon' : 'app', 'tests', ...inRepoAddons];
 
     return {
-      includes: JSON.stringify(includes, null, 2).replace(/\n|$/g, '\n    '),
+      includes: JSON.stringify(includes, null, 2).replace(/\n/g, '\n  '),
       pathsFor: dasherizedName => {
         let appName = isAddon ? 'dummy' : dasherizedName;
         let paths = {
@@ -35,7 +35,7 @@ module.exports = {
           paths[`${addonName}/*`] = [`${addon}/addon/*`];
         }
 
-        return stringify(paths).replace(/\n|$/g, '\n    ');
+        return stringify(paths).replace(/\n/g, '\n    ');
       },
     };
   },
