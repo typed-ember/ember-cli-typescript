@@ -22,8 +22,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(pkg).to.exist;
 
         const pkgJson = JSON.parse(pkg.content);
-        expect(pkgJson.scripts.prepack).to.be.undefined;
-        expect(pkgJson.scripts.postpack).to.be.undefined;
+        expect(pkgJson.scripts.prepublishOnly).to.be.undefined;
+        expect(pkgJson.scripts.postpublish).to.be.undefined;
 
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
@@ -48,8 +48,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(pkg).to.exist;
 
         const pkgJson = JSON.parse(pkg.content);
-        expect(pkgJson.scripts.prepack).to.equal('ember ts:precompile');
-        expect(pkgJson.scripts.postpack).to.equal('ember ts:clean');
+        expect(pkgJson.scripts.prepublishOnly).to.equal('ember ts:precompile');
+        expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
 
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;

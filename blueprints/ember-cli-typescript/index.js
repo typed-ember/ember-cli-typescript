@@ -71,8 +71,11 @@ module.exports = {
   _installPrecompilationHooks() {
     let pkgPath = `${this.project.root}/package.json`;
     let pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
-    this._addScript(pkg.scripts, 'prepack', 'ember ts:precompile');
-    this._addScript(pkg.scripts, 'postpack', 'ember ts:clean');
+
+    // Really `prepack` and `postpack` would be ideal, but yarn doesn't execute those when publishing
+    this._addScript(pkg.scripts, 'prepublishOnly', 'ember ts:precompile');
+    this._addScript(pkg.scripts, 'postpublish', 'ember ts:clean');
+
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
   },
 
