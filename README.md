@@ -26,7 +26,7 @@ In addition to ember-cli-typescript, the following are installed:
     + [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers)
 - Files:
     + [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-    
+
 ## Ember support
 
 ember-cli-typescript runs its test suite against the 2.4 LTS, the 2.8 LTS, the
@@ -107,22 +107,13 @@ Along with the @types/ files mentioned above, ember-cli-typescript adds a
 starter interface for `config/environment.js` in `config/environment.d.ts`.
 This interface will likely require some changes to match your app.
 
-## :construction: Using ember-cli-typescript with Ember CLI addons
+## Using ember-cli-typescript with Ember CLI addons
 
-**:warning: Warning: this is *not* currently recommended. This is a WIP part of
-the add-on, and it *will* make a dramatic difference in the size of your add-on
-in terms of installation. The upcoming 1.1 release will enable a much better
-experience for consumers of your addon.**
-
-We're working on making a solution that lets us ship generated typings and
-compiled JavaScript instead of shipping the entire TypeScript compiler toolchain
-for add-ons. If you're using ember-cli-typescript in an add-on, you might add a
-note to your users about the install size until we get that sorted out!
-
-If you want to experiment with this in the meantime, you can do so, but please
-give users fair warning about the increased size. To enable TypeScript for your
-addon, simple move `ember-cli-typescript` from `devDependencies` to
-`dependencies` in your `package.json`.
+TODO @dfreeman fill me out more
+- local dev
+- in-repo addons
+- publishing
+- linked addons
 
 ## Not (yet) supported
 

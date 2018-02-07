@@ -12,11 +12,5 @@
     "module": "es6",
     "paths": <%= pathsFor(dasherizedPackageName) %>
   },
-  "include": [
-    "app",
-    "tests"<%
-additionalIncludes.forEach(function(path) { %>,
-    "<%= path %>"<%
-}) %>
-  ]
+  "include": <%= includes %>
 }
