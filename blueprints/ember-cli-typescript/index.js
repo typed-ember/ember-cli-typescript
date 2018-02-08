@@ -1,4 +1,4 @@
-/* eslint-env node */
+'use strict';
 
 const fs = require('fs');
 const path = require('path');
@@ -17,7 +17,7 @@ module.exports = {
   locals() {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let isAddon = this.project.isEmberCLIAddon();
-    let includes = [isAddon ? 'addon' : 'app', 'tests', ...inRepoAddons];
+    let includes = [isAddon ? 'addon' : 'app', 'tests'].concat(inRepoAddons);
 
     return {
       includes: JSON.stringify(includes, null, 2).replace(/\n/g, '\n  '),

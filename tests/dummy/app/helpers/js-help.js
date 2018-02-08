@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 
 export function jsHelp(/*params, hash*/) {
   return 'js please help me';
 }
 
-export default Ember.Helper.helper(jsHelp);
+export default helper(jsHelp);

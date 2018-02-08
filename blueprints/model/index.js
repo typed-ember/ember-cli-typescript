@@ -1,8 +1,8 @@
-/* eslint-env node */
+'use strict';
 
-var inflection  = require('inflection');
-var stringUtils = require('ember-cli-string-utils');
-var EOL         = require('os').EOL;
+const inflection  = require('inflection');
+const stringUtils = require('ember-cli-string-utils');
+const EOL         = require('os').EOL;
 
 module.exports = {
   description: 'Generates an ember-data model.',
