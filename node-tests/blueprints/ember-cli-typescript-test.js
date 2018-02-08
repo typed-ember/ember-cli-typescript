@@ -40,8 +40,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
   it('basic addon', function() {
     const args = ['ember-cli-typescript'];
 
-    return emberNew({ target: 'addon' })
-      .then(() => emberGenerate(args))
+    return helpers.emberNew({ target: 'addon' })
+      .then(() => helpers.emberGenerate(args))
       .then(() => {
         const pkg = file('package.json');
         expect(pkg).to.exist;
