@@ -6,8 +6,9 @@ export default class <%= classifiedModuleName %> extends Controller.extend({
   // normal class body definition here
 }
 
-declare module 'ember' {
-  interface ControllerRegistry {
+// DO NOT DELETE: this is how TypeScript knows how to look up your controllers.
+declare module '@ember/controller' {
+  interface Registry {
     '<%= dasherizedModuleName %>': <%= classifiedModuleName %>;
   }
 }
