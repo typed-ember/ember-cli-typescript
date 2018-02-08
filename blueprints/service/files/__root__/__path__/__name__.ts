@@ -6,8 +6,9 @@ export default class <%= classifiedModuleName %> extends Service.extend({
   // normal class body definition here
 }
 
-declare module 'ember' {
-  interface ServiceRegistry {
+// DO NOT DELETE: this is how TypeScript knows how to look up your services.
+declare module '@ember/service' {
+  interface Registry {
     '<%= dasherizedModuleName %>': <%= classifiedModuleName %>;
   }
 }
