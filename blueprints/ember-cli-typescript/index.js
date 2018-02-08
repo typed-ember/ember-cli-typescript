@@ -1,6 +1,5 @@
-/* eslint-env node */
+'use strict';
 
-const { existsSync } = require('fs');
 const path = require('path');
 
 module.exports = {

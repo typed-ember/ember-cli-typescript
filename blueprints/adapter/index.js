@@ -1,6 +1,6 @@
-/* eslint-env node */
+'use strict';
 
-var extendFromApplicationEntity = require('../../lib/utilities/extend-from-application-entity');
+const extendFromApplicationEntity = require('../../lib/utilities/extend-from-application-entity');
 
 module.exports = {
   description: 'Generates an ember-data adapter.',

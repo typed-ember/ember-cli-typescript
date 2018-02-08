@@ -34,6 +34,7 @@ install:
   - yarn install --no-lockfile
 
 script:
+  - yarn lint:js
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
   - node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --skip-cleanup

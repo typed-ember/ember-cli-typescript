@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 
 function compute(): { value: string } {
   return { value: 'from component' };
 }
 
-export default Ember.Component.extend({
+export default Component.extend({
   someValue: compute().value,
 });

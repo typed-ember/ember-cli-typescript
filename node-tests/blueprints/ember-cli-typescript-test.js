@@ -2,21 +2,20 @@
 
 const fs = require('fs');
 const path = require('path');
-const {
-  setupTestHooks,
-  emberNew,
-  emberGenerate,
-} = require('ember-cli-blueprint-test-helpers/helpers');
-const { expect, file } = require('ember-cli-blueprint-test-helpers/chai');
+const helpers = require('ember-cli-blueprint-test-helpers/helpers');
+const chaiHelpers = require('ember-cli-blueprint-test-helpers/chai');
+
+const expect = chaiHelpers.expect;
+const file = chaiHelpers.file;
 
 describe('Acceptance: ember-cli-typescript generator', function() {
-  setupTestHooks(this);
+  helpers.setupTestHooks(this);
 
   it('basic app', function() {
     const args = ['ember-cli-typescript'];
 
-    return emberNew()
-      .then(() => emberGenerate(args))
+    return helpers.emberNew()
+      .then(() => helpers.emberGenerate(args))
       .then(() => {
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
@@ -32,7 +31,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
   it('in-repo addons', function() {
     const args = ['ember-cli-typescript'];
 
-    return emberNew()
+    return helpers.emberNew()
       .then(() => {
         const packagePath = path.resolve(process.cwd(), 'package.json');
         const contents = JSON.parse(fs.readFileSync(packagePath, { encoding: 'utf8' }));
@@ -41,7 +40,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         };
         fs.writeFileSync(packagePath, JSON.stringify(contents, null, 2));
       })
-      .then(() => emberGenerate(args))
+      .then(() => helpers.emberGenerate(args))
       .then(() => {
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;

@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { equal } from '@ember/object/computed';
 
 import * as constants from '../lib/some-const';
 
-export default Ember.Component.extend({
-  poke: Ember.computed.equal('ha', constants.CHANGE),
+export default Component.extend({
+  poke: equal('ha', constants.CHANGE),
 });
