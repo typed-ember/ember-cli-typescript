@@ -10,18 +10,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "module": "es6",
-    "paths": {
-      "<%= dasherizedPackageName %>/tests/*": ["tests/*"],
-      "<%= dasherizedPackageName %>/*": [
-        "app/*"<%
-inRepoAddons.forEach(function(path) { %>,
-        "<%= path %>/app/*"<%
-}) %>
-      ]
-    }
+    "paths": <%= pathsFor(dasherizedPackageName) %>
   },
-  "include": [
-    "app",
-    "tests"
-  ]
+  "include": <%= includes %>
 }

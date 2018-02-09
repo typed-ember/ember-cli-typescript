@@ -37,8 +37,11 @@
     "broccoli-stew": "^1.4.0",
     "chalk": "^2.3.0",
     "debug": "^3.1.0",
+    "ember-cli-get-component-path-option": "^1.0.0",
+    "ember-cli-normalize-entity-name": "^1.0.0",
     "ember-cli-path-utils": "^1.0.0",
     "ember-cli-string-utils": "^1.1.0",
+    "ember-cli-valid-component-name": "^1.0.0",
     "ember-router-generator": "^1.2.3",
     "execa": "^0.9.0",
     "exists-sync": "^0.0.4",
@@ -48,7 +51,8 @@
     "rimraf": "^2.6.2",
     "rsvp": "^4.8.1",
     "silent-error": "^1.1.0",
-    "symlink-or-copy": "^1.1.8"
+    "symlink-or-copy": "^1.1.8",
+    "walk-sync": "^0.3.2"
   },
   "devDependencies": {
     "@types/ember": "2.8.8",
