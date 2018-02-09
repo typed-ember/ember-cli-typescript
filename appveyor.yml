@@ -8,7 +8,7 @@ init:
 install:
   - git rev-parse HEAD
   # Get the latest stable version of Node 0.STABLE.latest
-  - ps: Install-Product node 6
+  - ps: Install-Product node 7
   # hide python so node-gyp won't try to build native extentions
   - rename C:\Python27 Python27hidden
   # Typical npm stuff.
