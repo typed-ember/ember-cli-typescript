@@ -27,7 +27,7 @@ cache:
 test_script:
   # Output useful info for debugging.
   - yarn versions
-  - cmd: yarn run test
+  - cmd: yarn ember try:one ember-release
   - cmd: yarn run nodetest
 
 # Don't actually build.
