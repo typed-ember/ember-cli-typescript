@@ -18,7 +18,7 @@ install:
   - rename C:\Python27 Python27hidden
   # Typical npm stuff.
   - md C:\nc
-  - yarn --ignore-optional
+  - yarn --ignore-optional --no-lockfile
 
 cache:
  - "%LOCALAPPDATA%\\Yarn"
