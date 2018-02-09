@@ -4,17 +4,11 @@
 init:
   - git config --global core.autocrlf true
 
-# Test against these versions of Node.js.
-environment:
-  matrix:
-    - nodejs_version: "6"
-    - nodejs_version: "7"
-
 # Install scripts. (runs after repo cloning)
 install:
   - git rev-parse HEAD
   # Get the latest stable version of Node 0.STABLE.latest
-  - ps: Install-Product node $env:nodejs_version
+  - ps: Install-Product node 6
   # hide python so node-gyp won't try to build native extentions
   - rename C:\Python27 Python27hidden
   # Typical npm stuff.
@@ -28,7 +22,7 @@ cache:
 test_script:
   # Output useful info for debugging.
   - yarn versions
-  - cmd: yarn run test
+  - cmd: yarn ember test
   - cmd: yarn run nodetest
 
 # Don't actually build.
