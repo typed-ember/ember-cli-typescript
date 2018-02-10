@@ -15,6 +15,8 @@ Use TypeScript in your Ember 2.x and 3.x apps!
     - [Linking Addons](#linking-addons)
     - [Gotchas](#gotchas)
 - [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
+    - [Service and controller injections](#service-and-controller-injections)
+    - [Opt-in unsafety for Ember Data lookups](#opt-in-unsafety-for-ember-data-lookups)
     - [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
     - [Browserify]
 - [Current limitations](#current-limitations)
@@ -137,7 +139,174 @@ A few things to look out for when working with TypeScript in addons:
  
 ## Using TypeScript with Ember effectively
 
-In addition to the points made below, you may find the "Update" sequence in the [Typing Your Ember][typing-your-ember] blog series particularly helpful in knowing how to do specific things—e.g. write Ember Data models effectively.
+In addition to the points made below, you may find the "Update" sequence in the [Typing Your Ember][typing-your-ember] blog series particularly helpful in knowing how to do specific things. In particular, [Update, Part 4][pt4] is a really important guide to making the service and controller injections and Ember Data lookups behave as described below.
+
+[pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
+
+## Service and controller injections
+
+Ember does service and controller lookups with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it.
+
+```ts
+// my-app/services/session.ts
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+
+export default class Session extends Service {
+  login(email: string, password: string): RSVP.Promise<string> {
+    // login and return the confirmation message
+  }
+}
+```
+```ts
+// my-app/components/user-profile.ts
+import Component from '@ember/component';
+import Computed from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+
+import Session from 'my-app/services/session';
+
+export default class UserProfile extends Component {
+  session: Computed<Session> = service();
+  
+  actions = {
+    login(this: UserProfile, email: string, password: string) {
+      this.get('session').login(email, string);
+    }
+  }
+}
+```
+
+The type of `session` would just be `Computed<Service>` if we didn't explicitly type it out. As a result, we wouldn't get any type-checking on that `.login` call (and in fact we'd get an incorrect type *error*!), and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
+
+The handy workaround we supply is simply to write some boilerplate (though take heart! We have generators for any *new* services or controllers you create) and then explicitly name the service or controller with its "dasherized" name, just like you would if you were mapping it to a different local name:
+
+```ts
+// my-app/services/session.ts
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+
+export default class Session extends Service {
+  login(email: string, password: string): RSVP.Promise<string> {
+    // login and return the confirmation message
+  }
+}
+
+declare module '@ember/service' {
+  interface Registry {
+    'session': Session;
+  }
+}
+```
+```
+// my-app/components/user-profile.ts
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+
+export default class UserProfile extends Component {
+  session = service('session');
+  
+  actions = {
+    login(this: UserProfile, email: string, password: string) {
+      this.get('session').login(email, string);
+    }
+  }
+}
+```
+
+The corresponding declaration for controllers is:
+
+```ts
+declare module '@ember/controller' {
+  interface Registry {
+    // add your key here, like `'dasherized-name': ClassifiedName;`
+  }
+}
+```
+
+You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
+
+If you have a reason to fall back to just getting the `Service` or `Controller` types, you can always do so by just using the string-less variant: `service('session')` will check that the string is a valid name of a service; `session()` will not.
+
+## Opt-in unsafety for Ember Data lookups
+
+The same basic approach is in play for Ember Data lookups. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything *should* just work.
+
+The declarations and changes you need to add to your existing files are:
+
+- Models
+
+    ```ts
+    import DS from 'ember-data';
+    
+    export default class UserMeta extends DS.Model.extend({
+      // attribute declarations here, as usual
+    }) {}
+    
+    declare module 'ember-data' {
+      interface ModelRegistry {
+        'user-meta': UserMeta;
+      }
+    }
+    ```
+
+- Adapters
+
+    ```ts
+    import DS from 'ember-data';
+    
+    export default class UserMeta extends DS.Adapter {
+      // properties and methods
+    }
+    
+    declare module 'ember-data' {
+      interface AdapterRegistry {
+        'user-meta': UserMeta;
+      }
+    }
+    ```
+
+- Serializers
+
+    ```ts
+    import DS from 'ember-data';
+    
+    export default class UserMeta extends DS.Serializer {
+      // properties and methods
+    }
+    
+    declare module 'ember-data' {
+      interface SerializerRegistry {
+        'user-meta': UserMeta;
+      }
+    }
+    ```
+
+In addition to the registry, note the oddly defined class for `DS.Model`s. This is because we need to set up the attribute bindings on the prototype (for a discussion of how and why this is different from class properties, see [Typing Your Ember, Update, Part 2][pt2]), but we cannot just use a `const` here because we need a named type—like a class!—to reference in the type registry and elsewhere in the app.
+
+[pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
+
+Also notice that unlike with service and controller injections, there is no unsafe fallback method by default, because there isn't an argument-less variant of the functions to use as there is for `Service` and `Controller` injection. If for some reason you want to opt *out* of the full type-safe lookup for the strings you pass into methods like `findRecord`, `adapterFor`, and `serializerFor`, you can add these declarations somewhere in your project:
+
+```ts
+import DS from 'ember-data';
+
+declare module 'ember-data' {
+  interface ModelRegistry {
+    [key: string]: DS.Model;
+  }
+  
+  interface AdapterRegistry {
+    [key: string]: DS.Adapter;
+  }
+  
+  interface SerializerRegistry {
+    [key: string]: DS.Serializer;
+  }
+}
+```
+
+However, we ***strongly*** recommend that you simply take the time to add the few lines of declarations to each of your `DS.Model`, `DS.Adapter`, and `DS.Serializer` instances instead. It will save you time in even the short run!
 
 ### Type definitions outside `node_modules/@types`
 
