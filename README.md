@@ -4,35 +4,32 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
 [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
- 
-- [Installing/Upgrading](#installingupgrading)
-- [Ember Support](#ember-support)
-- [Notes on `tsconfig.json`](#notes-on-tsconfigjson)
-    - [The Problem](#the-problem)
-    - [The Solution](#the-solution)
-    - [Customization](#customization)
+
+- [Setup and Configuration]
+    - [Ember Support](#ember-support)
+    - [`tsconfig.json`](#tsconfigjson)
 - [Incremental adoption](#incremental-adoption)
 - [Environment configuration typings](#environment-configuration-typings)
 - [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
     - [Publishing](#publishing)
     - [Linking Addons](#linking-addons)
     - [Gotchas](#gotchas)
-- [Not (yet) supported)(#not-yet-supported)
+- [Not (yet) supported](#not-yet-supported)
     - [Some `import`s don't resolve](#some-imports-dont-resolve)
     - [Type safety when invoking actions](#type-safety-when-invoking-actions)
     - [The type definitions I need to reference are not in `node_modules/@types`](#the-type-definitions-i-need-to-reference-are-not-in-node_modulestypes)
 
-## Installing/Upgrading
+## Setup and Configuration
 
-Just run:
+To install the addon, just run:
 
 ```
-ember install ember-cli-typescript
+ember install ember-cli-typescript@latest
 ```
 
 All dependencies will be added to your `package.json`, and you're ready to roll!
-(If you're upgrading from a previous release, you should check to merge any
-tweaks you've made to `tsconfig.json`.)
+If you're upgrading from a previous release, you should check to merge any
+tweaks you've made to `tsconfig.json`.
 
 In addition to ember-cli-typescript, the following are installed—all at their current "latest" value:
 
@@ -44,58 +41,41 @@ In addition to ember-cli-typescript, the following are installed—all at their 
 - Files:
     + [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
 
-## Ember support
+### Ember support
 
 ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the 2.18 LTS, the current release, the beta branch, and the canary branch. It's also in active use in several large applications. Any breakage for upcoming releases *should* be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
 
-## Notes on `tsconfig.json`
+### `tsconfig.json`
 
-If you make changes to the paths included in your `tsconfig.json`, you will need
-to restart the server to take the changes into account. Additionally, depending
-on what you're doing, you may notice that your tweaks to `tsconfig.json` aren't
-applied *exactly* as you might expect.
+In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file. However, there are a couple points worth noting.
 
-### The Problem
+First, by default, we target the highest stable version of JavaScript available in the TypeScript compiler, so that you may ship anything from that very code without further modification to browsers that support it all the way back to ES3, in line with the Babel configuration in your app's `config/targets.js`. You can set this target to whatever is appropriate for your application, but we *strongly* encourage you to leave it set to the highest stable version of JavaScript if you are developing an addon, so that consumers of your addon have full flexibility in this regard.
 
-The configuration file is used by both Ember CLI (via [broccoli]) and for tool
+Second, if you make changes to the paths included in or excluded from the build via your `tsconfig.json`, you will need to restart the server to take the changes into account: ember-cli-typescript does not currently watch the `tsconfig.json` file
+
+Finally, depending on what you're doing, you may notice that your tweaks to `tsconfig.json` aren't applied *exactly* as you might expect, because the configuration file is used by both Ember CLI (via [broccoli]) and for tool
 integration in editors.
 
 [broccoli]: http://broccolijs.com/
 
-Broccoli controls the inputs and the output folder of the various build steps
-that make the Ember build pipeline. Its expectation are impacted by TypeScript
-configuration properties like "include", "exclude", "outFile", "outDir".
+Usually, the TypeScript compiler's behavior is determined entirely by  configuration properties like `"include"`, `"exclude"`, `"outFile"`, and `"outDir"`. However, your editor *also* leans on those properties to determine how to resolve files, what to do during file watching, etc. And in this case, we have the third player of Ember.js and Broccoli in play, managing the TypeScript compilation and feeding it only what it actually needs (so that Broccoli's support for tree merging, concatenation, etc. works as expected).
 
-We want to allow you to change unrelated properties in the tsconfig file.
+This addon takes the following approach to allow normal use with your editor tooling while also supporting the customization required for Broccoli:
 
-### The Solution
-
-This addon takes the following approach to allow this dual use:
-
-- We generate a good default [blueprint], which will give you type resolution in
-  your editor for normal Ember.js paths. The generated tsconfig file does not
-  set `"outDir"` and sets `"noEmit"` to `true`. This allows you to run editors
-  which use the compiler without creating `.js` files throughout your codebase.
+-   We generate a good default [blueprint], which will give you type resolution in your editor for normal Ember.js paths. The generated tsconfig file does not set `"outDir"` and sets `"noEmit"` to `true`. This allows you to run editors which use the compiler without creating `.js` files throughout your codebase.
 
 - Then, before calling broccoli, the addon:
-    + removes any configured `outDir` to avoid name resolution problems in the
-      broccoli tree processing
-    + sets the `noEmit` option to `false` so that the compiler will emit files
-      for consumption by your app
-    + sets `allowJs` to `false`, so that the TypeScript compiler does not try to
-      process JavaScript files imported by TypeScript files in your app
-    + removes all values set for `include`, since we use Broccoli to manage the
-      build pipeline directly.
+
+    + removes any configured `outDir` to avoid name resolution problems in the Broccoli tree processing
+    + sets the `noEmit` option to `false` so that the compiler will emit files for consumption by your app
+    + sets `allowJs` to `false`, so that the TypeScript compiler does not try to process JavaScript files imported by TypeScript files in your app
+    + removes all values set for `include`, since we use Broccoli to manage the build pipeline directly
 
 [blueprint]: https://github.com/emberwatch/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json
 
-### Customization
+You can still customize those properties in `tsconfig.json` for your use case. Just note that the changes won't directly impact how Ember/Broccoli builds your app!
 
-You can still customize the `tsconfig.json` file further for your use case. For
-example, to see the output of the compilation in a separate folder you are
-welcome to set `"outDir"` to some path and set `"noEmit"` to `false`. Then tools
-which use the TypeScript compiler will generate files at that location, while
-the broccoli pipeline will continue to use its own temp folder.
+For example, to see the output of the compilation in a separate folder you are welcome to set `"outDir"` to some path and set `"noEmit"` to `false`. Then tools which use the TypeScript compiler (e.g. the watcher tooling in JetBrains IDEs) will generate files at that location, while the Ember.js/Broccoli pipeline will continue to use its own temp folder.
 
 ## Incremental adoption
 
