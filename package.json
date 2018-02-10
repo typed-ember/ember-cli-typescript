@@ -17,11 +17,11 @@
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "https://github.com/emberwatch/ember-cli-typescript.git",
+  "repository": "https://github.com/typed-ember/ember-cli-typescript.git",
   "bugs": {
-    "url": "https://github.com/emberwatch/ember-cli-typescript"
+    "url": "https://github.com/typed-ember/ember-cli-typescript"
   },
-  "homepage": "https://github.com/emberwatch/ember-cli-typescript",
+  "homepage": "https://github.com/typed-ember/ember-cli-typescript",
   "scripts": {
     "build": "ember build",
     "lint:js": "eslint ./*.js blueprints/*/index.js addon addon-test-support app config lib server test-support tests node-tests",
