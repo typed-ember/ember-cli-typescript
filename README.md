@@ -3,7 +3,24 @@
 Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
- [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+[![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+ 
+- [Installing/Upgrading](#installingupgrading)
+- [Ember Support](#ember-support)
+- [Notes on `tsconfig.json`](#notes-on-tsconfigjson)
+    - [The Problem](#the-problem)
+    - [The Solution](#the-solution)
+    - [Customization](#customization)
+- [Incremental adoption](#incremental-adoption)
+- [Environment configuration typings](#environment-configuration-typings)
+- [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
+    - [Publishing](#publishing)
+    - [Linking Addons](#linking-addons)
+    - [Gotchas](#gotchas)
+- [Not (yet) supported)(#not-yet-supported)
+    - [Some `import`s don't resolve](#some-imports-dont-resolve)
+    - [Type safety when invoking actions](#type-safety-when-invoking-actions)
+    - [The type definitions I need to reference are not in `node_modules/@types`](#the-type-definitions-i-need-to-reference-are-not-in-node_modulestypes)
 
 ## Installing/Upgrading
 
