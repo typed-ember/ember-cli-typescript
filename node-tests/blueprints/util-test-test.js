@@ -20,7 +20,7 @@ describe('Blueprint: util-test', function() {
       return emberNew();
     });
 
-    describe('with ember-cli-qunit before v4.2.0', function() {
+    describe('with ember-cli-qunit<4.2.0', function() {
       beforeEach(function() {
         generateFakePackageManifest('ember-cli-qunit', '4.1.1');
       });
@@ -68,7 +68,7 @@ describe('Blueprint: util-test', function() {
       return emberNew({ target: 'addon' });
     });
 
-    describe('with ember-cli-qunit before v4.2.0', function() {
+    describe('with ember-cli-qunit<4.2.0', function() {
       beforeEach(function() {
         generateFakePackageManifest('ember-cli-qunit', '4.1.1');
       });
