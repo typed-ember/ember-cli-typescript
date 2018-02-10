@@ -9,12 +9,12 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [Ember Support](#ember-support)
   * [`tsconfig.json`](#tsconfigjson)
 * [Incremental adoption](#incremental-adoption)
-* [Environment configuration typings](#environment-configuration-typings)
 * [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
   * [Publishing](#publishing)
   * [Linking Addons](#linking-addons)
   * [Gotchas](#gotchas)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
+  * [Environment configuration typings](#environment-configuration-typings)
   * [Service and controller injections](#service-and-controller-injections)
   * [Opt-in unsafety for Ember Data lookups](#opt-in-unsafety-for-ember-data-lookups)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
@@ -87,10 +87,6 @@ You may also find the blog series ["Typing Your Ember"][typing-your-ember] helpf
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
-## Environment configuration typings
-
-Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `config/environment.d.ts`. This interface will likely require some changes to match your app.
-
 ## Using ember-cli-typescript with Ember CLI addons
 
 During development, your `.ts` files will be watched and rebuilt just like any other sources in your addon when you run `ember serve`, `ember test`, etc.
@@ -143,7 +139,11 @@ In addition to the points made below, you may find the "Update" sequence in the 
 
 [pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
 
-## Service and controller injections
+### Environment configuration typings
+
+Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `config/environment.d.ts`. This interface will likely require some changes to match your app.
+
+### Service and controller injections
 
 Ember does service and controller lookups with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it.
 
@@ -230,7 +230,7 @@ You'll need to add that module and interface declaration to all your existing se
 
 If you have a reason to fall back to just getting the `Service` or `Controller` types, you can always do so by just using the string-less variant: `service('session')` will check that the string is a valid name of a service; `session()` will not.
 
-## Opt-in unsafety for Ember Data lookups
+### Opt-in unsafety for Ember Data lookups
 
 The same basic approach is in play for Ember Data lookups. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
 
