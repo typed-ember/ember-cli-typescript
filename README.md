@@ -1,6 +1,6 @@
 # ember-cli-typescript
 
-Use TypeScript in your Ember 2.x apps!
+Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
  [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
@@ -10,17 +10,17 @@ Use TypeScript in your Ember 2.x apps!
 Just run:
 
 ```
-ember install ember-cli-typescript@1
+ember install ember-cli-typescript
 ```
 
 All dependencies will be added to your `package.json`, and you're ready to roll!
 (If you're upgrading from a previous release, you should check to merge any
-tweaks you've made to `tsconfig.json`.
+tweaks you've made to `tsconfig.json`.)
 
-In addition to ember-cli-typescript, the following are installed:
+In addition to ember-cli-typescript, the following are installed—all at their current "latest" value:
 
 - Packages:
-    + [`typescript`](https://github.com/Microsoft/TypeScript) (2.4 or greater)
+    + [`typescript`](https://github.com/Microsoft/TypeScript)
     + [`@types/ember`](https://www.npmjs.com/package/@types/ember)
     + [`@types/rsvp`](https://www.npmjs.com/package/@types/rsvp)
     + [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers)
@@ -29,12 +29,7 @@ In addition to ember-cli-typescript, the following are installed:
 
 ## Ember support
 
-ember-cli-typescript runs its test suite against the 2.4 LTS, the 2.8 LTS, the
-current release, the beta branch, and the canary branch. It's also in active use
-in several large applications. Any breakage for upcoming releases *should* be
-detected and fixed ahead of those releases, but you can help us guarantee that by
-running your own Ember.js+TypeScript app with beta and canary turned on and let us
-know if you run into issues with upcoming Ember.js releases.
+ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the 2.18 LTS, the current release, the beta branch, and the canary branch. It's also in active use in several large applications. Any breakage for upcoming releases *should* be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
 
 ## Notes on `tsconfig.json`
 
