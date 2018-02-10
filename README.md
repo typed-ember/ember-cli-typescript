@@ -5,7 +5,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
 [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
-- [Setup and Configuration]
+- [Setup and Configuration](#setup-and-configuration)
     - [Ember Support](#ember-support)
     - [`tsconfig.json`](#tsconfigjson)
 - [Incremental adoption](#incremental-adoption)
