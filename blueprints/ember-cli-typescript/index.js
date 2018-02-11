@@ -70,7 +70,7 @@ module.exports = {
     // Return custom tokens to be replaced in your files.
     return {
       __app_name__(options) {
-        return options.dasherizedModuleName;
+        return options.inAddon ? 'dummy' : options.dasherizedModuleName;
       },
     };
   },

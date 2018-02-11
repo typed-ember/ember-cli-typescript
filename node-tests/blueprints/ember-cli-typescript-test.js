@@ -76,7 +76,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         expect(tsconfigJson.include).to.deep.equal(['addon', 'tests']);
 
-        const projectTypes = file('types/my-addon/index.d.ts');
+        const projectTypes = file('types/dummy/index.d.ts');
         expect(projectTypes).to.exist;
         expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
       });

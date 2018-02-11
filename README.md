@@ -32,7 +32,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 ## Setup and Configuration
 
-To install the addon, just run:
+To install or upgrade the addon, just run:
 
 ```
 ember install ember-cli-typescript@latest
