@@ -24,6 +24,7 @@ env:
     - EMBER_TRY_SCENARIO=ember-beta
     - EMBER_TRY_SCENARIO=ember-canary
     - EMBER_TRY_SCENARIO=ember-default
+    - EMBER_TRY_SCENARIO=integrated-node-tests
 
 matrix:
   fast_finish: true
@@ -35,7 +36,6 @@ install:
 
 script:
   - yarn lint:js
-  - yarn ember try:one integrated-node-tests
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
   - yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
