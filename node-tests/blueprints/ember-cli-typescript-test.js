@@ -14,7 +14,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
   it('basic app', function() {
     const args = ['ember-cli-typescript'];
 
-    return helpers.emberNew()
+    return helpers
+      .emberNew()
       .then(() => helpers.emberGenerate(args))
       .then(() => {
         const pkg = file('package.json');
@@ -31,16 +32,24 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
           'my-app/tests/*': ['tests/*'],
           'my-app/*': ['app/*'],
+          '*': ['types/*'],
         });
 
         expect(tsconfigJson.include).to.deep.equal(['app', 'tests']);
+
+        const projectTypes = file('types/my-app/index.d.ts');
+        expect(projectTypes).to.exist;
+
+        const environmentTypes = file('types/my-app/config/environment.d.ts');
+        expect(environmentTypes).to.exist;
       });
   });
 
   it('basic addon', function() {
     const args = ['ember-cli-typescript'];
 
-    return helpers.emberNew({ target: 'addon' })
+    return helpers
+      .emberNew({ target: 'addon' })
       .then(() => helpers.emberGenerate(args))
       .then(() => {
         const pkg = file('package.json');
@@ -59,6 +68,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           'dummy/*': ['tests/dummy/app/*'],
           'my-addon': ['addon'],
           'my-addon/*': ['addon/*'],
+          '*': ['types/*'],
         });
 
         expect(tsconfigJson.include).to.deep.equal(['addon', 'tests']);
@@ -68,7 +78,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
   it('in-repo addons', function() {
     const args = ['ember-cli-typescript'];
 
-    return helpers.emberNew()
+    return helpers
+      .emberNew()
       .then(() => {
         const packagePath = path.resolve(process.cwd(), 'package.json');
         const contents = JSON.parse(fs.readFileSync(packagePath, { encoding: 'utf8' }));
@@ -90,6 +101,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           'my-addon-1/*': ['lib/my-addon-1/addon/*'],
           'my-addon-2': ['lib/my-addon-2/addon'],
           'my-addon-2/*': ['lib/my-addon-2/addon/*'],
+          '*': ['types/*'],
         });
 
         expect(json.include).to.deep.equal(['app', 'tests', 'lib/my-addon-1', 'lib/my-addon-2']);

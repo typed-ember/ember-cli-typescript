@@ -45,7 +45,18 @@ module.exports = {
           paths[`${appName}/*`].push(`${addon}/app/*`);
         }
 
+        paths['*'] = ['types/*'];
+
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
+      },
+    };
+  },
+
+  fileMapTokens(/*options*/) {
+    // Return custom tokens to be replaced in your files.
+    return {
+      __app_name__(options) {
+        return options.dasherizedModuleName;
       },
     };
   },
