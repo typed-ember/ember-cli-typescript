@@ -81,9 +81,15 @@ For example, to see the output of the compilation in a separate folder you are w
 
 ## Incremental adoption
 
-If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. A good approach is to start at your leaf files and then work your way up. As TypeScript starts to find errors, make sure to celebrate your (small) wins with your team, specially if some people are not convinced yet. We would also love to hear your stories!
+If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your (small) wins with your team, especially if some people are not convinced yet. We would also love to hear your stories!
 
-You may also find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
+Some specific tips for success on the technical front:
+
+* Start with the _least_ strict "strictness" settings (which is what the default compiler options are set to) to begin, and only tighten them down iteratively.
+* Make liberal use of `any` for things you don't have types for as you go, and come back and fill them in later.
+* A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere.
+
+You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
