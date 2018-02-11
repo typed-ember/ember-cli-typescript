@@ -131,7 +131,7 @@ These are all fallbacks, of course, you should use the types supplied directly w
 
 At the root of your application or addon, we include a `types/<your app>` directory with an `index.d.ts` file in it. Anything which is part of your application but which must be declared globally can go in this file. For example, if you have data attached to the `Window` object when the page is loaded (for bootstrapping or whatever other reason), this is a good place to declare it.
 
-In the case of applications (but not for addons), we also automatically include declarations for Ember's prototype extensions in this `index.d.ts` file. If you are [disabling Ember's prototype extensions][disabling], you can remove these declarations; we include them because they're enabled in most Ember applications today.
+In the case of applications (but not for addons), we also automatically include declarations for Ember's prototype extensions in this `index.d.ts` file, with the `Array` prototype extensions enabled and the `Function` prototype extensions commented out. You should configure them to match your own config (which we cannot check during installation). If you are [disabling Ember's prototype extensions][disabling], you can remove these declarations entirely; we include them because they're enabled in most Ember applications today.
 
 [disabling]: https://guides.emberjs.com/v2.18.0/configuring-ember/disabling-prototype-extensions/
 
