@@ -13,7 +13,8 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [Install other types!](#install-other-types)
   * [Environment configuration typings](#environment-configuration-typings)
   * [Service and controller injections](#service-and-controller-injections)
-  * [Opt-in unsafety for Ember Data lookups](#opt-in-unsafety-for-ember-data-lookups)
+  * [Ember Data lookups](#ember-data-lookups)
+    * [Opt-in unsafety](#opt-in-unsafety)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
   * [ember-browserify](#ember-browserify)
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
@@ -203,7 +204,7 @@ You'll need to add that module and interface declaration to all your existing se
 
 If you have a reason to fall back to just getting the `Service` or `Controller` types, you can always do so by just using the string-less variant: `service('session')` will check that the string is a valid name of a service; `session()` will not.
 
-### Opt-in unsafety for Ember Data lookups
+### Ember Data lookups
 
 The same basic approach is in play for Ember Data lookups. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
 
@@ -260,6 +261,8 @@ The declarations and changes you need to add to your existing files are:
 In addition to the registry, note the oddly defined class for `DS.Model`s. This is because we need to set up the attribute bindings on the prototype (for a discussion of how and why this is different from class properties, see [Typing Your Ember, Update, Part 2][pt2]), but we cannot just use a `const` here because we need a named type—like a class!—to reference in the type registry and elsewhere in the app.
 
 [pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
+
+#### Opt-in unsafety
 
 Also notice that unlike with service and controller injections, there is no unsafe fallback method by default, because there isn't an argument-less variant of the functions to use as there is for `Service` and `Controller` injection. If for some reason you want to opt _out_ of the full type-safe lookup for the strings you pass into methods like `findRecord`, `adapterFor`, and `serializerFor`, you can add these declarations somewhere in your project:
 
