@@ -10,6 +10,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [`tsconfig.json`](#tsconfigjson)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
   * [Incremental adoption](#incremental-adoption)
+  * [Install other types!](#install-other-types)
   * [Environment configuration typings](#environment-configuration-typings)
   * [Service and controller injections](#service-and-controller-injections)
   * [Opt-in unsafety for Ember Data lookups](#opt-in-unsafety-for-ember-data-lookups)
@@ -101,6 +102,15 @@ Some specific tips for success on the technical front:
 You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
+
+### Install other types!
+
+You'll want to use other type definitions as much as possible. The first thing you should do, for example, is install the types for your testing framework of choice: `@types/ember-mocha` or `@types/ember-qunit`. Beyond that, look for types from other addons: it will mean writing `any` a lot less and getting a lot more help both from your editor and from the compiler.
+
+To make this easier, we're maintaining [a list of addons with known type definitions][known-typings] either on [Definitely Typed] or as part of the addon itself. (If you know of typings that aren't in that list, please open a pull request to add them!)
+
+[known-typings]: ./known-typings.md
+[definitely typed]: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 ### Environment configuration typings
 
