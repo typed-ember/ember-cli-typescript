@@ -8,12 +8,8 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 * [Setup and Configuration](#setup-and-configuration)
   * [Ember Support](#ember-support)
   * [`tsconfig.json`](#tsconfigjson)
-* [Incremental adoption](#incremental-adoption)
-* [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
-  * [Publishing](#publishing)
-  * [Linking Addons](#linking-addons)
-  * [Gotchas](#gotchas)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
+  * [Incremental adoption](#incremental-adoption)
   * [Environment configuration typings](#environment-configuration-typings)
   * [Service and controller injections](#service-and-controller-injections)
   * [Opt-in unsafety for Ember Data lookups](#opt-in-unsafety-for-ember-data-lookups)
@@ -22,6 +18,10 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
     * [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
     * [Why is this happening?](#why-is-this-happening)
+* [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
+  * [Publishing](#publishing)
+  * [Linking Addons](#linking-addons)
+  * [Gotchas](#gotchas)
 * [Current limitations](#current-limitations)
   * [Some `import`s don't resolve](#some-imports-dont-resolve)
   * [Type safety when invoking actions](#type-safety-when-invoking-actions)
@@ -82,7 +82,13 @@ You can still customize those properties in `tsconfig.json` for your use case. J
 
 For example, to see the output of the compilation in a separate folder you are welcome to set `"outDir"` to some path and set `"noEmit"` to `false`. Then tools which use the TypeScript compiler (e.g. the watcher tooling in JetBrains IDEs) will generate files at that location, while the Ember.js/Broccoli pipeline will continue to use its own temp folder.
 
-## Incremental adoption
+## Using TypeScript with Ember effectively
+
+In addition to the points made below, you may find the "Update" sequence in the [Typing Your Ember][typing-your-ember] blog series particularly helpful in knowing how to do specific things. In particular, [Update, Part 4][pt4] is a really important guide to making the service and controller injections and Ember Data lookups behave as described below.
+
+[pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
+
+### Incremental adoption
 
 If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your (small) wins with your team, especially if some people are not convinced yet. We would also love to hear your stories!
 
@@ -95,58 +101,6 @@ Some specific tips for success on the technical front:
 You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
-
-## Using ember-cli-typescript with Ember CLI addons
-
-During development, your `.ts` files will be watched and rebuilt just like any other sources in your addon when you run `ember serve`, `ember test`, etc.
-
-However, in order not to force downstream consumers to install the entire TS build toolchain when they want to use an addon written in TypeScript, ember-cli-typescript is designed to allow you to publish vanilla `.js` files to the npm registry, alongside `.d.ts` declarations so that consumers who _are_ using TypeScript can benefit from it.
-
-### Publishing
-
-This addon provides two commands to help with publishing your addon: `ember ts:precompile` and `ember ts:clean`. The default `ember-cli-typescript` blueprint will configure your `package.json` to run these commands in the `prepublishOnly` and `postpublish` phases respectively, but you can also run them by hand to verify that the output looks as you expect.
-
-The `ts:precompile` command will put compiled `.js` files in your `addon` directory and populate the overall structure of your package with `.d.ts` files laid out to match their import paths. For example, `addon/index.ts` would produce `addon/index.js` as well as `index.d.ts` in the root of your package.
-
-The `ts:clean` command will remove the generated `.js` and `.d.ts` files, leaving your working directory back in a pristine state.
-
-### Linking Addons
-
-Often when developing an addon, it can be useful to run that addon in the context of some other host app so you can make sure it will integrate the way you expect, e.g. using [`yarn link`](https://yarnpkg.com/en/docs/cli/link#search) or [`npm link`](https://docs.npmjs.com/cli/link).
-
-When you do this for a TypeScript addon, by default your `.ts` files won't be consumed by the host app. In order for a linked addon to work, you need to take two steps:
-
-* ensure `ember-cli-typescript` is installed and set up in the host app
-* override [`isDevelopingAddon()`](https://ember-cli.com/api/classes/Addon.html#method_isDevelopingAddon) in the linked addon to return `true`
-
-This will cause `ember-cli-typescript` in the host app to take over compiling the TS files in the addon as well, automatically rebuilding any time you make a change.
-
-**Note**: remember to remove your `isDevelopingAddon` override before publishing!
-
-### In-Repo Addons
-
-[In-repo addons](https://ember-cli.com/extending/#detailed-list-of-blueprints-and-their-use) work in much the same way as linked ones: their TypeScript compilation is managed by the host app. They have `isDevelopingAddon` return `true` by default, so the only thing you should need to do for an in-repo addon is update the `paths` entry in your `tsconfig.json` so instruct the compiler how to resolve imports:
-
-```js
-paths: {
-  // ...other entries e.g. for your app/ and tests/ trees
-  'my-addon': ['lib/my-addon/addon'],    // resolve `import x from 'my-addon';
-  'my-addon/*': ['lib/my-addon/addon/*'] // resolve `import y from 'my-addon/utils/y';
-}
-```
-
-### Gotchas
-
-A few things to look out for when working with TypeScript in addons:
-
-* Normally, addons under development automatically return `true` from their `isDevelopingAddon()` hook, which `ember-cli-typescript` relies on to determine whether to process the addon's `.ts` files. However, if the name field in your `package.json` doesn't match the name in your `index.js`, this default behavior will fail and you'll need to override the method yourself.
-* TypeScript has very particular rules when generating declaration files to avoid letting private types leak out unintentionally. You may find it useful to run `ember ts:precompile` yourself as you're getting a feel for these rules to ensure everything will go smoothly when you publish.
-
-## Using TypeScript with Ember effectively
-
-In addition to the points made below, you may find the "Update" sequence in the [Typing Your Ember][typing-your-ember] blog series particularly helpful in knowing how to do specific things. In particular, [Update, Part 4][pt4] is a really important guide to making the service and controller injections and Ember Data lookups behave as described below.
-
-[pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
 
 ### Environment configuration typings
 
@@ -383,6 +337,52 @@ There are two options here, neither of them _great_:
 #### Why is this happening?
 
 If you're using another package which includes these types, and then you trigger an upgrade for your own copy of the type definitions, npm and yarn will both try to preserve the existing installation and simply add a new one for your updated version. In most cases, this is sane behavior, because it prevents transitive dependency breakage hell. However, in the _specific_ case of type definitions, it causes TypeScript to get confused.
+
+## Using ember-cli-typescript with Ember CLI addons
+
+During development, your `.ts` files will be watched and rebuilt just like any other sources in your addon when you run `ember serve`, `ember test`, etc.
+
+However, in order not to force downstream consumers to install the entire TS build toolchain when they want to use an addon written in TypeScript, ember-cli-typescript is designed to allow you to publish vanilla `.js` files to the npm registry, alongside `.d.ts` declarations so that consumers who _are_ using TypeScript can benefit from it.
+
+### Publishing
+
+This addon provides two commands to help with publishing your addon: `ember ts:precompile` and `ember ts:clean`. The default `ember-cli-typescript` blueprint will configure your `package.json` to run these commands in the `prepublishOnly` and `postpublish` phases respectively, but you can also run them by hand to verify that the output looks as you expect.
+
+The `ts:precompile` command will put compiled `.js` files in your `addon` directory and populate the overall structure of your package with `.d.ts` files laid out to match their import paths. For example, `addon/index.ts` would produce `addon/index.js` as well as `index.d.ts` in the root of your package.
+
+The `ts:clean` command will remove the generated `.js` and `.d.ts` files, leaving your working directory back in a pristine state.
+
+### Linking Addons
+
+Often when developing an addon, it can be useful to run that addon in the context of some other host app so you can make sure it will integrate the way you expect, e.g. using [`yarn link`](https://yarnpkg.com/en/docs/cli/link#search) or [`npm link`](https://docs.npmjs.com/cli/link).
+
+When you do this for a TypeScript addon, by default your `.ts` files won't be consumed by the host app. In order for a linked addon to work, you need to take two steps:
+
+* ensure `ember-cli-typescript` is installed and set up in the host app
+* override [`isDevelopingAddon()`](https://ember-cli.com/api/classes/Addon.html#method_isDevelopingAddon) in the linked addon to return `true`
+
+This will cause `ember-cli-typescript` in the host app to take over compiling the TS files in the addon as well, automatically rebuilding any time you make a change.
+
+**Note**: remember to remove your `isDevelopingAddon` override before publishing!
+
+### In-Repo Addons
+
+[In-repo addons](https://ember-cli.com/extending/#detailed-list-of-blueprints-and-their-use) work in much the same way as linked ones: their TypeScript compilation is managed by the host app. They have `isDevelopingAddon` return `true` by default, so the only thing you should need to do for an in-repo addon is update the `paths` entry in your `tsconfig.json` so instruct the compiler how to resolve imports:
+
+```js
+paths: {
+  // ...other entries e.g. for your app/ and tests/ trees
+  'my-addon': ['lib/my-addon/addon'],    // resolve `import x from 'my-addon';
+  'my-addon/*': ['lib/my-addon/addon/*'] // resolve `import y from 'my-addon/utils/y';
+}
+```
+
+### Gotchas
+
+A few things to look out for when working with TypeScript in addons:
+
+* Normally, addons under development automatically return `true` from their `isDevelopingAddon()` hook, which `ember-cli-typescript` relies on to determine whether to process the addon's `.ts` files. However, if the name field in your `package.json` doesn't match the name in your `index.js`, this default behavior will fail and you'll need to override the method yourself.
+* TypeScript has very particular rules when generating declaration files to avoid letting private types leak out unintentionally. You may find it useful to run `ember ts:precompile` yourself as you're getting a feel for these rules to ensure everything will go smoothly when you publish.
 
 ## Current limitations
 
