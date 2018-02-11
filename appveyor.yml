@@ -28,7 +28,7 @@ test_script:
   # Output useful info for debugging.
   - yarn versions
   - cmd: yarn ember try:one ember-release
-  - cmd: yarn run nodetest
+  - cmd: yarn ember try:one integrated-node-tests
 
 # Don't actually build.
 build: off

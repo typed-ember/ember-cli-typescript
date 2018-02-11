@@ -2,6 +2,15 @@ module.exports = {
   useYarn: true,
   scenarios: [
     {
+      name: 'integrated-node-tests',
+      command: 'yarn nodetest',
+      npm: {
+        devDependencies: {
+          'ember-cli-qunit': null,
+        },
+      },
+    },
+    {
       name: 'ember-lts-2.12',
       npm: {
         devDependencies: {
