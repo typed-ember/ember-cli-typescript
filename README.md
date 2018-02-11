@@ -11,7 +11,9 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
   * [Incremental adoption](#incremental-adoption)
   * [Install other types!](#install-other-types)
-  * [Environment configuration typings](#environment-configuration-typings)
+  * [The `types` directory](#the-types-directory)
+    * [Global types for your package](#global-types-for-your-package)
+    * [Environment configuration typings](#environment-configuration-typings)
   * [Service and controller injections](#service-and-controller-injections)
   * [Ember Data lookups](#ember-data-lookups)
     * [Opt-in unsafety](#opt-in-unsafety)
@@ -38,7 +40,7 @@ ember install ember-cli-typescript@latest
 
 All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
 
-In addition to ember-cli-typescript, the following are installed—all at their current "latest" value:
+In addition to ember-cli-typescript, the following are installed—all at their current "latest" value—or generated:
 
 * Packages:
   * [`typescript`](https://github.com/Microsoft/TypeScript)
@@ -47,6 +49,8 @@ In addition to ember-cli-typescript, the following are installed—all at their 
   * [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers)
 * Files:
   * [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+  * `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
+  * `types/<app name>/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
 
 ### Ember support
 
@@ -113,9 +117,29 @@ To make this easier, we're maintaining [a list of addons with known type definit
 [known-typings]: ./known-typings.md
 [definitely typed]: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-### Environment configuration typings
+### The `types` directory
+
+During installation, we create a `types` directory in the root of your application and add a `"paths"` mapping that includes that directory in any type lookups TypeScript tries to do. This is convenient for a few things:
+
+* global types for your package (see the next section)
+* writing types for third-party/`vendor` packages which do not have any types
+* developing types for an addon which you intend to upstream later
+
+These are all fallbacks, of course, you should use the types supplied directly with a package
+
+#### Global types for your package
+
+At the root of your application or addon, we include a `types/<your app>` directory with an `index.d.ts` file in it. Anything which is part of your application but which must be declared globally can go in this file. For example, if you have data attached to the `Window` object when the page is loaded (for bootstrapping or whatever other reason), this is a good place to declare it.
+
+In the case of applications (but not for addons), we also automatically include declarations for Ember's prototype extensions in this `index.d.ts` file. If you are [disabling Ember's prototype extensions][disabling], you can remove these declarations; we include them because they're enabled in most Ember applications today.
+
+[disabling]: https://guides.emberjs.com/v2.18.0/configuring-ember/disabling-prototype-extensions/
+
+#### Environment configuration typings
 
 Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `config/environment.d.ts`. This interface will likely require some changes to match your app.
+
+We install this file because the actual `config/environment.js` is (a) not actually identical with the types as you inherit them in the content of an application, but rather a superset of what an application has access to, and (b) not in a the same location as the path at which you look it up. We map it to the lookup path within your `types` directory, and TypeScript resolves it correctly.
 
 ### Service and controller injections
 
