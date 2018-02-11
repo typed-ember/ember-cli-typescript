@@ -64,6 +64,7 @@ module.exports = {
       { name: '@types/ember', target: 'latest' },
       { name: '@types/ember-data', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },
+      { name: '@types/ember-test-helpers', target: 'latest' },
       { name: '@types/ember-testing-helpers', target: 'latest' },
     ]);
   },
