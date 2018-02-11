@@ -9,14 +9,21 @@ to ask for help in the [Ember Community Slack] ([get an invite]).
 
 [this blog post]: http://www.chriskrycho.com/2017/typing-your-ember-part-5.html
 [this quest issue]: https://github.com/typed-ember/ember-typings/issues/14
-[Ember Community Slack]: https://embercommunity.slack.com/
+[ember community slack]: https://embercommunity.slack.com/
 [get an invite]: https://ember-community-slackin.herokuapp.com/
 
 ## Integrated in the addon
 
-
+(Someday soon this list should get _long and awesome_! Help us make it happen!)
 
 ## DefinitelyTyped (`@types`)
 
-For addons which do not have types shipped with the addon directly, you may be
-able 
+For addons which do not have types shipped with the addon directly, you may be find them on DefinitelyTyped:
+
+* `@types/ember-data`
+* `@types/ember-mocha`
+* `@types/ember-qunit`
+* `@types/ember-test-helpers`
+* `@types/ember-testing-helpers`
+* `@types/ember`
+* `@types/rsvp`
