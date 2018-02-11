@@ -19,6 +19,9 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [Opt-in unsafety for Ember Data lookups](#opt-in-unsafety-for-ember-data-lookups)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
   * [ember-browserify](#ember-browserify)
+  * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
+    * [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
+    * [Why is this happening?](#why-is-this-happening)
 * [Current limitations](#current-limitations)
   * [Some `import`s don't resolve](#some-imports-dont-resolve)
   * [Type safety when invoking actions](#type-safety-when-invoking-actions)
@@ -355,6 +358,31 @@ If the `my-module` has types, you will not be able to resolve them this way by d
   }
 }
 ```
+
+### "TypeScript is complaining about multiple copies of the same types!"
+
+You may sometimes see TypeScript errors indicating that you have duplicate type definitions for Ember, Ember Data, etc. This is usually the result of an annoying quirk of the way both npm and yarn resolve your dependencies in their lockfiles.
+
+#### Just tell me how to fix it
+
+There are two options here, neither of them _great_:
+
+* manually edit `yarn.lock` or `package-lock.json` and merge the conflicting
+* add a ["resolutions"] key to your `package.json` with the version you want to install of the types you're installing:
+
+```json
+{
+  "resolutions": {
+    "**/@types/ember": "2.8.8"
+  }
+}
+```
+
+["resolutions"]: https://yarnpkg.com/lang/en/docs/selective-version-resolutions/
+
+#### Why is this happening?
+
+If you're using another package which includes these types, and then you trigger an upgrade for your own copy of the type definitions, npm and yarn will both try to preserve the existing installation and simply add a new one for your updated version. In most cases, this is sane behavior, because it prevents transitive dependency breakage hell. However, in the _specific_ case of type definitions, it causes TypeScript to get confused.
 
 ## Current limitations
 
