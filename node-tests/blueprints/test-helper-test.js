@@ -20,7 +20,8 @@ describe('Blueprint: test-helper', function() {
       return emberGenerateDestroy(['test-helper', 'foo'], _file => {
         expect(_file('tests/helpers/foo.ts'))
           .to.contain("import { registerAsyncHelper } from '@ember/test';")
-          .to.contain("export default registerAsyncHelper('foo', function(app) {\n\n}");
+          .to.contain("export default registerAsyncHelper('foo', function(app) {")
+          .to.contain('}');
       });
     });
   });

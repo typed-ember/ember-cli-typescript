@@ -25,7 +25,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo'], _file => {
         expect(_file('app/routes/foo.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -58,7 +58,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo', '--path=:foo_id/show'], _file => {
         expect(_file('app/routes/foo.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -85,7 +85,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'parent/child', '--reset-namespace'], _file => {
         expect(_file('app/routes/child.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class ParentChild extends Route.extend({\n')
+          .to.contain('export default class ParentChild extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -111,7 +111,7 @@ describe('Blueprint: route', function() {
         _file => {
           expect(_file('app/child/route.ts'))
             .to.contain("import Route from '@ember/routing/route';")
-            .to.contain('export default class ParentChild extends Route.extend({\n')
+            .to.contain('export default class ParentChild extends Route.extend({')
             .to.contain('  // anything which *must* be merged to prototype here')
             .to.contain('}) {')
             .to.contain('  // normal class body definition here')
@@ -163,7 +163,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo', '--pod'], _file => {
         expect(_file('app/foo/route.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -227,7 +227,7 @@ describe('Blueprint: route', function() {
         return emberGenerateDestroy(['route', 'foo', '--pod'], _file => {
           expect(_file('app/pods/foo/route.ts'))
             .to.contain("import Route from '@ember/routing/route';")
-            .to.contain('export default class Foo extends Route.extend({\n')
+            .to.contain('export default class Foo extends Route.extend({')
             .to.contain('  // anything which *must* be merged to prototype here')
             .to.contain('}) {')
             .to.contain('  // normal class body definition here')
@@ -258,7 +258,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo'], _file => {
         expect(_file('addon/routes/foo.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -290,7 +290,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo/bar'], _file => {
         expect(_file('addon/routes/foo/bar.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class FooBar extends Route.extend({\n')
+          .to.contain('export default class FooBar extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -320,7 +320,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo', '--dummy'], _file => {
         expect(_file('tests/dummy/app/routes/foo.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -342,7 +342,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo/bar', '--dummy'], _file => {
         expect(_file('tests/dummy/app/routes/foo/bar.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class FooBar extends Route.extend({\n')
+          .to.contain('export default class FooBar extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -368,7 +368,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo', '--pod'], _file => {
         expect(_file('addon/foo/route.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -402,7 +402,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo', '--in-repo-addon=my-addon'], _file => {
         expect(_file('lib/my-addon/addon/routes/foo.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class Foo extends Route.extend({\n')
+          .to.contain('export default class Foo extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
@@ -428,7 +428,7 @@ describe('Blueprint: route', function() {
       return emberGenerateDestroy(['route', 'foo/bar', '--in-repo-addon=my-addon'], _file => {
         expect(_file('lib/my-addon/addon/routes/foo/bar.ts'))
           .to.contain("import Route from '@ember/routing/route';")
-          .to.contain('export default class FooBar extends Route.extend({\n')
+          .to.contain('export default class FooBar extends Route.extend({')
           .to.contain('  // anything which *must* be merged to prototype here')
           .to.contain('}) {')
           .to.contain('  // normal class body definition here')
