@@ -1,0 +1,1 @@
+<%= baseDeclarations(dasherizedPackageName) %>

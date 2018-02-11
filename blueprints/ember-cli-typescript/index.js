@@ -3,7 +3,16 @@
 const fs = require('fs');
 const path = require('path');
 
+const APP_DECLARATIONS = `
+declare global {
+  interface Array<T> extends Ember.ArrayPrototypeExtensions<T> {}
+  interface Function extends Ember.FunctionPrototypeExtensions {}
+}
+`;
+
 module.exports = {
+  APP_DECLARATIONS,
+
   description: 'Initialize files needed for typescript compilation',
 
   install(options) {
@@ -48,6 +57,11 @@ module.exports = {
         paths['*'] = ['types/*'];
 
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
+      },
+      baseDeclarations: dasherizedName => {
+        const isDummyApp = dasherizedName === 'dummy';
+        const useAppDeclarations = !(isAddon || isDummyApp);
+        return useAppDeclarations ? APP_DECLARATIONS : '';
       },
     };
   },

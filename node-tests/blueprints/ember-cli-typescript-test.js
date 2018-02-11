@@ -5,6 +5,8 @@ const path = require('path');
 const helpers = require('ember-cli-blueprint-test-helpers/helpers');
 const chaiHelpers = require('ember-cli-blueprint-test-helpers/chai');
 
+const ects = require('../../blueprints/ember-cli-typescript');
+
 const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
 
@@ -39,6 +41,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         const projectTypes = file('types/my-app/index.d.ts');
         expect(projectTypes).to.exist;
+        expect(projectTypes).to.include(ects.APP_DECLARATIONS);
 
         const environmentTypes = file('types/my-app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
@@ -72,6 +75,10 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         });
 
         expect(tsconfigJson.include).to.deep.equal(['addon', 'tests']);
+
+        const projectTypes = file('types/my-addon/index.d.ts');
+        expect(projectTypes).to.exist;
+        expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
       });
   });
 
@@ -105,6 +112,10 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         });
 
         expect(json.include).to.deep.equal(['app', 'tests', 'lib/my-addon-1', 'lib/my-addon-2']);
+
+        const projectTypes = file('types/my-app/index.d.ts');
+        expect(projectTypes).to.exist;
+        expect(projectTypes).to.include(ects.APP_DECLARATIONS);
       });
   });
 });
