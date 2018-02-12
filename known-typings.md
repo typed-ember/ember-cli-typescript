@@ -16,6 +16,8 @@ to ask for help in the [Ember Community Slack] ([get an invite]).
 
 (Someday soon this list should get _long and awesome_! Help us make it happen!)
 
+* [True Myth](https://github.com/chriskrycho/true-myth)
+
 ## DefinitelyTyped (`@types`)
 
 For addons which do not have types shipped with the addon directly, you may be find them on DefinitelyTyped:
