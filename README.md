@@ -2,7 +2,8 @@
 
 Use TypeScript in your Ember 2.x and 3.x apps!
 
-[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
+[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript)
+[![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
 [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
 * [Setup and Configuration](#setup-and-configuration)
@@ -40,14 +41,19 @@ ember install ember-cli-typescript@latest
 
 All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
 
-In addition to ember-cli-typescript, the following are installed—all at their current "latest" value—or generated:
+In addition to ember-cli-typescript, we make the following changes to your project:
 
-* Packages:
+* We install the following packages—all at their current "latest" value—or generated:
+
   * [`typescript`](https://github.com/Microsoft/TypeScript)
   * [`@types/ember`](https://www.npmjs.com/package/@types/ember)
+  * [`@types/ember-data`](https://www.npmjs.com/package/@types/ember)
   * [`@types/rsvp`](https://www.npmjs.com/package/@types/rsvp)
-  * [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers)
-* Files:
+  * [`@types/ember-test-helpers`](https://www.npmjs.com/package/@types/ember-test-helpers) – these are the importable test helpers from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)-style tests
+  * [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers) – these are the globally-available acceptance test helpers
+
+* We add the following files to your project:
+
   * [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
   * `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
   * `types/<app name>/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
@@ -58,35 +64,22 @@ ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the
 
 ### `tsconfig.json`
 
-In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file. However, there are a couple points worth noting.
+We generate a good default [`tsconfig.json`][blueprint], which will usually make everything _Just Work_. In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file.
 
-First, by default, we target the highest stable version of JavaScript available in the TypeScript compiler, so that you may ship anything from that very code without further modification to browsers that support it all the way back to ES3, in line with the Babel configuration in your app's `config/targets.js`. You can set this target to whatever is appropriate for your application, but we _strongly_ encourage you to leave it set to the highest stable version of JavaScript if you are developing an addon, so that consumers of your addon have full flexibility in this regard.
+However, there are a few things worth noting if you're already familiar with TypeScript and looking to make further or more advanced customizations (i.e. _most_ users can just ignore this section!):
 
-Second, if you make changes to the paths included in or excluded from the build via your `tsconfig.json`, you will need to restart the server to take the changes into account: ember-cli-typescript does not currently watch the `tsconfig.json` file
+1. The generated tsconfig file does not set `"outDir"` and sets `"noEmit"` to `true`. Under the hood, Ember's own invocation of `tsc` _does_ set these, but the default configuration we generate allows you to run editors which use the compiler without creating extraneous `.js` files throughout your codebase, leaving the compilation to ember-cli-typescript to manage.
 
-Finally, depending on what you're doing, you may notice that your tweaks to `tsconfig.json` aren't applied _exactly_ as you might expect, because the configuration file is used by both Ember CLI (via [broccoli]) and for tool
-integration in editors.
+   You _can_ still customize those properties in `tsconfig.json` if your use case requires it, however. For example, to see the output of the compilation in a separate folder you are welcome to set `"outDir"` to some path and set `"noEmit"` to `false`. Then tools which use the TypeScript compiler (e.g. the watcher tooling in JetBrains IDEs) will generate files at that location, while the Ember.js/Broccoli pipeline will continue to use its own temp folder.
 
+2. Closely related to the previous point: any changes you do make to `outDir` won't have any effect on how _Ember_ builds your application—we have to pipe everything into Ember CLI via [broccoli], so we override that. In general, everything else works just as you'd expect, though!
+
+3. By default, we target the highest stable version of JavaScript available in the TypeScript compiler, so that you may ship anything from that very code without further modification to browsers that support it all the way back to ES3, in line with the Babel configuration in your app's `config/targets.js`. You can set this target to whatever is appropriate for your application, but we _strongly_ encourage you to leave it set to the highest stable version of JavaScript if you are developing an addon, so that consumers of your addon have full flexibility in this regard.
+
+4. If you make changes to the paths included in or excluded from the build via your `tsconfig.json` (using the `"include"`, `"exclude"`, or `"files"` keys), you will need to restart the server to take the changes into account: ember-cli-typescript does not currently watch the `tsconfig.json` file.
+
+[blueprint]: https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json
 [broccoli]: http://broccolijs.com/
-
-Usually, the TypeScript compiler's behavior is determined entirely by configuration properties like `"include"`, `"exclude"`, `"outFile"`, and `"outDir"`. However, your editor _also_ leans on those properties to determine how to resolve files, what to do during file watching, etc. And in this case, we have the third player of Ember.js and Broccoli in play, managing the TypeScript compilation and feeding it only what it actually needs (so that Broccoli's support for tree merging, concatenation, etc. works as expected).
-
-This addon takes the following approach to allow normal use with your editor tooling while also supporting the customization required for Broccoli:
-
-* We generate a good default [blueprint], which will give you type resolution in your editor for normal Ember.js paths. The generated tsconfig file does not set `"outDir"` and sets `"noEmit"` to `true`. This allows you to run editors which use the compiler without creating `.js` files throughout your codebase.
-
-* Then, before calling broccoli, the addon:
-
-  * removes any configured `outDir` to avoid name resolution problems in the Broccoli tree processing
-  * sets the `noEmit` option to `false` so that the compiler will emit files for consumption by your app
-  * sets `allowJs` to `false`, so that the TypeScript compiler does not try to process JavaScript files imported by TypeScript files in your app
-  * removes all values set for `include`, since we use Broccoli to manage the build pipeline directly
-
-[blueprint]: https://github.com/emberwatch/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json
-
-You can still customize those properties in `tsconfig.json` for your use case. Just note that the changes won't directly impact how Ember/Broccoli builds your app!
-
-For example, to see the output of the compilation in a separate folder you are welcome to set `"outDir"` to some path and set `"noEmit"` to `false`. Then tools which use the TypeScript compiler (e.g. the watcher tooling in JetBrains IDEs) will generate files at that location, while the Ember.js/Broccoli pipeline will continue to use its own temp folder.
 
 ## Using TypeScript with Ember effectively
 
@@ -309,6 +302,28 @@ declare module 'ember-data' {
 ```
 
 However, we **_strongly_** recommend that you simply take the time to add the few lines of declarations to each of your `DS.Model`, `DS.Adapter`, and `DS.Serializer` instances instead. It will save you time in even the short run!
+
+#### Fixing the Ember Data `error TS2344` problem
+
+If you're developing an Ember app or addon and _not_ using Ember Data (and accordingly not even have the Ember Data types installed), you may see an error like this and be confused:
+
+```
+node_modules/@types/ember-data/index.d.ts(920,56): error TS2344: Type 'any' does not satisfy the constraint 'never'.
+```
+
+This happens because the types for Ember's _test_ tooling includes the types for Ember Data because the `this` value in several of Ember's test types can include a reference to `DS.Store`.
+
+**The fix:** add a declaration like this in your `types` directory:
+
+```ts
+declare module 'ember-data' {
+  interface ModelRegistry {
+    [key: string]: any;
+  }
+}
+```
+
+(If you're developing an addon and concerned that this might affect consumers, it won't. Your types directory will never be referenced by consumers at all!)
 
 ### Type definitions outside `node_modules/@types`
 
