@@ -2,9 +2,7 @@
 
 Use TypeScript in your Ember 2.x and 3.x apps!
 
-[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript)
-[![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master)
-[![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
 * [Setup and Configuration](#setup-and-configuration)
   * [Ember Support](#ember-support)
@@ -15,9 +13,12 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [The `types` directory](#the-types-directory)
     * [Global types for your package](#global-types-for-your-package)
     * [Environment configuration typings](#environment-configuration-typings)
-  * [Service and controller injections](#service-and-controller-injections)
-  * [Ember Data lookups](#ember-data-lookups)
-    * [Opt-in unsafety](#opt-in-unsafety)
+  * [String-keyed lookups](#string-keyed-lookups)
+    * [`this` type workaround](#this-type-workaround)
+    * [Nested keys in `get` or `set`](#nested-keys-in-get-or-set)
+    * [Service and controller injections](#service-and-controller-injections)
+    * [Ember Data lookups](#ember-data-lookups)
+      * [Opt-in unsafety](#opt-in-unsafety)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
   * [ember-browserify](#ember-browserify)
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
@@ -83,9 +84,7 @@ However, there are a few things worth noting if you're already familiar with Typ
 
 ## Using TypeScript with Ember effectively
 
-In addition to the points made below, you may find the "Update" sequence in the [Typing Your Ember][typing-your-ember] blog series particularly helpful in knowing how to do specific things. In particular, [Update, Part 4][pt4] is a really important guide to making the service and controller injections and Ember Data lookups behave as described below.
-
-[pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
+In addition to the points made below, you may find the [Typing Your Ember][typing-your-ember] blog series (especially the "Update" sequence) particularly helpful in knowing how to do specific things.
 
 ### Incremental adoption
 
@@ -134,7 +133,66 @@ Along with the @types/ files mentioned above, ember-cli-typescript adds a starte
 
 We install this file because the actual `config/environment.js` is (a) not actually identical with the types as you inherit them in the content of an application, but rather a superset of what an application has access to, and (b) not in a the same location as the path at which you look it up. We map it to the lookup path within your `types` directory, and TypeScript resolves it correctly.
 
-### Service and controller injections
+### String-keyed lookups
+
+Ember makes heavy use of string-based APIs to allow for a high degree of dynamicism. With some limitations, you can nonetheless use TypeScript very effectively to get auto-complete/IntelliSense as well as to accurately type-check your applications.
+
+The "Update" sequence in the Typing Your Ember has detailed explanations and guides for getting good type-safety for Ember's string-based APIs, e.g. the use of `get` and `set`, service and controller injection, Ember Data models and lookups
+
+* [Part 1][pt1]: A look at normal Ember objects, "arguments" to components (and controllers), and service (or controller) injections.
+* [Part 2][pt2]: Class properties — some notes on how things differ from the `Ember.Object` world.
+* [Part 3][pt3]: Computed properties, actions, mixins, and class methods.
+* [Part 4][pt4]: Using Ember Data, and service and controller injections improvements. (This includes a detailed guide to updating making the service and controller injections and Ember Data lookups behave as described below.)
+
+[pt1]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-1.html
+[pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
+[pt3]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-3.html
+[pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
+
+A few of the most common speed-bumps are listed here to help make this easier:
+
+#### `this` type workaround
+
+One important note for using `class` types effectively with today's Ember typings: you will (at least for now) need to explicitly write out a `this` type for methods, computed property callbacks, and actions if you are going to use `get` or `set`
+
+```ts
+import Component from '@ember/component';
+
+export default class UserProfile extends Component {
+  changeUsername(this: UserProfile, userName: string) {
+    //           ^---------------^
+    // `this` tells TS to use `UserProfile` for `get` and `set` lookups
+  }
+}
+```
+
+This is a workaround for how incredibly dynamic `Ember.Object` instances are, and is only necessary but i; again, see [the relevant blog post for details][pt2].
+
+#### Nested keys in `get` or `set`
+
+In general, `this.get` and `this.set` will work as you'd expect _if_ you're doing lookups only a single layer deep. Things like `this.get('a.b.c')` don't (and can't ever!) type-check; see the blog posts for a more detailed discussion of why.
+
+The workaround is simply to do one of two things:
+
+1. **The type-safe approach.** This _will_ typecheck, but is both ugly and only works \*if there are no `null`s or `undefined`s along the way. If `nested` is `null` at runtime, this will crash!
+
+   ```ts
+   import { get } from '@ember/object';
+
+   // -- Type-safe but ugly --//
+   get(get(get(someObject, 'deeply'), 'nested'), 'key');
+   ```
+
+2. **Using `// @ts-ignore`.** This will _not do any type-checking_, but is useful for the cases where you are intentionally checking a path which may be `null` or `undefined` anywhere long it.
+
+   ```ts
+   // @ts-ignore
+   get(someObject, 'deeply.nested.key');
+   ```
+
+   It's usually best to include an explanation of _why_ you're ignoring a lookup!
+
+#### Service and controller injections
 
 Ember does service and controller lookups with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it.
 
@@ -221,7 +279,7 @@ You'll need to add that module and interface declaration to all your existing se
 
 If you have a reason to fall back to just getting the `Service` or `Controller` types, you can always do so by just using the string-less variant: `service('session')` will check that the string is a valid name of a service; `session()` will not.
 
-### Ember Data lookups
+#### Ember Data lookups
 
 The same basic approach is in play for Ember Data lookups. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
 
@@ -279,7 +337,7 @@ In addition to the registry, note the oddly defined class for `DS.Model`s. This 
 
 [pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
 
-#### Opt-in unsafety
+##### Opt-in unsafety
 
 Also notice that unlike with service and controller injections, there is no unsafe fallback method by default, because there isn't an argument-less variant of the functions to use as there is for `Service` and `Controller` injection. If for some reason you want to opt _out_ of the full type-safe lookup for the strings you pass into methods like `findRecord`, `adapterFor`, and `serializerFor`, you can add these declarations somewhere in your project:
 
@@ -303,7 +361,7 @@ declare module 'ember-data' {
 
 However, we **_strongly_** recommend that you simply take the time to add the few lines of declarations to each of your `DS.Model`, `DS.Adapter`, and `DS.Serializer` instances instead. It will save you time in even the short run!
 
-#### Fixing the Ember Data `error TS2344` problem
+##### Fixing the Ember Data `error TS2344` problem
 
 If you're developing an Ember app or addon and _not_ using Ember Data (and accordingly not even have the Ember Data types installed), you may see an error like this and be confused:
 
@@ -450,25 +508,19 @@ Here is the short list of things which do _not_ work yet in the version of the t
 
 ### Some `import`s don't resolve
 
-You'll frequently see errors for imports which TypeScript doesn't know how to
-resolve. For example, if you use Ember Concurrency today and try to import its
-`task` helper:
+You'll frequently see errors for imports which TypeScript doesn't know how to resolve. For example, if you use Ember Concurrency today and try to import its `task` helper:
 
 ```typescript
 import { task } from 'ember-concurrency';
 ```
 
-You'll see an error, because there aren't yet type definitions for it. You may
-see the same with some addons as well. **These won't stop the build from
-working;** they just mean TypeScript doesn't know where to find those.
+You'll see an error, because there aren't yet type definitions for it. You may see the same with some addons as well. **These won't stop the build from working;** they just mean TypeScript doesn't know where to find those.
 
-Writing these missing type definitions is a great way to pitch in! Jump in
-\#topic-typescript on the Ember Slack and we'll be happy to help you.
+Writing these missing type definitions is a great way to pitch in! Jump in \#topic-typescript on the Ember Slack and we'll be happy to help you.
 
 ### Type safety when invoking actions
 
-TypeScript won't detect a mismatch between this action and the corresponding
-call in the template:
+TypeScript won't detect a mismatch between this action and the corresponding call in the template:
 
 ```typescript
 Ember.Component.extend({
