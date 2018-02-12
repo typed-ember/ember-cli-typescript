@@ -374,6 +374,7 @@ This happens because the types for Ember's _test_ tooling includes the types for
 **The fix:** add a declaration like this in your `types` directory:
 
 ```ts
+// types/ember-data.d.ts
 declare module 'ember-data' {
   interface ModelRegistry {
     [key: string]: any;
