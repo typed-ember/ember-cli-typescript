@@ -19,19 +19,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * `tsconfig.json` is no longer so annoyingly temperamental; you can largely do what you want with it
 * `ember serve` no longer triggers a full rebuild of all TypeScript files every time _any_ file in your project changes.
 
-## [1.0.6]
+## [1.0.6] - 2017-12-17
 
 ### Changed
 
 * Update to broccoli-typescript-compiler 2.1.1, for proper support for TS 2.6. This should make your build properly respect things like // @ts-ignore special comments.
 
-## [1.0.5]
+## [1.0.5] - 2017-11-23
 
 ### Fixed
 
 * Updated the `tsconfig.json` blueprint to set the `noImplicitThis` option to `true`, improving experience around use of updated type definitions
 
-## [1.0.4]
+## [1.0.4] - 2017-11-13
 
 ### Changed
 
@@ -46,26 +46,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 * Made everything [✨ Prettier ✨](https://prettier.io)
 
-## [1.0.3]
+## [1.0.3] - 2017-08-22
 
 ### Changed
 
 * TS info messages now go to `stdout` and TS error messages now properly go to `stderr`
 * Fixed a dead link in the README
 
-## [1.0.2]
+## [1.0.2] - 2017-08-16
 
 ### Fixed
 
 * Updates the generated `tsconfig.json` to set `"modules": "ES6"` in the compiler options, so that codemods which operate on modules, like [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill/), will actually work. (Yes, this is 1.0.1, but done correctly.)
 
-## [1.0.1]
+## [1.0.1] - 2017-08-16
 
 ### Changed
 
 * Updates the generated `tsconfig.json` to set `"modules": "ES6"` in the compiler options, so that codemods which operate on modules, like [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill/), will actually work.
 
-## [1.0.0]
+## [1.0.0] - 2017-08-08
 
 ### Added
 
