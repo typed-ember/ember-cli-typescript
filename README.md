@@ -19,6 +19,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
     * [Service and controller injections](#service-and-controller-injections)
     * [Ember Data lookups](#ember-data-lookups)
       * [Opt-in unsafety](#opt-in-unsafety)
+      * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
   * [ember-browserify](#ember-browserify)
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
@@ -371,7 +372,7 @@ node_modules/@types/ember-data/index.d.ts(920,56): error TS2344: Type 'any' does
 
 This happens because the types for Ember's _test_ tooling includes the types for Ember Data because the `this` value in several of Ember's test types can include a reference to `DS.Store`.
 
-**The fix:** add a declaration like this in your `types` directory:
+**The fix:** add a declaration like this in a new file named `ember-data.d.ts` in your `types` directory:
 
 ```ts
 declare module 'ember-data' {
@@ -381,7 +382,9 @@ declare module 'ember-data' {
 }
 ```
 
-(If you're developing an addon and concerned that this might affect consumers, it won't. Your types directory will never be referenced by consumers at all!)
+This works because (a) we include things in your types directory automatically and (b) TypeScript will merge this module and interface declaration with the main definitions for Ember Data from DefinitelyTyped behind the scenes.
+
+If you're developing an addon and concerned that this might affect consumers, it won't. Your types directory will never be referenced by consumers at all!
 
 ### Type definitions outside `node_modules/@types`
 
