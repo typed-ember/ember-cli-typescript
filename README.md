@@ -167,7 +167,7 @@ export default class UserProfile extends Component {
 }
 ```
 
-This is a workaround for how incredibly dynamic `Ember.Object` instances are, and is only necessary but i; again, see [the relevant blog post for details][pt2].
+This is a workaround for how incredibly dynamic `Ember.Object` instances are and hopefully will improve over time as we continue to iterate on the type definitions. Again, see [the relevant blog post for details][pt2].
 
 #### Nested keys in `get` or `set`
 

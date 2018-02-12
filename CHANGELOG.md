@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.1.1] - 2018-02-12
+
+### Fixed
+
+* No longer throw when running generators if `ember-cli-version-checker` version too low.
+* Clarified some parts of the README that misled people on handling certain errors.
+
 ## [1.1.0] - 2018-02-12
 
 ### Added
@@ -135,7 +142,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.0.6...v1.1.0
 [1.0.6]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.0.5...v1.0.6
 [1.0.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.0.4...v1.0.5
