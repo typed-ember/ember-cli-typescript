@@ -4,10 +4,14 @@ const fs = require('fs');
 const path = require('path');
 
 const APP_DECLARATIONS = `
+import Ember from 'ember';
+
 declare global {
   interface Array<T> extends Ember.ArrayPrototypeExtensions<T> {}
   // interface Function extends Ember.FunctionPrototypeExtensions {}
 }
+
+export {};
 `;
 
 module.exports = {
