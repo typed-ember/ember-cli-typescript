@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [1.1.2] - 2018-02-13
 
+### Fixed
+
 * _Actually_ resolve the problem of throwing when running generators if `ember-cli-version-checker` version too low: put it in `dependencies`.
 
 ## [1.1.1] - 2018-02-12
