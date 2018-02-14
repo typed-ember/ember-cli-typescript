@@ -49,7 +49,7 @@ In addition to ember-cli-typescript, we make the following changes to your proje
 
   * [`typescript`](https://github.com/Microsoft/TypeScript)
   * [`@types/ember`](https://www.npmjs.com/package/@types/ember)
-  * [`@types/ember-data`](https://www.npmjs.com/package/@types/ember)
+  * [`@types/ember-data`](https://www.npmjs.com/package/@types/ember-data)
   * [`@types/rsvp`](https://www.npmjs.com/package/@types/rsvp)
   * [`@types/ember-test-helpers`](https://www.npmjs.com/package/@types/ember-test-helpers) – these are the importable test helpers from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)-style tests
   * [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers) – these are the globally-available acceptance test helpers
