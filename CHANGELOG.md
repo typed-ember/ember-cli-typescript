@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+* Fix default blueprint for `types/<my app>/index.d.ts`: add missing import and an export statement so ambient declarations work.
+
 ## [1.1.2] - 2018-02-13
 
 ### Fixed
