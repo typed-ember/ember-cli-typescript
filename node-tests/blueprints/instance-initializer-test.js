@@ -21,7 +21,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo'], _file => {
         expect(_file('app/instance-initializers/foo.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -39,7 +39,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo/bar'], _file => {
         expect(_file('app/instance-initializers/foo/bar.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -57,7 +57,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo', '--pod'], _file => {
         expect(_file('app/instance-initializers/foo.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -71,7 +71,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo/bar', '--pod'], _file => {
         expect(_file('app/instance-initializers/foo/bar.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -90,7 +90,7 @@ describe('Blueprint: instance-initializer', function() {
         return emberGenerateDestroy(['instance-initializer', 'foo', '--pod'], _file => {
           expect(_file('app/instance-initializers/foo.ts'))
             .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-            .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+            .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
             .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
             .to.contain('}')
             .to.contain('')
@@ -104,7 +104,7 @@ describe('Blueprint: instance-initializer', function() {
         return emberGenerateDestroy(['instance-initializer', 'foo/bar', '--pod'], _file => {
           expect(_file('app/instance-initializers/foo/bar.ts'))
             .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-            .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+            .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
             .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
             .to.contain('}')
             .to.contain('')
@@ -127,7 +127,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo'], _file => {
         expect(_file('addon/instance-initializers/foo.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -149,7 +149,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo/bar'], _file => {
         expect(_file('addon/instance-initializers/foo/bar.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -169,7 +169,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo', '--dummy'], _file => {
         expect(_file('tests/dummy/app/instance-initializers/foo.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -187,7 +187,7 @@ describe('Blueprint: instance-initializer', function() {
       return emberGenerateDestroy(['instance-initializer', 'foo/bar', '--dummy'], _file => {
         expect(_file('tests/dummy/app/instance-initializers/foo/bar.ts'))
           .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-          .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+          .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
           .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
           .to.contain('}')
           .to.contain('')
@@ -215,7 +215,7 @@ describe('Blueprint: instance-initializer', function() {
         _file => {
           expect(_file('lib/my-addon/addon/instance-initializers/foo.ts'))
             .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-            .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+            .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
             .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
             .to.contain('}')
             .to.contain('')
@@ -238,7 +238,7 @@ describe('Blueprint: instance-initializer', function() {
         _file => {
           expect(_file('lib/my-addon/addon/instance-initializers/foo/bar.ts'))
             .to.contain('import ApplicationInstance from \'@ember/application/instance\';')
-            .to.contain('export function initialize(appInstance: ApplicationInstance) {')
+            .to.contain('export function initialize(appInstance: ApplicationInstance): void {')
             .to.contain("  // appInstance.inject('route', 'foo', 'service:foo');")
             .to.contain('}')
             .to.contain('')
