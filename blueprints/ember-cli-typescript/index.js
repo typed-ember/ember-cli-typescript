@@ -29,8 +29,14 @@ module.exports = {
 
   locals() {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
+    let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
     let includes = [isAddon ? 'addon' : 'app', 'tests'].concat(inRepoAddons);
+
+    // Mirage is already covered for addons because it's under `tests/`
+    if (hasMirage && !isAddon) {
+      includes.push('mirage');
+    }
 
     return {
       includes: JSON.stringify(includes, null, 2).replace(/\n/g, '\n  '),
@@ -39,6 +45,10 @@ module.exports = {
         let paths = {
           [`${appName}/tests/*`]: ['tests/*'],
         };
+
+        if (hasMirage) {
+          paths[`${appName}/mirage/*`] = [`${isAddon ? 'tests/dummy/' : ''}mirage/*`];
+        }
 
         if (isAddon) {
           paths[`${appName}/*`] = ['tests/dummy/app/*'];
