@@ -8,6 +8,8 @@ const emberDestroy = blueprintHelpers.emberDestroy;
 const emberGenerateDestroy = blueprintHelpers.emberGenerateDestroy;
 const setupPodConfig = blueprintHelpers.setupPodConfig;
 
+const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
+
 const chai = require('ember-cli-blueprint-test-helpers/chai');
 const expect = chai.expect;
 const file = chai.file;
@@ -18,7 +20,7 @@ describe('Blueprint: route', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew();
+      return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
     it('route foo', function() {
@@ -249,7 +251,7 @@ describe('Blueprint: route', function() {
 
   describe('in addon', function() {
     beforeEach(function() {
-      return emberNew({ target: 'addon' });
+      return emberNew({ target: 'addon' }).then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
     // Skipping these because the reason they're failing is *not* apparent, and

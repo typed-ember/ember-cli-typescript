@@ -17,7 +17,7 @@ describe('Blueprint: initializer-test', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew();
+      return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
     it('initializer-test foo', function() {
@@ -62,7 +62,9 @@ describe('Blueprint: initializer-test', function() {
 
   describe('in addon', function() {
     beforeEach(function() {
-      return emberNew({ target: 'addon' });
+      return emberNew({ target: 'addon' }).then(() =>
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
+      );
     });
 
     it('initializer-test foo', function() {

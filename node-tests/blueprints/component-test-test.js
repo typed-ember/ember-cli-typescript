@@ -19,7 +19,7 @@ describe('Blueprint: component-test', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew();
+      return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
     it('component-test x-foo', function() {
@@ -135,7 +135,9 @@ describe('Blueprint: component-test', function() {
 
   describe('in addon', function() {
     beforeEach(function() {
-      return emberNew({ target: 'addon' });
+      return emberNew({ target: 'addon' }).then(() =>
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
+      );
     });
 
     it('component-test x-foo', function() {
@@ -171,7 +173,9 @@ describe('Blueprint: component-test', function() {
 
   describe('in in-repo-addon', function() {
     beforeEach(function() {
-      return emberNew({ target: 'in-repo-addon' });
+      return emberNew({ target: 'in-repo-addon' }).then(() =>
+        generateFakePackageManifest('ember-cli-qunit', '4.1.0')
+      );
     });
 
     it('component-test x-foo --in-repo-addon=my-addon', function() {
