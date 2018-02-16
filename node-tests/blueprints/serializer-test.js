@@ -19,7 +19,7 @@ describe('Acceptance: generate and destroy serializer blueprints', function() {
   setupTestHooks(this);
 
   beforeEach(function() {
-    return emberNew();
+    return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
   });
 
   it('serializer', function() {

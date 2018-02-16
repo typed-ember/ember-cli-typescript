@@ -6,6 +6,8 @@ const emberNew = blueprintHelpers.emberNew;
 const emberGenerateDestroy = blueprintHelpers.emberGenerateDestroy;
 const setupPodConfig = blueprintHelpers.setupPodConfig;
 
+const generateFakePackageManifest = require('../helpers/generate-fake-package-manifest');
+
 const chai = require('ember-cli-blueprint-test-helpers/chai');
 const expect = chai.expect;
 
@@ -202,12 +204,14 @@ describe('Blueprint: initializer', function() {
     });
 
     it('initializer-test foo', function() {
+      generateFakePackageManifest('ember-cli-qunit', '4.2.0');
+
       return emberGenerateDestroy(['initializer-test', 'foo'], _file => {
         expect(_file('tests/unit/initializers/foo-test.ts'))
           .to.contain("import { initialize } from 'dummy/initializers/foo';")
           .to.contain("module('Unit | Initializer | foo'")
-          .to.contain('application = Application.create();')
-          .to.contain('initialize(this.application);');
+          .to.contain('application = this.TestApplication.create(')
+          .to.contain('this.application.boot()');
       });
     });
   });

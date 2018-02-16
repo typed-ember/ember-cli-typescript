@@ -19,7 +19,7 @@ describe('Acceptance: generate and destroy adapter blueprints', function() {
   setupTestHooks(this);
 
   beforeEach(function() {
-    return emberNew();
+    return emberNew().then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
   });
 
   it('adapter', function() {

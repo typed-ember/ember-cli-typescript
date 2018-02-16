@@ -17,7 +17,8 @@ describe('Acceptance: generate and destroy transform blueprints', function() {
 
   describe('in app', function() {
     beforeEach(function() {
-      return emberNew();
+      return emberNew()
+        .then(() => generateFakePackageManifest('ember-cli-qunit', '4.1.0'));
     });
 
     it('transform', function() {
