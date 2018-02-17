@@ -22,6 +22,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
       * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
   * [ember-browserify](#ember-browserify)
+  * [ember-cli-mirage](#ember-cli-mirage)
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
     * [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
     * [Why is this happening?](#why-is-this-happening)
@@ -410,7 +411,7 @@ If you're using [ember-browserify], you're used to writing imports like this:
 [ember-browserify]: https://github.com/ef4/ember-browserify
 
 ```js
-import 'npm:my-module' from 'my-module';
+import MyModule from 'npm:my-module';
 ```
 
 If the `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, hwowever:
@@ -425,6 +426,47 @@ If the `my-module` has types, you will not be able to resolve them this way by d
   }
 }
 ```
+
+### ember-cli-mirage
+
+Mirage adds files from a nonstandard location to your application tree, so you'll need to tell the TypeScript compiler about how that layout works.
+
+For an app, this should look roughly like:
+
+```js
+{
+  "compilerOptions": {
+    "paths": {
+      // ...
+      "my-app-name/mirage/*": "mirage/*",
+    }
+  },
+  "include": [
+    "app",
+    "tests",
+    "mirage"
+  ]
+}
+```
+
+And for an addon:
+
+```js
+{
+  "compilerOptions": {
+    "paths": {
+      // ...
+      "dummy/mirage/*": "tests/dummy/mirage/*",
+    }
+  },
+  "include": [
+    "addon",
+    "tests"
+  ]
+}
+```
+
+Note that if Mirage was present when you installed ember-cli-typescript (or if you run `ember g ember-cli-typescript`), this configuration should be automatically set up for you.
 
 ### "TypeScript is complaining about multiple copies of the same types!"
 

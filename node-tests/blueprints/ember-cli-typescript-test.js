@@ -118,4 +118,62 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(projectTypes).to.include(ects.APP_DECLARATIONS);
       });
   });
+
+  it('app with Mirage', function() {
+    const args = ['ember-cli-typescript'];
+
+    return helpers
+      .emberNew()
+      .then(() => {
+        const packagePath = path.resolve(process.cwd(), 'package.json');
+        const contents = JSON.parse(fs.readFileSync(packagePath, { encoding: 'utf8' }));
+        contents.devDependencies['ember-cli-mirage'] = '*';
+        fs.writeFileSync(packagePath, JSON.stringify(contents, null, 2));
+      })
+      .then(() => helpers.emberGenerate(args))
+      .then(() => {
+        const tsconfig = file('tsconfig.json');
+        expect(tsconfig).to.exist;
+
+        const json = JSON.parse(tsconfig.content);
+        expect(json.compilerOptions.paths).to.deep.equal({
+          'my-app/tests/*': ['tests/*'],
+          'my-app/mirage/*': ['mirage/*'],
+          'my-app/*': ['app/*'],
+          '*': ['types/*'],
+        });
+
+        expect(json.include).to.deep.equal(['app', 'tests', 'mirage']);
+      });
+  });
+
+  it('addon with Mirage', function() {
+    const args = ['ember-cli-typescript'];
+
+    return helpers
+      .emberNew({ target: 'addon' })
+      .then(() => {
+        const packagePath = path.resolve(process.cwd(), 'package.json');
+        const contents = JSON.parse(fs.readFileSync(packagePath, { encoding: 'utf8' }));
+        contents.devDependencies['ember-cli-mirage'] = '*';
+        fs.writeFileSync(packagePath, JSON.stringify(contents, null, 2));
+      })
+      .then(() => helpers.emberGenerate(args))
+      .then(() => {
+        const tsconfig = file('tsconfig.json');
+        expect(tsconfig).to.exist;
+
+        const json = JSON.parse(tsconfig.content);
+        expect(json.compilerOptions.paths).to.deep.equal({
+          'dummy/tests/*': ['tests/*'],
+          'dummy/mirage/*': ['tests/dummy/mirage/*'],
+          'dummy/*': ['tests/dummy/app/*'],
+          'my-addon': ['addon'],
+          'my-addon/*': ['addon/*'],
+          '*': ['types/*'],
+        });
+
+        expect(json.include).to.deep.equal(['addon', 'tests']);
+      });
+  });
 });
