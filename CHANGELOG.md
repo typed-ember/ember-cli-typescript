@@ -6,8 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.1.3] - 2018-02-16
+
+### Fixes
+
 * Fix default blueprint for `types/<my app>/index.d.ts`: add missing import and an export statement so ambient declarations work.
 * Add types to initializer and instance initializer blueprints.
+* Special-case handling for Mirage so that it works at all, and update generators so it works "out of the box".
+* Stop assuming the ember-cli-qunit version consumers have installed will be sufficiently high for our tests to pass.
 
 ## [1.1.2] - 2018-02-13
 
@@ -151,7 +157,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.2...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...HEAD
+[1.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.0.6...v1.1.0
