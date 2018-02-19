@@ -51,7 +51,7 @@ module.exports = {
         }
 
         if (isAddon) {
-          paths[`${appName}/*`] = ['tests/dummy/app/*'];
+          paths[`${appName}/*`] = ['app/*', 'tests/dummy/app/*'];
         } else {
           paths[`${appName}/*`] = ['app/*'];
         }
