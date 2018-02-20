@@ -93,8 +93,8 @@ To enable TypeScript sourcemaps, you'll need to add the corresponding configurat
 const app = new EmberApp(defaults, {
   babel: {
     sourceMaps: 'inline',
-  }
-}
+  },
+});
 ```
 
 (Note that this _will_ noticeably slow down your app rebuilds.)
