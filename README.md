@@ -7,6 +7,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 * [Setup and Configuration](#setup-and-configuration)
   * [Ember Support](#ember-support)
   * [`tsconfig.json`](#tsconfigjson)
+  * [Sourcemaps](#sourcemaps)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
   * [Incremental adoption](#incremental-adoption)
   * [Install other types!](#install-other-types)
@@ -83,6 +84,20 @@ However, there are a few things worth noting if you're already familiar with Typ
 
 [blueprint]: https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json
 [broccoli]: http://broccolijs.com/
+
+### Sourcemaps
+
+To enable TypeScript sourcemaps, you'll need to add the corresponding configuration for Babel to your `ember-cli-build.js` file:
+
+```ts
+const app = new EmberApp(defaults, {
+  babel: {
+    sourceMaps: 'inline',
+  }
+}
+```
+
+(Note that this _will_ noticeably slow down your app rebuilds.)
 
 ## Using TypeScript with Ember effectively
 
