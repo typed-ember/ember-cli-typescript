@@ -2,6 +2,8 @@
 'use strict';
 
 const IncrementalTypescriptCompiler = require('./lib/incremental-typescript-compiler');
+const Funnel = require('broccoli-funnel');
+const MergeTrees = require('broccoli-merge-trees');
 
 module.exports = {
   name: 'ember-cli-typescript',
@@ -22,6 +24,24 @@ module.exports = {
         'ts:clean': require('./lib/commands/clean'),
       };
     }
+  },
+
+  setupPreprocessorRegistry(type, registry) {
+    if (type !== 'parent') {
+      return;
+    }
+
+    registry.add('js', {
+      name: 'ember-cli-typescript',
+      toTree: (original, inputPath, outputPath) => {
+        if (!this.compiler || inputPath !== '/') {
+          return original;
+        }
+
+        let ts = new Funnel(this.compiler.treeForHost(), { destDir: outputPath });
+        return new MergeTrees([original, ts], { overwrite: true });
+      },
+    });
   },
 
   treeForApp() {
