@@ -6,9 +6,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.1.4] - 2018-02-20
+
+### Changed
+
+* The default `tsconfig.json` now includes inline source maps to support integrating with Babel sourcemaps, and the README has instructions for configuring Ember CLI's Babel integration.
+
+### Fixed
+
+* TypeScript files in addon `app` trees now get compiled properly.
+* App files now correctly take precedence over any files of the same name earlier in the tree. (If you had a component with the same name as an addon-supplied component, for example, the addon version could override yours.)
+
 ## [1.1.3] - 2018-02-16
 
-### Fixes
+### Fixed
 
 * Fix default blueprint for `types/<my app>/index.d.ts`: add missing import and an export statement so ambient declarations work.
 * Add types to initializer and instance initializer blueprints.
@@ -157,7 +168,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.4...HEAD
+[1.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.0...v1.1.1
