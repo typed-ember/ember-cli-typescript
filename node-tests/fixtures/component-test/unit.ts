@@ -1,4 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import { TestContext } from 'ember-test-helpers';
 
 moduleForComponent('x-foo', 'Unit | Component | x-foo', {
   // Specify the other units that are required for this test
@@ -6,7 +7,7 @@ moduleForComponent('x-foo', 'Unit | Component | x-foo', {
   unit: true
 });
 
-test('it renders', function(assert) {
+test('it renders', function(this: TestContext, assert) {
   
   // Creates the component instance
   /*let component =*/ this.subject();

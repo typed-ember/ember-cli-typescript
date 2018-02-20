@@ -1,12 +1,13 @@
 <% if (testType == 'integration') { %>import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { TestContext } from 'ember-test-helpers';
 
 moduleForComponent('<%= dasherizedModuleName %>', 'helper:<%= dasherizedModuleName %>', {
   integration: true
 });
 
 // Replace this with your real tests.
-test('it renders', function(assert) {
+test('it renders', function(this: TestContext, assert) {
   this.set('inputValue', '1234');
 
   this.render(hbs`{{<%= dasherizedModuleName %> inputValue}}`);

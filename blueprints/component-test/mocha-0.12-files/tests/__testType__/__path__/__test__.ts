@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';<% if (testType === 'integration') { %>
 import hbs from 'htmlbars-inline-precompile';<% } %>
+import { TestContext } from 'ember-test-helpers';
 
 describe('<%= friendlyTestDescription %>', function() {
   setupComponentTest('<%= componentPathName %>', {
@@ -10,7 +11,7 @@ describe('<%= friendlyTestDescription %>', function() {
     unit: true<% } %>
   });
 
-  it('renders', function() {
+  it('renders', function(this: TestContext) {
     <% if (testType === 'integration' ) { %>// Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
     // Template block usage:

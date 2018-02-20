@@ -2,13 +2,14 @@ import { expect } from 'chai';
 
 import { describeComponent, it } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
+import { TestContext } from 'ember-test-helpers';
 
 describeComponent('foo/bar-baz', 'helper:foo/bar-baz',
   {
     integration: true
   },
   function() {
-    it('renders', function() {
+    it('renders', function(this: TestContext) {
       // Set any properties with this.set('myProperty', 'value');
       // Handle any actions with this.on('myAction', function(val) { ... });
       // Template block usage:

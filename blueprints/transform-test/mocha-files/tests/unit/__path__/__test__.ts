@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { setupTest } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describe('<%= friendlyTestDescription %>', function() {
   setupTest('transform:<%= dasherizedModuleName %>', {
@@ -9,7 +10,7 @@ describe('<%= friendlyTestDescription %>', function() {
   });
 
   // Replace this with your real tests.
-  it('exists', function() {
+  it('exists', function(this: TestContext) {
     let transform = this.subject();
     expect(transform).to.be.ok;
   });

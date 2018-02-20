@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { setupTest } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describe('Unit | Route | foo', function() {
   setupTest('route:foo', {
@@ -8,7 +9,7 @@ describe('Unit | Route | foo', function() {
     // needs: ['controller:foo']
   });
 
-  it('exists', function() {
+  it('exists', function(this: TestContext) {
     let route = this.subject();
     expect(route).to.be.ok;
   });

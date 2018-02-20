@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { describeModule, it } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describeModule('route:<%= moduleName %>', '<%= friendlyTestDescription %>',
   {
@@ -7,7 +8,7 @@ describeModule('route:<%= moduleName %>', '<%= friendlyTestDescription %>',
     // needs: ['controller:foo']
   },
   function() {
-    it('exists', function() {
+    it('exists', function(this: TestContext) {
       let route = this.subject();
       expect(route).to.be.ok;
     });
