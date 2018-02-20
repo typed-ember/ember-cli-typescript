@@ -507,6 +507,8 @@ The `ts:precompile` command will put compiled `.js` files in your `addon` direct
 
 The `ts:clean` command will remove the generated `.js` and `.d.ts` files, leaving your working directory back in a pristine state.
 
+**Note**: While `.ts` files from both the `app` and `addon` directories of your addon will be transpiled by `ts:precompile`, only the declaration files from `addon` will be published. Since the final import paths for `app` files will depend on the name of the consuming application, we can't put those declaration files in a meaningful place.
+
 ### Linking Addons
 
 Often when developing an addon, it can be useful to run that addon in the context of some other host app so you can make sure it will integrate the way you expect, e.g. using [`yarn link`](https://yarnpkg.com/en/docs/cli/link#search) or [`npm link`](https://docs.npmjs.com/cli/link).

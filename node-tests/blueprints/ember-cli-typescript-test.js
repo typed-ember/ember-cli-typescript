@@ -68,13 +68,13 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const tsconfigJson = JSON.parse(tsconfig.content);
         expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
           'dummy/tests/*': ['tests/*'],
-          'dummy/*': ['tests/dummy/app/*'],
+          'dummy/*': ['tests/dummy/app/*', 'app/*'],
           'my-addon': ['addon'],
           'my-addon/*': ['addon/*'],
           '*': ['types/*'],
         });
 
-        expect(tsconfigJson.include).to.deep.equal(['addon', 'tests']);
+        expect(tsconfigJson.include).to.deep.equal(['app', 'addon', 'tests']);
 
         const projectTypes = file('types/dummy/index.d.ts');
         expect(projectTypes).to.exist;
@@ -167,13 +167,13 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(json.compilerOptions.paths).to.deep.equal({
           'dummy/tests/*': ['tests/*'],
           'dummy/mirage/*': ['tests/dummy/mirage/*'],
-          'dummy/*': ['tests/dummy/app/*'],
+          'dummy/*': ['tests/dummy/app/*', 'app/*'],
           'my-addon': ['addon'],
           'my-addon/*': ['addon/*'],
           '*': ['types/*'],
         });
 
-        expect(json.include).to.deep.equal(['addon', 'tests']);
+        expect(json.include).to.deep.equal(['app', 'addon', 'tests']);
       });
   });
 });
