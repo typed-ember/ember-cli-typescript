@@ -31,7 +31,7 @@ module.exports = {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
-    let includes = [isAddon ? 'addon' : 'app', 'tests'].concat(inRepoAddons);
+    let includes = ['app', isAddon && 'addon', 'tests'].concat(inRepoAddons).filter(Boolean);
 
     // Mirage is already covered for addons because it's under `tests/`
     if (hasMirage && !isAddon) {
@@ -51,7 +51,7 @@ module.exports = {
         }
 
         if (isAddon) {
-          paths[`${appName}/*`] = ['tests/dummy/app/*'];
+          paths[`${appName}/*`] = ['tests/dummy/app/*', 'app/*'];
         } else {
           paths[`${appName}/*`] = ['app/*'];
         }
