@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.1.5] - 2018-02-20
+
+### Fixed
+
+* Fixed a regression in 1.1.4 which caused in-repo-addons written in TypeScript not to work correctly.
+
 ## [1.1.4] - 2018-02-20
 
 ### Changed
@@ -168,7 +174,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.4...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.5...HEAD
+[1.1.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.1...v1.1.2
