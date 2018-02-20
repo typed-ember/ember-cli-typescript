@@ -2,13 +2,14 @@ import { expect } from 'chai';
 <% if (testType == 'integration') { %>import { describe, it } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
 import hbs from 'htmlbars-inline-precompile';
+import { TestContext } from 'ember-test-helpers';
 
 describe('<%= friendlyTestName %>', function() {
   setupComponentTest('<%= dasherizedModuleName %>', {
     integration: true
   });
 
-  it('renders', function() {
+  it('renders', function(this: TestContext) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
     // Template block usage:

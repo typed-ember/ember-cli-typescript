@@ -1,4 +1,5 @@
 import { moduleFor, test } from 'ember-qunit';
+import { TestContext } from 'ember-test-helpers';
 
 moduleFor('adapter:application', 'Unit | Adapter | application', {
   // Specify the other units that are required for this test.
@@ -6,7 +7,7 @@ moduleFor('adapter:application', 'Unit | Adapter | application', {
 });
 
 // Replace this with your real tests.
-test('it exists', function(assert) {
+test('it exists', function(this: TestContext, assert) {
   let adapter = this.subject();
   assert.ok(adapter);
 });

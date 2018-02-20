@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { describeModule, it } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describeModule('service:foo', 'Unit | Service | foo',
   {
@@ -8,7 +9,7 @@ describeModule('service:foo', 'Unit | Service | foo',
   },
   function() {
     // Replace this with your real tests.
-    it('exists', function() {
+    it('exists', function(this: TestContext) {
       let service = this.subject();
       expect(service).to.be.ok;
     });

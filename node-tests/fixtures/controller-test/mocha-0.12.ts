@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { setupTest } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describe('Unit | Controller | foo', function() {
   setupTest('controller:foo', {
@@ -9,7 +10,7 @@ describe('Unit | Controller | foo', function() {
   });
 
   // Replace this with your real tests.
-  it('exists', function() {
+  it('exists', function(this: TestContext) {
     let controller = this.subject();
     expect(controller).to.be.ok;
   });

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { setupComponentTest } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describe('Unit | Component | x-foo', function() {
   setupComponentTest('x-foo', {
@@ -9,7 +10,7 @@ describe('Unit | Component | x-foo', function() {
     unit: true
   });
 
-  it('renders', function() {
+  it('renders', function(this: TestContext) {
     // creates the component instance
     let component = this.subject();
     // renders the component on the page

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 import { describe, it } from 'mocha';
 import { setupModelTest } from 'ember-mocha';
+import { TestContext } from 'ember-test-helpers';
 
 describe('Unit | Serializer | foo', function() {
   setupModelTest('foo', {
@@ -9,7 +10,7 @@ describe('Unit | Serializer | foo', function() {
   });
 
   // Replace this with your real tests.
-  it('serializes records', function() {
+  it('serializes records', function(this: TestContext) {
     let record = this.subject();
 
     let serializedRecord = record.serialize();

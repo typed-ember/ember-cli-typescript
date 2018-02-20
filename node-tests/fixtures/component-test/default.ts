@@ -1,11 +1,12 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { TestContext } from 'ember-test-helpers';
 
 moduleForComponent('x-foo', 'Integration | Component | x-foo', {
   integration: true
 });
 
-test('it renders', function(assert) {
+test('it renders', function(this: TestContext, assert) {
   // Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 

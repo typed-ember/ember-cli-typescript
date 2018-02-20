@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';<% if (testType === 'integration') { %>
 import hbs from 'htmlbars-inline-precompile';<% } %>
+import { TestContext } from 'ember-test-helpers';
 
 moduleForComponent('<%= componentPathName %>', '<%= friendlyTestDescription %>', {
   <% if (testType === 'integration' ) { %>integration: true<% } else if(testType === 'unit') { %>// Specify the other units that are required for this test
@@ -7,7 +8,7 @@ moduleForComponent('<%= componentPathName %>', '<%= friendlyTestDescription %>',
   unit: true<% } %>
 });
 
-test('it renders', function(assert) {
+test('it renders', function(this: TestContext, assert) {
   <% if (testType === 'integration' ) { %>// Set any properties with this.set('myProperty', 'value');
   // Handle any actions with this.on('myAction', function(val) { ... });
 
