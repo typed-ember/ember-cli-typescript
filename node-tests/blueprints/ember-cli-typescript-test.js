@@ -37,6 +37,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           '*': ['types/*'],
         });
 
+        expect(tsconfigJson.compilerOptions.inlineSourceMap).to.equal(true);
+        expect(tsconfigJson.compilerOptions.inlineSources).to.equal(true);
+
         expect(tsconfigJson.include).to.deep.equal(['app', 'tests']);
 
         const projectTypes = file('types/my-app/index.d.ts');
