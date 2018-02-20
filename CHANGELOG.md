@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Fixed
 
 * Fixed a regression in 1.1.4 which caused in-repo-addons written in TypeScript not to work correctly.
+* Fixed the `tsconfig.json` blueprint to properly include the `types` directory.
 
 ## [1.1.4] - 2018-02-20
 
