@@ -26,7 +26,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const pkgJson = JSON.parse(pkg.content);
         expect(pkgJson.scripts.prepublishOnly).to.be.undefined;
         expect(pkgJson.scripts.postpublish).to.be.undefined;
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
@@ -70,7 +72,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const pkgJson = JSON.parse(pkg.content);
         expect(pkgJson.scripts.prepublishOnly).to.equal('ember ts:precompile');
         expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
