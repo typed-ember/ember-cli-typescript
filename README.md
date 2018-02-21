@@ -238,7 +238,7 @@ export default class UserProfile extends Component {
 
   actions = {
     login(this: UserProfile, email: string, password: string) {
-      this.get('session').login(email, string);
+      this.get('session').login(email, password);
     },
   };
 }
