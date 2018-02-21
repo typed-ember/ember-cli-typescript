@@ -33,6 +33,7 @@ module.exports = {
 
     registry.add('js', {
       name: 'ember-cli-typescript',
+      ext: 'ts',
       toTree: (original, inputPath, outputPath) => {
         if (!this.compiler || inputPath !== '/') {
           return original;
