@@ -28,6 +28,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(pkgJson.scripts.postpublish).to.be.undefined;
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
@@ -71,6 +72,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
@@ -190,6 +192,46 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         });
 
         expect(json.include).to.deep.equal(['app', 'addon', 'tests', 'types']);
+      });
+  });
+
+  it('app with Mocha', function() {
+    const args = ['ember-cli-typescript'];
+
+    return helpers
+      .emberNew()
+      .then(() => helpers.modifyPackages([
+        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-cli-qunit', delete: true },
+      ]))
+      .then(() => helpers.emberGenerate(args))
+      .then(() => {
+        const pkg = file('package.json');
+        expect(pkg).to.exist;
+
+        const pkgJson = JSON.parse(pkg.content);
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+      });
+  });
+
+  it('addon with Mocha', function() {
+    const args = ['ember-cli-typescript'];
+
+    return helpers
+      .emberNew({ target: 'addon' })
+      .then(() => helpers.modifyPackages([
+        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-cli-qunit', delete: true },
+      ]))
+      .then(() => helpers.emberGenerate(args))
+      .then(() => {
+        const pkg = file('package.json');
+        expect(pkg).to.exist;
+
+        const pkgJson = JSON.parse(pkg.content);
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
       });
   });
 });
