@@ -238,7 +238,7 @@ export default class UserProfile extends Component {
 
   actions = {
     login(this: UserProfile, email: string, password: string) {
-      this.get('session').login(email, string);
+      this.get('session').login(email, password);
     },
   };
 }
@@ -266,7 +266,7 @@ declare module '@ember/service' {
 }
 ```
 
-```
+```ts
 // my-app/components/user-profile.ts
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
