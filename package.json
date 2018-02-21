@@ -92,7 +92,7 @@
     "typescript": "^2.7.2"
   },
   "resolutions": {
-    "@types/ember": "2.8.13",
+    "@types/ember": "2.8.13"
   },
   "peerDependencies": {
     "typescript": "^2.4.2"
