@@ -106,10 +106,24 @@ module.exports = {
       { name: '@types/ember-testing-helpers', target: 'latest' },
     ];
 
-    if (this._hasEmberData()) {
+    if (this._has('ember-data')) {
       packages.push(
         { name: '@types/ember-data', target: 'latest' }
       );
+    }
+
+    if (this._has('ember-cli-qunit')) {
+      packages = packages.concat([
+        { name: '@types/ember-qunit', target: 'latest' },
+        { name: '@types/qunit', target: 'latest' },
+      ]);
+    }
+
+    if (this._has('ember-cli-mocha')) {
+      packages = packages.concat([
+        { name: '@types/ember-mocha', target: 'latest' },
+        { name: '@types/mocha', target: 'latest' },
+      ]);
     }
 
     return this.addPackagesToProject(packages);
@@ -118,7 +132,7 @@ module.exports = {
   files() {
     let files = this._super.files.apply(this, arguments);
 
-    if (!this._hasEmberData()) {
+    if (!this._has('ember-data')) {
       files = files.filter(file => file !== 'types/ember-data.d.ts');
     }
 
@@ -148,9 +162,9 @@ module.exports = {
     scripts[type] = script;
   },
 
-  _hasEmberData() {
+  _has(pkg) {
     if (this.project) {
-      return 'ember-data' in this.project.dependencies();
+      return pkg in this.project.dependencies();
     }
   },
 };
