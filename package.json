@@ -59,7 +59,7 @@
     "walk-sync": "^0.3.2"
   },
   "devDependencies": {
-    "@types/ember": "2.8.8",
+    "@types/ember": "2.8.13",
     "@types/ember-qunit": "^3.0.1",
     "@types/node": "*",
     "@types/qunit": "^2.0.31",
@@ -90,6 +90,9 @@
     "loader.js": "^4.2.3",
     "mocha": "^5.0.0",
     "typescript": "^2.7.2"
+  },
+  "resolutions": {
+    "@types/ember": "2.8.13",
   },
   "peerDependencies": {
     "typescript": "^2.4.2"
