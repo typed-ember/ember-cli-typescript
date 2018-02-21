@@ -1,0 +1,12 @@
+{
+  "name": "in-repo-a",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "ember-cli-babel": "*"
+  },
+  "devDependencies": {
+    "ember-cli-typescript": "*"
+  }
+}
