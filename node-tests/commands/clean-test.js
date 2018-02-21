@@ -22,8 +22,8 @@ describe('Acceptance: ts:clean command', function() {
     fs.ensureDirSync('tmp');
     fs.ensureDirSync('app');
     fs.ensureDirSync('addon');
-    fs.writeFileSync('app/test-file.ts', `export const testString: string = 'app';\n`);
-    fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'addon';\n`);
+    fs.writeFileSync('app/test-file.ts', `export const testString: string = 'app';`);
+    fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'addon';`);
 
     let before = walkSync(process.cwd());
     return ember(['ts:precompile'])

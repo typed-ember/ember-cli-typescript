@@ -20,23 +20,23 @@ describe('Acceptance: ts:precompile command', function() {
 
   it('generates .js and .d.ts files from the addon tree', function() {
     fs.ensureDirSync('addon');
-    fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'hello';\n`);
+    fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'hello';`);
 
     return ember(['ts:precompile'])
       .then(() => {
         let declaration = file('test-file.d.ts');
         expect(declaration).to.exist;
-        expect(declaration.content).to.equal(`export declare const testString: string;\n`);
+        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
 
         let transpiled = file('addon/test-file.js');
         expect(transpiled).to.exist;
-        expect(transpiled.content).to.equal(`export const testString = 'hello';\n`);
+        expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
       });
   });
 
   it('generates .js files only from the app tree', function() {
     fs.ensureDirSync('app');
-    fs.writeFileSync('app/test-file.ts', `export const testString: string = 'hello';\n`);
+    fs.writeFileSync('app/test-file.ts', `export const testString: string = 'hello';`);
 
     return ember(['ts:precompile']).then(() => {
       let declaration = file('test-file.d.ts');
@@ -44,7 +44,7 @@ describe('Acceptance: ts:precompile command', function() {
 
       let transpiled = file('app/test-file.js');
       expect(transpiled).to.exist;
-      expect(transpiled.content.split('\n')[0]).to.equal(`export const testString = 'hello';`);
+      expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
     });
   });
 });
