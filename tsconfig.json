@@ -7,7 +7,9 @@
     "baseUrl": ".",
     "paths": {
       "dummy/tests/*": ["tests/*"],
-      "dummy/*": ["tests/dummy/app/*"]
+      "dummy/*": ["tests/dummy/app/*", "tests/dummy/lib/in-repo-a/app/*", "tests/dummy/lib/in-repo-b/app/*"],
+      "in-repo-a/*": ["tests/dummy/lib/in-repo-a/addon/*"],
+      "in-repo-b/*": ["tests/dummy/lib/in-repo-b/addon/*"]
     }
   },
   "include": [
