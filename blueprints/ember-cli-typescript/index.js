@@ -98,14 +98,31 @@ module.exports = {
       this._installPrecompilationHooks();
     }
 
-    return this.addPackagesToProject([
+    let packages = [
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
-      { name: '@types/ember-data', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },
       { name: '@types/ember-test-helpers', target: 'latest' },
       { name: '@types/ember-testing-helpers', target: 'latest' },
-    ]);
+    ];
+
+    if (this._hasEmberData()) {
+      packages.push(
+        { name: '@types/ember-data', target: 'latest' }
+      );
+    }
+
+    return this.addPackagesToProject(packages);
+  },
+
+  files() {
+    let files = this._super.files.apply(this, arguments);
+
+    if (!this._hasEmberData()) {
+      files = files.filter(file => file !== 'types/ember-data.d.ts');
+    }
+
+    return files;
   },
 
   _installPrecompilationHooks() {
@@ -129,5 +146,11 @@ module.exports = {
     }
 
     scripts[type] = script;
+  },
+
+  _hasEmberData() {
+    if (this.project) {
+      return 'ember-data' in this.project.dependencies();
+    }
   },
 };

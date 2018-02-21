@@ -48,6 +48,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         const environmentTypes = file('types/my-app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
+
+        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        expect(emberDataCatchallTypes).to.exist;
       });
   });
 
@@ -82,6 +85,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const projectTypes = file('types/dummy/index.d.ts');
         expect(projectTypes).to.exist;
         expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
+
+        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        expect(emberDataCatchallTypes).not.to.exist;
       });
   });
 
@@ -119,6 +125,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const projectTypes = file('types/my-app/index.d.ts');
         expect(projectTypes).to.exist;
         expect(projectTypes).to.include(ects.APP_DECLARATIONS);
+
+        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        expect(emberDataCatchallTypes).to.exist;
       });
   });
 
