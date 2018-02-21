@@ -20,7 +20,23 @@
   dependencies:
     "@glimmer/di" "^0.2.0"
 
-"@types/ember@2.8.8":
+"@types/ember-qunit@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/ember-qunit/-/ember-qunit-3.0.1.tgz#ddf7f25e75eb0a91f18e159369876bf02496dd38"
+  dependencies:
+    "@types/ember" "*"
+    "@types/ember-test-helpers" "*"
+
+"@types/ember-test-helpers@*":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@types/ember-test-helpers/-/ember-test-helpers-0.7.1.tgz#14b9f132e9c60c2dfaf7a10ace937bfb7157fb26"
+  dependencies:
+    "@types/ember" "*"
+    "@types/htmlbars-inline-precompile" "*"
+    "@types/jquery" "*"
+    "@types/rsvp" "*"
+
+"@types/ember@*", "@types/ember@2.8.8":
   version "2.8.8"
   resolved "https://registry.yarnpkg.com/@types/ember/-/ember-2.8.8.tgz#a3621385cb91a2ff4a9e2cd2a5f0f7c33b9f5d5d"
   dependencies:
@@ -32,6 +48,10 @@
   version "4.0.35"
   resolved "https://registry.yarnpkg.com/@types/handlebars/-/handlebars-4.0.35.tgz#409eb97a3ad6970daba4d586cb6afe3f5e082c01"
 
+"@types/htmlbars-inline-precompile@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/htmlbars-inline-precompile/-/htmlbars-inline-precompile-1.0.0.tgz#4c283da1a7e303b269de3c6aa953acc8d8736949"
+
 "@types/jquery@*":
   version "3.2.10"
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.2.10.tgz#0e3da7ad6481a1cdf48af39ff00a990afeb8018b"
@@ -39,6 +59,10 @@
 "@types/node@*":
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.1.tgz#4ec3020bcdfe2abffeef9ba3fbf26fca097514b5"
+
+"@types/qunit@^2.0.31":
+  version "2.0.31"
+  resolved "https://registry.yarnpkg.com/@types/qunit/-/qunit-2.0.31.tgz#a53e2cf635262c8bf46a71a137d8c7970dde9562"
 
 "@types/rsvp@*":
   version "4.0.0"
@@ -6794,9 +6818,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@^2.7.1:
-  version "2.7.1"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.1.tgz#bb3682c2c791ac90e7c6210b26478a8da085c359"
+typescript@^2.7.2:
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
 
 uc.micro@^1.0.1, uc.micro@^1.0.3:
   version "1.0.3"
