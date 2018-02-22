@@ -30,6 +30,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 * [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
   * [Publishing](#publishing)
   * [Linking Addons](#linking-addons)
+  * [In-Repo Addons](#in-repo-addons)
   * [Gotchas](#gotchas)
 * [Current limitations](#current-limitations)
   * [Some `import`s don't resolve](#some-imports-dont-resolve)
