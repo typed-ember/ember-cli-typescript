@@ -1,9 +1,10 @@
 'use strict';
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const helpers = require('ember-cli-blueprint-test-helpers/helpers');
 const chaiHelpers = require('ember-cli-blueprint-test-helpers/chai');
+const Blueprint = require('ember-cli/lib/models/blueprint');
 
 const ects = require('../../blueprints/ember-cli-typescript');
 
@@ -12,6 +13,31 @@ const file = chaiHelpers.file;
 
 describe('Acceptance: ember-cli-typescript generator', function() {
   helpers.setupTestHooks(this, { disabledTasks: ['addon-install', 'bower-install'] });
+
+  const originalTaskForFn = Blueprint.prototype.taskFor;
+
+  beforeEach(function() {
+    Blueprint.prototype.taskFor = function(taskName) {
+      if (taskName === 'npm-install') {
+        // Mock npm-install that only modifies package.json
+        return {
+          run: function(options) {
+            let pkgJson = fs.readJsonSync('package.json')
+            options.packages.forEach(function(pkg) {
+              let pkgName = pkg.match(/^(.*)@[^@]*$/);
+              pkgJson['devDependencies'][pkgName[1]] = '*';
+            });
+            fs.writeJsonSync('package.json', pkgJson);
+          }
+        }
+      }
+      return originalTaskForFn.call(this, taskName);
+    };
+  });
+
+  afterEach(function() {
+    Blueprint.prototype.taskFor = originalTaskForFn;
+  });
 
   it('basic app', function() {
     const args = ['ember-cli-typescript'];
