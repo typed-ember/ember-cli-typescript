@@ -105,6 +105,10 @@
     "before": [
       "ember-cli-babel"
     ],
+    "after": [
+      "ember-source",
+      "ember-data"
+    ],
     "paths": [
       "tests/dummy/lib/in-repo-a",
       "tests/dummy/lib/in-repo-b"
