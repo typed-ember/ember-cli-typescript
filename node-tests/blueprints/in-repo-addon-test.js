@@ -17,8 +17,16 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
 
   it('in-repo-addon fooBar', function() {
     let args = ['in-repo-addon', 'fooBar'];
+    let name, nameStar;
 
     return emberNew()
+      .then(function() {
+        name = fs.readJsonSync('package.json')['name'];
+        nameStar = [name, '*'].join('/');
+      })
+      .then(function() {
+        return emberGenerate(['ember-cli-typescript']);
+      })
       .then(function() {
         expect(fs.readJsonSync('package.json')['ember-addon']).to.be.undefined;
       })
@@ -41,6 +49,12 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
             "lib/foo-bar",
           ],
         });
+
+        const tsconfigJson = fs.readJsonSync('tsconfig.json');
+        expect(tsconfigJson['compilerOptions']['paths']['foo-bar']).to.have.all.members(['lib/foo-bar/addon']);
+        expect(tsconfigJson['compilerOptions']['paths']['foo-bar/*']).to.have.all.members(['lib/foo-bar/addon/*']);
+        expect(tsconfigJson['compilerOptions']['paths'][nameStar]).to.include.members(['lib/foo-bar/app/*']);
+        expect(tsconfigJson['include']).to.include.members(['lib/foo-bar']);
       })
       .then(function() {
         return emberDestroy(args);
@@ -50,6 +64,12 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
         expect(file('lib/foo-bar/index.js')).to.not.exist;
 
         expect(fs.readJsonSync('package.json')['ember-addon']['paths']).to.be.undefined;
+
+        const tsconfigJson = fs.readJsonSync('tsconfig.json');
+        expect(tsconfigJson['compilerOptions']['paths']['foo-bar']).to.be.undefined;
+        expect(tsconfigJson['compilerOptions']['paths']['foo-bar/*']).to.be.undefined;
+        expect(tsconfigJson['compilerOptions']['paths'][nameStar]).to.not.include.members(['lib/foo-bar/app/*']);
+        expect(tsconfigJson['include']).to.not.include.members(['lib/foo-bar']);
       });
   });
 });
@@ -64,6 +84,8 @@ describe('Unit: in-repo-addon blueprint', function() {
     blueprint = require('../../blueprints/in-repo-addon');
     blueprint.project = {
       root: 'test-project-root',
+      isEmberCLIAddon: function() { return false; },
+      name: function() { return 'foo-bar'; },
     };
 
     options = {
