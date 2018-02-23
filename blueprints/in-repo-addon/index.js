@@ -3,8 +3,8 @@
 const fs = require('fs-extra');
 const path = require('path');
 const stringUtil = require('ember-cli-string-utils');
-const Blueprint = require('../../lib/models/blueprint');
-const stringifyAndNormalize = require('../../lib/utilities/stringify-and-normalize');
+const Blueprint = require('ember-cli/lib/models/blueprint'); // eslint-disable-line node/no-unpublished-require
+const stringifyAndNormalize = require('ember-cli/lib/utilities/stringify-and-normalize'); // eslint-disable-line node/no-unpublished-require
 
 module.exports = {
   description: 'The blueprint for addon in repo ember-cli addons.',

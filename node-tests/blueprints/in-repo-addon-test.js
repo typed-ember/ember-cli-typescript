@@ -13,9 +13,7 @@ const expect = require('ember-cli-blueprint-test-helpers/chai').expect;
 const file = require('ember-cli-blueprint-test-helpers/chai').file;
 
 describe('Acceptance: ember generate and destroy in-repo-addon', function() {
-  setupTestHooks(this, {
-    cliPath: path.resolve(`${__dirname}/../../..`),
-  });
+  setupTestHooks(this);
 
   it('in-repo-addon fooBar', function() {
     let args = ['in-repo-addon', 'fooBar'];
@@ -63,7 +61,7 @@ describe('Unit: in-repo-addon blueprint', function() {
   let options;
 
   beforeEach(function() {
-    blueprint = require('../../../blueprints/in-repo-addon');
+    blueprint = require('../../blueprints/in-repo-addon');
     blueprint.project = {
       root: 'test-project-root',
     };
