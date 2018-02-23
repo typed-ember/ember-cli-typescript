@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.1.6] - 2018-02-23
+
+### Fixed
+
+* The blueprints provided by `ember-cli-typescript` now deterministically override the base ones from `ember-data` and `ember-source`.
+* Correct type declarations are installed out of the box based on what test framework is present.
+* A catch-all model registry is generated on installation to avoid the "error TS2344" problem.
+
 ## [1.1.5] - 2018-02-20
 
 ### Fixed
@@ -175,7 +183,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.5...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...HEAD
+[1.1.6]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...v1.1.4
 [1.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.2...v1.1.3
