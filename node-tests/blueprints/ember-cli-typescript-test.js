@@ -1,9 +1,10 @@
 'use strict';
 
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const helpers = require('ember-cli-blueprint-test-helpers/helpers');
 const chaiHelpers = require('ember-cli-blueprint-test-helpers/chai');
+const Blueprint = require('ember-cli/lib/models/blueprint');
 
 const ects = require('../../blueprints/ember-cli-typescript');
 
@@ -11,7 +12,32 @@ const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
 
 describe('Acceptance: ember-cli-typescript generator', function() {
-  helpers.setupTestHooks(this);
+  helpers.setupTestHooks(this, { disabledTasks: ['addon-install', 'bower-install'] });
+
+  const originalTaskForFn = Blueprint.prototype.taskFor;
+
+  beforeEach(function() {
+    Blueprint.prototype.taskFor = function(taskName) {
+      if (taskName === 'npm-install') {
+        // Mock npm-install that only modifies package.json
+        return {
+          run: function(options) {
+            let pkgJson = fs.readJsonSync('package.json')
+            options.packages.forEach(function(pkg) {
+              let pkgName = pkg.match(/^(.*)@[^@]*$/);
+              pkgJson['devDependencies'][pkgName[1]] = '*';
+            });
+            fs.writeJsonSync('package.json', pkgJson);
+          }
+        }
+      }
+      return originalTaskForFn.call(this, taskName);
+    };
+  });
+
+  afterEach(function() {
+    Blueprint.prototype.taskFor = originalTaskForFn;
+  });
 
   it('basic app', function() {
     const args = ['ember-cli-typescript'];
@@ -26,6 +52,11 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const pkgJson = JSON.parse(pkg.content);
         expect(pkgJson.scripts.prepublishOnly).to.be.undefined;
         expect(pkgJson.scripts.postpublish).to.be.undefined;
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
@@ -48,6 +79,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         const environmentTypes = file('types/my-app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
+
+        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        expect(emberDataCatchallTypes).to.exist;
       });
   });
 
@@ -64,6 +98,11 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const pkgJson = JSON.parse(pkg.content);
         expect(pkgJson.scripts.prepublishOnly).to.equal('ember ts:precompile');
         expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
         const tsconfig = file('tsconfig.json');
         expect(tsconfig).to.exist;
@@ -82,6 +121,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const projectTypes = file('types/dummy/index.d.ts');
         expect(projectTypes).to.exist;
         expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
+
+        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        expect(emberDataCatchallTypes).not.to.exist;
       });
   });
 
@@ -119,6 +161,9 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const projectTypes = file('types/my-app/index.d.ts');
         expect(projectTypes).to.exist;
         expect(projectTypes).to.include(ects.APP_DECLARATIONS);
+
+        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        expect(emberDataCatchallTypes).to.exist;
       });
   });
 
@@ -177,6 +222,46 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         });
 
         expect(json.include).to.deep.equal(['app', 'addon', 'tests', 'types']);
+      });
+  });
+
+  it('app with Mocha', function() {
+    const args = ['ember-cli-typescript'];
+
+    return helpers
+      .emberNew()
+      .then(() => helpers.modifyPackages([
+        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-cli-qunit', delete: true },
+      ]))
+      .then(() => helpers.emberGenerate(args))
+      .then(() => {
+        const pkg = file('package.json');
+        expect(pkg).to.exist;
+
+        const pkgJson = JSON.parse(pkg.content);
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+      });
+  });
+
+  it('addon with Mocha', function() {
+    const args = ['ember-cli-typescript'];
+
+    return helpers
+      .emberNew({ target: 'addon' })
+      .then(() => helpers.modifyPackages([
+        { name: 'ember-cli-mocha', dev: true },
+        { name: 'ember-cli-qunit', delete: true },
+      ]))
+      .then(() => helpers.emberGenerate(args))
+      .then(() => {
+        const pkg = file('package.json');
+        expect(pkg).to.exist;
+
+        const pkgJson = JSON.parse(pkg.content);
+        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
       });
   });
 });

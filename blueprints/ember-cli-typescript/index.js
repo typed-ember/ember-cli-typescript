@@ -98,14 +98,45 @@ module.exports = {
       this._installPrecompilationHooks();
     }
 
-    return this.addPackagesToProject([
+    let packages = [
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
-      { name: '@types/ember-data', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },
       { name: '@types/ember-test-helpers', target: 'latest' },
       { name: '@types/ember-testing-helpers', target: 'latest' },
-    ]);
+    ];
+
+    if (this._has('ember-data')) {
+      packages.push(
+        { name: '@types/ember-data', target: 'latest' }
+      );
+    }
+
+    if (this._has('ember-cli-qunit')) {
+      packages = packages.concat([
+        { name: '@types/ember-qunit', target: 'latest' },
+        { name: '@types/qunit', target: 'latest' },
+      ]);
+    }
+
+    if (this._has('ember-cli-mocha')) {
+      packages = packages.concat([
+        { name: '@types/ember-mocha', target: 'latest' },
+        { name: '@types/mocha', target: 'latest' },
+      ]);
+    }
+
+    return this.addPackagesToProject(packages);
+  },
+
+  files() {
+    let files = this._super.files.apply(this, arguments);
+
+    if (!this._has('ember-data')) {
+      files = files.filter(file => file !== 'types/ember-data.d.ts');
+    }
+
+    return files;
   },
 
   _installPrecompilationHooks() {
@@ -129,5 +160,11 @@ module.exports = {
     }
 
     scripts[type] = script;
+  },
+
+  _has(pkg) {
+    if (this.project) {
+      return pkg in this.project.dependencies();
+    }
   },
 };
