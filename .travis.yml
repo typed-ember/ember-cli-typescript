@@ -31,14 +31,17 @@ matrix:
   allow_failures:
     - env: EMBER_TRY_SCENARIO=ember-canary
 
+before_install:
+  - bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
+
 install:
-  - yarn install --no-lockfile
+  - test $MD_ONLY && echo "Skipped!" || yarn install --no-lockfile
 
 script:
-  - yarn lint:js
+  - test $MD_ONLY && echo "Skipped!" || yarn lint:js
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
-  - yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+  - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
 
 # We build PRs, but don't trigger separate builds for the PR from the branch.
 branches:
