@@ -19,4 +19,14 @@ describe('Acceptance: ember generate and destroy component', function() {
         expect(file('app/components/foo-bar.ts')).to.contain('export default class FooBar extends Component.extend');
     }));
   });
+
+  it('addon component foo-bar', function() {
+    let args = ['component', 'foo-bar'];
+
+    return emberNew({ target: 'addon' })
+      .then(() => emberGenerateDestroy(args, (file) => {
+        expect(file('addon/components/foo-bar.ts'))
+          .to.contain('layout = layout;');
+    }));
+  });
 });
