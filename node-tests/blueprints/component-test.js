@@ -26,6 +26,8 @@ describe('Acceptance: ember generate and destroy component', function() {
     return emberNew({ target: 'addon' })
       .then(() => emberGenerateDestroy(args, (file) => {
         expect(file('addon/components/foo-bar.ts'))
+          .to.contain('// @ts-ignore: Ignore import of compiled template\nimport layout from \'../templates/components/foo-bar\';\n');
+        expect(file('addon/components/foo-bar.ts'))
           .to.contain('layout = layout;');
     }));
   });
