@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+### Changed
+
+* Improve instructions for setting up [Linked Addons](README.md#linking-addons) and [In-repo Addons](README.md#in-repo-addons).
+
 ## [1.1.6] - 2018-02-23
 
 ### Fixed
