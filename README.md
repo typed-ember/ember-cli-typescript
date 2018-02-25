@@ -533,15 +533,33 @@ When you do this for a TypeScript addon, by default your `.ts` files won't be co
 
 * ensure `ember-cli-typescript` is installed and set up in the host app
 * override [`isDevelopingAddon()`](https://ember-cli.com/api/classes/Addon.html#method_isDevelopingAddon) in the linked addon to return `true`
-* add `"node_modules/my-addon/addon"` to the `include` entry in `tsconfig.json`
-* update the `paths` entry in your `tsconfig.json` to instruct the compiler how to resolve imports:
+* update the `paths` and `include` entries in your `tsconfig.json` to instruct the compiler how to resolve imports and include the addon's TypeScript files:
 
 ```js
-paths: {
-  // ...other entries e.g. for your app/ and tests/ trees
-  "my-addon": ["node_modules/my-addon/addon"],    // resolve `import x from 'my-addon';
-  "my-addon/*": ["node_modules/my-addon/addon/*"] // resolve `import y from 'my-addon/utils/y';
-}
+compilerOptions: {
+  // ...other options
+  paths: {
+    // ...other paths, e.g. for your tests/ tree
+    "my-app": [
+      "app/*",
+      // add addon app directory that will be merged with the host application
+      "node_modules/my-addon/app/*"
+    ],
+    // resolve: import x from 'my-addon';
+    "my-addon": [
+      "node_modules/my-addon/addon"
+    ],
+    // resolve: import y from 'my-addon/utils/y';
+    "my-addon/*": [
+      "node_modules/my-addon/addon/*"
+    ]
+  }
+},
+include: [
+  // ...other includes, e.g. app, tests, types
+  "node_modules/my-addon/app",
+  "node_modules/my-addon/addon"
+]
 ```
 
 This will cause `ember-cli-typescript` in the host app to take over compiling the TS files in the addon as well, automatically rebuilding any time you make a change.
@@ -550,17 +568,32 @@ This will cause `ember-cli-typescript` in the host app to take over compiling th
 
 ### In-Repo Addons
 
-[In-repo addons](https://ember-cli.com/extending/#detailed-list-of-blueprints-and-their-use) work in much the same way as linked ones: their TypeScript compilation is managed by the host app. They have `isDevelopingAddon` return `true` by default, so you only have to:
-
-* add `"lib/my-addon/addon"` to the `include` entry in `tsconfig.json`
-* update the `paths` entry in your `tsconfig.json` to instruct the compiler how to resolve imports:
+[In-repo addons](https://ember-cli.com/extending/#detailed-list-of-blueprints-and-their-use) work in much the same way as linked ones: their TypeScript compilation is managed by the host app. They have `isDevelopingAddon` return `true` by default, so you only have to update the `paths` and `include` entries in your `tsconfig.json` to instruct the compiler how to resolve imports and include the addon's TypeScript files:
 
 ```js
-paths: {
-  // ...other entries e.g. for your app/ and tests/ trees
-  "my-addon": ["lib/my-addon/addon"],    // resolve `import x from 'my-addon';
-  "my-addon/*": ["lib/my-addon/addon/*"] // resolve `import y from 'my-addon/utils/y';
-}
+compilerOptions: {
+  // ...other options
+  paths: {
+    // ...other paths, e.g. for your tests/ tree
+    "my-app": [
+      "app/*",
+      // add addon app directory that will be merged with the host application
+      "lib/my-addon/app/*"
+    ],
+    // resolve: import x from 'my-addon';
+    "my-addon": [
+      "lib/my-addon/addon"
+    ],
+    // resolve: import y from 'my-addon/utils/y';
+    "my-addon/*": [
+      "lib/my-addon/addon/*"
+    ]
+  }
+},
+include: [
+  // ...other includes, e.g. app, tests, types
+  "lib/my-addon"
+]
 ```
 
 ### Gotchas
