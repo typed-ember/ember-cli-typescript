@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 
 * @ts-ignore component template import.
+* -addon blueprints for all the things to generate .ts files in `app/` in an addon.
 
 ### Changed
 
