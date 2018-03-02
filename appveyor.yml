@@ -40,3 +40,9 @@ version: "{build}"
 branches:
   only:
     - master
+
+# Skip commits that include only Markdown files. There's no reason to trigger a
+# build for docs-only changes More details here: /docs/appveyor-yml
+skip_commits:
+ files:
+   - '**/*.md'
