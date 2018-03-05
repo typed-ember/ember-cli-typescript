@@ -61,7 +61,7 @@ In addition to ember-cli-typescript, we make the following changes to your proje
 
   * [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
   * `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
-  * `types/<app name>/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
+  * `app/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
 
 ### Ember support
 
@@ -147,9 +147,9 @@ In the case of applications (but not for addons), we also automatically include 
 
 #### Environment configuration typings
 
-Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `config/environment.d.ts`. This interface will likely require some changes to match your app.
+Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `app/config/environment.d.ts`. This interface will likely require some changes to match your app.
 
-We install this file because the actual `config/environment.js` is (a) not actually identical with the types as you inherit them in the content of an application, but rather a superset of what an application has access to, and (b) not in a the same location as the path at which you look it up. We map it to the lookup path within your `types` directory, and TypeScript resolves it correctly.
+We install this file because the actual `config/environment.js` is (a) not actually identical with the types as you inherit them in the content of an application, but rather a superset of what an application has access to, and (b) not in a the same location as the path at which you look it up. The actual `config/environment.js` file executes in Node during the build, and Ember CLI writes its result as `<my-app>/config/environment` into your build for consumption at runtime.
 
 ### String-keyed lookups
 
