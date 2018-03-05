@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const updatePathsForAddon = require('../../lib/utilities/update-paths-for-addon');
 
 const APP_DECLARATIONS = `
 import Ember from 'ember';
@@ -62,10 +63,7 @@ module.exports = {
         }
 
         for (let addon of inRepoAddons) {
-          let addonName = path.basename(addon);
-          paths[addonName] = [`${addon}/addon`];
-          paths[`${addonName}/*`] = [`${addon}/addon/*`];
-          paths[`${appName}/*`].push(`${addon}/app/*`);
+          updatePathsForAddon(paths, path.basename(addon), appName);
         }
 
         paths['*'] = ['types/*'];
