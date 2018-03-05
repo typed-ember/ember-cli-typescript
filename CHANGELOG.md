@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Added
 
+* Blueprint (and tests) to generate in-repo addons configured for TypeScript
 * @ts-ignore component template import.
 
 ### Changed
