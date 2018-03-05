@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Fixed
 
 * Addon components need to manually set their layout property to the imported compiled template.
+* The declaration file for the `<app-name>/config/environment` module now resolves correctly from app code. If you have a version of this file previously generated at `types/<app-name>/config/environment.d.ts`, you'll likely want to move it to `app/config/environment.d.ts`.
 
 ## [1.1.6] - 2018-02-23
 
