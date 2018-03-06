@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.2.0] - 2018-03-05
+
 ### Added
 
 * Blueprint (and tests) to generate in-repo addons configured for TypeScript
@@ -198,7 +200,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...v1.2.0
 [1.1.6]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...v1.1.4
