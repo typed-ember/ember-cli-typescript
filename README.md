@@ -498,7 +498,7 @@ There are two options here, neither of them _great_:
 ```json
 {
   "resolutions": {
-    "**/@types/ember": "2.8.8"
+    "**/@types/ember": "2.8.15"
   }
 }
 ```
