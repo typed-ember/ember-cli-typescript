@@ -1,18 +1,65 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "es6",
     "allowJs": false,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": false,
+    "noImplicitThis": true,
+    "noEmit": true,
     "noEmitOnError": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "strict": true,
+    "strictFunctionTypes": false,
     "baseUrl": ".",
+    "module": "commonjs",
+    "lib": [
+      "es2015",
+      "dom"
+    ],
     "paths": {
-      "dummy/tests/*": ["tests/*"],
-      "dummy/*": ["tests/dummy/app/*", "tests/dummy/lib/in-repo-a/app/*", "tests/dummy/lib/in-repo-b/app/*"],
-      "in-repo-a/*": ["tests/dummy/lib/in-repo-a/addon/*"],
-      "in-repo-b/*": ["tests/dummy/lib/in-repo-b/addon/*"]
+      "dummy/tests/*": [
+        "tests/*"
+      ],
+      "dummy/*": [
+        "tests/dummy/app/*",
+        "app/*",
+        "tests/dummy/lib/in-repo-a/app/*",
+        "tests/dummy/lib/in-repo-b/app/*"
+      ],
+      "ember-cli-typescript": [
+        "addon"
+      ],
+      "ember-cli-typescript/*": [
+        "addon/*"
+      ],
+      "in-repo-a": [
+        "tests/dummy/lib/in-repo-a/addon"
+      ],
+      "in-repo-a/*": [
+        "tests/dummy/lib/in-repo-a/addon/*"
+      ],
+      "in-repo-b": [
+        "tests/dummy/lib/in-repo-b/addon"
+      ],
+      "in-repo-b/*": [
+        "tests/dummy/lib/in-repo-b/addon/*"
+      ],
+      "*": [
+        "types/*"
+      ]
     }
   },
   "include": [
-    "tests"
+    "app",
+    "addon",
+//    "tests",
+    "types",
+    "lib",
+    "blueprints/*/index.ts",
+    "blueprints/*.ts",
+    "index.ts"
+//    "tests/dummy/lib/in-repo-a",
+//    "tests/dummy/lib/in-repo-b"
   ]
 }

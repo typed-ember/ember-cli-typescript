@@ -1,0 +1,1055 @@
+
+declare class Assembler {
+}
+/**
+ * Responsible for packaging Ember.js application.
+ */
+declare class DefaultPackager {
+}
+/**
+ * EmberAddon is used during addon development.
+ */
+declare class EmberAddon extends EmberApp {
+}
+/**
+ * EmberApp is the main class Ember CLI uses to manage the Broccoli trees
+ * for your application. It is very tightly integrated with Broccoli and has
+ * a `toTree()` method you can use to get the entire tree for your application.
+ */
+declare class EmberApp {
+  /**
+   * Initializes the `tests` and `hinting` properties.
+   */
+  _initTestsAndHinting(options: {}): any;
+  /**
+   * Initializes the `project` property from `options.project` or the
+   * closest Ember CLI project from the current working directory.
+   */
+  _initProject(options: {}): any;
+  /**
+   * Initializes the `options` property from the `options` parameter and
+   * a set of default values from Ember CLI.
+   */
+  _initOptions(options: {}): any;
+  /**
+   * Resolves a path relative to the project's root
+   */
+  _resolveLocal(): any;
+  _initVendorFiles(): any;
+  /**
+   * Returns the environment name
+   */
+  static env(): string;
+  /**
+   * Delegates to `broccoli-concat` with the `sourceMapConfig` option set to `options.sourcemaps`.
+   */
+  _concatFiles(tree: any, options: any): void;
+  /**
+   * Checks the result of `addon.isEnabled()` if it exists, defaults to `true` otherwise.
+   */
+  _addonEnabled(addon: Addon): boolean;
+  _addonDisabledByBlacklist(addon: Addon): boolean;
+  _addonDisabledByWhitelist(addon: Addon): boolean;
+  /**
+   * Returns whether an addon should be added to the project
+   */
+  shouldIncludeAddon(addon: Addon): boolean;
+  /**
+   * Calls the included hook on addons.
+   */
+  _notifyAddonIncluded(): any;
+  /**
+   * Calls the importTransforms hook on addons.
+   */
+  _importAddonTransforms(): any;
+  /**
+   * Loads and initializes addons for this project.
+   * Calls initializeAddons on the Project.
+   */
+  initializeAddons(): any;
+  /**
+   * Returns a list of trees for a given type, returned by all addons.
+   */
+  addonTreesFor(type: string): any[];
+  /**
+   * Runs addon post-processing on a given tree and returns the processed tree.
+   */
+  addonPostprocessTree(type: string, tree: Tree): Tree;
+  /**
+   * Runs addon pre-processing on a given tree and returns the processed tree.
+   */
+  addonPreprocessTree(type: string, tree: Tree): Tree;
+  /**
+   * Runs addon lintTree hooks and returns a single tree containing all
+   * their output.
+   */
+  addonLintTree(type: string, tree: Tree): Tree;
+  /**
+   * Imports legacy imports in this.vendorFiles
+   */
+  populateLegacyFiles(): any;
+  /**
+   * Returns the tree for app/index.html
+   */
+  index(): Tree;
+  /**
+   * Filters styles and templates from the `app` tree.
+   */
+  _filterAppTree(): Tree;
+  _configReplacePatterns(): void;
+  /**
+   * Returns the tree for /tests/index.html
+   */
+  testIndex(): Tree;
+  /**
+   * Returns the tree for /public
+   */
+  publicTree(): Tree;
+  _processedAppTree(): void;
+  _processedSrcTree(): void;
+  _processedTemplatesTree(): void;
+  _podTemplatePatterns(): any[];
+  _processedTestsTree(): void;
+  _processedExternalTree(): void;
+  _configTree(): void;
+  _processedEmberCLITree(): void;
+  _testAppConfigTree(): void;
+  /**
+   * Returns the tree for the app and its dependencies
+   */
+  appAndDependencies(): Tree;
+  appTests(): any;
+  /**
+   * Runs the `app`, `tests` and `templates` trees through the chain of addons that produces lint trees.
+   */
+  lintTestsTrees(): any[];
+  _addonInstalled(addonName: string): boolean;
+  /**
+   * Returns the tree for javascript files
+   */
+  javascript(): Tree;
+  /**
+   * Returns the tree for styles
+   */
+  styles(): Tree;
+  /**
+   * Returns the tree for test files
+   */
+  testFiles(): Tree;
+  /**
+   * Returns the tree for the additional assets which are not in
+   * one of the default trees.
+   */
+  otherAssets(): Tree;
+  dependencies(): {};
+  /**
+   * Imports an asset into the application.
+   */
+  import(asset: {}|string, options: {}): any;
+  _import(assetPath: string, options: {}, directory: string, subdirectory: string, extension: string): any;
+  _getAssetPath(asset: {}|string): string|undefined;
+  /**
+   * Returns an array of trees for this application
+   */
+  toArray(): any[];
+  /**
+   * Returns the merged tree for this application
+   */
+  toTree(additionalTrees: any[]): Tree;
+  /**
+   * Returns the content for a specific type (section) for index.html.
+   */
+  contentFor(config: {}, match: RegExp, type: string): string;
+  _contentForTestBodyFooter(content: any[]): any;
+  _contentForHead(content: any[], config: {}): any;
+  _contentForConfigModule(content: any[], config: {}): any;
+  _contentForAppBoot(content: any[], config: {}): any;
+}
+/**
+ * Concatenation strategy.
+ */
+declare class ConcatenationStrategy {
+}
+declare class CLI {
+  name: any;
+  ui: UI;
+  analytics: any;
+  testing: boolean;
+  disableDependencyChecker: boolean;
+  root: any;
+  npmPackage: any;
+  instrumentation: any;
+  run(environment: any): Promise<any>;
+  callHelp(options: any): Promise<any>;
+  logError(error: any): number;
+}
+/**
+ * AddonDiscovery is responsible for collecting information about all of the
+ * addons that will be used with a project.
+ */
+declare class AddonDiscovery {
+  /**
+   * This is one of the primary APIs for this class and is called by addons.
+   * It returns a tree of plain objects that each contain information about a
+   * discovered addon. Each node has `name`, `path`, `pkg` and
+   * `childAddons` properties. The latter is an array containing any addons
+   * discovered from applying the discovery process to that addon.
+   */
+  discoverProjectAddons(): any;
+  /**
+   * Returns an array containing zero or one nodes, depending on whether or not
+   * the passed project is an addon.
+   */
+  discoverFromProjectItself(): any;
+  /**
+   * Returns a tree based on the addons referenced in the provided `pkg` through
+   * the package.json `dependencies` and optionally `devDependencies` collections,
+   * as well as those discovered addons' child addons.
+   */
+  discoverFromDependencies(): any;
+  /**
+   * Returns a tree based on the in-repo addons referenced in the provided `pkg`
+   * through paths listed in the `ember-addon` entry, as well as those discovered
+   * addons' child addons.
+   */
+  discoverInRepoAddons(): any;
+  /**
+   * Returns a tree based on the internal addons that may be defined within the project.
+   * It does this by consulting the projects `supportedInternalAddonPaths()` method, which
+   * is primarily used for middleware addons.
+   */
+  discoverFromInternalProjectAddons(): any;
+  /**
+   * Given a particular path, return undefined if the path is not an addon, or if it is,
+   * a node with the info about the addon.
+   */
+  discoverAtPath(): any;
+  /**
+   * Returns the dependencies from a package.json
+   */
+  dependencies(pkg: {}, excludeDevDeps: boolean): {};
+}
+/**
+ * Root class for an Addon. If your addon module exports an Object this
+ * will be extended from this base class. If you export a constructor (function),
+ * it will **not** extend from this class.
+ */
+declare class Addon {
+  /**
+   * Initializes the addon.  If you override this method make sure and call `this._super.init && this._super.init.apply(this, arguments);` or your addon will not work.
+   */
+  init(parent: Project|Addon, project: Project): any;
+  /**
+   * Returns whether this is using a module unification format.
+   */
+  isModuleUnification(): boolean;
+  /**
+   * Loads all required modules for a build
+   */
+  _requireBuildPackages(): any;
+  /**
+   * Shorthand method for [broccoli-concat](https://github.com/ember-cli/broccoli-concat)
+   */
+  concatFiles(tree: Tree, options: {}): Tree;
+  /**
+   * Allows to mark the addon as developing, triggering live-reload in the project the addon is linked to.
+   */
+  isDevelopingAddon(): boolean;
+  /**
+   * Discovers all child addons of this addon and stores their names and
+   * package.json contents in this.addonPackages as key-value pairs
+   */
+  discoverAddons(): any;
+  /**
+   * Invoke the specified method for each enabled addon.
+   */
+  eachAddonInvoke(methodName: string, args: any[]): any;
+  /**
+   * Invoke the specified method for each of the project's addons.
+   */
+  _eachProjectAddonInvoke(methodName: string, args: any[]): any;
+  /**
+   * Generates a tree for the specified path
+   */
+  treeGenerator(): Tree;
+  /**
+   * Returns a given type of tree (if present), merged with the
+   * application tree. For each of the trees available using this
+   * method, you can also use a direct method called `treeFor[Type]` (eg. `treeForApp`).
+   */
+  treeFor(name: string): Tree;
+  _treeFor(name: string): Tree;
+  /**
+   * Calculates a cacheKey for the given treeType. It is expected to return a
+   * cache key allowing multiple builds of the same tree to simply return the
+   * original tree (preventing duplicate work). If it returns null / undefined
+   * the tree in question will opt out of this caching system.
+   */
+  cacheKeyForTree(treeType: string): string;
+  /**
+   * This method climbs up the hierarchy of addons
+   * up to the host application.
+   */
+  _findHost(): any;
+  /**
+   * This method is called when the addon is included in a build. You
+   * would typically use this hook to perform additional imports
+   */
+  included(parent: EmberApp|EmberAddon): any;
+  /**
+   * Imports an asset into this addon.
+   */
+  import(asset: {}|string, options: {}): any;
+  /**
+   * Returns the tree for all app files
+   */
+  treeForApp(tree: Tree): Tree;
+  /**
+   * Returns the tree for all template files
+   */
+  treeForTemplates(tree: Tree): Tree;
+  treeForSrc(): void;
+  /**
+   * Returns the tree for this addon's templates
+   */
+  treeForAddonTemplates(tree: Tree): Tree;
+  /**
+   * Returns a tree for this addon
+   */
+  treeForAddon(tree: Tree): Tree;
+  /**
+   * Returns the tree for all style files
+   */
+  treeForStyles(tree: Tree): Tree;
+  /**
+   * Returns the tree for all vendor files
+   */
+  treeForVendor(tree: Tree): Tree;
+  /**
+   * Returns the tree for all test support files
+   */
+  treeForTestSupport(tree: Tree): Tree;
+  /**
+   * Returns the tree for all public files
+   */
+  treeForPublic(tree: Tree): Tree;
+  /**
+   * Returns the tree for all test files namespaced to a given addon.
+   */
+  treeForAddonTestSupport(tree: Tree): Tree;
+  /**
+   * Runs the styles tree through preprocessors.
+   */
+  compileStyles(addonStylesTree: Tree): Tree;
+  /**
+   * Looks in the addon/ and addon/templates trees to determine if template files
+   * exists that need to be precompiled.
+   */
+  shouldCompileTemplates(): boolean;
+  /**
+   * Looks in the addon/ and addon/templates trees to determine if template files
+   * exists in the pods format that need to be precompiled.
+   */
+  _shouldCompilePodTemplates(): boolean;
+  /**
+   * Runs the templates tree through preprocessors.
+   */
+  compileTemplates(tree: Tree): Tree;
+  /**
+   * Runs the addon tree through preprocessors.
+   */
+  compileAddon(tree: Tree): Tree;
+  /**
+   * Returns a tree with JSHhint output for all addon JS.
+   */
+  jshintAddonTree(): Tree;
+  /**
+   * Returns a tree containing the addon's js files
+   */
+  addonJsFiles(): Tree;
+  /**
+   * Preprocesses a javascript tree.
+   */
+  preprocessJs(): Tree;
+  /**
+   * Returns a tree with all javascript for this addon.
+   */
+  processedAddonJsFiles(the: Tree): Tree;
+  /**
+   * Returns the module name for this addon.
+   */
+  moduleName(): string;
+  /**
+   * Returns the path for addon blueprints.
+   */
+  blueprintsPath(): string;
+  /**
+   * Augments the applications configuration settings.
+   */
+  config(env: string, baseConfig: {}): {};
+  dependencies(): {};
+  isEnabled(): boolean;
+  /**
+   * Can be used to exclude addons from being added as a child addon.
+   */
+  shouldIncludeChildAddon(childAddon: Addon): boolean;
+  /**
+   * Allows the specification of custom addon commands.
+   * Expects you to return an object whose key is the name of the command and value is the command instance..
+   */
+  includedCommands(): {};
+  /**
+   * Allows addons to define a custom transfrom function that other addons and app can use when using `app.import`.
+   */
+  importTransforms(): {};
+  /**
+   * Pre-process a tree
+   */
+  preprocessTree(type: string, tree: Tree): Tree;
+  /**
+   * Post-process a tree
+   */
+  postprocessTree(type: string, tree: Tree): Tree;
+  /**
+   * This hook allows you to make changes to the express server run by ember-cli.
+   */
+  serverMiddleware(startOptions: {}): any;
+  /**
+   * This hook allows you to make changes to the express server run by testem.
+   */
+  testemMiddleware(app: {}): any;
+  /**
+   * This hook is called before a build takes place.
+   */
+  preBuild(result: {}): any;
+  /**
+   * This hook is called after a build is complete.
+   */
+  postBuild(result: {}): any;
+  /**
+   * This hook is called after the build has been processed and the build files have been copied to the output directory
+   */
+  outputReady(result: {}): any;
+  /**
+   * This hook is called when an error occurs during the preBuild, postBuild or outputReady hooks
+   * for addons, or when the build fails
+   */
+  buildError(error: Error): any;
+  /**
+   * Used to add preprocessors to the preprocessor registry. This is often used by addons like [ember-cli-htmlbars](https://github.com/ember-cli/ember-cli-htmlbars)
+   * and [ember-cli-coffeescript](https://github.com/kimroen/ember-cli-coffeescript) to add a `template` or `js` preprocessor to the registry.
+   */
+  setupPreprocessorRegistry(type: string, registry: any): any;
+  /**
+   * Return value is merged into the **tests** tree. This lets you inject
+   * linter output as test results.
+   */
+  lintTree(treeType: string, tree: Tree): any;
+  /**
+   * Allow addons to implement contentFor method to add string output into the associated `{{content-for 'foo'}}` section in `index.html`
+   */
+  contentFor(type: any, config: any, content: any): any;
+  /**
+   * Returns the absolute path for a given addon
+   */
+  resolvePath(addon: string): string;
+  /**
+   * Returns the addon class for a given addon name.
+   * If the Addon exports a function, that function is used
+   * as constructor. If an Object is exported, a subclass of
+   * `Addon` is returned with the exported hash merged into it.
+   */
+  static lookup(addon: string): Addon;
+}
+/**
+ * AddonsFactory is responsible for instantiating a collection of addons, in the right order.
+ */
+declare class AddonsFactory {
+}
+/**
+ * A blueprint is a bundle of template files with optional install
+ * logic.
+ */
+declare class Blueprint {
+  /**
+   * Hook to specify the path to the blueprint's files. By default this is
+   * `path.join(this.path, 'files)`.
+   */
+  filesPath(options: {}): string;
+  /**
+   * Used to retrieve files for blueprint.
+   */
+  files(): any[];
+  srcPath(file: string): string;
+  /**
+   * Hook for normalizing entity name
+   */
+  normalizeEntityName(entityName: string): Null;
+  /**
+   * Write a status and message to the UI
+   */
+  _writeStatusToUI(chalkColor: Function, keyword: string, message: string): any;
+  _writeFile(info: {}): Promise<any>;
+  /**
+   * Actions lookup
+   */
+  _actions: {};
+  /**
+   * Calls an action.
+   */
+  _commit(result: {}): Promise<any>;
+  /**
+   * Prints warning for pod unsupported.
+   */
+  _checkForPod(): any;
+  _normalizeEntityName(entity: {}): any;
+  _checkInRepoAddonExists(inRepoAddon: string): any;
+  _process(options: {}, beforeHook: Function, process: Function, afterHook: Function): any;
+  install(options: {}): Promise<any>;
+  uninstall(options: {}): Promise<any>;
+  /**
+   * Hook for running operations before install.
+   */
+  beforeInstall(): Promise<any>|null;
+  /**
+   * Hook for running operations after install.
+   */
+  afterInstall(): Promise<any>|null;
+  /**
+   * Hook for running operations before uninstall.
+   */
+  beforeUninstall(): Promise<any>|null;
+  /**
+   * Hook for running operations after uninstall.
+   */
+  afterUninstall(): Promise<any>|null;
+  /**
+   * Hook for adding custom template variables.
+   */
+  locals(options: {}): {}|Promise<any>|null;
+  /**
+   * Hook to add additional or override existing fileMap tokens.
+   */
+  fileMapTokens(): {}|null;
+  _fileMapTokens(options: {}): {};
+  /**
+   * Used to generate fileMap tokens for mapFile.
+   */
+  generateFileMap(fileMapVariables: {}): {};
+  buildFileInfo(destPath: Function, templateVariables: {}, file: string): FileInfo;
+  isUpdate(): boolean;
+  _getFileInfos(files: any[], intoDir: string, templateVariables: {}): any[];
+  /**
+   * Add update files to ignored files
+   */
+  _ignoreUpdateFiles(): any;
+  _getFilesForInstall(targetFiles: any[]): any[];
+  _checkForNoMatch(fileInfos: any[], rawArgs: string): any;
+  processFiles(intoDir: string, templateVariables: {}): any;
+  processFilesForUninstall(intoDir: string, templateVariables: {}): any;
+  mapFile(file: string, locals: any): string;
+  /**
+   * Looks for a __root__ token in the files folder. Must be present for
+   * the blueprint to support addon tokens. The `server`, `blueprints`, and `test`
+   */
+  supportsAddon(): boolean;
+  _generateFileMapVariables(moduleName: string, locals: any, options: {}): {};
+  _locals(options: {}): {};
+  /**
+   * Used to add a package to the project's `package.json`.
+   */
+  addPackageToProject(packageName: string, target: string): Promise<any>;
+  /**
+   * Used to add multiple packages to the project's `package.json`.
+   */
+  addPackagesToProject(packages: any[]): Promise<any>;
+  /**
+   * Used to remove a package from the project's `package.json`.
+   */
+  removePackageFromProject(packageName: string): Promise<any>;
+  /**
+   * Used to remove multiple packages from the project's `package.json`.
+   */
+  removePackagesFromProject(packages: any[]): Promise<any>;
+  /**
+   * Used to add a package to the projects `bower.json`.
+   */
+  addBowerPackageToProject(localPackageName: string, target: string, installOptions: {}): Promise<any>;
+  /**
+   * Used to add an array of packages to the projects `bower.json`.
+   */
+  addBowerPackagesToProject(packages: any[], installOptions: {}): Promise<any>;
+  /**
+   * Used to add an addon to the project's `package.json` and run it's
+   * `defaultBlueprint` if it provides one.
+   */
+  addAddonToProject(options: {}): Promise<any>;
+  /**
+   * Used to add multiple addons to the project's `package.json` and run their
+   * `defaultBlueprint` if they provide one.
+   */
+  addAddonsToProject(options: {}): Promise<any>;
+  /**
+   * Used to retrieve a task with the given name. Passes the new task
+   * the standard information available (like `ui`, `analytics`, `project`, etc).
+   */
+  taskFor(dasherizedName: any): any;
+  /**
+   * Inserts the given content into a file. If the `contentsToInsert` string is already
+   * present in the current contents, the file will not be changed unless `force` option
+   * is passed.
+   */
+  insertIntoFile(pathRelativeToProjectRoot: string, contentsToInsert: string, providedOptions: {}): Promise<any>;
+  /**
+   * Used to retrieve a blueprint with the given name.
+   */
+  lookupBlueprint(dasherizedName: string): Blueprint;
+  static lookup(name: string, options: {}): Blueprint;
+  /**
+   * Loads a blueprint from given path.
+   */
+  static load(blueprintPath: string): Blueprint;
+  static list(options: {}): any[];
+  /**
+   * Files that are renamed when installed into the target directory.
+   * This allows including files in the blueprint that would have an effect
+   * on another process, such as a file named `.gitignore`.
+   */
+  static renamedFiles: any;
+  static ignoredFiles: any;
+  static ignoredUpdateFiles: any;
+  static defaultLookupPaths: any;
+  prepareConfirm(info: FileInfo): Promise<any>;
+  markIdenticalToBeSkipped(info: FileInfo): any;
+  markToBeRemoved(info: FileInfo): any;
+  gatherConfirmationMessages(collection: any[], info: FileInfo): any[];
+  isFile(info: FileInfo): Promise<any>;
+  isIgnored(info: FileInfo): boolean;
+  /**
+   * Combines provided lookup paths with defaults and removes
+   * duplicates.
+   */
+  generateLookupPaths(lookupPaths: any[]): any[];
+  /**
+   * Looks for a __path__ token in the files folder. Must be present for
+   * the blueprint to support pod tokens.
+   */
+  hasPathToken(files: Files): boolean;
+  isValidFile(fileInfo: {}): Promise<any>;
+  isFilePath(fileInfo: {}): Promise<any>;
+  dir(): any[];
+  getDetailedHelpPath(thisPath: string): string;
+}
+/**
+ * Wrapper for the Broccoli [Builder](https://github.com/broccolijs/broccoli/blob/master/lib/builder.js) class.
+ */
+declare class Builder {
+  setupBroccoliBuilder(): any;
+  /**
+   * Determine whether the output path is safe to delete. If the outputPath
+   * appears anywhere in the parents of the project root, the build would
+   * delete the project directory. In this case return `false`, otherwise
+   * return `true`.
+   */
+  canDeleteOutputPath(outputPath: string): boolean;
+  copyToOutputPath(inputPath: string): any;
+  processBuildResult(results: any): Promise<any>;
+  processAddonBuildSteps(buildStep: any, results: any): Promise<any>;
+  build(): Promise<any>;
+  /**
+   * Delegates to the `cleanup` method of the wrapped Broccoli builder.
+   */
+  cleanup(): Promise<any>;
+  /**
+   * Checks for issues in the environment that can't easily be detected until
+   * after a build and issues any necessary deprecation warnings.
+   */
+  checkForPostBuildEnvironmentIssues(): any;
+  finalizeBuild(): any;
+}
+/**
+ * The base class for all CLI commands.
+ */
+declare class Command {
+  /**
+   * The description of what this command does.
+   */
+  description: string;
+  /**
+   * Does this command work everywhere or just inside or outside of projects.
+   */
+  works: string;
+  isWithinProject: boolean;
+  /**
+   * The name of the command.
+   */
+  name: string;
+  /**
+   * An array of aliases for the command
+   */
+  aliases: any[];
+  /**
+   * An array of available options for the command
+   */
+  availableOptions: any[];
+  /**
+   * An array of anonymous options for the command
+   */
+  anonymousOptions: any[];
+  /**
+   * Registers options with command. This method provides the ability to extend or override command options.
+   * Expects an object containing anonymousOptions or availableOptions, which it will then merge with
+   * existing availableOptions before building the optionsAliases which are used to define shorthands.
+   */
+  registerOptions(options: {}): any;
+  /**
+   * Called when command is interrupted from outside, e.g. ctrl+C or process kill
+   * Can be used to cleanup artifacts produced by command and control process exit code
+   */
+  onInterrupt(): Promise<any>|undefined;
+  /**
+   * Looks up for the task and runs
+   * It also keeps the reference for the current active task
+   * Keeping reference for the current task allows to cleanup task on interruption
+   */
+  runTask(name: string, options: {}): Promise<any>;
+  /**
+   * Hook for extending a command before it is run in the cli.run command.
+   * Most common use case would be to extend availableOptions.
+   */
+  beforeRun(): Promise<any>|null;
+  validateAndRun(): Promise<any>;
+  /**
+   * Reports if the given command has a command line option by a given name
+   */
+  hasOption(name: string): boolean;
+  /**
+   * Merges any options with duplicate keys in the availableOptions array.
+   * Used primarily by registerOptions.
+   */
+  mergeDuplicateOption(key: string): {};
+  /**
+   * Normalizes option, filling in implicit values
+   */
+  normalizeOption(option: {}): {};
+  /**
+   * Assigns option
+   */
+  assignOption(option: {}, parsedOptions: {}, commandOptions: {}): boolean;
+  /**
+   * Validates option
+   */
+  validateOption(option: {}): boolean;
+  /**
+   * Parses alias for an option and adds it to optionsAliases
+   */
+  parseAlias(option: {}, alias: {}|string): {};
+  assignAlias(option: any, alias: any): boolean;
+  /**
+   * Validates alias value
+   */
+  validateAlias(alias: {}): boolean;
+  /**
+   * Parses command arguments and processes
+   */
+  parseArgs(commandArgs: {}): {}|null;
+  run(commandArgs: any): any;
+  /**
+   * Prints basic help for the command.
+   */
+  printBasicHelp(): any;
+  /**
+   * Prints detailed help for the command.
+   */
+  printDetailedHelp(): any;
+  getJson(options: {}): {};
+}
+/**
+ * An instance of this class is used for invoking the instrumentation
+ * hooks on addons.
+ */
+declare class Instrumentation {
+  /**
+   * Check if npm and bower installation directories are present,
+   * and raise an error message with instructions on how to proceed.
+   */
+  checkInstallations(): any;
+}
+/**
+ * The Project model is tied to your package.json. It is instantiated
+ * by giving {{#crossLink "Project/closestSync:method"}}{{/crossLink}}
+ * the path to your project.
+ */
+declare class Project {
+  /**
+   * Set when the `Watcher.detectWatchman` helper method finishes running,
+   * so that other areas of the system can be aware that watchman is being used.
+   */
+  _watchmanInfo: any;
+  /**
+   * Sets the name of the bower directory for this project
+   */
+  setupBowerDirectory(): any;
+  /**
+   * Returns the name from package.json.
+   */
+  name(): string;
+  /**
+   * Returns whether or not this is an Ember CLI project.
+   * This checks whether ember-cli is listed in devDependencies.
+   */
+  isEmberCLIProject(): boolean;
+  /**
+   * Returns whether or not this is an Ember CLI addon.
+   */
+  isEmberCLIAddon(): boolean;
+  /**
+   * Returns whether this is using a module unification format.
+   */
+  isModuleUnification(): boolean;
+  /**
+   * Returns the path to the configuration.
+   */
+  configPath(): string;
+  /**
+   * Loads the configuration for this project and its addons.
+   */
+  config(env: string): {};
+  configWithoutCache(env: string): {};
+  /**
+   * Returns the targets of this project, or the default targets if not present.
+   */
+  targets: any;
+  /**
+   * Returns the addons configuration.
+   */
+  getAddonsConfig(env: string, appConfig: {}): {};
+  /**
+   * Returns whether or not the given file name is present in this project.
+   */
+  has(file: string): boolean;
+  /**
+   * Resolves the absolute path to a file synchronously
+   */
+  resolveSync(file: string): string;
+  /**
+   * Calls `require` on a given module from the context of the project. For
+   * instance, an addon may want to require a class from the root project's
+   * version of ember-cli.
+   */
+  require(file: string): {};
+  /**
+   * Returns the dependencies from a package.json
+   */
+  dependencies(pkg: {}, excludeDevDeps: boolean): {};
+  /**
+   * Returns the bower dependencies for this project.
+   */
+  bowerDependencies(bower: string): {};
+  /**
+   * Provides the list of paths to consult for addons that may be provided
+   * internally to this project. Used for middleware addons with built-in support.
+   */
+  supportedInternalAddonPaths(): any;
+  /**
+   * Discovers all addons for this project and stores their names and
+   * package.json contents in this.addonPackages as key-value pairs
+   */
+  discoverAddons(): any;
+  /**
+   * Loads and initializes all addons for this project.
+   */
+  initializeAddons(): any;
+  /**
+   * Returns what commands are made available by addons by inspecting
+   * `includedCommands` for every addon.
+   */
+  addonCommands(): {};
+  /**
+   * Execute a given callback for every addon command.
+   * Example:
+   */
+  eachAddonCommand(callback: Function): any;
+  /**
+   * Path to the blueprints for this project.
+   */
+  localBlueprintLookupPath(): string;
+  /**
+   * Returns a list of paths (including addon paths) where blueprints will be looked up.
+   */
+  blueprintLookupPaths(): any[];
+  /**
+   * Returns a list of addon paths where blueprints will be looked up.
+   */
+  addonBlueprintLookupPaths(): any[];
+  /**
+   * Reloads package.json
+   */
+  reloadPkg(): {};
+  /**
+   * Re-initializes addons.
+   */
+  reloadAddons(): any;
+  /**
+   * Find an addon by its name
+   */
+  findAddonByName(name: string): Addon;
+  /**
+   * Generate test file contents.
+   */
+  generateTestFile(moduleName: string, tests: Object[]): string;
+  /**
+   * Returns a new project based on the first package.json that is found
+   * in `pathName`.
+   */
+  static closestSync(pathName: string, _ui: UI): Project;
+  /**
+   * Returns a new project based on the first package.json that is found
+   * in `pathName`, or the nullProject.
+   */
+  static projectOrnullProject(_ui: UI): Project;
+  /**
+   * Returns the project root based on the first package.json that is found
+   */
+  static getProjectRoot(): string;
+}
+/**
+ * This addon is used to serve the requested assets and set the required response
+ * headers. It runs after broccoli-watcher addon.
+ */
+declare class ServeFilesAddon {
+  /**
+   * Interrupt comamd with an exit code
+   * Called when the process is interrupted from outside, e.g. CTRL+C or `process.kill()`
+   */
+  onInterrupt(): any;
+}
+/**
+ * This addon is used to set the default response headers for the assets that will be
+ * served by the next middleware. It waits for the watcher promise to resolve before
+ * setting the response headers.
+ */
+declare class WatcherAddon {
+}
+/**
+ * This addon is used to serve the `index.html` file at every requested
+ * URL that begins with `rootURL` and is expecting `text/html` output.
+ */
+declare class HistorySupportAddon {
+}
+/**
+ * This addon is used to serve the QUnit or Mocha test runner
+ * at `baseURL + '/tests'`.
+ */
+declare class TestsServerAddon {
+}
+/**
+ * This addon is used to register a custom AMD transform for app and addons to use.
+ */
+declare class AmdTransformAddon {
+}
+declare class NpmTask {
+  /**
+   * Exit silently
+   */
+  onInterrupt(): any;
+  /**
+   * This method will determine what package manager (npm or yarn) should be
+   * used to install the npm dependencies.
+   */
+  findPackageManager(): Promise<any>;
+}
+/**
+ * On windows users will have a much better experience if symlinks are enabled
+ * an usable. This object when queried informs windows users, if they can
+ * improve there build performance, and how.
+ * > Windows vista: nothing we can really do, so we fall back to junctions for folders + copying of files
+ * <= Windows vista: symlinks are available but using them is somewhat tricky
+ * * if the users is an admin, the process needed to have been started with elevated privs
+ * * if the user is not an admin, a specific setting needs to be enabled
+ * <= Windows 10 Insiders build 14972
+ * * if developer mode is enabled, symlinks "just work"
+ * * https://blogs.windows.com/buildingapps/2016/12/02/symlinks-windows-10
+ * ```js
+ * let checker = WindowsSymlinkChecker;
+ * let {
+ * windows,
+ * elevated
+ * } = await = checker.checkIfSymlinksNeedToBeEnabled(); // aslso emits helpful warnings
+ * ```
+ */
+declare class WindowsSymlinkChecker {
+  /**
+   * Exit silently
+   */
+  onInterrupt(): any;
+  /**
+   * Returns a normalized url given a string.
+   * Returns an empty string if `null`, `undefined` or an empty string are passed
+   * in.
+   */
+  normalizeUrl(Raw: string): string;
+  /**
+   * Converts Javascript Object to a string.
+   * Returns an empty object string representation if a "falsy" value is passed
+   * in.
+   */
+  convertObjectToString(Any: {}): string;
+  /**
+   * Returns the <base> tag for index.html.
+   */
+  calculateBaseTag(baseURL: string, locationType: string): string;
+  /**
+   * Inserts the given content into a file. If the `contentsToInsert` string is already
+   * present in the current contents, the file will not be changed unless `force` option
+   * is passed.
+   */
+  insertIntoFile(pathRelativeToProjectRoot: string, contentsToInsert: string, providedOptions: {}): Promise<any>;
+  /**
+   * Returns true if and only if the given directory has a yarn.lock file or is a child of a
+   * yarn workspace root.
+   */
+  isYarnProject(thePath: string): boolean;
+  /**
+   * Checks if the string starts with a number.
+   */
+  startsWithNumber(): boolean;
+  /**
+   * Checks if project name is valid.
+   */
+  validProjectName(name: string): boolean;
+  /**
+   * Drops all the interruption handlers and disables an ability to add new one
+   */
+  release(): any;
+  /**
+   * Add process interruption handler
+   */
+  addHandler(cb: Function): any;
+  /**
+   * Remove process interruption handler
+   */
+  removeHandler(cb: Function): any;
+  /**
+   * Sets up listeners for interruption signals
+   */
+  setupSignalsTrap(): any;
+  /**
+   * Removes interruption signal listeners and tears down capture-exit
+   */
+  teardownSignalsTrap(): any;
+  /**
+   * Suppresses "Terminate batch job (Y/N)" confirmation on Windows
+   */
+  trapWindowsSignals(): any;
+  checkIfSymlinksNeedToBeEnabled(): Promise<Object>;
+  /**
+   * sets up a WindowsSymlinkChecker
+   */
+  _setup(UI: UI): WindowsSymlinkChecker;
+  /**
+   * Uses the eon-old command NET SESSION to determine whether or not the
+   * current user has elevated rights (think sudo, but Windows).
+   */
+  _checkForElevatedRights(ui: {}): {};
+}
