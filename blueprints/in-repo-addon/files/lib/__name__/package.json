@@ -2,5 +2,8 @@
   "name": "<%= dasherizedModuleName %>",
   "keywords": [
     "ember-addon"
-  ]
+  ],
+  "devDependencies": {
+    "ember-cli-typescript": "*"
+  }
 }
