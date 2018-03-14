@@ -42,6 +42,9 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
           "keywords": [
             "ember-addon",
           ],
+          "devDependencies": {
+            "ember-cli-typescript": "*"
+          }
         });
 
         expect(fs.readJsonSync('package.json')['ember-addon']).to.deep.equal({
