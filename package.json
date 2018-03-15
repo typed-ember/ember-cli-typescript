@@ -55,6 +55,7 @@
     "resolve": "^1.5.0",
     "rimraf": "^2.6.2",
     "rsvp": "^4.8.1",
+    "sane": "^2.4.1",
     "silent-error": "^1.1.0",
     "symlink-or-copy": "^1.1.8",
     "walk-sync": "^0.3.2"
