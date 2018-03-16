@@ -430,7 +430,7 @@ If you're using [ember-browserify], you're used to writing imports like this:
 import MyModule from 'npm:my-module';
 ```
 
-If the `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, hwowever:
+If the `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however:
 
 ```json
 {
