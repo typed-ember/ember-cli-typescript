@@ -100,8 +100,8 @@ const app = new EmberApp(defaults, {
 
 (Note that this _will_ noticeably slow down your app rebuilds.)
 
-You also need some lines in `tsconfig.json`; a new, blank project will have the right content automatically. Either run
-`ember generate ember-cli-typescript` or verify the file contents manually towards [the file in the blueprint](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json)
+If you're updating from an older version of the addon, you may also need to update your `tsconfig.json`. (Current versions generate the correct config at installation.) Either run
+`ember generate ember-cli-typescript` or verify you have the same sourcemap settings in your `tscsonfig.json` that appear in [the blueprint](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json).
 
 ## Using TypeScript with Ember effectively
 
