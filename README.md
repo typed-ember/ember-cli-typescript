@@ -120,7 +120,19 @@ If you are porting an existing app to TypeScript, you can install this addon and
 
 Some specific tips for success on the technical front:
 
-* Use the *strictest* strictness settings that our typings allow. While it may be tempting to start with the *loosest* strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process – getting it type-checking with every new strictness setting you enable! – rather than something you do just once.
+* Use the *strictest* strictness settings that our typings allow. While it may be tempting to start with the *loosest* strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process – getting it type-checking with every new strictness setting you enable! – rather than something you do just once. The only strictness setting you should turn *off* is `strictFunctionTypes`, which our current type definitions do not support. The recommended *strictness* settings in your `"compilerOptions"` hash:
+
+    ```
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    ```
 
 * Make liberal use of `any` for things you don't have types for as you go, and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it."
 
