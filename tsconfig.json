@@ -4,6 +4,8 @@
     "allowJs": false,
     "moduleResolution": "node",
     "noEmitOnError": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
     "baseUrl": ".",
     "paths": {
       "dummy/tests/*": ["tests/*"],
