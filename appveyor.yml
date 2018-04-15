@@ -18,10 +18,10 @@ install:
   - rename C:\Python27 Python27hidden
   # Typical npm stuff.
   - md C:\nc
-  - yarn --ignore-optional
+  - yarn
 
 cache:
- - "%LOCALAPPDATA%\\Yarn"
+#  - "%LOCALAPPDATA%\\Yarn"
 
 # Post-install test scripts.
 test_script:
