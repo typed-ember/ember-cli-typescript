@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitThis": true,
+    "noEmitOnError": false,
+    "noEmit": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "baseUrl": ".",
+    "module": "es6",
+    "paths": {
+      "ts1/tests/*": [
+        "tests/*"
+      ],
+      "ts1/*": [
+        "app/*",
+        "lib/header-additions/app/*",
+        "lib/test-shims/app/*"
+      ],
+      "header-additions": [
+        "lib/header-additions/addon"
+      ],
+      "header-additions/*": [
+        "lib/header-additions/addon/*"
+      ],
+      "test-shims": [
+        "lib/test-shims/addon"
+      ],
+      "test-shims/*": [
+        "lib/test-shims/addon/*"
+      ],
+      "*": [
+        "types/*"
+      ]
+    }
+  },
+  "include": [
+    "app",
+    "tests",
+    "types",
+    "lib/header-additions",
+    "lib/test-shims"
+  ]
+}
