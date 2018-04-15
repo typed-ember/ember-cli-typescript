@@ -17,7 +17,7 @@ describe('ember-cli-addon-tests (slow)', function() {
     }
     return app.create('ts1', appCreateOptions)
       .then(() => {
-        return app.run('npm', 'install');
+        return app.run('yarn');
       })
       .then(function() {
         return app.startServer();
