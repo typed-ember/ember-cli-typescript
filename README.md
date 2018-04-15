@@ -76,7 +76,7 @@ Support for (mostly in the form of documentation!) for the changes in Ember 3.1 
 
 ### `tsconfig.json`
 
-We generate a good default [`tsconfig.json`][blueprint], which will usually make everything _Just Work_. In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file.
+We generate a good default [`tsconfig.json`][blueprint], which will usually make everything _Just Work™_. In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file.
 
 However, there are a few things worth noting if you're already familiar with TypeScript and looking to make further or more advanced customizations (i.e. _most_ users can just ignore this section!):
 
@@ -116,13 +116,19 @@ In addition to the points made below, you may find the [Typing Your Ember][typin
 
 ### Incremental adoption
 
-If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your (small) wins with your team, especially if some people are not convinced yet. We would also love to hear your stories!
+If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your wins – even if they're small! – with your team, especially if some people are not convinced yet. We would also love to hear your stories!
 
 Some specific tips for success on the technical front:
 
-* Start with the _least_ strict "strictness" settings (which is what the default compiler options are set to) to begin, and only tighten them down iteratively.
-* Make liberal use of `any` for things you don't have types for as you go, and come back and fill them in later.
-* A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere.
+* Use the *strictest* strictness settings that our typings allow. While it may be tempting to start with the *loosest* strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process – getting it type-checking with every new strictness setting you enable! – rather than something you do just once.
+
+* Make liberal use of `any` for things you don't have types for as you go, and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it."
+
+* A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update *tons* of other places in your app) when you type them later in the process.
+
+* Set `"noEmitOnError": true` in the `"compilerOptions"` hash in your `tsconfig.json` – it will help a lot if you can be sure that for the parts of your app you *have* added types to are still correct. And you'll get nice feedback *immediately* when you have type errors that way!
+
+    ![type errors in your build!](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif "example of a build error during live reload")
 
 You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
 
