@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+### Added
+
+* Now supports failing the build when there are type errors.
+
 ### Changed
 
 * Clarified instructions for sourcemaps.
