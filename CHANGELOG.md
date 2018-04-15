@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+### Changed
+
+* Clarified instructions for sourcemaps.
+
+### Fixed
+
+* TypeScript no longer churns on every change in the `tmp` directory.
+* Make sure ember-cli-typescript is a dev dependency when generating in-repo-addons, so their TypeScript gets built correctly.
+* Eliminated some lint errors in the build.
+
 ## [1.2.1] - 2018-03-14
 
 ### Fixed
@@ -17,8 +27,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 ### Added
 
 * Blueprint (and tests) to generate in-repo addons configured for TypeScript
-* @ts-ignore component template import.
-* -addon blueprints for all the things to generate .ts files in `app/` in an addon.
+* Add `// @ts-ignore` component template import.
+* `-addon` blueprints for all the things to generate .ts files in `app/` in an addon.
 
 ### Changed
 
