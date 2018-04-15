@@ -6,6 +6,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 * [Setup and Configuration](#setup-and-configuration)
   * [Ember Support](#ember-support)
+      * [:construction: Ember 3.1](#construction-ember-31)
   * [`tsconfig.json`](#tsconfigjson)
   * [Sourcemaps](#sourcemaps)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
@@ -66,6 +67,12 @@ In addition to ember-cli-typescript, we make the following changes to your proje
 ### Ember support
 
 ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the 2.18 LTS, the current release, the beta branch, and the canary branch. It's also in active use in several large applications. Any breakage for upcoming releases _should_ be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
+
+#### :construction: Ember 3.1
+
+Support for (mostly in the form of documentation!) for the changes in Ember 3.1 is inbound shortly. You *can* use this addon with Ember 3.1, but the docs are not yet updated, and some of the patterns recommended below will actually cause your app to break. :grimacing: Come ping us in #topic-typescript in the [Ember Community Slack][Slack] and we'll help you. (And updated docs for 3.1 are inbound *soon*!)
+
+[Slack]: https://ember-community-slackin.herokuapp.com
 
 ### `tsconfig.json`
 
@@ -628,7 +635,7 @@ import { task } from 'ember-concurrency';
 
 You'll see an error, because there aren't yet type definitions for it. You may see the same with some addons as well. **These won't stop the build from working;** they just mean TypeScript doesn't know where to find those.
 
-Writing these missing type definitions is a great way to pitch in! Jump in \#topic-typescript on the Ember Slack and we'll be happy to help you.
+Writing these missing type definitions is a great way to pitch in! Jump in \#topic-typescript on the [Ember Slack][Slack] and we'll be happy to help you.
 
 ### Type safety when invoking actions
 
