@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Added
 
-* Now supports failing the build when there are type errors.
+* The addon now supports failing the build when there are type errors, using `"noEmitOnError": true` in `tsconfig.json`.
 
 ### Changed
 
