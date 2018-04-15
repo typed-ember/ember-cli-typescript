@@ -16,6 +16,7 @@ to ask for help in the [Ember Community Slack] ([get an invite]).
 
 (Someday soon this list should get _long and awesome_! Help us make it happen!)
 
+* [ember-test-friendly-error-handler](https://github.com/rwjblue/ember-test-friendly-error-handler)
 * [True Myth](https://github.com/chriskrycho/true-myth)
 
 ## DefinitelyTyped (`@types`)
