@@ -6,7 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
-## [1.3.0-beta.2]
+### [1.3.0-beta.4]
+
+* Updated the generated `tsconfig.json` to use the maximum strictness we can with Ember's typings.
+
+## [1.3.0-beta.3]
 
 ### Fixed
 
