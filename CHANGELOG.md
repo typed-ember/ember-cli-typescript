@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-* The synchronization tweak made in 1.3.0-beta.3 now works properly on Windows.
+* The synchronization tweak made in 1.3.0-beta.2 now works properly on Windows.
 
 ## [1.3.0-beta.2]
 
