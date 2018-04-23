@@ -13,7 +13,6 @@ module.exports = {
 
     if (includer === this.app) {
       this.compiler = new IncrementalTypescriptCompiler(this.app, this.project);
-      this.compiler.launch();
     }
   },
 
