@@ -5,6 +5,7 @@ const path = require('path');
 const helpers = require('ember-cli-blueprint-test-helpers/helpers');
 const chaiHelpers = require('ember-cli-blueprint-test-helpers/chai');
 const Blueprint = require('ember-cli/lib/models/blueprint');
+const Project = require('ember-cli/lib/models/project');
 
 const ects = require('../../blueprints/ember-cli-typescript');
 
@@ -128,6 +129,108 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const emberDataCatchallTypes = file('types/ember-data.d.ts');
         expect(emberDataCatchallTypes).not.to.exist;
       });
+  });
+
+  describe('module unification', function() {
+    const originalIsMU = Project.prototype.isModuleUnification;
+
+    beforeEach(function() {
+      Project.prototype.isModuleUnification = () => true;
+    });
+
+    afterEach(function() {
+      Project.prototype.isModuleUnification = originalIsMU;
+    });
+
+    it('basic app', function() {
+      const args = ['ember-cli-typescript'];
+
+      return helpers
+        .emberNew()
+        .then(() => helpers.emberGenerate(args))
+        .then(() => {
+          const pkg = file('package.json');
+          expect(pkg).to.exist;
+
+          const pkgJson = JSON.parse(pkg.content);
+          expect(pkgJson.scripts.prepublishOnly).to.be.undefined;
+          expect(pkgJson.scripts.postpublish).to.be.undefined;
+          expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+          expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
+
+          const tsconfig = file('tsconfig.json');
+          expect(tsconfig).to.exist;
+
+          const tsconfigJson = JSON.parse(tsconfig.content);
+          expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
+            'my-app/tests/*': ['tests/*'],
+            'my-app/src/*': ['src/*'],
+            '*': ['types/*'],
+          });
+
+          expect(tsconfigJson.compilerOptions.inlineSourceMap).to.equal(true);
+          expect(tsconfigJson.compilerOptions.inlineSources).to.equal(true);
+
+          expect(tsconfigJson.include).to.deep.equal(['src', 'tests', 'types']);
+
+          const projectTypes = file('types/my-app/index.d.ts');
+          expect(projectTypes).to.exist;
+          expect(projectTypes).to.include(ects.APP_DECLARATIONS);
+
+          const environmentTypes = file('config/environment.d.ts');
+          expect(environmentTypes).to.exist;
+
+          const emberDataCatchallTypes = file('types/ember-data.d.ts');
+          expect(emberDataCatchallTypes).to.exist;
+        });
+    });
+
+    it('basic addon', function() {
+      const args = ['ember-cli-typescript'];
+
+      return helpers
+        .emberNew({ target: 'addon' })
+        .then(() => helpers.emberGenerate(args))
+        .then(() => {
+          const pkg = file('package.json');
+          expect(pkg).to.exist;
+
+          const pkgJson = JSON.parse(pkg.content);
+          expect(pkgJson.scripts.prepublishOnly).to.equal('ember ts:precompile');
+          expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
+          expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
+
+          const tsconfig = file('tsconfig.json');
+          expect(tsconfig).to.exist;
+
+          const tsconfigJson = JSON.parse(tsconfig.content);
+          expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
+            'dummy/tests/*': ['tests/*'],
+            'dummy/src/*': ['tests/dummy/src/*'],
+            'my-addon/src/*': ['src/*'],
+            '*': ['types/*'],
+          });
+
+          expect(tsconfigJson.include).to.deep.equal(['src', 'tests', 'types']);
+
+          const projectTypes = file('types/dummy/index.d.ts');
+          expect(projectTypes).to.exist;
+          expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
+
+          const environmentTypes = file('tests/dummy/config/environment.d.ts');
+          expect(environmentTypes).to.exist;
+
+          const emberDataCatchallTypes = file('types/ember-data.d.ts');
+          expect(emberDataCatchallTypes).not.to.exist;
+        });
+    });
   });
 
   it('in-repo addons', function() {
