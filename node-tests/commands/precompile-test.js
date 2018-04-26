@@ -47,4 +47,26 @@ describe('Acceptance: ts:precompile command', function() {
       expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
     });
   });
+
+  describe('module unification', function() {
+    it('generates .js and .d.ts files from the src tree', function() {
+      fs.ensureDirSync('src');
+      fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
+
+      let tsconfig = fs.readJSONSync('tsconfig.json');
+      tsconfig.include.push('src');
+      fs.writeJSONSync('tsconfig.json', tsconfig);
+
+      return ember(['ts:precompile'])
+        .then(() => {
+          let declaration = file('src/test-file.d.ts');
+          expect(declaration).to.exist;
+          expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+
+          let transpiled = file('src/test-file.js');
+          expect(transpiled).to.exist;
+          expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
+        });
+    });
+  });
 });

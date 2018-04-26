@@ -32,7 +32,10 @@ module.exports = {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
-    let includes = ['app', isAddon && 'addon', 'tests', 'types'].concat(inRepoAddons).filter(Boolean);
+    let isMU = this._detectMU();
+    let includes = isMU ? ['src'] : ['app', isAddon && 'addon'].filter(Boolean);
+
+    includes = includes.concat(['tests', 'types']).concat(inRepoAddons);
 
     // Mirage is already covered for addons because it's under `tests/`
     if (hasMirage && !isAddon) {
@@ -51,15 +54,24 @@ module.exports = {
           paths[`${appName}/mirage/*`] = [`${isAddon ? 'tests/dummy/' : ''}mirage/*`];
         }
 
-        if (isAddon) {
-          paths[`${appName}/*`] = ['tests/dummy/app/*', 'app/*'];
+        if (isMU) {
+          if (isAddon) {
+            paths[`${appName}/src/*`] = ['tests/dummy/src/*'];
+            paths[`${dasherizedName}/src/*`] = ['src/*'];
+          } else {
+            paths[`${appName}/src/*`] = ['src/*'];
+          }
         } else {
-          paths[`${appName}/*`] = ['app/*'];
-        }
+          if (isAddon) {
+            paths[`${appName}/*`] = ['tests/dummy/app/*', 'app/*'];
+          } else {
+            paths[`${appName}/*`] = ['app/*'];
+          }
 
-        if (isAddon) {
-          paths[dasherizedName] = ['addon'];
-          paths[`${dasherizedName}/*`] = ['addon/*'];
+          if (isAddon) {
+            paths[dasherizedName] = ['addon'];
+            paths[`${dasherizedName}/*`] = ['addon/*'];
+          }
         }
 
         for (let addon of inRepoAddons) {
@@ -79,11 +91,21 @@ module.exports = {
   },
 
   fileMapTokens(/*options*/) {
+    let isMU = this._detectMU();
+
     // Return custom tokens to be replaced in your files.
     return {
       __app_name__(options) {
         return options.inAddon ? 'dummy' : options.dasherizedModuleName;
       },
+
+      __config_root__(options) {
+        if (isMU) {
+          return options.inAddon ? 'tests/dummy' : '.';
+        } else {
+          return options.inAddon ? 'tests/dummy/app' : 'app';
+        }
+      }
     };
   },
 
@@ -136,6 +158,10 @@ module.exports = {
     }
 
     return files;
+  },
+
+  _detectMU() {
+    return this.project.isModuleUnification && this.project.isModuleUnification();
   },
 
   _installPrecompilationHooks() {
