@@ -29,7 +29,7 @@ module.exports = {
   shouldIncludeChildAddon(addon) {
     // For testing, we have dummy in-repo addons set up, but e-c-ts doesn't depend on them;
     // its dummy app does. Otherwise we'd have a circular dependency.
-    return addon.name !== 'in-repo-a' && addon.name !== 'in-repo-b';
+    return !['in-repo-a', 'in-repo-b', 'in-repo-c'].includes(addon.name);
   },
 
   setupPreprocessorRegistry(type, registry) {
