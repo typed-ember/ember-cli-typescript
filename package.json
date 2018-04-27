@@ -62,7 +62,7 @@
   "devDependencies": {
     "@types/ember": "2.8.13",
     "@types/ember-qunit": "^3.0.1",
-    "@types/node": "*",
+    "@types/node": "^9.6.5",
     "@types/qunit": "^2.0.31",
     "broccoli-asset-rev": "^2.6.0",
     "ember-cli": "~2.18.2",
