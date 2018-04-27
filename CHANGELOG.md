@@ -6,7 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
-### [1.3.0-beta.4]
+## [1.3.0-beta.5]
+
+### Fixed
+
+* Simplified the file watching implementation, fixing some odd behavior when trees of files were deleted or moved all at once.
+
+## [1.3.0-beta.4]
 
 * Updated the generated `tsconfig.json` to use the maximum strictness we can with Ember's typings.
 
@@ -238,7 +244,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.4...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.5...HEAD
+[1.3.0-beta.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.4...v1.3.0-beta.5
 [1.3.0-beta.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.3...v1.3.0-beta.4
 [1.3.0-beta.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.2...v1.3.0-beta.3
 [1.3.0-beta.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.1...v1.3.0-beta.2
