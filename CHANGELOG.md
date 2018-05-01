@@ -6,43 +6,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
-## [1.3.0-beta.5]
+## [1.3.0] - 2018-05-01
 
 ### Fixed
 
 * Simplified the file watching implementation, fixing some odd behavior when trees of files were deleted or moved all at once.
+* Synchronization between tsc and the broccoli build process has been improved, reducing spurious rebuilds.
+* TypeScript no longer churns on every change in the `tmp` directory.
+* Make sure ember-cli-typescript is a dev dependency when generating in-repo-addons, so their TypeScript gets built correctly.
+* Eliminated some lint errors in the build.
 
-## [1.3.0-beta.4]
+### Changed
 
 * Updated the generated `tsconfig.json` to use the maximum strictness we can with Ember's typings.
-
-## [1.3.0-beta.3]
-
-### Fixed
-
-* The synchronization tweak made in 1.3.0-beta.2 now works properly on Windows.
-
-## [1.3.0-beta.2]
-
-### Fixed
-
-* Synchronization between tsc and the broccoli build process has been improved, reducing spurious rebuilds.
-
-## [1.3.0-beta.1]
+* Clarified instructions for sourcemaps.
 
 ### Added
 
 * The addon now supports failing the build when there are type errors, using `"noEmitOnError": true` in `tsconfig.json`.
-
-### Changed
-
-* Clarified instructions for sourcemaps.
-
-### Fixed
-
-* TypeScript no longer churns on every change in the `tmp` directory.
-* Make sure ember-cli-typescript is a dev dependency when generating in-repo-addons, so their TypeScript gets built correctly.
-* Eliminated some lint errors in the build.
 
 ## [1.2.1] - 2018-03-14
 
@@ -244,12 +225,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.5...HEAD
-[1.3.0-beta.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.4...v1.3.0-beta.5
-[1.3.0-beta.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.3...v1.3.0-beta.4
-[1.3.0-beta.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.2...v1.3.0-beta.3
-[1.3.0-beta.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0-beta.1...v1.3.0-beta.2
-[1.3.0-beta.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.1...v1.3.0-beta.1
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...v1.2.0
 [1.1.6]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.5...v1.1.6
