@@ -48,6 +48,7 @@
     "ember-cli-valid-component-name": "^1.0.0",
     "ember-cli-version-checker": "^2.1.0",
     "ember-router-generator": "^1.2.3",
+    "escape-string-regexp": "^1.0.5",
     "execa": "^0.9.0",
     "exists-sync": "^0.0.4",
     "fs-extra": "^5.0.0",
