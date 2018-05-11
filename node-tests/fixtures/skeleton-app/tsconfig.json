@@ -5,11 +5,16 @@
     "moduleResolution": "node",
     "noEmitOnError": true,
     "baseUrl": ".",
+    "rootDirs": [".", "types/generated"],
     "paths": {
-      "skeleton-app/*": ["app/*"]
+      "skeleton-app/*": [
+        "app/*",
+        "types/generated/app/*"
+      ]
     }
   },
   "include": [
-    "app"
+    "app",
+    "types"
   ]
 }

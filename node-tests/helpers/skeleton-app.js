@@ -5,6 +5,7 @@ const path = require('path');
 const mktemp = require('mktemp');
 const execa = require('execa');
 const EventEmitter = require('events').EventEmitter;
+const debug = require('debug')('skeleton-app');
 
 module.exports = class SkeletonApp {
   constructor() {
@@ -82,8 +83,21 @@ class WatchedBuild extends EventEmitter {
     this._ember = ember;
     this._ember.stdout.on('data', (data) => {
       let output = data.toString();
+
+      debug(output.trim());
+
       if (output.includes('Build successful')) {
         this.emit('did-rebuild');
+      }
+    });
+
+    this._ember.stderr.on('data', (data) => {
+      let output = data.toString();
+
+      debug(output.trim());
+
+      if (output.includes('Build Error')) {
+        this.emit('did-error', new Error(output));
       }
     });
 
