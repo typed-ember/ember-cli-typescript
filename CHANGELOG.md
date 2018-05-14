@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.3.1] - 2018-05-14
+
+### Fixed
+
+* No longer requires TypeScript before it has been installed.
+* Properly ignore the root across platforms.
+
 ## [1.3.0] - 2018-05-01
 
 ### Fixed
@@ -226,6 +233,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
 [unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0...HEAD
+[1.3.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...v1.2.0
