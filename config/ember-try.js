@@ -1,6 +1,5 @@
 'use strict';
 
-// eslint-disable no-unpublished-require
 const getChannelURL = require('ember-source-channel-url');
 
 module.exports = function() {
