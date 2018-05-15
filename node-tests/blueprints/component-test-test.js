@@ -38,19 +38,9 @@ describe('Blueprint: component-test', function() {
       });
     });
 
-    describe('with usePods=true', function() {
-      beforeEach(function() {
-        fs.writeFileSync(
-          '.ember-cli',
-          `{
-          "disableAnalytics": false,
-          "usePods": true
-        }`
-        );
-      });
-
+    describe('with --pod', function() {
       it('component-test x-foo', function() {
-        return emberGenerateDestroy(['component-test', 'x-foo'], _file => {
+        return emberGenerateDestroy(['--pod', 'component-test', 'x-foo'], _file => {
           expect(_file('tests/integration/components/x-foo/component-test.ts')).to.equal(
             fixture('component-test/default.ts')
           );
