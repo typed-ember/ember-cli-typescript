@@ -1,3 +1,4 @@
+/* eslint-env node */
 'use strict';
 
 var stringUtil  = require('ember-cli-string-utils');
