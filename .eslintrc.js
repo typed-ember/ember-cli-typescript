@@ -14,9 +14,10 @@ module.exports = {
     // node files
     {
       files: [
+        'ember-cli-build.js',
         'index.js',
         'testem.js',
-        'ember-cli-build.js',
+        'blueprints/*/index.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
         'lib/**/*.js',
@@ -34,7 +35,7 @@ module.exports = {
       plugins: ['node'],
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
-        'ember/avoid-leaking-state-in-ember-objects': 'off'
+        'ember/avoid-leaking-state-in-ember-objects': 'off',
       }),
     },
 
@@ -54,8 +55,8 @@ module.exports = {
         mocha: true,
       },
       rules: {
-        'node/no-unpublished-require': 'off'
-      }
+        'node/no-unpublished-require': 'off',
+      },
     },
   ],
 };
