@@ -24,6 +24,9 @@ env:
 
 matrix:
   fast_finish: true
+  allow_failures:
+    - env: EMBER_TRY_SCENARIO=typescript-beta
+    - env: EMBER_TRY_SCENARIO=ember-cli-beta
 
 before_install:
   - bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
