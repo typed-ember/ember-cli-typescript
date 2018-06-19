@@ -71,7 +71,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(tsconfigJson.compilerOptions.inlineSourceMap).to.equal(true);
         expect(tsconfigJson.compilerOptions.inlineSources).to.equal(true);
 
-        expect(tsconfigJson.include).to.deep.equal(['app', 'tests', 'types']);
+        expect(tsconfigJson.include).to.deep.equal(['app/**/*', 'tests/**/*', 'types/**/*']);
 
         const projectTypes = file('types/my-app/index.d.ts');
         expect(projectTypes).to.exist;
@@ -116,7 +116,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           '*': ['types/*'],
         });
 
-        expect(tsconfigJson.include).to.deep.equal(['app', 'addon', 'tests', 'types']);
+        expect(tsconfigJson.include).to.deep.equal(['app/**/*', 'addon/**/*', 'tests/**/*', 'types/**/*']);
 
         const projectTypes = file('types/dummy/index.d.ts');
         expect(projectTypes).to.exist;
@@ -159,7 +159,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           '*': ['types/*'],
         });
 
-        expect(json.include).to.deep.equal(['app', 'tests', 'types', 'lib/my-addon-1', 'lib/my-addon-2']);
+        expect(json.include).to.deep.equal(['app/**/*', 'tests/**/*', 'types/**/*', 'lib/my-addon-1/**/*', 'lib/my-addon-2/**/*']);
 
         const projectTypes = file('types/my-app/index.d.ts');
         expect(projectTypes).to.exist;
@@ -194,7 +194,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           '*': ['types/*'],
         });
 
-        expect(json.include).to.deep.equal(['app', 'tests', 'types', 'mirage']);
+        expect(json.include).to.deep.equal(['app/**/*', 'tests/**/*', 'types/**/*', 'mirage/**/*']);
       });
   });
 
@@ -224,7 +224,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           '*': ['types/*'],
         });
 
-        expect(json.include).to.deep.equal(['app', 'addon', 'tests', 'types']);
+        expect(json.include).to.deep.equal(['app/**/*', 'addon/**/*', 'tests/**/*', 'types/**/*']);
       });
   });
 
