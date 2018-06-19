@@ -18,6 +18,7 @@
     "inlineSourceMap": true,
     "inlineSources": true,
     "baseUrl": ".",
+    "rootDirs": [".", "types/generated"],
     "module": "es6",
     "paths": <%= pathsFor(dasherizedPackageName) %>
   },

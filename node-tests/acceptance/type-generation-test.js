@@ -20,25 +20,25 @@ describe('Acceptance: type generation', function() {
     this.app.teardown();
   });
 
-  // it('creates a types/generated directory and populates it before typechecking', co.wrap(function*() {
-  //   this.app.writeFile('app/foo.test', 'hello');
-  //   this.app.writeFile('app/app.ts', stripIndent`
-  //     import { content as foo } from './foo';
-  //     console.log(foo);
-  //   `);
+  it('creates a types/generated directory and populates it before typechecking', co.wrap(function*() {
+    this.app.writeFile('app/foo.test', 'hello');
+    this.app.writeFile('app/app.ts', stripIndent`
+      import { content as foo } from './foo';
+      console.log(foo);
+    `);
 
-  //   yield this.app.build();
+    yield this.app.build();
 
-  //   expect(this.app.readFile('types/generated/app/foo.d.ts')).to.equal(stripIndent`
-  //     export declare const content: "hello";
-  //   `);
+    expect(this.app.readFile('types/generated/app/foo.d.ts')).to.equal(stripIndent`
+      export declare const content: "hello";
+    `);
 
-  //   this.app.removeFile('app/foo.test');
+    this.app.removeFile('app/foo.test');
 
-  //   yield expect(this.app.build()).to.be.rejectedWith(`Cannot find module './foo'`);
+    yield expect(this.app.build()).to.be.rejectedWith(`Cannot find module './foo'`);
 
-  //   expect(walkSync(`${this.app.root}/types/generated`, { directories: false })).to.deep.equal([]);
-  // }));
+    expect(walkSync(`${this.app.root}/types/generated`, { directories: false })).to.deep.equal([]);
+  }));
 
   it('updates generated types on rebuild', co.wrap(function*() {
     let server = this.app.serve();

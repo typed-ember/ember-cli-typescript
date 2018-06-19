@@ -78,6 +78,10 @@ module.exports = {
           updatePathsForAddon(paths, path.basename(addon), appName);
         }
 
+        for (let key of Object.keys(paths)) {
+          paths[key] = paths[key].concat(paths[key].map(path => `types/generated/${path}`));
+        }
+
         paths['*'] = ['types/*'];
 
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
