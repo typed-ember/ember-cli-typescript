@@ -1,0 +1,14 @@
+{
+  "name": "skeleton-app",
+  "devDependencies": {
+    "ember-cli": "*",
+    "ember-cli-htmlbars": "*",
+    "ember-cli-babel": "*",
+    "ember-source": "*",
+    "loader.js": "*",
+    "typescript": "*"
+  },
+  "ember-addon": {
+    "paths": [".."]
+  }
+}
