@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "allowJs": false,
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "baseUrl": ".",
+    "paths": {
+      "skeleton-app/*": ["app/*"]
+    }
+  },
+  "include": [
+    "app"
+  ]
+}
