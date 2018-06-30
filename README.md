@@ -242,7 +242,9 @@ The workaround is simply to do one of two things:
 
 In Ember 1.x and Ember 2.x we did service and controller lookups in `EmberObjects` with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that we need to do things differently in Ember 3.x with ES6 classes.
 
-We also want the injection to be per-class, not per-instance (slower), unlike the `inject` helpers in ES6. Lukily the hard work has been done for us. [Ember-decorators](https://github.com/ember-decorators/ember-decorators) to the rescue! This declarative addon makes injections trivially easy.
+We also want the injection to be per-class, not per-instance (slower and only works by accident), unlike the `inject` helpers in ES6. We've always wanted to define computed properties on prototypes instead of instances, so this is not something new in TS or ES6, it's just that the old "easier but worse" way doesn't work any more.
+
+Luckily the hard work has been done for us. [Ember-decorators](https://github.com/ember-decorators/ember-decorators) to the rescue! This declarative addon makes injections trivially easy.
 
 Let's generate our service as normal with `ember g service session`. If you're converting an existing service, remember to add the module declaration at the end which provides the Typescript types.
 
@@ -264,14 +266,24 @@ declare module '@ember/service' {
 }
 ```
 
+> The corresponding declaration for controllers is:
+>
+> ```ts
+> declare module '@ember/controller' {
+>   interface Registry {
+>     // add your key here, like `'dasherized-name': ClassifiedName;`
+>   }
+> }
+> ```
+
 ```ts
 // my-app/components/user-profile.ts
 import Component from '@ember/component';
 import { service } from '@ember-decorators/service';
-import Session from 'my-app/services/session';
+import MySession from 'my-app/services/my-session';
 
 export default class UserProfile extends Component {
-  @service('my-session') session;
+  @service('my-session') session: MySession;
 
   actions = {
     login(this: UserProfile, email: string, password: string) {
@@ -281,31 +293,7 @@ export default class UserProfile extends Component {
 }
 ```
 
-```ts
-// my-app/components/user-profile.ts
-import Component from '@ember/component';
-import { inject as service } from '@ember/service';
-
-export default class UserProfile extends Component {
-  session = service('session');
-
-  actions = {
-    login(this: UserProfile, email: string, password: string) {
-      return this.get('session').login(email, string);
-    }
-  }
-}
-```
-
-The corresponding declaration for controllers is:
-
-```ts
-declare module '@ember/controller' {
-  interface Registry {
-    // add your key here, like `'dasherized-name': ClassifiedName;`
-  }
-}
-```
+> The type of `session` would just be `any` if we didn't explicitly type it out as `MySession`: decorators are currently (as of TS 2.9 and 3.0) not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
 
 You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
 
