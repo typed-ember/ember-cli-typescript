@@ -240,49 +240,18 @@ The workaround is simply to do one of two things:
 
 #### Service and controller injections
 
-Ember does service and controller lookups with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it.
+In Ember 1.x and Ember 2.x we did service and controller lookups in `EmberObjects` with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that we need to do things differently in Ember 3.x with ES6 classes.
+
+We also want the injection to be per-class, not per-instance (slower), unlike the `inject` helpers in ES6. Lukily the hard work has been done for us. [Ember-decorators](https://github.com/ember-decorators/ember-decorators) to the rescue! This declarative addon makes injections trivially easy.
+
+Let's generate our service as normal with `ember g service session`. If you're converting an existing service, remember to add the module declaration at the end which provides the Typescript types.
 
 ```ts
-// my-app/services/session.ts
+// my-app/services/my-session.ts
 import Service from '@ember/service';
 import RSVP from 'rsvp';
 
-export default class Session extends Service {
-  login(email: string, password: string): RSVP.Promise<string> {
-    // login and return the confirmation message
-  }
-}
-```
-
-```ts
-// my-app/components/user-profile.ts
-import Component from '@ember/component';
-import Computed from '@ember/object/computed';
-import { inject as service } from '@ember/service';
-
-import Session from 'my-app/services/session';
-
-export default class UserProfile extends Component {
-  session: Computed<Session> = service();
-
-  actions = {
-    login(this: UserProfile, email: string, password: string) {
-      this.get('session').login(email, password);
-    },
-  };
-}
-```
-
-The type of `session` would just be `Computed<Service>` if we didn't explicitly type it out. As a result, we wouldn't get any type-checking on that `.login` call (and in fact we'd get an incorrect type _error_!), and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
-
-The handy workaround we supply is simply to write some boilerplate (though take heart! We have generators for any _new_ services or controllers you create) and then explicitly name the service or controller with its "dasherized" name, just like you would if you were mapping it to a different local name:
-
-```ts
-// my-app/services/session.ts
-import Service from '@ember/service';
-import RSVP from 'rsvp';
-
-export default class Session extends Service {
+export default class MySession extends Service {
   login(email: string, password: string): RSVP.Promise<string> {
     // login and return the confirmation message
   }
@@ -290,8 +259,25 @@ export default class Session extends Service {
 
 declare module '@ember/service' {
   interface Registry {
-    session: Session;
+    my-session: MySession;
   }
+}
+```
+
+```ts
+// my-app/components/user-profile.ts
+import Component from '@ember/component';
+import { service } from '@ember-decorators/service';
+import Session from 'my-app/services/session';
+
+export default class UserProfile extends Component {
+  @service('my-session') session;
+
+  actions = {
+    login(this: UserProfile, email: string, password: string) {
+      this.get('session').login(email, password);
+    },
+  };
 }
 ```
 
@@ -305,7 +291,7 @@ export default class UserProfile extends Component {
 
   actions = {
     login(this: UserProfile, email: string, password: string) {
-      this.get('session').login(email, string);
+      return this.get('session').login(email, string);
     }
   }
 }
@@ -322,8 +308,6 @@ declare module '@ember/controller' {
 ```
 
 You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
-
-If you have a reason to fall back to just getting the `Service` or `Controller` types, you can always do so by just using the string-less variant: `service('session')` will check that the string is a valid name of a service; `session()` will not.
 
 #### Ember Data lookups
 
