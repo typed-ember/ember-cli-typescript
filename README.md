@@ -309,6 +309,8 @@ declare module '@ember/controller' {
 
 You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
 
+> If you get the compile error `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` then you're using the old `inject` helper on at least one ES6 class in Ember 3.x. Replace it with the `@service` decorator instead as above.
+
 #### Ember Data lookups
 
 The same basic approach is in play for Ember Data lookups. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
