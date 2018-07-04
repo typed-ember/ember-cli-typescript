@@ -6,7 +6,6 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 * [Setup and Configuration](#setup-and-configuration)
   * [Ember Support](#ember-support)
-      * [:construction: Ember 3.1](#construction-ember-31)
   * [`tsconfig.json`](#tsconfigjson)
   * [Sourcemaps](#sourcemaps)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
@@ -19,6 +18,9 @@ Use TypeScript in your Ember 2.x and 3.x apps!
     * [`this` type workaround](#this-type-workaround)
     * [Nested keys in `get` or `set`](#nested-keys-in-get-or-set)
     * [Service and controller injections](#service-and-controller-injections)
+      * [Using `.extend`](#using-extend)
+      * [Using decorators](#using-decorators)
+  * [Class property setup errors](#class-property-setup-errors)
     * [Ember Data lookups](#ember-data-lookups)
       * [Opt-in unsafety](#opt-in-unsafety)
       * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
@@ -67,12 +69,6 @@ In addition to ember-cli-typescript, we make the following changes to your proje
 ### Ember support
 
 ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the 2.18 LTS, the current release, the beta branch, and the canary branch. It's also in active use in several large applications. Any breakage for upcoming releases _should_ be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
-
-#### :construction: Ember 3.1
-
-Support for (mostly in the form of documentation!) for the changes in Ember 3.1 is inbound shortly. You *can* use this addon with Ember 3.1, but the docs are not yet updated, and some of the patterns recommended below will actually cause your app to break. :grimacing: Come ping us in #topic-typescript in the [Ember Community Slack][Slack] and we'll help you. (And updated docs for 3.1 are inbound *soon*!)
-
-[Slack]: https://ember-community-slackin.herokuapp.com
 
 ### `tsconfig.json`
 
@@ -240,49 +236,26 @@ The workaround is simply to do one of two things:
 
 #### Service and controller injections
 
-Ember does service and controller lookups with the `inject` helpers at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way. This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it.
+Ember does service and controller lookups with the `inject` functions at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way.
+
+This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it. But… where should we put that? If we try to set it up as a [class property], we'll get an error as of Ember 3.1 (and it only accidentally works before that): computed properties and injections must be installed on the prototype.
+
+[class property]: https://basarat.gitbooks.io/typescript/docs/classes.html#property-initializer
+
+There are two basic approaches we can take. The first uses the `.extend` method in conjunction with class definitions to make sure the injections are set up correctly; the second leans on the still-experimental [Ember Decorators][decorators] project to let us do everything in the class body while still getting the niceties of ES6 classes. The decorators approach is much nicer, and likely to eventually become the standard across Ember in general assuming the decorators spec stabilizes. For today, however, it's an opt-in rather than the default because it remains an experimental extension to the JavaScript standard.
+
+[decorators]: https://github.com/ember-decorators/ember-decorators
+
+##### Using `.extend`
+
+The officially supported method for injections uses a combination of class body and traditional `EmberObject.extend` functionality. We generate a service like normal by running `ember generate service my-session`. The resulting definition will look like this:
 
 ```ts
-// my-app/services/session.ts
+// my-app/services/my-session.ts
 import Service from '@ember/service';
 import RSVP from 'rsvp';
 
-export default class Session extends Service {
-  login(email: string, password: string): RSVP.Promise<string> {
-    // login and return the confirmation message
-  }
-}
-```
-
-```ts
-// my-app/components/user-profile.ts
-import Component from '@ember/component';
-import Computed from '@ember/object/computed';
-import { inject as service } from '@ember/service';
-
-import Session from 'my-app/services/session';
-
-export default class UserProfile extends Component {
-  session: Computed<Session> = service();
-
-  actions = {
-    login(this: UserProfile, email: string, password: string) {
-      this.get('session').login(email, password);
-    },
-  };
-}
-```
-
-The type of `session` would just be `Computed<Service>` if we didn't explicitly type it out. As a result, we wouldn't get any type-checking on that `.login` call (and in fact we'd get an incorrect type _error_!), and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
-
-The handy workaround we supply is simply to write some boilerplate (though take heart! We have generators for any _new_ services or controllers you create) and then explicitly name the service or controller with its "dasherized" name, just like you would if you were mapping it to a different local name:
-
-```ts
-// my-app/services/session.ts
-import Service from '@ember/service';
-import RSVP from 'rsvp';
-
-export default class Session extends Service {
+export default class MySession extends Service {
   login(email: string, password: string): RSVP.Promise<string> {
     // login and return the confirmation message
   }
@@ -290,44 +263,69 @@ export default class Session extends Service {
 
 declare module '@ember/service' {
   interface Registry {
-    session: Session;
+    'my-session': MySession;
   }
 }
 ```
+
+(If you're converting an existing service, remember to add the module declaration at the end. This is what we'll use to tell TypeScript what the type of the service is in the injection.)
+
+Then we can use the service as usual:
 
 ```ts
 // my-app/components/user-profile.ts
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 
-export default class UserProfile extends Component {
-  session = service('session');
-
-  actions = {
-    login(this: UserProfile, email: string, password: string) {
-      this.get('session').login(email, string);
-    }
+export default class UserProfile extends Component.extend({
+  mySession: service('my-session'),
+}) {
+  login(email: string, password: string) {
+    this.session.login(email, password);
   }
 }
 ```
 
-The corresponding declaration for controllers is:
+Notice that the type of `mySession` will be the `MySession` type here: TypeScript is using the "registry" set up in the last lines of the `my-session` module to look up the type by its name. If we had written just `service()` instead, Ember would have resolved the correct type at runtime as usual, but TypeScript would not be able to tell *which* service we had, only that it was a `Service`. In that case, the `this.session` would not have a `login` property from TS's perspective, and this would fail to type-check. That extra string gives TS the information it needs to resolve the type and give us auto-completion, type-checking, etc.
+
+(In Ember 3.0 or earlier, we would have `this.get('session').login(email, password);` instead.)
+
+Although this may look a little strange, everything works correctly. We can use other ES6 class functionality and behaviors (including class properties) as normal; it is just the special Ember pieces which have to be set up on the prototype like this: injections, computed properties, and the `actions` hash.
+
+##### Using decorators
+
+The alternative here is to use [Ember Decorators][decorators]. In that case, we'd have precisely the same definition for our `MySession` service, but a much cleaner implementation in the component class:
 
 ```ts
-declare module '@ember/controller' {
-  interface Registry {
-    // add your key here, like `'dasherized-name': ClassifiedName;`
+// my-app/components/user-profile.ts
+import Component from '@ember/component';
+import { service } from '@ember-decorators/service';
+import MySession from 'my-app/services/my-session';
+
+export default class UserProfile extends Component {
+  @service mySession: MySession;
+
+  login(this: UserProfile, email: string, password: string) {
+    this.session.login(email, password);
   }
 }
 ```
+
+Note that we need the `MySession` type annotation this way, but we *don't* need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators (as of TS 2.8 – 3.0) are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
 
 You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
 
-If you have a reason to fall back to just getting the `Service` or `Controller` types, you can always do so by just using the string-less variant: `service('session')` will check that the string is a valid name of a service; `session()` will not.
+#### Class setup errors
+
+Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
+
+`Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use [class properties] to set up injections, computed properties, the action hash, and so on, you will see this error.
+
+- `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
 
 #### Ember Data lookups
 
-The same basic approach is in play for Ember Data lookups. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
+We use the same basic approach for Ember Data type lookups with string keys as we do for service or controller injections. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
 
 The declarations and changes you need to add to your existing files are:
 
