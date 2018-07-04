@@ -20,10 +20,10 @@ Use TypeScript in your Ember 2.x and 3.x apps!
     * [Service and controller injections](#service-and-controller-injections)
       * [Using `.extend`](#using-extend)
       * [Using decorators](#using-decorators)
-  * [Class property setup errors](#class-property-setup-errors)
     * [Ember Data lookups](#ember-data-lookups)
       * [Opt-in unsafety](#opt-in-unsafety)
       * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
+  * [Class property setup errors](#class-property-setup-errors)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
   * [ember-browserify](#ember-browserify)
   * [ember-cli-mirage](#ember-cli-mirage)
@@ -315,14 +315,6 @@ Note that we need the `MySession` type annotation this way, but we *don't* need 
 
 You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
 
-#### Class setup errors
-
-Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
-
-`Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use [class properties] to set up injections, computed properties, the action hash, and so on, you will see this error.
-
-- `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
-
 #### Ember Data lookups
 
 We use the same basic approach for Ember Data type lookups with string keys as we do for service or controller injections. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
@@ -428,6 +420,14 @@ declare module 'ember-data' {
 This works because (a) we include things in your types directory automatically and (b) TypeScript will merge this module and interface declaration with the main definitions for Ember Data from DefinitelyTyped behind the scenes.
 
 If you're developing an addon and concerned that this might affect consumers, it won't. Your types directory will never be referenced by consumers at all!
+
+#### Class property setup errors
+
+Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
+
+`Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use [class properties] to set up injections, computed properties, the action hash, and so on, you will see this error.
+
+- `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
 
 ### Type definitions outside `node_modules/@types`
 
