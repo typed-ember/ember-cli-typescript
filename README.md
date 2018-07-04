@@ -425,7 +425,7 @@ If you're developing an addon and concerned that this might affect consumers, it
 
 Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
 
-- `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use [class properties] to set up injections, computed properties, the action hash, and so on, you will see this error.
+- `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or by using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use class properties to set up injections, computed properties, the action hash, and so on, you will see this error.
 
 - `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
 
