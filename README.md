@@ -431,24 +431,7 @@ Some common stumbling blocks for people switching to ES6 classes from the tradit
 
 ### Type definitions outside `node_modules/@types`
 
-By default the typescript compiler loads up any type definitions found in `node_modules/@types`. If the type defs you need are not found here you can register a custom value in `paths` in the `tsconfig.json` file. For example, if you are using [True Myth], you'll need to follow that project's installation instructions (since it ships types in a special location to support both CommonJS and ES Modules):
-
-[true myth]: https://github.com/chriskrycho/true-myth
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "my-app-name/*": ["app/*"],
-      "true-myth/*": ["node_modules/true-myth/dist/types/src/*"]
-    }
-  }
-}
-```
-
-### ember-browserify
-
-If you're using [ember-browserify], you're used to writing imports like this:
+By default, the TypeScript compiler loads all type definitions found in `node_modules/@types`. If the type defs you need are not found there and are not supplied in the root of the package you're referencing, you can register a custom value in `paths` in the `tsconfig.json` file. For example, if you're using [ember-browserify], you're used to writing imports like this:
 
 [ember-browserify]: https://github.com/ef4/ember-browserify
 
@@ -456,7 +439,7 @@ If you're using [ember-browserify], you're used to writing imports like this:
 import MyModule from 'npm:my-module';
 ```
 
-If the `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however:
+If `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however, mapping `npm:my-module/*` to `node_modules/my-module/*`.
 
 ```json
 {
