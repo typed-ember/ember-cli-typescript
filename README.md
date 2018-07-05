@@ -25,7 +25,6 @@ Use TypeScript in your Ember 2.x and 3.x apps!
       * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
   * [Class property setup errors](#class-property-setup-errors)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
-  * [ember-browserify](#ember-browserify)
   * [ember-cli-mirage](#ember-cli-mirage)
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
     * [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
@@ -439,14 +438,14 @@ By default, the TypeScript compiler loads all type definitions found in `node_mo
 import MyModule from 'npm:my-module';
 ```
 
-If `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however, mapping `npm:my-module/*` to `node_modules/my-module/*`.
+If `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however, mapping `npm:*` to `node_modules/*`.
 
 ```json
 {
   "compilerOptions": {
     "paths": {
       "my-app-name/*": ["app/*"],
-      "npm:my-module/*": ["node_modules/my-module/*"]
+      "npm:*": ["node_modules/*"]
     }
   }
 }
