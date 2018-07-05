@@ -25,7 +25,6 @@ Use TypeScript in your Ember 2.x and 3.x apps!
       * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
   * [Class property setup errors](#class-property-setup-errors)
   * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
-  * [ember-browserify](#ember-browserify)
   * [ember-cli-mirage](#ember-cli-mirage)
   * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
     * [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
@@ -425,30 +424,13 @@ If you're developing an addon and concerned that this might affect consumers, it
 
 Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
 
-`Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use [class properties] to set up injections, computed properties, the action hash, and so on, you will see this error.
+- `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or by using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use class properties to set up injections, computed properties, the action hash, and so on, you will see this error.
 
 - `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
 
 ### Type definitions outside `node_modules/@types`
 
-By default the typescript compiler loads up any type definitions found in `node_modules/@types`. If the type defs you need are not found here you can register a custom value in `paths` in the `tsconfig.json` file. For example, if you are using [True Myth], you'll need to follow that project's installation instructions (since it ships types in a special location to support both CommonJS and ES Modules):
-
-[true myth]: https://github.com/chriskrycho/true-myth
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "my-app-name/*": ["app/*"],
-      "true-myth/*": ["node_modules/true-myth/dist/types/src/*"]
-    }
-  }
-}
-```
-
-### ember-browserify
-
-If you're using [ember-browserify], you're used to writing imports like this:
+By default, the TypeScript compiler loads all type definitions found in `node_modules/@types`. If the type defs you need are not found there and are not supplied in the root of the package you're referencing, you can register a custom value in `paths` in the `tsconfig.json` file. For example, if you're using [ember-browserify], you're used to writing imports like this:
 
 [ember-browserify]: https://github.com/ef4/ember-browserify
 
@@ -456,14 +438,14 @@ If you're using [ember-browserify], you're used to writing imports like this:
 import MyModule from 'npm:my-module';
 ```
 
-If the `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however:
+If `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however, mapping `npm:*` to `node_modules/*`.
 
 ```json
 {
   "compilerOptions": {
     "paths": {
       "my-app-name/*": ["app/*"],
-      "npm:my-module/*": ["node_modules/my-module/*"]
+      "npm:*": ["node_modules/*"]
     }
   }
 }
