@@ -4,6 +4,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
+* [Getting Help](#getting-help)
 * [Setup and Configuration](#setup-and-configuration)
   * [Ember Support](#ember-support)
   * [`tsconfig.json`](#tsconfigjson)
@@ -38,6 +39,40 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [Some `import`s don't resolve](#some-imports-dont-resolve)
   * [Type safety when invoking actions](#type-safety-when-invoking-actions)
 
+## Getting Help
+
+When seeking help, you should first consider what you need, and which aspect of the Ember+TypeScript ecosystem your issue pertains to.
+
+### 💬 Getting Started
+
+We have an [Ember Community Slack channel](https://embercommunity.slack.com/messages/C2F8Q3SK1) where you can ask about getting started, good resources for self-directed learning and more. 
+
+### 📚 Issues With Ember Type Definitions
+
+If you've found that some of the ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
+
+ If you still see a problem, please create a bug report [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=TYPES_BUG.md&labels=%5Btypes,bug%5D&title=%5B@types/ember%20bug%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) or a feature request [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=TYPES_ENHANCEMENT.md&labels=%5Btypes,enhancement%5D&title=%5B@types/ember%20enhancement%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E).
+
+### ⚙️ Issues With Adding TypeScript Support To Apps and Addons
+
+If you run into a problem with the way TypeScript is compiled in ember apps (i.e., a broccoli error message, incorrect build output, etc...), please first check [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript), as you may find an answer.
+
+If you still need help, please open an bug report [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=BUILD_BUG.md&labels=%5Bbuild,bug%5D&title=%5Bbug%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) or a feature request [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=BUILD_ENHANCEMENT.md&labels=%5Bbuild,enhancement%5D&title=%5Benhancement%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) 
+
+### ✅ Issues With Static Analysis of TypeScript In Ember Apps and Addons
+
+The TypeScript compiler does some very basic static analysis of your code, and most developers use Palantir's TSLint tool for more thorough checking.
+
+One sure way to tell which tool is generating an error message is that *TSLint will always mention the name of the pertinent rule, when it alerts you to a violation*.
+
+##### Example: 
+```
+[tslint] variable name must be in lowerCamelCase, PascalCase or UPPER_CASE (variable-name)
+```
+`variable-name` is the name of the rule.
+
+For issues relating to typescript compiler analysis, create an issue in this repository by clicking [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=CONFIG_ISSUE.md&labels=%5Bbuild%5D&title=%5Bconfig%5D%20-%20-%3CYOUR_DESCRIPTION_HERE%3E). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new).
+
 ## Setup and Configuration
 
 To install or upgrade the addon, just run:
@@ -50,14 +85,18 @@ All dependencies will be added to your `package.json`, and you're ready to roll!
 
 In addition to ember-cli-typescript, we make the following changes to your project:
 
+### Other Packages This Addon Installs
+
 * We install the following packages—all at their current "latest" value—or generated:
 
   * [`typescript`](https://github.com/Microsoft/TypeScript)
-  * [`@types/ember`](https://www.npmjs.com/package/@types/ember)
-  * [`@types/ember-data`](https://www.npmjs.com/package/@types/ember-data)
-  * [`@types/rsvp`](https://www.npmjs.com/package/@types/rsvp)
-  * [`@types/ember-test-helpers`](https://www.npmjs.com/package/@types/ember-test-helpers) – these are the importable test helpers from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)-style tests
-  * [`@types/ember-testing-helpers`](https://www.npmjs.com/package/@types/ember-testing-helpers) – these are the globally-available acceptance test helpers
+  * **@types/ember** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js)
+  * **@types/ember-data** - ([npm](https://www.npmjs.com/package/@types/ember-data) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-data)) - Types for [Ember-Data](https://github.com/emberjs/data)
+  * **@types/rsvp** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
+  * **@types/ember-test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-test-helpers)) Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers), which arose from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)
+  * **@types/ember-testing-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-testing-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-testing-helpers)) – Types for [Ember's built-in globally-available test helpers](https://github.com/emberjs/ember.js/tree/master/packages/ember-testing/lib/helpers)
+
+### Files this addon Generates
 
 * We add the following files to your project:
 
