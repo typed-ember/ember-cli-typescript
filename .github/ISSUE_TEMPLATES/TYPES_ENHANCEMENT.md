@@ -1,7 +1,7 @@
 <!-- This template is for enhancements relating to Ember.js type information.
      Please fill out all of the required information below -->
 
-### Which package(s) does this problem pertain to?
+### Which package(s) does this enhancement pertain to?
   - [ ] @types/ember
   - [ ] @types/ember-data
   - [ ] @types/rsvp

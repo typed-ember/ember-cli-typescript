@@ -17,7 +17,7 @@
 
 -->
 
-### Please paste your `tconfig.json` and `tslint.json` (if applicable) below
+### Please paste your `tconfig.json` and `tslint.json` or `eslint.json` (if applicable) below
 
 
 <details><summary><b>My tsconfig.json</b></summary><pre>
@@ -26,7 +26,7 @@
   
 </pre></details>
 
-<details><summary><b>My tslint.json</b></summary><pre>
+<details><summary><b>My tslint.json or eslint.json</b></summary><pre>
 
   <!-- Paste your tslint.json here -->
 

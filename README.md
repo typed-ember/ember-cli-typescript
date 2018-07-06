@@ -45,17 +45,17 @@ When seeking help, you should first consider what you need, and which aspect of 
 
 ### 💬 Getting Started
 
-We have an [Ember Community Slack channel](https://embercommunity.slack.com/messages/C2F8Q3SK1) where you can ask about getting started, good resources for self-directed learning and more. 
+We have an Ember Community Slack channel [#-topic-typescript](https://embercommunity.slack.com/messages/C2F8Q3SK1) where you can ask about getting started, good resources for self-directed learning and more. 
 
 ### 📚 Issues With Ember Type Definitions
 
-If you've found that some of the ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
+If you've found that some of the Ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
 
  If you still see a problem, please create a bug report [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=TYPES_BUG.md&labels=%5Btypes,bug%5D&title=%5B@types/ember%20bug%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) or a feature request [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=TYPES_ENHANCEMENT.md&labels=%5Btypes,enhancement%5D&title=%5B@types/ember%20enhancement%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E).
 
 ### ⚙️ Issues With Adding TypeScript Support To Apps and Addons
 
-If you run into a problem with the way TypeScript is compiled in ember apps (i.e., a broccoli error message, incorrect build output, etc...), please first check [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript), as you may find an answer.
+If you run into a problem with the way TypeScript is compiled in Ember apps (i.e., a broccoli error message, incorrect build output, etc...), please first check [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript), as you may find an answer.
 
 If you still need help, please open an bug report [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=BUILD_BUG.md&labels=%5Bbuild,bug%5D&title=%5Bbug%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) or a feature request [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=BUILD_ENHANCEMENT.md&labels=%5Bbuild,enhancement%5D&title=%5Benhancement%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) 
 
@@ -63,7 +63,7 @@ If you still need help, please open an bug report [here](https://github.com/type
 
 The TypeScript compiler does some very basic static analysis of your code, and most developers use Palantir's TSLint tool for more thorough checking.
 
-One sure way to tell which tool is generating an error message is that *TSLint will always mention the name of the pertinent rule, when it alerts you to a violation*.
+One sure way to tell which tool is generating an error message is that *Linters like [TSLint](https://github.com/palantir/tslint/) and [ESLint](https://eslint.org/) will always mention their name, and the name of the pertinent rule, when it alerts you to a violation*.
 
 ##### Example: 
 ```
@@ -71,7 +71,7 @@ One sure way to tell which tool is generating an error message is that *TSLint w
 ```
 `variable-name` is the name of the rule.
 
-For issues relating to typescript compiler analysis, create an issue in this repository by clicking [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=CONFIG_ISSUE.md&labels=%5Bbuild%5D&title=%5Bconfig%5D%20-%20-%3CYOUR_DESCRIPTION_HERE%3E). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new).
+For issues relating to typescript compiler analysis, create an issue in this repository by clicking [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=CONFIG_ISSUE.md&labels=%5Bbuild%5D&title=%5Bconfig%5D%20-%20-%3CYOUR_DESCRIPTION_HERE%3E). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new). If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
 
 ## Setup and Configuration
 
