@@ -40,7 +40,7 @@ module.exports = {
     }
 
     return {
-      includes: JSON.stringify(includes, null, 2).replace(/\n/g, '\n  '),
+      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(/\n/g, '\n  '),
       pathsFor: dasherizedName => {
         let appName = isAddon ? 'dummy' : dasherizedName;
         let paths = {
