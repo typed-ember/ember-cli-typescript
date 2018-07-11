@@ -114,7 +114,8 @@
     ],
     "after": [
       "ember-source",
-      "ember-data"
+      "ember-data",
+      "ember-decorators"
     ],
     "paths": [
       "tests/dummy/lib/in-repo-a",
