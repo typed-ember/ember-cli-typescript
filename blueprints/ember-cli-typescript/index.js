@@ -102,6 +102,7 @@ module.exports = {
       { name: '@types/rsvp', target: 'latest' },
       { name: '@types/ember-test-helpers', target: 'latest' },
       { name: '@types/ember-testing-helpers', target: 'latest' },
+      { name: '@types/ember__test-helpers', target: 'latest' },
     ];
 
     if (this._has('ember-data')) {
