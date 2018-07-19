@@ -306,7 +306,7 @@ declare module '@ember/service' {
 }
 ```
 
-(If you're converting an existing service, remember to add the module declaration at the end. This is what we'll use to tell TypeScript what the type of the service is in the injection.)
+You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
 
 Then we can use the service as usual:
 
@@ -350,8 +350,6 @@ export default class UserProfile extends Component {
 ```
 
 Note that we need the `MySession` type annotation this way, but we *don't* need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators (as of TS 2.8 – 3.0) are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
-
-You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
 
 Also use the [`!` non-null assertion operator](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator) to prevent [`TS2564`](https://github.com/kaorun343/vue-property-decorator/issues/81), that is caused by enabling `strictPropertyInitialization` in `tsconfig.json`.
 
