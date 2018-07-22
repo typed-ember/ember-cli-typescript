@@ -114,10 +114,19 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           'dummy/*': ['tests/dummy/app/*', 'app/*'],
           'my-addon': ['addon'],
           'my-addon/*': ['addon/*'],
+          'my-addon/test-support': ['addon-test-support'],
+          'my-addon/test-support/*': ['addon-test-support/*'],
           '*': ['types/*'],
         });
 
-        expect(tsconfigJson.include).to.deep.equal(['app/**/*', 'addon/**/*', 'tests/**/*', 'types/**/*']);
+        expect(tsconfigJson.include).to.deep.equal([
+          'app/**/*',
+          'tests/**/*',
+          'types/**/*',
+          'addon/**/*',
+          'test-support/**/*',
+          'addon-test-support/**/*'
+        ]);
 
         const projectTypes = file('types/dummy/index.d.ts');
         expect(projectTypes).to.exist;
@@ -257,8 +266,12 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           'my-app/*': ['app/*', 'lib/my-addon-1/app/*', 'lib/my-addon-2/app/*'],
           'my-addon-1': ['lib/my-addon-1/addon'],
           'my-addon-1/*': ['lib/my-addon-1/addon/*'],
+          'my-addon-1/test-support': ['lib/my-addon-1/addon-test-support'],
+          'my-addon-1/test-support/*': ['lib/my-addon-1/addon-test-support/*'],
           'my-addon-2': ['lib/my-addon-2/addon'],
           'my-addon-2/*': ['lib/my-addon-2/addon/*'],
+          'my-addon-2/test-support': ['lib/my-addon-2/addon-test-support'],
+          'my-addon-2/test-support/*': ['lib/my-addon-2/addon-test-support/*'],
           '*': ['types/*'],
         });
 
@@ -324,10 +337,19 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           'dummy/*': ['tests/dummy/app/*', 'app/*'],
           'my-addon': ['addon'],
           'my-addon/*': ['addon/*'],
+          'my-addon/test-support': ['addon-test-support'],
+          'my-addon/test-support/*': ['addon-test-support/*'],
           '*': ['types/*'],
         });
 
-        expect(json.include).to.deep.equal(['app/**/*', 'addon/**/*', 'tests/**/*', 'types/**/*']);
+        expect(json.include).to.deep.equal([
+          'app/**/*',
+          'tests/**/*',
+          'types/**/*',
+          'addon/**/*',
+          'test-support/**/*',
+          'addon-test-support/**/*'
+        ]);
       });
   });
 
