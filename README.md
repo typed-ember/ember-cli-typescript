@@ -95,6 +95,7 @@ In addition to ember-cli-typescript, we make the following changes to your proje
   * **@types/rsvp** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
   * **@types/ember-test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-test-helpers)) Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers), which arose from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)
   * **@types/ember-testing-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-testing-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-testing-helpers)) – Types for [Ember's built-in globally-available test helpers](https://github.com/emberjs/ember.js/tree/master/packages/ember-testing/lib/helpers)
+  * **@types/ember__test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember__test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test-helpers)) – Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers) when imported as `@ember/test-helpers`.
 
 ### Files this addon Generates
 
