@@ -72,9 +72,7 @@ module.exports = {
     let trees = [];
     if (this.compiler) {
       trees.push(this.compiler.treeForTests());
-      let babel = this.project.addons.find(addon => addon.name === 'ember-cli-babel');
-      let tree = this.compiler.treeForTestSupport();
-      trees.push(babel.transpileTree(tree));
+      trees.push(this.compiler.treeForTestSupport());
     }
     return this._super.treeForTestSupport.call(this, new MergeTrees(trees));
   },
