@@ -7,6 +7,8 @@ import fileA from 'dummy/a';
 import fileB from 'dummy/b';
 import muFile from 'dummy/src/test-file';
 import shadowedFile from 'dummy/shadowed-file';
+import { description as fromAts } from 'in-repo-a/test-support/from-ats';
+import { description as fromTs } from 'dummy/tests/from-ts';
 
 module('Unit | Build', function() {
   test('in-repo addons\' addon trees wind up in the right place', function(assert) {
@@ -29,5 +31,14 @@ module('Unit | Build', function() {
 
   test('MU addon files wind up in the right place', function(assert) {
     assert.equal(addonFileC, 'in-repo-c/src/test-file');
+  });
+
+  test('addon\'s addon-test-support files end up in <addon-name>/test-support/*', function (assert) {
+    assert.ok(fromAts);
+    assert.equal(fromAts, 'From addon-test-support');
+  });
+  test('addon\'s test-support files end up in dummy/tests/*', function (assert) {
+    assert.ok(fromTs);
+    assert.equal(fromTs, 'From test-support');
   });
 });
