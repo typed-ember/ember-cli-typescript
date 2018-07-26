@@ -33,10 +33,12 @@ module.exports = {
     let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
     let isMU = this._detectMU();
-    let includes = isMU ? ['src'] : ['app', 'tests', 'types'].filter(Boolean);
+    let includes = isMU ? ['src'] : ['app', isAddon && 'addon'].filter(Boolean);
 
-    if (isAddon) {
-      includes.push('addon', 'test-support', 'addon-test-support');
+    includes = includes.concat(['tests', 'types']).concat(inRepoAddons);
+
+    if (isAddon && !isMU) {
+      includes.push('test-support', 'addon-test-support');
     }
     // Mirage is already covered for addons because it's under `tests/`
     if (hasMirage && !isAddon) {
