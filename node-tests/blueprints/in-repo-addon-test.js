@@ -56,6 +56,8 @@ describe('Acceptance: ember generate and destroy in-repo-addon', function() {
         const tsconfigJson = fs.readJsonSync('tsconfig.json');
         expect(tsconfigJson['compilerOptions']['paths']['foo-bar']).to.have.all.members(['lib/foo-bar/addon']);
         expect(tsconfigJson['compilerOptions']['paths']['foo-bar/*']).to.have.all.members(['lib/foo-bar/addon/*']);
+        expect(tsconfigJson['compilerOptions']['paths']['foo-bar/test-support']).to.have.all.members(['lib/foo-bar/addon-test-support']);
+        expect(tsconfigJson['compilerOptions']['paths']['foo-bar/test-support/*']).to.have.all.members(['lib/foo-bar/addon-test-support/*']);
         expect(tsconfigJson['compilerOptions']['paths'][nameStar]).to.include.members(['lib/foo-bar/app/*']);
         expect(tsconfigJson['include']).to.include.members(['lib/foo-bar']);
       })

@@ -37,6 +37,9 @@ module.exports = {
 
     includes = includes.concat(['tests', 'types']).concat(inRepoAddons);
 
+    if (isAddon && !isMU) {
+      includes.push('test-support', 'addon-test-support');
+    }
     // Mirage is already covered for addons because it's under `tests/`
     if (hasMirage && !isAddon) {
       includes.push('mirage');
@@ -71,6 +74,8 @@ module.exports = {
           if (isAddon) {
             paths[dasherizedName] = ['addon'];
             paths[`${dasherizedName}/*`] = ['addon/*'];
+            paths[`${dasherizedName}/test-support`] = ['addon-test-support'];
+            paths[`${dasherizedName}/test-support/*`] = ['addon-test-support/*'];
           }
         }
 
