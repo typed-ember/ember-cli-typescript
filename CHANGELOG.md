@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.4.0] - 2018-08-07
+
+### Fixed
+
+* Ignore `node_modules` hoisted above project root (e.g. yarn workspaces)
+
+### Added
+
+* Auto-install of [`@types/ember__test-helpers`](https://www.npmjs.com/package/@types/ember__test-helpers)
+* Initial support for [Module Unification](https://github.com/emberjs/rfcs/blob/master/text/0143-module-unification.md) (see [#199](https://github.com/typed-ember/ember-cli-typescript/pull/199) for what is/isn't supported in this release)
+* Support for building addons' `test-support` and `addon-test-support` directories
+
 ## [1.3.3] - 2018-07-19
 
 ### Fixed
@@ -254,7 +266,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.3...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.3...v1.4.0
 [1.3.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0...v1.3.1
