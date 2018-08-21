@@ -12,6 +12,10 @@ module.exports = {
   init() {
     this._super.init.apply(this, arguments);
 
+    // If we're a direct dependency of the app, we cheat and add our instance of the blueprints
+    // addon to the project, as only top-level addons contribute blueprints.
+    // This won't be necessary in 2.x if we shift to adding the blueprints addon as a host
+    // dependency on install.
     if (this.project.addons.includes(this)) {
       this.project.addons.push(this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
     }
