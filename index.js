@@ -9,6 +9,14 @@ const stew = require('broccoli-stew');
 module.exports = {
   name: 'ember-cli-typescript',
 
+  init() {
+    this._super.init.apply(this, arguments);
+
+    if (this.project.addons.includes(this)) {
+      this.project.addons.push(this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
+    }
+  },
+
   included(includer) {
     this._super.included.apply(this, arguments);
 
@@ -76,7 +84,7 @@ module.exports = {
       trees.push(this.compiler.treeForTests());
       trees.push(this.compiler.treeForTestSupport());
     }
-    return this._super.treeForTestSupport.call(this, 
+    return this._super.treeForTestSupport.call(this,
       stew.mv(new MergeTrees(trees), 'test-support/*', '/')
     );
   },
