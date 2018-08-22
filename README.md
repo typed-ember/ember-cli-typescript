@@ -6,7 +6,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 * [Getting Help](#getting-help)
 * [Setup and Configuration](#setup-and-configuration)
-  * [Ember Support](#ember-support)
+  * [Supported Ember & TypeScript Versions](#supported-ember-and-typescript-versions)
   * [`tsconfig.json`](#tsconfigjson)
   * [Sourcemaps](#sourcemaps)
 * [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
@@ -105,9 +105,11 @@ In addition to ember-cli-typescript, we make the following changes to your proje
   * `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
   * `app/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
 
-### Ember support
+### Supported Ember and TypeScript versions
 
 ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the 2.18 LTS, the current release, the beta branch, and the canary branch. It's also in active use in several large applications. Any breakage for upcoming releases _should_ be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
+
+This library supports the current version of TypeScript [![TS Version](https://img.shields.io/github/tag/Microsoft/typescript.svg?label=latest%20typescript%20release)](https://github.com/Microsoft/TypeScript/releases/latest) and at least one previous minor or major release (i.e., if `3.0` is the latest release, we **do** support `3.0.x`, `2.9.x`, and **might** support `2.8` as well).
 
 ### `tsconfig.json`
 
