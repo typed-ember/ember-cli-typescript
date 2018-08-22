@@ -31,34 +31,19 @@
     "test:all": "ember try:each"
   },
   "dependencies": {
-    "broccoli-debug": "^0.6.4",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-plugin": "^1.2.1",
     "broccoli-stew": "^1.4.0",
-    "chalk": "^2.3.0",
     "chokidar": "^2.0.3",
     "debug": "^3.1.0",
-    "ember-cli": "*",
-    "ember-cli-get-component-path-option": "^1.0.0",
-    "ember-cli-is-package-missing": "^1.0.0",
-    "ember-cli-normalize-entity-name": "^1.0.0",
-    "ember-cli-path-utils": "^1.0.0",
-    "ember-cli-string-utils": "^1.1.0",
-    "ember-cli-test-info": "^1.0.0",
-    "ember-cli-valid-component-name": "^1.0.0",
-    "ember-cli-version-checker": "^2.1.0",
-    "ember-router-generator": "^1.2.3",
+    "ember-cli-typescript-blueprints": "^1.0.0",
     "escape-string-regexp": "^1.0.5",
     "execa": "^0.9.0",
-    "exists-sync": "^0.0.4",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2",
-    "inflection": "^1.12.0",
     "resolve": "^1.5.0",
-    "rimraf": "^2.6.2",
     "rsvp": "^4.8.1",
-    "silent-error": "^1.1.0",
     "symlink-or-copy": "^1.1.8",
     "walk-sync": "^0.3.2"
   },
@@ -112,11 +97,6 @@
     "configPath": "tests/dummy/config",
     "before": [
       "ember-cli-babel"
-    ],
-    "after": [
-      "ember-source",
-      "ember-data",
-      "ember-decorators"
     ],
     "paths": [
       "tests/dummy/lib/in-repo-a",

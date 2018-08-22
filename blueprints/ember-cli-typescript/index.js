@@ -2,7 +2,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const updatePathsForAddon = require('../../lib/utilities/update-paths-for-addon');
 
 const APP_DECLARATIONS = `
 import Ember from 'ember';
@@ -29,6 +28,7 @@ module.exports = {
   },
 
   locals() {
+    let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
