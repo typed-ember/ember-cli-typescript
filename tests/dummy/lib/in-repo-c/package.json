@@ -1,10 +1,11 @@
 {
   "name": "in-repo-c",
+  "version": "1.0.0",
   "keywords": [
     "ember-addon"
   ],
   "dependencies": {
-    "ember-cli-babel": "*"
+    "ember-cli-babel": "link:../../../../node_modules/ember-cli-babel"
   },
   "devDependencies": {
     "ember-cli-typescript": "*"

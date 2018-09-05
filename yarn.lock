@@ -2488,6 +2488,10 @@ ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6
     ember-cli-version-checker "^2.1.0"
     semver "^5.4.1"
 
+"ember-cli-babel@link:node_modules/ember-cli-babel":
+  version "0.0.0"
+  uid ""
+
 ember-cli-blueprint-test-helpers@^0.18.3:
   version "0.18.3"
   resolved "https://registry.yarnpkg.com/ember-cli-blueprint-test-helpers/-/ember-cli-blueprint-test-helpers-0.18.3.tgz#945c606d855f0263f5e8c03522e4040a74f259cc"
@@ -4119,6 +4123,18 @@ ignore@^3.3.3, ignore@^3.3.6:
 imurmurhash@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/imurmurhash/-/imurmurhash-0.1.4.tgz#9218b9b2b928a238b13dc4fb6b6d576f231453ea"
+
+"in-repo-a@link:tests/dummy/lib/in-repo-a":
+  version "0.0.0"
+  uid ""
+
+"in-repo-b@link:tests/dummy/lib/in-repo-b":
+  version "0.0.0"
+  uid ""
+
+"in-repo-c@link:tests/dummy/lib/in-repo-c":
+  version "0.0.0"
+  uid ""
 
 indent-string@^2.1.0:
   version "2.1.0"
