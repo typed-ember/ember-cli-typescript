@@ -6,6 +6,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.4.1] - 2018-09-05
+
+### Fixed
+
+* Avoid warnings in Ember CLI 3.4+ about missing package directories for our in-repo testing addons ([#252)(https://github.com/typed-ember/ember-cli-typescript/pull/252))
+
+### Changed
+
+* All blueprints for Ember and Ember Data entities now come from a standalone [ember-cli-typescript-blueprints](https://github.com/typed-ember/ember-cli-typescript-blueprints) package.
+
 ## [1.4.0] - 2018-08-07
 
 ### Fixed
@@ -266,7 +276,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.3...v1.4.0
 [1.3.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.1...v1.3.2
