@@ -9,18 +9,6 @@ const stew = require('broccoli-stew');
 module.exports = {
   name: 'ember-cli-typescript',
 
-  init() {
-    this._super.init.apply(this, arguments);
-
-    // If we're a direct dependency of the app, we cheat and add our instance of the blueprints
-    // addon to the project, as only top-level addons contribute blueprints.
-    // This won't be necessary in 2.x if we shift to adding the blueprints addon as a host
-    // dependency on install.
-    if (this.project.addons.includes(this)) {
-      this.project.addons.push(this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
-    }
-  },
-
   included(includer) {
     this._super.included.apply(this, arguments);
 
@@ -31,6 +19,16 @@ module.exports = {
   },
 
   includedCommands() {
+    // If we're a direct dependency of the app, we cheat and add our instance of the blueprints
+    // addon to the project, as only top-level addons contribute blueprints. We need to be careful
+    // with the timing of when we do this, as it has to happen after addon initialization is
+    // complete, but before blueprint paths are resolved.
+    // This won't be necessary in 2.x if we shift to adding the blueprints addon as a host
+    // dependency on install.
+    if (this.project.addons.includes(this)) {
+      this.project.addons.push(this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
+    }
+
     if (this.project.isEmberCLIAddon()) {
       return {
         'ts:precompile': require('./lib/commands/precompile'),
