@@ -36,6 +36,8 @@ install:
 
 script:
   - test $MD_ONLY && echo "Skipped!" || yarn lint:js
+  # Typecheck and compile the addon, then nuke the TS source so we're testing the code we would publish
+  - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
   - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup

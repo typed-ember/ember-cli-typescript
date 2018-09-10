@@ -27,6 +27,8 @@ cache:
 test_script:
   # Output useful info for debugging.
   - yarn versions
+  # Typecheck and compile the addon, then nuke the TS source so we're testing the code we would publish
+  - cmd: yarn ci:prepare
   - cmd: yarn ember try:one defaults
 
 # Don't actually build.
