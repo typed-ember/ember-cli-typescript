@@ -37,6 +37,10 @@ module.exports = {
     }
   },
 
+  blueprintsPath() {
+    return `${__dirname}/blueprints`;
+  },
+
   shouldIncludeChildAddon(addon) {
     // For testing, we have dummy in-repo addons set up, but e-c-ts doesn't depend on them;
     // its dummy app does. Otherwise we'd have a circular dependency.

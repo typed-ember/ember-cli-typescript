@@ -10,7 +10,7 @@ module.exports = class SkeletonApp {
   constructor() {
     this._watched = null;
     this.root = mktemp.createDirSync('test-skeleton-app-XXXXXX');
-    fs.copySync(`${__dirname}/../fixtures/skeleton-app`, this.root);
+    fs.copySync(`${__dirname}/../../../test-fixtures/skeleton-app`, this.root);
   }
 
   build() {
