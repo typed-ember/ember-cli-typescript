@@ -27,7 +27,7 @@
     "lint:js": "eslint ./*.js addon addon-test-support app blueprints config lib server test-support tests",
     "start": "ember serve",
     "test": "ember test",
-    "test:node": "mocha -r ts-node/register/transpile-only 'ts/tests/**/*.{ts,js}'",
+    "test:node": "mocha -r register-ts-node 'ts/tests/**/*.{ts,js}'",
     "test:all": "ember try:each",
     "prepublishOnly": "yarn tsc --project ts --noEmit false",
     "postpublish": "rimraf js"
