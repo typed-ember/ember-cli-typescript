@@ -10,6 +10,12 @@ module.exports = {
     browser: true,
   },
   rules: {},
+  settings: {
+    node: {
+      // Honor both extensions when enforcing e.g. `node/no-missing-require`
+      tryExtensions: ['.js', '.ts'],
+    },
+  },
   overrides: [
     // node files
     {
@@ -20,8 +26,7 @@ module.exports = {
         'blueprints/*/index.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
-        'lib/**/*.js',
-        'node-tests/**/*.js',
+        'ts/**/*.js',
       ],
       excludedFiles: ['app/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
@@ -50,7 +55,7 @@ module.exports = {
 
     // node test files
     {
-      files: ['node-tests/**/*.js'],
+      files: ['ts/tests/**/*.js'],
       env: {
         mocha: true,
       },

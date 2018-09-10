@@ -1,4 +1,3 @@
-// @ts-check
 'use strict';
 
 const IncrementalTypescriptCompiler = require('./lib/incremental-typescript-compiler');
