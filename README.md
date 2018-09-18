@@ -696,7 +696,7 @@ import { task } from 'ember-concurrency';
 
 You'll see an error, because there aren't yet type definitions for it. You may see the same with some addons as well. **These won't stop the build from working;** they just mean TypeScript doesn't know where to find those.
 
-Writing these missing type definitions is a great way to pitch in! Jump in \#topic-typescript on the [Ember Slack][Slack] and we'll be happy to help you.
+Writing these missing type definitions is a great way to pitch in! Jump in `#e-typescript` on the [Ember Community Discord server](https://discord.gg/zT3asNS) and we'll be happy to help you.
 
 ### Type safety when invoking actions
 
