@@ -24,7 +24,7 @@
   "homepage": "https://github.com/typed-ember/ember-cli-typescript",
   "scripts": {
     "build": "ember build",
-    "lint:js": "eslint ./*.js addon addon-test-support app blueprints config lib server test-support tests",
+    "lint:js": "eslint --ext js,ts .",
     "start": "ember serve",
     "test": "ember test",
     "ci:prepare": "yarn prepublishOnly && rimraf ts",
@@ -94,7 +94,8 @@
     "rimraf": "^2.6.2",
     "testdouble": "^3.5.0",
     "ts-node": "^7.0.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.7.2",
+    "typescript-eslint-parser": "^15.0.0"
   },
   "resolutions": {
     "@types/ember": "2.8.13"

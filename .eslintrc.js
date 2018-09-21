@@ -47,8 +47,8 @@ module.exports = {
 
     // test files
     {
-      files: ['tests/**/*.js'],
-      excludedFiles: ['tests/dummy/**/*.js'],
+      files: ['tests/**/*.{js,ts}'],
+      excludedFiles: ['tests/dummy/**/*.{js,ts}'],
       env: {
         embertest: true,
       },
@@ -56,7 +56,7 @@ module.exports = {
 
     // node test files
     {
-      files: ['ts/tests/**/*.js'],
+      files: ['ts/tests/**/*.{js,ts}'],
       env: {
         mocha: true,
       },
@@ -64,5 +64,16 @@ module.exports = {
         'node/no-unpublished-require': 'off',
       },
     },
+
+    // all TypeScript files
+    {
+      files: ['**/*.ts'],
+      parser: 'typescript-eslint-parser',
+      rules: {
+        // These are covered by tsc
+        'no-undef': 'off',
+        'no-unused-var': 'off'
+      }
+    }
   ],
 };
