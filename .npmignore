@@ -3,6 +3,10 @@
 /dist
 /tests
 /tmp
+/test-fixtures
+/ts
+/js/tests
+
 **/.gitkeep
 .bowerrc
 .editorconfig

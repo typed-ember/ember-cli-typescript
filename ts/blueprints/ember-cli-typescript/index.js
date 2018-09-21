@@ -155,6 +155,10 @@ module.exports = {
     return this.addPackagesToProject(packages);
   },
 
+  filesPath() {
+    return `${__dirname}/../../../blueprint-files/ember-cli-typescript`;
+  },
+
   files() {
     let files = this._super.files.apply(this, arguments);
 

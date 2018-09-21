@@ -10,18 +10,24 @@ module.exports = {
     browser: true,
   },
   rules: {},
+  settings: {
+    node: {
+      // Honor both extensions when enforcing e.g. `node/no-missing-require`
+      tryExtensions: ['.js', '.ts'],
+    },
+  },
   overrides: [
     // node files
     {
       files: [
         'ember-cli-build.js',
         'index.js',
+        'register-ts-node.js',
         'testem.js',
         'blueprints/*/index.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
-        'lib/**/*.js',
-        'node-tests/**/*.js',
+        'ts/**/*.js',
       ],
       excludedFiles: ['app/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
@@ -41,8 +47,8 @@ module.exports = {
 
     // test files
     {
-      files: ['tests/**/*.js'],
-      excludedFiles: ['tests/dummy/**/*.js'],
+      files: ['tests/**/*.{js,ts}'],
+      excludedFiles: ['tests/dummy/**/*.{js,ts}'],
       env: {
         embertest: true,
       },
@@ -50,7 +56,7 @@ module.exports = {
 
     // node test files
     {
-      files: ['node-tests/**/*.js'],
+      files: ['ts/tests/**/*.{js,ts}'],
       env: {
         mocha: true,
       },
@@ -58,5 +64,16 @@ module.exports = {
         'node/no-unpublished-require': 'off',
       },
     },
+
+    // all TypeScript files
+    {
+      files: ['**/*.ts'],
+      parser: 'typescript-eslint-parser',
+      rules: {
+        // These are covered by tsc
+        'no-undef': 'off',
+        'no-unused-var': 'off'
+      }
+    }
   ],
 };
