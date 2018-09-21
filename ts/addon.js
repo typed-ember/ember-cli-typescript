@@ -4,12 +4,15 @@ const IncrementalTypescriptCompiler = require('./lib/incremental-typescript-comp
 const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const stew = require('broccoli-stew');
+const path = require('path');
 
 module.exports = {
   name: 'ember-cli-typescript',
 
   included(includer) {
     this._super.included.apply(this, arguments);
+
+    this._checkDevelopment();
 
     if (includer === this.app) {
       this.compiler = new IncrementalTypescriptCompiler(this.app, this.project);
@@ -44,6 +47,15 @@ module.exports = {
     // For testing, we have dummy in-repo addons set up, but e-c-ts doesn't depend on them;
     // its dummy app does. Otherwise we'd have a circular dependency.
     return !['in-repo-a', 'in-repo-b', 'in-repo-c'].includes(addon.name);
+  },
+
+  _checkDevelopment() {
+    if (this.isDevelopingAddon() && !process.env.CI && path.basename(__dirname) !== 'ts') {
+      this.ui.writeWarnLine(
+        'ember-cli-typescript is in development but not being loaded from `/ts` — ' +
+        'do you have compiled artifacts lingering in `/js`?'
+      );
+    }
   },
 
   setupPreprocessorRegistry(type, registry) {
