@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [1.4.3] - 2018-09-24
+
+### Fixed
+
+* We now correctly clean up the system temp directory we create during builds.
+
+### Changed
+
+* We reference the Discord channel instead of Slack.
+* [Internal] We enabled writing code for this addon itself in TypeScript.
+
 ## [1.4.2] - 2018-09-06
 
 ### Fixed
@@ -33,6 +44,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Auto-install of [`@types/ember__test-helpers`](https://www.npmjs.com/package/@types/ember__test-helpers)
 * Initial support for [Module Unification](https://github.com/emberjs/rfcs/blob/master/text/0143-module-unification.md) (see [#199](https://github.com/typed-ember/ember-cli-typescript/pull/199) for what is/isn't supported in this release)
 * Support for building addons' `test-support` and `addon-test-support` directories
+
+## [1.3.4] - 2018-09-24
+
+### Fixed
+
+* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3.)
 
 ## [1.3.3] - 2018-07-19
 
@@ -82,6 +99,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 * The addon now supports failing the build when there are type errors, using `"noEmitOnError": true` in `tsconfig.json`.
 
+## [1.2.2] - 2018-09-24
+
+### Fixed
+
+* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3.)
+
 ## [1.2.1] - 2018-03-14
 
 ### Fixed
@@ -104,6 +127,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 * Addon components need to manually set their layout property to the imported compiled template.
 * The declaration file for the `<app-name>/config/environment` module now resolves correctly from app code. If you have a version of this file previously generated at `types/<app-name>/config/environment.d.ts`, you'll likely want to move it to `app/config/environment.d.ts`.
+
+## [1.1.7] - 2018-09-24
+
+### Fixed
+
+* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3.)
 
 ## [1.1.6] - 2018-02-23
 
@@ -282,16 +311,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.2...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.3...HEAD
+[1.4.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.2...v1.4.3
 [1.4.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.1...v1.4.2
 [1.4.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.3...v1.4.0
+[1.3.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.3...v1.3.4
 [1.3.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.2...v1.3.3
 [1.3.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.1...v1.3.2
 [1.3.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.1...v1.3.0
 [1.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...v1.2.0
+[1.1.7]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.6...v1.1.7
 [1.1.6]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.5...v1.1.6
 [1.1.5]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.4...v1.1.5
 [1.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.1.3...v1.1.4
