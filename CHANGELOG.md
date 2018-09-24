@@ -10,7 +10,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds.
+* We now correctly clean up the system temp directory we create during builds (see [#318])
+
+[#318]: https://github.com/typed-ember/ember-cli-typescript/issues/318
 
 ### Changed
 
@@ -49,7 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3.)
+* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
 
 ## [1.3.3] - 2018-07-19
 
@@ -103,7 +105,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3.)
+* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
 
 ## [1.2.1] - 2018-03-14
 
@@ -132,7 +134,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3.)
+* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
 
 ## [1.1.6] - 2018-02-23
 
