@@ -28,7 +28,10 @@ module.exports = {
     // This won't be necessary in 2.x if we shift to adding the blueprints addon as a host
     // dependency on install.
     if (this.project.addons.includes(this)) {
-      this.project.addons.push(this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
+      this.project.addons.splice(
+        this.project.addons.map(a => a.name).indexOf('ember-cli-typescript') + 1,
+        0,
+        this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
     }
 
     if (this.project.isEmberCLIAddon()) {
