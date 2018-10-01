@@ -29,7 +29,7 @@ module.exports = {
     // dependency on install.
     if (this.project.addons.includes(this)) {
       this.project.addons.splice(
-        this.project.addons.map(a => a.name).indexOf('ember-source') + 1,
+        this.project.addons.map(a => a.name).indexOf('ember-cli-typescript') + 1,
         0,
         this.addons.find(addon => addon.name === 'ember-cli-typescript-blueprints'));
     }
