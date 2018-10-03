@@ -53,6 +53,8 @@
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
+    "@types/console-ui": "^2.2.0",
+    "@types/core-object": "^3.0.0",
     "@types/ember": "2.8.13",
     "@types/ember-qunit": "^3.0.1",
     "@types/node": "^9.6.5",
@@ -94,8 +96,8 @@
     "rimraf": "^2.6.2",
     "testdouble": "^3.5.0",
     "ts-node": "^7.0.1",
-    "typescript": "^2.7.2",
-    "typescript-eslint-parser": "^15.0.0"
+    "typescript": "^3.1.1",
+    "typescript-eslint-parser": "^19.0.2"
   },
   "resolutions": {
     "@types/ember": "2.8.13"
