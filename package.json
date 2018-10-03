@@ -93,7 +93,6 @@
     "esprima": "^4.0.0",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
-    "in-repo-c": "link:tests/dummy/lib/in-repo-c",
     "loader.js": "^4.7.0",
     "mktemp": "^0.4.0",
     "mocha": "^5.0.0",
