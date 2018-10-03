@@ -29,7 +29,7 @@ describe('Acceptance: build', function() {
     yield server.waitForBuild();
 
     expectModuleBody(this.app, 'skeleton-app/app', `
-      exports.add = add;
+      _exports.add = add;
       function add(a, b) {
         return a + b;
       }
@@ -42,11 +42,14 @@ describe('Acceptance: build', function() {
     yield server.waitForBuild();
 
     expectModuleBody(this.app, 'skeleton-app/app', `
-      var foo = exports.foo = 'hello';
+      _exports.foo = void 0;
+      var foo = 'hello';
+      _exports.foo = foo;
     `);
   }));
 
-  it('fails the build when noEmitOnError is set and an error is emitted', co.wrap(function*() {
+  // TODO re-enable once type checking is integrated again
+  it.skip('fails the build when noEmitOnError is set and an error is emitted', co.wrap(function*() {
     this.app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 
     yield expect(this.app.build()).to.be.rejectedWith(`Cannot find module 'nonexistent'`);
