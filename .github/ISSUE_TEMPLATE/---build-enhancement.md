@@ -1,3 +1,9 @@
+---
+name: "\U0001F381 Build Enhancement"
+about: An enhancement relating to Ember.js typescript support & infrastructure
+
+---
+
 <!-- This template is for enhancements relating to Ember.js typescript support & infrastructure.
      Please fill out all of the required information below -->
 
