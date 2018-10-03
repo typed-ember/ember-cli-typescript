@@ -124,6 +124,8 @@ module.exports = {
     }
 
     let packages = [
+      // TODO release blueprints@2 that emit `.js` files in `app/`
+      // { name: 'ember-cli-typescript-blueprints', target: '^2.0.0' },
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },
