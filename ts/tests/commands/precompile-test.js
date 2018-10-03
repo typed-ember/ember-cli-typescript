@@ -18,7 +18,7 @@ describe('Acceptance: ts:precompile command', function() {
     return emberNew({ target: 'addon' }).then(() => ember(['generate', 'ember-cli-typescript']));
   });
 
-  it('generates .js and .d.ts files from the addon tree', function() {
+  it('generates .d.ts files from the addon tree', function() {
     fs.ensureDirSync('addon');
     fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'hello';`);
 
@@ -27,29 +27,21 @@ describe('Acceptance: ts:precompile command', function() {
         let declaration = file('test-file.d.ts');
         expect(declaration).to.exist;
         expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
-
-        let transpiled = file('addon/test-file.js');
-        expect(transpiled).to.exist;
-        expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
       });
   });
 
-  it('generates .js files only from the app tree', function() {
+  it('generates nothing from the app tree', function() {
     fs.ensureDirSync('app');
     fs.writeFileSync('app/test-file.ts', `export const testString: string = 'hello';`);
 
     return ember(['ts:precompile']).then(() => {
       let declaration = file('test-file.d.ts');
       expect(declaration).not.to.exist;
-
-      let transpiled = file('app/test-file.js');
-      expect(transpiled).to.exist;
-      expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
     });
   });
 
   describe('module unification', function() {
-    it('generates .js and .d.ts files from the src tree', function() {
+    it('generates .d.ts files from the src tree', function() {
       fs.ensureDirSync('src');
       fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
 
@@ -62,10 +54,6 @@ describe('Acceptance: ts:precompile command', function() {
           let declaration = file('src/test-file.d.ts');
           expect(declaration).to.exist;
           expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
-
-          let transpiled = file('src/test-file.js');
-          expect(transpiled).to.exist;
-          expect(transpiled.content.trim()).to.equal(`export const testString = 'hello';`);
         });
     });
   });
