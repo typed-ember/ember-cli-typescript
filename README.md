@@ -392,8 +392,8 @@ The declarations and changes you need to add to your existing files are:
     // attribute declarations here, as usual
   }) {}
 
-  declare module 'ember-data' {
-    interface ModelRegistry {
+  declare module 'ember-data/types/registries/model' {
+    export default interface ModelRegistry {
       'user-meta': UserMeta;
     }
   }
@@ -408,8 +408,8 @@ The declarations and changes you need to add to your existing files are:
     // properties and methods
   }
 
-  declare module 'ember-data' {
-    interface AdapterRegistry {
+  declare module 'ember-data/types/registries/adapter' {
+    export default interface AdapterRegistry {
       'user-meta': UserMeta;
     }
   }
@@ -424,9 +424,26 @@ The declarations and changes you need to add to your existing files are:
     // properties and methods
   }
 
-  declare module 'ember-data' {
-    interface SerializerRegistry {
+  declare module 'ember-data/types/registries/serializer' {
+    export default interface SerializerRegistry {
       'user-meta': UserMeta;
+    }
+  }
+  ```
+  
+  
+* Transforms
+
+  ```ts
+  import DS from 'ember-data';
+
+  export default class ColorTransform extends DS.Transform {
+     // properties and methods
+  }
+
+  declare module 'ember-data/types/registries/transform' {
+    export default interface TransformRegistry {
+      color: ColorTransform;
     }
   }
   ```
@@ -442,16 +459,18 @@ Also notice that unlike with service and controller injections, there is no unsa
 ```ts
 import DS from 'ember-data';
 
-declare module 'ember-data' {
-  interface ModelRegistry {
+declare module 'ember-data/types/registries/model' {
+  export default interface ModelRegistry {
     [key: string]: DS.Model;
   }
-
-  interface AdapterRegistry {
+}
+declare module 'ember-data/types/registries/adapter' {
+  export default interface AdapterRegistry {
     [key: string]: DS.Adapter;
   }
-
-  interface SerializerRegistry {
+}
+declare module 'ember-data/types/registries/serializer' {
+  export default interface SerializerRegistry {
     [key: string]: DS.Serializer;
   }
 }
@@ -472,8 +491,8 @@ This happens because the types for Ember's _test_ tooling includes the types for
 **The fix:** add a declaration like this in a new file named `ember-data.d.ts` in your `types` directory:
 
 ```ts
-declare module 'ember-data' {
-  interface ModelRegistry {
+declare module 'ember-data/types/registries/model' {
+  export default interface ModelRegistry {
     [key: string]: any;
   }
 }
