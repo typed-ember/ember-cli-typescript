@@ -51,13 +51,13 @@ We have a channel (#e-typescript) on the [Ember Community Discord server](https:
 
 If you've found that some of the Ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
 
- If you still see a problem, please create a bug report [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=TYPES_BUG.md&labels=%5Btypes,bug%5D&title=%5B@types/ember%20bug%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) or a feature request [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=TYPES_ENHANCEMENT.md&labels=%5Btypes,enhancement%5D&title=%5B@types/ember%20enhancement%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E).
+If you don't find an answer, please [open an enhancement request or bug report in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose).
 
 ### ⚙️ Issues With Adding TypeScript Support To Apps and Addons
 
 If you run into a problem with the way TypeScript is compiled in Ember apps (i.e., a broccoli error message, incorrect build output, etc...), please first check [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript), as you may find an answer.
 
-If you still need help, please open an bug report [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=BUILD_BUG.md&labels=%5Bbuild,bug%5D&title=%5Bbug%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) or a feature request [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=BUILD_ENHANCEMENT.md&labels=%5Bbuild,enhancement%5D&title=%5Benhancement%5D%20-%20%3CYOUR_DESCRIPTION_HERE%3E) 
+If you don't find an answer, please [open an enhancement request or bug report in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose).
 
 ### ✅ Issues With Static Analysis of TypeScript In Ember Apps and Addons
 
@@ -71,7 +71,7 @@ One sure way to tell which tool is generating an error message is that *Linters 
 ```
 `variable-name` is the name of the rule.
 
-For issues relating to typescript compiler analysis, create an issue in this repository by clicking [here](https://github.com/typed-ember/ember-cli-typescript/issues/new?template=CONFIG_ISSUE.md&labels=%5Bbuild%5D&title=%5Bconfig%5D%20-%20-%3CYOUR_DESCRIPTION_HERE%3E). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new). If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
+For issues relating to typescript compiler analysis, [create an issue in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new). If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
 
 ## Setup and Configuration
 
@@ -90,7 +90,22 @@ In addition to ember-cli-typescript, we make the following changes to your proje
 * We install the following packages—all at their current "latest" value—or generated:
 
   * [`typescript`](https://github.com/Microsoft/TypeScript)
-  * **@types/ember** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js)
+  * **@types/ember** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js) which includes
+     * **@types/ember__string** ([npm](https://www.npmjs.com/package/@types/ember__string) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__string)) - types for the [`@ember/string` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fstring) 
+     * **@types/ember__object** ([npm](https://www.npmjs.com/package/@types/ember__object) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__object)) - types for the [`@ember/object` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fobject) 
+     * **@types/ember__utils** ([npm](https://www.npmjs.com/package/@types/ember__utils) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__utils)) - types for the [`@ember/utils` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Futils) 
+     * **@types/ember__array** ([npm](https://www.npmjs.com/package/@types/ember__array) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__array)) - types for the [`@ember/array` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Farray) 
+     * **@types/ember__component** ([npm](https://www.npmjs.com/package/@types/ember__component) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__component)) - types for the [`@ember/component` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcomponent) 
+     * **@types/ember__engine** ([npm](https://www.npmjs.com/package/@types/ember__engine) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__engine)) - types for the [`@ember/engine` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fengine) 
+     * **@types/ember__application** ([npm](https://www.npmjs.com/package/@types/ember__application) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__application)) - types for the [`@ember/application` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fapplication) 
+     * **@types/ember__controller** ([npm](https://www.npmjs.com/package/@types/ember__controller) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__controller)) - types for the [`@ember/controller` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcontroller) 
+     * **@types/ember__service** ([npm](https://www.npmjs.com/package/@types/ember__service) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__service)) - types for the [`@ember/service` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fservice) 
+     * **@types/ember__runloop** ([npm](https://www.npmjs.com/package/@types/ember__runloop) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__runloop)) - types for the [`@ember/runloop` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frunloop) 
+     * **@types/ember__error** ([npm](https://www.npmjs.com/package/@types/ember__error) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__error)) - types for the [`@ember/error` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ferror) 
+     * **@types/ember__polyfills** ([npm](https://www.npmjs.com/package/@types/ember__polyfills) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__polyfills)) - types for the [`@ember/polyfills` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fpolyfills) 
+     * **@types/ember__debug** ([npm](https://www.npmjs.com/package/@types/ember__debug) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__debug)) - types for the [`@ember/debug` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fdebug) 
+     * **@types/ember__test** ([npm](https://www.npmjs.com/package/@types/ember__test) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test)) - types for the [`@ember/test` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ftest) 
+     * **@types/ember__routing** ([npm](https://www.npmjs.com/package/@types/ember__routing) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__routing)) - types for the [`@ember/routing` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frouting) 
   * **@types/ember-data** - ([npm](https://www.npmjs.com/package/@types/ember-data) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-data)) - Types for [Ember-Data](https://github.com/emberjs/data)
   * **@types/rsvp** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
   * **@types/ember-test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-test-helpers)) Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers), which arose from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)
