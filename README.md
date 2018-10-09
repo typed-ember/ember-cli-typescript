@@ -35,6 +35,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [Linking Addons](#linking-addons)
   * [In-Repo Addons](#in-repo-addons)
   * [Gotchas](#gotchas)
+* [Installing from git](#installing-from-git])
 * [Current limitations](#current-limitations)
   * [Some `import`s don't resolve](#some-imports-dont-resolve)
   * [Type safety when invoking actions](#type-safety-when-invoking-actions)
@@ -707,6 +708,10 @@ A few things to look out for when working with TypeScript in addons:
 
 * Normally, addons under development automatically return `true` from their `isDevelopingAddon()` hook, which `ember-cli-typescript` relies on to determine whether to process the addon's `.ts` files. However, if the name field in your `package.json` doesn't match the name in your `index.js`, this default behavior will fail and you'll need to override the method yourself.
 * TypeScript has very particular rules when generating declaration files to avoid letting private types leak out unintentionally. You may find it useful to run `ember ts:precompile` yourself as you're getting a feel for these rules to ensure everything will go smoothly when you publish.
+
+## Installing from git
+
+This addon uses TypeScript for its own implementation, so if you install `ember-cli-typescript` from git rather than from the npm registry, you won't get compiled `.js` files. To get everything working, you can install `ts-node` as a project dependency, and `ember-cli-typescript` will ensure it's registered correctly to transpile source files as needed.
 
 ## Current limitations
 
