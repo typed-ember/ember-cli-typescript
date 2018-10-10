@@ -81,7 +81,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const environmentTypes = file('app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
 
-        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        const emberDataCatchallTypes = file('types/ember-data/types/registries/model.d.ts');
         expect(emberDataCatchallTypes).to.exist;
       });
   });
@@ -135,7 +135,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const environmentTypes = file('tests/dummy/app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
 
-        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        const emberDataCatchallTypes = file('types/ember-data/types/registries/model.d.ts');
         expect(emberDataCatchallTypes).not.to.exist;
       });
   });
@@ -195,7 +195,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           const environmentTypes = file('config/environment.d.ts');
           expect(environmentTypes).to.exist;
 
-          const emberDataCatchallTypes = file('types/ember-data.d.ts');
+          const emberDataCatchallTypes = file('types/ember-data/types/registries/model.d.ts');
           expect(emberDataCatchallTypes).to.exist;
         });
     });
@@ -242,7 +242,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           const environmentTypes = file('tests/dummy/config/environment.d.ts');
           expect(environmentTypes).to.exist;
 
-          const emberDataCatchallTypes = file('types/ember-data.d.ts');
+          const emberDataCatchallTypes = file('types/ember-data/types/registries/model.d.ts');
           expect(emberDataCatchallTypes).not.to.exist;
         });
     });
@@ -293,7 +293,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(projectTypes).to.exist;
         expect(projectTypes).to.include(ects.APP_DECLARATIONS);
 
-        const emberDataCatchallTypes = file('types/ember-data.d.ts');
+        const emberDataCatchallTypes = file('types/ember-data/types/registries/model.d.ts');
         expect(emberDataCatchallTypes).to.exist;
       });
   });

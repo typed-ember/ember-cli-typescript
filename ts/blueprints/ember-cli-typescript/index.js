@@ -163,7 +163,7 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (!this._has('ember-data')) {
-      files = files.filter(file => file !== 'types/ember-data.d.ts');
+      files = files.filter(file => file !== 'types/ember-data/types/registries/model.d.ts');
     }
 
     return files;
