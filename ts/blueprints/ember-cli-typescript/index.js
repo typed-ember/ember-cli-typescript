@@ -138,7 +138,7 @@ module.exports = {
       );
     }
 
-    if (this._has('ember-cli-qunit')) {
+    if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {
       packages = packages.concat([
         { name: '@types/ember-qunit', target: 'latest' },
         { name: '@types/qunit', target: 'latest' },

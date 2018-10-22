@@ -4,10 +4,12 @@
   "keywords": [
     "ember-addon"
   ],
-  "dependencies": {
-    "ember-cli-babel": "link:../../../../node_modules/ember-cli-babel"
-  },
   "devDependencies": {
     "ember-cli-typescript": "*"
+  },
+  "ember-addon": {
+    "paths": [
+      "../../../../node_modules/ember-cli-babel"
+    ]
   }
 }

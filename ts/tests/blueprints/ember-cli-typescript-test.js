@@ -55,7 +55,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(pkgJson.scripts.postpublish).to.be.undefined;
         expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
-        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
@@ -101,7 +101,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
         expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
-        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
         expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
 
@@ -166,7 +166,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           expect(pkgJson.scripts.postpublish).to.be.undefined;
           expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
-          expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+          expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
           expect(pkgJson.devDependencies).to.not.have.any.keys(
             '@types/ember-mocha',
@@ -215,7 +215,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           expect(pkgJson.scripts.postpublish).to.equal('ember ts:clean');
           expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
           expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
-          expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-qunit');
+          expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
           expect(pkgJson.devDependencies).to.not.have.any.keys(
             '@types/ember-mocha',
@@ -372,7 +372,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
       .emberNew()
       .then(() => helpers.modifyPackages([
         { name: 'ember-cli-mocha', dev: true },
-        { name: 'ember-cli-qunit', delete: true },
+        { name: 'ember-qunit', delete: true }
       ]))
       .then(() => helpers.emberGenerate(args))
       .then(() => {
@@ -392,7 +392,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
       .emberNew({ target: 'addon' })
       .then(() => helpers.modifyPackages([
         { name: 'ember-cli-mocha', dev: true },
-        { name: 'ember-cli-qunit', delete: true },
+        { name: 'ember-qunit', delete: true }
       ]))
       .then(() => helpers.emberGenerate(args))
       .then(() => {
