@@ -15,17 +15,24 @@ env:
   global:
     # See https://git.io/vdao3 for details.
     - JOBS=1
-  matrix:
-    - EMBER_TRY_SCENARIO=defaults
-    - EMBER_TRY_SCENARIO=typescript-release
-    - EMBER_TRY_SCENARIO=typescript-beta
-    - EMBER_TRY_SCENARIO=ember-cli-release
-    - EMBER_TRY_SCENARIO=ember-cli-beta
 
-matrix:
-  fast_finish: true
+jobs:
+  fail_fast: true
   allow_failures:
     - env: EMBER_TRY_SCENARIO=typescript-beta
+    - env: EMBER_TRY_SCENARIO=ember-cli-beta
+
+  include:
+    - stage: "Tests"
+      name: "Tests"
+      script:
+        - test $MD_ONLY && echo "Skipped!" || yarn lint:js
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:test
+    - stage: "Versioned Tests"
+      env: EMBER_TRY_SCENARIO=typescript-release
+    - env: EMBER_TRY_SCENARIO=typescript-beta
+    - env: EMBER_TRY_SCENARIO=ember-cli-release
     - env: EMBER_TRY_SCENARIO=ember-cli-beta
 
 before_install:
@@ -35,7 +42,6 @@ install:
   - test $MD_ONLY && echo "Skipped!" || yarn install
 
 script:
-  - test $MD_ONLY && echo "Skipped!" || yarn lint:js
   # Typecheck and compile the addon, then nuke the TS source so we're testing the code we would publish
   - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
   # Usually, it's ok to finish the test scenario without reverting
