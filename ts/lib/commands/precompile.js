@@ -41,19 +41,14 @@ module.exports = Command.extend({
     return execa('tsc', flags).then(() => {
       let output = [];
       for (let declSource of walkSync(outDir, { globs: ['**/*.d.ts'] })) {
-        if (this._shouldCopy(declSource)) {
-          let compiled = declSource.replace(/\.d\.ts$/, '.js');
-          this._copyFile(output, `${outDir}/${compiled}`, compiled);
-
-          // We can only do anything meaningful with declarations for files in addon/ or src/
-          if (this._isAddonFile(declSource)) {
-            let declDest = declSource
-              .replace(/^addon\//, '')
-              .replace(/^addon-test-support/, 'test-support');
-            this._copyFile(output, `${outDir}/${declSource}`, declDest);
-          } else if (this._isSrcFile(declSource)) {
-            this._copyFile(output, `${outDir}/${declSource}`, declSource);
-          }
+        // We can only do anything meaningful with declarations for files in addon/ or src/
+        if (this._isAddonFile(declSource)) {
+          let declDest = declSource
+            .replace(/^addon\//, '')
+            .replace(/^addon-test-support/, 'test-support');
+          this._copyFile(output, `${outDir}/${declSource}`, declDest);
+        } else if (this._isSrcFile(declSource)) {
+          this._copyFile(output, `${outDir}/${declSource}`, declSource);
         }
       }
 
@@ -61,16 +56,6 @@ module.exports = Command.extend({
       fs.writeFileSync(manifestPath, JSON.stringify(output.reverse()));
       fs.remove(outDir);
     });
-  },
-
-  _shouldCopy(source) {
-    return this._isAppFile(source)
-      || this._isAddonFile(source)
-      || this._isSrcFile(source);
-  },
-
-  _isAppFile(source) {
-    return source.indexOf('app') === 0;
   },
 
   _isAddonFile(source) {

@@ -35,33 +35,39 @@
     "postpublish": "rimraf js"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-typescript": "^7.1.0",
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-plugin": "^1.2.1",
     "broccoli-stew": "^1.4.0",
     "chokidar": "^2.0.3",
     "debug": "^3.1.0",
-    "ember-cli-typescript-blueprints": "^1.0.0",
+    "ember-cli-babel-plugin-helpers": "^1.0.0",
     "escape-string-regexp": "^1.0.5",
     "execa": "^0.9.0",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2",
     "resolve": "^1.5.0",
     "rsvp": "^4.8.1",
+    "semver": "^5.5.1",
     "symlink-or-copy": "^1.1.8",
     "walk-sync": "^0.3.2"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",
+    "@types/console-ui": "^2.2.0",
+    "@types/core-object": "^3.0.0",
     "@types/ember": "2.8.13",
     "@types/ember-qunit": "^3.0.1",
     "@types/node": "^9.6.5",
     "@types/qunit": "^2.0.31",
+    "@types/semver": "^5.5.0",
     "broccoli-asset-rev": "^2.7.0",
     "co": "^4.6.0",
     "ember-cli": "~3.5.0",
     "ember-cli-app-version": "^3.1.3",
-    "ember-cli-babel": "^6.16.0",
+    "ember-cli-babel": "^7.1.2",
     "ember-cli-blueprint-test-helpers": "^0.18.3",
     "ember-cli-dependency-checker": "^3.0.0",
     "ember-cli-eslint": "^4.2.3",
@@ -70,6 +76,7 @@
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-release": "^0.2.9",
     "ember-cli-sri": "^2.1.1",
+    "ember-cli-typescript-blueprints": "^1.0.0",
     "ember-cli-uglify": "^2.1.0",
     "ember-cli-update": "^0.14.0",
     "ember-disable-prototype-extensions": "^1.1.3",
@@ -86,7 +93,6 @@
     "esprima": "^4.0.0",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
-    "in-repo-c": "link:tests/dummy/lib/in-repo-c",
     "loader.js": "^4.7.0",
     "mktemp": "^0.4.0",
     "mocha": "^5.0.0",
@@ -94,8 +100,8 @@
     "rimraf": "^2.6.2",
     "testdouble": "^3.5.0",
     "ts-node": "^7.0.1",
-    "typescript": "^2.7.2",
-    "typescript-eslint-parser": "^15.0.0"
+    "typescript": "^3.1.1",
+    "typescript-eslint-parser": "^19.0.2"
   },
   "resolutions": {
     "@types/ember": "2.8.13"
@@ -106,13 +112,7 @@
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "before": [
-      "ember-cli-babel",
-      "ember-qunit-decorators"
-    ],
-    "after": [
-      "ember-source",
-      "ember-data",
-      "ember-decorators"
+      "ember-cli-babel"
     ]
   },
   "prettier": {

@@ -10,6 +10,10 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
-    "outDir": "../js"
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "../js",
+    "typeRoots": ["../node_modules/@types", "types"],
+    "esModuleInterop": true
   }
 }
