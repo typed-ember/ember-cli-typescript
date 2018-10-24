@@ -6,6 +6,7 @@ import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
 import TypecheckWorker from './lib/typechecking/worker';
+import TypecheckMiddleware from './lib/typechecking/middleware';
 
 export default addon({
   name: 'ember-cli-typescript',
@@ -33,6 +34,12 @@ export default addon({
 
   blueprintsPath() {
     return `${__dirname}/blueprints`;
+  },
+
+  serverMiddleware({ app }) {
+    let workerPromise = this._getTypecheckWorker();
+    let middleware = new TypecheckMiddleware(this.project, workerPromise);
+    middleware.register(app);
   },
 
   async postBuild() {
