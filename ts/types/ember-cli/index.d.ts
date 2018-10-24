@@ -34,6 +34,7 @@ declare module 'ember-cli/lib/models/addon' {
     includedCommands(): Record<string, typeof Command | ExtendOptions<Command>> | void;
     shouldIncludeChildAddon(addon: Addon): boolean;
     isDevelopingAddon(): boolean;
+    setupPreprocessorRegistry(type: 'self' | 'parent', registry: unknown): void;
   }
 }
 

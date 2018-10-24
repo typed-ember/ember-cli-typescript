@@ -1,7 +1,11 @@
 import semver from 'semver';
+import { Remote } from 'stagehand';
+import { connect } from 'stagehand/lib/adapters/child-process';
 import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
+import fork from './lib/utilities/fork';
+import TypecheckWorker from './lib/typechecking/worker';
 
 export default addon({
   name: 'ember-cli-typescript',
@@ -10,6 +14,12 @@ export default addon({
     this._super.included.apply(this, arguments);
     this._checkDevelopment();
     this._checkBabelVersion();
+
+    // If we're a direct dependency of the host app, go ahead and start up the
+    // typecheck worker so we don't wait until the end of the build to check
+    if (this.parent === this.project) {
+      this._getTypecheckWorker();
+    }
   },
 
   includedCommands() {
@@ -25,7 +35,24 @@ export default addon({
     return `${__dirname}/blueprints`;
   },
 
-  setupPreprocessorRegistry(type: string) {
+  async postBuild() {
+    // This code makes the fundamental assumption that the TS compiler's fs watcher
+    // will notice a file change before the full Broccoli build completes. Otherwise
+    // the `getStatus` call here might report the status of the previous check. In
+    // practice, though, building takes much longer than the time to trigger the
+    // compiler's "hey, a file changed" hook, and once the typecheck has begun, the
+    // `getStatus` call will block until it's complete.
+    let worker = await this._getTypecheckWorker();
+    let { failed } = await worker.getStatus();
+
+    if (failed) {
+      // The actual details of the errors will already have been printed
+      // with nice highlighting and formatting separately.
+      throw new Error('Typechecking failed');
+    }
+  },
+
+  setupPreprocessorRegistry(type) {
     if (type !== 'parent') return;
 
     // Normally this is the sort of logic that would live in `included()`, but
@@ -94,5 +121,30 @@ export default addon({
     if (!extensions.includes('ts')) {
       extensions.push('ts');
     }
+  },
+
+  _typecheckWorker: undefined as Promise<Remote<TypecheckWorker>> | undefined,
+
+  _getTypecheckWorker() {
+    if (!this._typecheckWorker) {
+      this._typecheckWorker = this._forkTypecheckWorker();
+    }
+
+    return this._typecheckWorker;
+  },
+
+  async _forkTypecheckWorker() {
+    let childProcess = fork(`${__dirname}/lib/typechecking/worker/launch`);
+    let worker = await connect<TypecheckWorker>(childProcess);
+
+    await worker.onTypecheck(status => {
+      for (let error of status.errors) {
+        this.ui.writeLine(error);
+      }
+    });
+
+    await worker.start(this.project.root);
+
+    return worker;
   },
 });
