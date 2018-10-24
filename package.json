@@ -37,20 +37,14 @@
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-transform-typescript": "^7.1.0",
-    "broccoli-funnel": "^2.0.1",
-    "broccoli-merge-trees": "^2.0.0",
-    "broccoli-plugin": "^1.2.1",
-    "broccoli-stew": "^1.4.0",
-    "chokidar": "^2.0.3",
     "debug": "^3.1.0",
     "ember-cli-babel-plugin-helpers": "^1.0.0",
-    "escape-string-regexp": "^1.0.5",
     "execa": "^0.9.0",
     "fs-extra": "^5.0.0",
-    "glob": "^7.1.2",
     "resolve": "^1.5.0",
     "rsvp": "^4.8.1",
     "semver": "^5.5.1",
+    "stagehand": "^1.0.0",
     "symlink-or-copy": "^1.1.8",
     "walk-sync": "^0.3.2"
   },
@@ -60,8 +54,10 @@
     "@types/core-object": "^3.0.0",
     "@types/ember": "2.8.13",
     "@types/ember-qunit": "^3.0.1",
+    "@types/express": "^4.16.0",
     "@types/node": "^9.6.5",
     "@types/qunit": "^2.0.31",
+    "@types/resolve": "^0.0.8",
     "@types/semver": "^5.5.0",
     "broccoli-asset-rev": "^2.7.0",
     "co": "^4.6.0",
@@ -73,7 +69,7 @@
     "ember-cli-eslint": "^4.2.3",
     "ember-cli-htmlbars": "^3.0.0",
     "ember-cli-htmlbars-inline-precompile": "^1.0.3",
-    "ember-cli-inject-live-reload": "^1.8.2",
+    "ember-cli-inject-live-reload": "^2.0.1",
     "ember-cli-release": "^0.2.9",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-typescript-blueprints": "^1.0.0",
@@ -91,6 +87,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "esprima": "^4.0.0",
+    "got": "^9.2.2",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "loader.js": "^4.7.0",
@@ -107,11 +104,12 @@
     "@types/ember": "2.8.13"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",
     "before": [
+      "broccoli-watcher",
       "ember-cli-babel"
     ]
   },
