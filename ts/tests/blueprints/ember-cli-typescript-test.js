@@ -53,6 +53,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         const pkgJson = JSON.parse(pkg.content);
         expect(pkgJson.scripts.prepublishOnly).to.be.undefined;
         expect(pkgJson.scripts.postpublish).to.be.undefined;
+        expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-typescript-blueprints');
         expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
         expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
         expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
