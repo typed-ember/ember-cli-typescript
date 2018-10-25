@@ -24,11 +24,12 @@ jobs:
 
   include:
     - stage: "Tests"
-      name: "Tests"
-      script:
+      script: &baseline_tests
         - test $MD_ONLY && echo "Skipped!" || yarn lint:js
         - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
         - test $MD_ONLY && echo "Skipped!" || yarn ci:test
+    - os: windows
+      script: *baseline_tests
     - stage: "Versioned Tests"
       env: EMBER_TRY_SCENARIO=typescript-release
     - env: EMBER_TRY_SCENARIO=typescript-beta
