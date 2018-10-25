@@ -95,7 +95,7 @@
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "esprima": "^4.0.0",
-    "got": "^9.2.2",
+    "got": "^8.0.0",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "loader.js": "^4.7.0",
