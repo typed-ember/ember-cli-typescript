@@ -9,6 +9,7 @@ declare module 'ember-cli/lib/broccoli/ember-app' {
 declare module 'ember-cli/lib/models/addon' {
   import CoreObject, { ExtendOptions } from 'core-object';
   import UI from 'console-ui';
+  import { Application } from 'express';
   import Project from 'ember-cli/lib/models/project';
   import Command from 'ember-cli/lib/models/command';
   import EmberApp from 'ember-cli/lib/broccoli/ember-app';
@@ -34,6 +35,8 @@ declare module 'ember-cli/lib/models/addon' {
     includedCommands(): Record<string, typeof Command | ExtendOptions<Command>> | void;
     shouldIncludeChildAddon(addon: Addon): boolean;
     isDevelopingAddon(): boolean;
+    serverMiddleware(options: { app: Application }): void | Promise<void>;
+    setupPreprocessorRegistry(type: 'self' | 'parent', registry: unknown): void;
   }
 }
 

@@ -48,11 +48,22 @@ describe('Acceptance: build', function() {
     `);
   }));
 
-  // TODO re-enable once type checking is integrated again
-  it.skip('fails the build when noEmitOnError is set and an error is emitted', co.wrap(function*() {
+  it('fails the build when noEmitOnError is set and an error is emitted', co.wrap(function*() {
     this.app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 
     yield expect(this.app.build()).to.be.rejectedWith(`Cannot find module 'nonexistent'`);
+  }));
+
+  it('serves a type error page when the build has failed', co.wrap(function*() {
+    this.app.writeFile('app/index.html', 'plain index');
+    this.app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
+
+    let server = this.app.serve();
+    let output = yield server.waitForOutput('Typechecking failed');
+    let response = yield server.request('/');
+
+    expect(output).to.include(`Cannot find module 'nonexistent'`);
+    expect(response.body).to.include(`Cannot find module 'nonexistent'`);
   }));
 });
 
