@@ -1,4 +1,4 @@
-# ember-cli-typescript 2.0
+# ember-cli-typescript
 
 Use TypeScript in your Ember 2.x and 3.x apps!
 
