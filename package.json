@@ -38,22 +38,14 @@
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-transform-typescript": "^7.1.0",
     "ansi-to-html": "^0.6.6",
-    "broccoli-funnel": "^2.0.1",
-    "broccoli-merge-trees": "^2.0.0",
-    "broccoli-plugin": "^1.2.1",
-    "broccoli-stew": "^1.4.0",
-    "chokidar": "^2.0.3",
     "debug": "^3.1.0",
     "ember-cli-babel-plugin-helpers": "^1.0.0",
-    "escape-string-regexp": "^1.0.5",
     "execa": "^0.9.0",
     "fs-extra": "^5.0.0",
-    "glob": "^7.1.2",
     "resolve": "^1.5.0",
     "rsvp": "^4.8.1",
     "semver": "^5.5.1",
     "stagehand": "^1.0.0",
-    "symlink-or-copy": "^1.1.8",
     "walk-sync": "^0.3.2"
   },
   "devDependencies": {
@@ -112,7 +104,7 @@
     "@types/ember": "2.8.13"
   },
   "engines": {
-    "node": "^4.5 || 6.* || >= 7.*"
+    "node": "6.* || 8.* || >= 10.*"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config",

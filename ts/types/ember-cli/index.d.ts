@@ -2,7 +2,7 @@ declare module 'ember-cli/lib/broccoli/ember-app' {
   import CoreObject from 'core-object';
 
   export default class EmberApp extends CoreObject {
-    options?: Record<string, unknown>;
+    options: Record<string, unknown>;
   }
 }
 
