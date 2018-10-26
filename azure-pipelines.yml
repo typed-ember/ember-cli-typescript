@@ -12,7 +12,9 @@ trigger:
       - master
   paths:
     exclude:
-      - *.md
+      - README.md
+      - CHANGELOG.md
+      - CODE_OF_CONDUCT.md
 steps:
   - task: NodeTool@0
     inputs:
