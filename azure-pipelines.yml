@@ -29,9 +29,9 @@ steps:
   - script: |
       yarn install
       yarn run build
-      yarn ci:prepare
-    displayName: 'Build & prepare'
+    displayName: 'Build'
 
   - script: |
+      yarn ci:prepare
       yarn ember try:one defaults --skip-cleanup
     displayName: 'Run Tests'
