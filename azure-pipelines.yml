@@ -13,7 +13,7 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      npm install -g yarn ember-cli
+      npm install -g yarn ember-cli ts-node
       # bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
       yarn install
     displayName: 'Install dependencies'
