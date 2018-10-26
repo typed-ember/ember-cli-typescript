@@ -15,14 +15,14 @@ steps:
   - script: |
       npm install -g yarn
       # bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
-      test $MD_ONLY && echo "Skipped!" || yarn install
+      yarn install
     displayName: 'Install dependencies'
 
   - script: |
-      test $MD_ONLY && echo "Skipped!" || yarn run build
-      test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+      yarn run build
+      yarn ci:prepare
     displayName: 'Build & prepare'
 
   - script: |
-      test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+      yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
     displayName: 'Run Tests'
