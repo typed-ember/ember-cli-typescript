@@ -13,12 +13,12 @@ strategy:
     EmberRelease: EMBER_TRY_SCENARIO=ember-cli-release
     EmberBeta: EMBER_TRY_SCENARIO=ember-cli-beta
 
-trigger:
-  paths:
-    exclude:
-      - README.md
-      - CHANGELOG.md
-      - CODE_OF_CONDUCT.md
+# trigger:
+#   paths:
+#     exclude:
+#       - README.md
+#       - CHANGELOG.md
+#       - CODE_OF_CONDUCT.md
 steps:
   - task: NodeTool@0
     inputs:
