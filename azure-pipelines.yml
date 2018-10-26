@@ -5,11 +5,14 @@
 
 pool:
   vmImage: 'vs2017-win2016'
+# strategy:
+#   matrix:
+#     TsRelease: EMBER_TRY_SCENARIO=typescript-release
+#     TsBeta: EMBER_TRY_SCENARIO=typescript-beta
+#     EmberRelease: EMBER_TRY_SCENARIO=ember-cli-release
+#     EmberBeta: EMBER_TRY_SCENARIO=ember-cli-beta
+
 trigger:
-  batch: true
-  branches:
-    include:
-      - master
   paths:
     exclude:
       - README.md
@@ -23,8 +26,7 @@ steps:
 
   - script: |
       npm install -g yarn ember-cli ts-node
-      yarn install
-    displayName: 'Install dependencies'
+    displayName: 'Setup global tools'
 
   - script: |
       yarn install
@@ -34,4 +36,4 @@ steps:
   - script: |
       yarn ci:prepare
       yarn ci:test
-    displayName: 'Run Tests'
+    displayName: 'Test'
