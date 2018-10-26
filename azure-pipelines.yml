@@ -8,17 +8,21 @@ pool:
 
 strategy:
   matrix:
-    TsRelease: EMBER_TRY_SCENARIO=typescript-release
-    TsBeta: EMBER_TRY_SCENARIO=typescript-beta
-    EmberRelease: EMBER_TRY_SCENARIO=ember-cli-release
-    EmberBeta: EMBER_TRY_SCENARIO=ember-cli-beta
+    TsRelease:
+      EMBER_TRY_SCENARIO: typescript-release
+    TsBeta:
+      EMBER_TRY_SCENARIO: typescript-beta
+    EmberRelease:
+      EMBER_TRY_SCENARIO: ember-cli-release
+    EmberBeta:
+      EMBER_TRY_SCENARIO: ember-cli-beta
 
-# trigger:
-#   paths:
-#     exclude:
-#       - README.md
-#       - CHANGELOG.md
-#       - CODE_OF_CONDUCT.md
+trigger:
+  paths:
+    exclude:
+      - README.md
+      - CHANGELOG.md
+      - CODE_OF_CONDUCT.md
 steps:
   - task: NodeTool@0
     inputs:
@@ -36,6 +40,7 @@ steps:
 
   - script: |
       ls -all
+      ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
       yarn ci:prepare
       yarn ci:test
     displayName: 'Test'
