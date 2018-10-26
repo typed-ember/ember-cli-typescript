@@ -42,7 +42,7 @@ steps:
 
   - script: |
       ls -all
-      ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+      ember try:one $(EMBER_TRY_SCENARIO) --skip-cleanup
       yarn ci:prepare
       yarn ci:test
     displayName: 'Test'
