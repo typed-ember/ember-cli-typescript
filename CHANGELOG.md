@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.0-beta.2] - 2018-10-26
+
+### Fixed
+- Ensure that ember-cli-typescript doesn't interfere with parallelizing the Babel transpilation process (#351)
+
 ## [2.0.0-beta.1] - 2018-10-25
 
 This is a major release with 💥 breaking changes 💥! However, most apps will compile with minimal (or no) changes! 🎉 They'll also tend to compile *much faster* in many cases. ⚡️
@@ -385,7 +390,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
 [unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.5.0...HEAD
-[2.0.0-beta.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.5.0...v2.0.0-beta.1
+[2.0.0-beta.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.1...v2.0.0-beta.2
+[2.0.0-beta.1]: https://github.com/typed-ember/ember-cli-typescript/compare/HEAD...v2.0.0-beta.1
 [1.5.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.4...v1.5.0
 [1.4.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.3...v1.4.4
 [1.4.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.2...v1.4.3
