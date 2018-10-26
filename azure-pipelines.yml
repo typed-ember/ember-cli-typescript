@@ -10,6 +10,8 @@ strategy:
   matrix:
     TsRelease:
       EMBER_TRY_SCENARIO: 'typescript-release'
+    TsRelease:
+      EMBER_TRY_SCENARIO: 'node'
     # TsBeta:
     #   EMBER_TRY_SCENARIO: 'typescript-beta'
     # EmberRelease:
@@ -40,9 +42,8 @@ steps:
 
   - script: |
       ls -all
-      ember try:one $(EMBER_TRY_SCENARIO)
-      ls -all
-      yarn ci:prepare
-      ls -all
-      yarn ci:test
+      if [ "$(EMBER_TRY_SCENARIO)" == "node" ];
+      then yarn ci:prepare && ls -all && yarn ci:test
+      else ember try:one $(EMBER_TRY_SCENARIO);
+
     displayName: 'Test'
