@@ -19,6 +19,7 @@ steps:
     displayName: 'Install dependencies'
 
   - script: |
+      yarn install
       yarn run build
       yarn ci:prepare
     displayName: 'Build & prepare'
