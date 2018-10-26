@@ -2,7 +2,7 @@
 
 set -e
 
-[[ -z $TRAVIS_COMMIT ]] && exit 0
+[[ -z $TRAVIS_COMMIT ]] && exit 1
 
 CHANGED_FILES=`git diff --name-only master...${TRAVIS_COMMIT}`
 
