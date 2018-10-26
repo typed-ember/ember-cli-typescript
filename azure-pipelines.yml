@@ -33,5 +33,5 @@ steps:
 
   - script: |
       yarn ci:prepare
-      yarn ember try:one defaults --skip-cleanup
+      yarn ci:test
     displayName: 'Run Tests'
