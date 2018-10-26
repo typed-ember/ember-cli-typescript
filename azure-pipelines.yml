@@ -6,20 +6,6 @@
 pool:
   vmImage: 'vs2017-win2016'
 
-strategy:
-  matrix:
-    TsRelease:
-      SUITE: 'ember-try'
-      EMBER_TRY_SCENARIO: 'typescript-release'
-    NodeTests:
-      SUITE: 'node'
-    # TsBeta:
-    #   EMBER_TRY_SCENARIO: 'typescript-beta'
-    # EmberRelease:
-    #   EMBER_TRY_SCENARIO: 'ember-cli-release'
-    # EmberBeta:
-    #   EMBER_TRY_SCENARIO: 'ember-cli-beta'
-
 trigger:
   paths:
     exclude:
@@ -38,14 +24,9 @@ steps:
 
   - script: |
       yarn install
-      yarn run build
     displayName: 'Build'
 
   - script: |
-      ls -all
-      if [ "$(SUITE)" == "node" ]; then yarn ci:prepare && ls -all && yarn ci:test;
-      else if [ "$(SUITE)" == "ember-try" ]; then ember try:one $(EMBER_TRY_SCENARIO);
-      else echo "Unknown suite: $(SUITE)" && exit 1;
-      fi;
-
+      yarn ci:prepare
+      yarn ember try:one defaults
     displayName: 'Test'
