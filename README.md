@@ -35,7 +35,7 @@ Use TypeScript in your Ember 2.x and 3.x apps!
   * [Linking Addons](#linking-addons)
   * [In-Repo Addons](#in-repo-addons)
   * [Gotchas](#gotchas)
-* [Installing from git](#installing-from-git])
+* [Installing from git](#installing-from-git)
 * [Current limitations](#current-limitations)
   * [Some `import`s don't resolve](#some-imports-dont-resolve)
   * [Type safety when invoking actions](#type-safety-when-invoking-actions)
