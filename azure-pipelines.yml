@@ -6,16 +6,18 @@
 pool:
   vmImage: 'vs2017-win2016'
 
+job: Build
+
 strategy:
   matrix:
     TsRelease:
-      EMBER_TRY_SCENARIO: typescript-release
+      EMBER_TRY_SCENARIO: 'typescript-release'
     TsBeta:
-      EMBER_TRY_SCENARIO: typescript-beta
+      EMBER_TRY_SCENARIO: 'typescript-beta'
     EmberRelease:
-      EMBER_TRY_SCENARIO: ember-cli-release
+      EMBER_TRY_SCENARIO: 'ember-cli-release'
     EmberBeta:
-      EMBER_TRY_SCENARIO: ember-cli-beta
+      EMBER_TRY_SCENARIO: 'ember-cli-beta'
 
 trigger:
   paths:
