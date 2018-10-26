@@ -5,7 +5,14 @@
 
 pool:
   vmImage: 'vs2017-win2016'
-
+trigger:
+  batch: true
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - *.md
 steps:
   - task: NodeTool@0
     inputs:
@@ -14,7 +21,6 @@ steps:
 
   - script: |
       npm install -g yarn ember-cli ts-node
-      # bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
       yarn install
     displayName: 'Install dependencies'
 
