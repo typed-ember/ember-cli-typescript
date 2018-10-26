@@ -27,5 +27,6 @@ steps:
     displayName: 'Build'
 
   - script: |
-      yarn ember try:one defaults && yarn test:node
+      yarn ci:prepare
+      yarn ci:test
     displayName: 'Test'
