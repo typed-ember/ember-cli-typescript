@@ -14,7 +14,7 @@ steps:
 
   - script: |
       npm install -g yarn
-      bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
+      # bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
       test $MD_ONLY && echo "Skipped!" || yarn install
     displayName: 'Install dependencies'
 
