@@ -35,6 +35,7 @@ steps:
     displayName: 'Build'
 
   - script: |
+      ls -all
       yarn ci:prepare
       yarn ci:test
     displayName: 'Test'
