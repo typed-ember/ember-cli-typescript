@@ -1,7 +1,7 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
+import { hasPlugin, addPlugin, AddPluginOptions, BabelPluginConfig } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
@@ -109,7 +109,9 @@ export default addon({
     let target = this._getConfigurationTarget();
 
     if (!hasPlugin(target, name)) {
-      addPlugin(target, [require.resolve(name), config], constraints);
+      let resolvedPath = require.resolve(name);
+      let pluginEntry: BabelPluginConfig = config ? [resolvedPath, config] : resolvedPath;
+      addPlugin(target, pluginEntry, constraints);
     }
   },
 
