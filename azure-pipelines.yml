@@ -9,9 +9,10 @@ pool:
 strategy:
   matrix:
     TsRelease:
+      SUITE: 'ember-try'
       EMBER_TRY_SCENARIO: 'typescript-release'
     NodeTests:
-      EMBER_TRY_SCENARIO: 'node'
+      SUITE: 'node'
     # TsBeta:
     #   EMBER_TRY_SCENARIO: 'typescript-beta'
     # EmberRelease:
@@ -42,9 +43,9 @@ steps:
 
   - script: |
       ls -all
-      if [ "$(EMBER_TRY_SCENARIO)" == "node" ];
-      then yarn ci:prepare && ls -all && yarn ci:test
-      else ember try:one $(EMBER_TRY_SCENARIO);
+      if [ "$(SUITE)" == "node" ]; then yarn ci:prepare && ls -all && yarn ci:test;
+      else if [ "$(SUITE)" == "ember-try" ]; then ember try:one $(EMBER_TRY_SCENARIO);
+      else echo "Unknown suite: $(SUITE)" && exit 1;
       fi;
 
     displayName: 'Test'
