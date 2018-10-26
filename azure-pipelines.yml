@@ -25,5 +25,5 @@ steps:
     displayName: 'Build & prepare'
 
   - script: |
-      yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+      yarn ember try:one defaults --skip-cleanup
     displayName: 'Run Tests'
