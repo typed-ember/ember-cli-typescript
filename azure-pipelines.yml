@@ -45,5 +45,6 @@ steps:
       if [ "$(EMBER_TRY_SCENARIO)" == "node" ];
       then yarn ci:prepare && ls -all && yarn ci:test
       else ember try:one $(EMBER_TRY_SCENARIO);
+      fi;
 
     displayName: 'Test'
