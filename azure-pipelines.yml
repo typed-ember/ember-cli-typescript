@@ -41,6 +41,8 @@ steps:
   - script: |
       ls -all
       ember try:one $(EMBER_TRY_SCENARIO)
+      ls -all
       yarn ci:prepare
+      ls -all
       yarn ci:test
     displayName: 'Test'
