@@ -10,7 +10,7 @@ strategy:
   matrix:
     TsRelease:
       EMBER_TRY_SCENARIO: 'typescript-release'
-    TsRelease:
+    NodeTests:
       EMBER_TRY_SCENARIO: 'node'
     # TsBeta:
     #   EMBER_TRY_SCENARIO: 'typescript-beta'
