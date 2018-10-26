@@ -18,13 +18,6 @@ strategy:
     #   EMBER_TRY_SCENARIO: 'ember-cli-beta'
 
 - job: NodeTests
-  strategy:
-    matrix:
-      TsRelease:
-        EMBER_TRY_SCENARIO: 'typescript-release'
-      # TsBeta:
-      #   EMBER_TRY_SCENARIO: 'typescript-beta'
-
   trigger:
     paths:
       exclude:
@@ -52,8 +45,6 @@ strategy:
     displayName: 'Node Tests'
 
 - job: EmberTryTests
-
-
   trigger:
     paths:
       exclude:
