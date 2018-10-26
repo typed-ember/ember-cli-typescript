@@ -11,8 +11,8 @@ strategy:
   matrix:
     TsRelease:
       EMBER_TRY_SCENARIO: 'typescript-release'
-    TsBeta:
-      EMBER_TRY_SCENARIO: 'typescript-beta'
+    # TsBeta:
+    #   EMBER_TRY_SCENARIO: 'typescript-beta'
 
 trigger:
   paths:
@@ -45,12 +45,12 @@ strategy:
   matrix:
     TsRelease:
       EMBER_TRY_SCENARIO: 'typescript-release'
-    TsBeta:
-      EMBER_TRY_SCENARIO: 'typescript-beta'
-    EmberRelease:
-      EMBER_TRY_SCENARIO: 'ember-cli-release'
-    EmberBeta:
-      EMBER_TRY_SCENARIO: 'ember-cli-beta'
+    # TsBeta:
+    #   EMBER_TRY_SCENARIO: 'typescript-beta'
+    # EmberRelease:
+    #   EMBER_TRY_SCENARIO: 'ember-cli-release'
+    # EmberBeta:
+    #   EMBER_TRY_SCENARIO: 'ember-cli-beta'
 
 trigger:
   paths:
