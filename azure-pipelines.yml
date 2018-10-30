@@ -19,7 +19,7 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      npm install -g yarn ember-cli ts-node
+      npm install -g yarn ember-cli ts-node mocha
     displayName: 'Setup global tools'
 
   - script: |
@@ -28,5 +28,12 @@ steps:
 
   - script: |
       yarn ci:prepare
-      yarn ci:test
-    displayName: 'Test'
+    displayName: 'Prepare CI environment'
+
+  - script: |
+      ember test
+    displayName: 'Ember App Tests'
+
+  - script: |
+      mocha --recursive js/tests
+    displayName: 'Node Tests'

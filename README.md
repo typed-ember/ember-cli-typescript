@@ -2,43 +2,43 @@
 
 Use TypeScript in your Ember 2.x and 3.x apps!
 
-[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Windows build status](https://ci.appveyor.com/api/projects/status/i94uv7jgmrg022ho/branch/master?svg=true)](https://ci.appveyor.com/project/chriskrycho/ember-cli-typescript/branch/master) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
-* [Getting Help](#getting-help)
-* [Setup and Configuration](#setup-and-configuration)
-  * [Supported Ember & TypeScript Versions](#supported-ember-and-typescript-versions)
-  * [`tsconfig.json`](#tsconfigjson)
-  * [Sourcemaps](#sourcemaps)
-* [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
-  * [Incremental adoption](#incremental-adoption)
-  * [Install other types!](#install-other-types)
-  * [The `types` directory](#the-types-directory)
-    * [Global types for your package](#global-types-for-your-package)
-    * [Environment configuration typings](#environment-configuration-typings)
-  * [String-keyed lookups](#string-keyed-lookups)
-    * [`this` type workaround](#this-type-workaround)
-    * [Nested keys in `get` or `set`](#nested-keys-in-get-or-set)
-    * [Service and controller injections](#service-and-controller-injections)
-      * [Using `.extend`](#using-extend)
-      * [Using decorators](#using-decorators)
-    * [Ember Data lookups](#ember-data-lookups)
-      * [Opt-in unsafety](#opt-in-unsafety)
-      * [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
-  * [Class property setup errors](#class-property-setup-errors)
-  * [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
-  * [ember-cli-mirage](#ember-cli-mirage)
-  * ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
-    * [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
-    * [Why is this happening?](#why-is-this-happening)
-* [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
-  * [Publishing](#publishing)
-  * [Linking Addons](#linking-addons)
-  * [In-Repo Addons](#in-repo-addons)
-  * [Gotchas](#gotchas)
-* [Installing from git](#installing-from-git)
-* [Current limitations](#current-limitations)
-  * [Some `import`s don't resolve](#some-imports-dont-resolve)
-  * [Type safety when invoking actions](#type-safety-when-invoking-actions)
+- [Getting Help](#getting-help)
+- [Setup and Configuration](#setup-and-configuration)
+  - [Supported Ember & TypeScript Versions](#supported-ember-and-typescript-versions)
+  - [`tsconfig.json`](#tsconfigjson)
+  - [Sourcemaps](#sourcemaps)
+- [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
+  - [Incremental adoption](#incremental-adoption)
+  - [Install other types!](#install-other-types)
+  - [The `types` directory](#the-types-directory)
+    - [Global types for your package](#global-types-for-your-package)
+    - [Environment configuration typings](#environment-configuration-typings)
+  - [String-keyed lookups](#string-keyed-lookups)
+    - [`this` type workaround](#this-type-workaround)
+    - [Nested keys in `get` or `set`](#nested-keys-in-get-or-set)
+    - [Service and controller injections](#service-and-controller-injections)
+      - [Using `.extend`](#using-extend)
+      - [Using decorators](#using-decorators)
+    - [Ember Data lookups](#ember-data-lookups)
+      - [Opt-in unsafety](#opt-in-unsafety)
+      - [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
+  - [Class property setup errors](#class-property-setup-errors)
+  - [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
+  - [ember-cli-mirage](#ember-cli-mirage)
+  - ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
+    - [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
+    - [Why is this happening?](#why-is-this-happening)
+- [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
+  - [Publishing](#publishing)
+  - [Linking Addons](#linking-addons)
+  - [In-Repo Addons](#in-repo-addons)
+  - [Gotchas](#gotchas)
+- [Installing from git](#installing-from-git)
+- [Current limitations](#current-limitations)
+  - [Some `import`s don't resolve](#some-imports-dont-resolve)
+  - [Type safety when invoking actions](#type-safety-when-invoking-actions)
 
 ## Getting Help
 
@@ -64,12 +64,14 @@ If you don't find an answer, please [open an enhancement request or bug report i
 
 The TypeScript compiler does some very basic static analysis of your code, and most developers use Palantir's TSLint tool for more thorough checking.
 
-One sure way to tell which tool is generating an error message is that *Linters like [TSLint](https://github.com/palantir/tslint/) and [ESLint](https://eslint.org/) will always mention their name, and the name of the pertinent rule, when it alerts you to a violation*.
+One sure way to tell which tool is generating an error message is that _Linters like [TSLint](https://github.com/palantir/tslint/) and [ESLint](https://eslint.org/) will always mention their name, and the name of the pertinent rule, when it alerts you to a violation_.
 
-##### Example: 
+##### Example:
+
 ```
 [tslint] variable name must be in lowerCamelCase, PascalCase or UPPER_CASE (variable-name)
 ```
+
 `variable-name` is the name of the rule.
 
 For issues relating to typescript compiler analysis, [create an issue in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new). If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
@@ -95,38 +97,38 @@ In addition to ember-cli-typescript, we make the following changes to your proje
 
 ### Other Packages This Addon Installs
 
-* We install the following packages—all at their current "latest" value—or generated:
+- We install the following packages—all at their current "latest" value—or generated:
 
-  * [`typescript`](https://github.com/Microsoft/TypeScript)
-  * **@types/ember** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js) which includes
-     * **@types/ember__string** ([npm](https://www.npmjs.com/package/@types/ember__string) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__string)) - types for the [`@ember/string` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fstring) 
-     * **@types/ember__object** ([npm](https://www.npmjs.com/package/@types/ember__object) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__object)) - types for the [`@ember/object` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fobject) 
-     * **@types/ember__utils** ([npm](https://www.npmjs.com/package/@types/ember__utils) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__utils)) - types for the [`@ember/utils` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Futils) 
-     * **@types/ember__array** ([npm](https://www.npmjs.com/package/@types/ember__array) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__array)) - types for the [`@ember/array` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Farray) 
-     * **@types/ember__component** ([npm](https://www.npmjs.com/package/@types/ember__component) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__component)) - types for the [`@ember/component` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcomponent) 
-     * **@types/ember__engine** ([npm](https://www.npmjs.com/package/@types/ember__engine) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__engine)) - types for the [`@ember/engine` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fengine) 
-     * **@types/ember__application** ([npm](https://www.npmjs.com/package/@types/ember__application) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__application)) - types for the [`@ember/application` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fapplication) 
-     * **@types/ember__controller** ([npm](https://www.npmjs.com/package/@types/ember__controller) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__controller)) - types for the [`@ember/controller` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcontroller) 
-     * **@types/ember__service** ([npm](https://www.npmjs.com/package/@types/ember__service) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__service)) - types for the [`@ember/service` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fservice) 
-     * **@types/ember__runloop** ([npm](https://www.npmjs.com/package/@types/ember__runloop) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__runloop)) - types for the [`@ember/runloop` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frunloop) 
-     * **@types/ember__error** ([npm](https://www.npmjs.com/package/@types/ember__error) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__error)) - types for the [`@ember/error` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ferror) 
-     * **@types/ember__polyfills** ([npm](https://www.npmjs.com/package/@types/ember__polyfills) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__polyfills)) - types for the [`@ember/polyfills` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fpolyfills) 
-     * **@types/ember__debug** ([npm](https://www.npmjs.com/package/@types/ember__debug) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__debug)) - types for the [`@ember/debug` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fdebug) 
-     * **@types/ember__test** ([npm](https://www.npmjs.com/package/@types/ember__test) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test)) - types for the [`@ember/test` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ftest) 
-     * **@types/ember__routing** ([npm](https://www.npmjs.com/package/@types/ember__routing) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__routing)) - types for the [`@ember/routing` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frouting) 
-  * **@types/ember-data** - ([npm](https://www.npmjs.com/package/@types/ember-data) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-data)) - Types for [Ember-Data](https://github.com/emberjs/data)
-  * **@types/rsvp** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
-  * **@types/ember-test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-test-helpers)) Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers), which arose from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)
-  * **@types/ember-testing-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-testing-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-testing-helpers)) – Types for [Ember's built-in globally-available test helpers](https://github.com/emberjs/ember.js/tree/master/packages/ember-testing/lib/helpers)
-  * **@types/ember__test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember__test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test-helpers)) – Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers) when imported as `@ember/test-helpers`.
+  - [`typescript`](https://github.com/Microsoft/TypeScript)
+  - **@types/ember** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js) which includes
+    - **@types/ember\_\_string** ([npm](https://www.npmjs.com/package/@types/ember__string) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__string)) - types for the [`@ember/string` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fstring)
+    - **@types/ember\_\_object** ([npm](https://www.npmjs.com/package/@types/ember__object) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__object)) - types for the [`@ember/object` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fobject)
+    - **@types/ember\_\_utils** ([npm](https://www.npmjs.com/package/@types/ember__utils) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__utils)) - types for the [`@ember/utils` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Futils)
+    - **@types/ember\_\_array** ([npm](https://www.npmjs.com/package/@types/ember__array) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__array)) - types for the [`@ember/array` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Farray)
+    - **@types/ember\_\_component** ([npm](https://www.npmjs.com/package/@types/ember__component) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__component)) - types for the [`@ember/component` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcomponent)
+    - **@types/ember\_\_engine** ([npm](https://www.npmjs.com/package/@types/ember__engine) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__engine)) - types for the [`@ember/engine` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fengine)
+    - **@types/ember\_\_application** ([npm](https://www.npmjs.com/package/@types/ember__application) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__application)) - types for the [`@ember/application` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fapplication)
+    - **@types/ember\_\_controller** ([npm](https://www.npmjs.com/package/@types/ember__controller) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__controller)) - types for the [`@ember/controller` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcontroller)
+    - **@types/ember\_\_service** ([npm](https://www.npmjs.com/package/@types/ember__service) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__service)) - types for the [`@ember/service` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fservice)
+    - **@types/ember\_\_runloop** ([npm](https://www.npmjs.com/package/@types/ember__runloop) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__runloop)) - types for the [`@ember/runloop` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frunloop)
+    - **@types/ember\_\_error** ([npm](https://www.npmjs.com/package/@types/ember__error) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__error)) - types for the [`@ember/error` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ferror)
+    - **@types/ember\_\_polyfills** ([npm](https://www.npmjs.com/package/@types/ember__polyfills) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__polyfills)) - types for the [`@ember/polyfills` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fpolyfills)
+    - **@types/ember\_\_debug** ([npm](https://www.npmjs.com/package/@types/ember__debug) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__debug)) - types for the [`@ember/debug` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fdebug)
+    - **@types/ember\_\_test** ([npm](https://www.npmjs.com/package/@types/ember__test) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test)) - types for the [`@ember/test` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ftest)
+    - **@types/ember\_\_routing** ([npm](https://www.npmjs.com/package/@types/ember__routing) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__routing)) - types for the [`@ember/routing` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frouting)
+  - **@types/ember-data** - ([npm](https://www.npmjs.com/package/@types/ember-data) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-data)) - Types for [Ember-Data](https://github.com/emberjs/data)
+  - **@types/rsvp** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
+  - **@types/ember-test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-test-helpers)) Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers), which arose from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)
+  - **@types/ember-testing-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-testing-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-testing-helpers)) – Types for [Ember's built-in globally-available test helpers](https://github.com/emberjs/ember.js/tree/master/packages/ember-testing/lib/helpers)
+  - **@types/ember\_\_test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember__test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test-helpers)) – Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers) when imported as `@ember/test-helpers`.
 
 ### Files this addon Generates
 
-* We add the following files to your project:
+- We add the following files to your project:
 
-  * [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-  * `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
-  * `app/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
+  - [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
+  - `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
+  - `app/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
 
 ### Supported Ember and TypeScript versions
 
@@ -167,8 +169,7 @@ const app = new EmberApp(defaults, {
 
 (Note that this _will_ noticeably slow down your app rebuilds.)
 
-If you're updating from an older version of the addon, you may also need to update your `tsconfig.json`. (Current versions generate the correct config at installation.) Either run
-`ember generate ember-cli-typescript` or verify you have the same sourcemap settings in your `tscsonfig.json` that appear in [the blueprint](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json).
+If you're updating from an older version of the addon, you may also need to update your `tsconfig.json`. (Current versions generate the correct config at installation.) Either run `ember generate ember-cli-typescript` or verify you have the same sourcemap settings in your `tscsonfig.json` that appear in [the blueprint](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json).
 
 ## Using TypeScript with Ember effectively
 
@@ -180,27 +181,27 @@ If you are porting an existing app to TypeScript, you can install this addon and
 
 Some specific tips for success on the technical front:
 
-* Use the *strictest* strictness settings that our typings allow. While it may be tempting to start with the *loosest* strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process – getting it type-checking with every new strictness setting you enable! – rather than something you do just once. The only strictness setting you should turn *off* is `strictFunctionTypes`, which our current type definitions do not support. The recommended *strictness* settings in your `"compilerOptions"` hash:
+- Use the _strictest_ strictness settings that our typings allow. While it may be tempting to start with the _loosest_ strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process – getting it type-checking with every new strictness setting you enable! – rather than something you do just once. The only strictness setting you should turn _off_ is `strictFunctionTypes`, which our current type definitions do not support. The recommended _strictness_ settings in your `"compilerOptions"` hash:
 
-    ```
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    ```
+  ```
+  "noImplicitAny": true,
+  "noImplicitThis": true,
+  "alwaysStrict": true,
+  "strictNullChecks": true,
+  "strictPropertyInitialization": true,
+  "noFallthroughCasesInSwitch": true,
+  "noUnusedLocals": true,
+  "noUnusedParameters": true,
+  "noImplicitReturns": true,
+  ```
 
-* Make liberal use of `any` for things you don't have types for as you go, and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it."
+- Make liberal use of `any` for things you don't have types for as you go, and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it."
 
-* A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update *tons* of other places in your app) when you type them later in the process.
+- A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update _tons_ of other places in your app) when you type them later in the process.
 
-* Set `"noEmitOnError": true` in the `"compilerOptions"` hash in your `tsconfig.json` – it will help a lot if you can be sure that for the parts of your app you *have* added types to are still correct. And you'll get nice feedback *immediately* when you have type errors that way!
+- Set `"noEmitOnError": true` in the `"compilerOptions"` hash in your `tsconfig.json` – it will help a lot if you can be sure that for the parts of your app you _have_ added types to are still correct. And you'll get nice feedback _immediately_ when you have type errors that way!
 
-    ![type errors in your build!](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif "example of a build error during live reload")
+  ![type errors in your build!](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif 'example of a build error during live reload')
 
 You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
 
@@ -219,9 +220,9 @@ To make this easier, we're maintaining [a list of addons with known type definit
 
 During installation, we create a `types` directory in the root of your application and add a `"paths"` mapping that includes that directory in any type lookups TypeScript tries to do. This is convenient for a few things:
 
-* global types for your package (see the next section)
-* writing types for third-party/`vendor` packages which do not have any types
-* developing types for an addon which you intend to upstream later
+- global types for your package (see the next section)
+- writing types for third-party/`vendor` packages which do not have any types
+- developing types for an addon which you intend to upstream later
 
 These are all fallbacks, of course, you should use the types supplied directly with a package
 
@@ -245,10 +246,10 @@ Ember makes heavy use of string-based APIs to allow for a high degree of dynamic
 
 The "Update" sequence in the Typing Your Ember has detailed explanations and guides for getting good type-safety for Ember's string-based APIs, e.g. the use of `get` and `set`, service and controller injection, Ember Data models and lookups
 
-* [Part 1][pt1]: A look at normal Ember objects, "arguments" to components (and controllers), and service (or controller) injections.
-* [Part 2][pt2]: Class properties — some notes on how things differ from the `Ember.Object` world.
-* [Part 3][pt3]: Computed properties, actions, mixins, and class methods.
-* [Part 4][pt4]: Using Ember Data, and service and controller injections improvements. (This includes a detailed guide to updating making the service and controller injections and Ember Data lookups behave as described below.)
+- [Part 1][pt1]: A look at normal Ember objects, "arguments" to components (and controllers), and service (or controller) injections.
+- [Part 2][pt2]: Class properties — some notes on how things differ from the `Ember.Object` world.
+- [Part 3][pt3]: Computed properties, actions, mixins, and class methods.
+- [Part 4][pt4]: Using Ember Data, and service and controller injections improvements. (This includes a detailed guide to updating making the service and controller injections and Ember Data lookups behave as described below.)
 
 [pt1]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-1.html
 [pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
@@ -350,7 +351,7 @@ export default class UserProfile extends Component.extend({
 }
 ```
 
-Notice that the type of `mySession` will be the `MySession` type here: TypeScript is using the "registry" set up in the last lines of the `my-session` module to look up the type by its name. If we had written just `service()` instead, Ember would have resolved the correct type at runtime as usual, but TypeScript would not be able to tell *which* service we had, only that it was a `Service`. In that case, the `this.session` would not have a `login` property from TS's perspective, and this would fail to type-check. That extra string gives TS the information it needs to resolve the type and give us auto-completion, type-checking, etc.
+Notice that the type of `mySession` will be the `MySession` type here: TypeScript is using the "registry" set up in the last lines of the `my-session` module to look up the type by its name. If we had written just `service()` instead, Ember would have resolved the correct type at runtime as usual, but TypeScript would not be able to tell _which_ service we had, only that it was a `Service`. In that case, the `this.session` would not have a `login` property from TS's perspective, and this would fail to type-check. That extra string gives TS the information it needs to resolve the type and give us auto-completion, type-checking, etc.
 
 (In Ember 3.0 or earlier, we would have `this.get('session').login(email, password);` instead.)
 
@@ -367,7 +368,8 @@ import { service } from '@ember-decorators/service';
 import MySession from 'my-app/services/my-session';
 
 export default class UserProfile extends Component {
-  @service mySession!: MySession;
+  @service
+  mySession!: MySession;
 
   login(this: UserProfile, email: string, password: string) {
     this.session.login(email, password);
@@ -375,7 +377,7 @@ export default class UserProfile extends Component {
 }
 ```
 
-Note that we need the `MySession` type annotation this way, but we *don't* need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators (as of TS 2.8 – 3.0) are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
+Note that we need the `MySession` type annotation this way, but we _don't_ need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators (as of TS 2.8 – 3.0) are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
 
 Also use the [`!` non-null assertion operator](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator) to prevent [`TS2564`](https://github.com/kaorun343/vue-property-decorator/issues/81), that is caused by enabling `strictPropertyInitialization` in `tsconfig.json`.
 
@@ -390,7 +392,8 @@ import { service } from '@ember-decorators/service';
 import MySession from 'my-app/services/my-session';
 
 export default class UserProfile extends Component {
-  @service mySession!: ComputedProperty<MySession>;
+  @service
+  mySession!: ComputedProperty<MySession>;
 
   login(this: UserProfile, email: string, password: string) {
     get(this, 'session').login(email, password);
@@ -406,7 +409,7 @@ We use the same basic approach for Ember Data type lookups with string keys as w
 
 The declarations and changes you need to add to your existing files are:
 
-* Models
+- Models
 
   ```ts
   import DS from 'ember-data';
@@ -422,7 +425,7 @@ The declarations and changes you need to add to your existing files are:
   }
   ```
 
-* Adapters
+- Adapters
 
   ```ts
   import DS from 'ember-data';
@@ -438,7 +441,7 @@ The declarations and changes you need to add to your existing files are:
   }
   ```
 
-* Serializers
+- Serializers
 
   ```ts
   import DS from 'ember-data';
@@ -453,15 +456,14 @@ The declarations and changes you need to add to your existing files are:
     }
   }
   ```
-  
-  
-* Transforms
+
+- Transforms
 
   ```ts
   import DS from 'ember-data';
 
   export default class ColorTransform extends DS.Transform {
-     // properties and methods
+    // properties and methods
   }
 
   declare module 'ember-data/types/registries/transform' {
@@ -529,7 +531,7 @@ If you're developing an addon and concerned that this might affect consumers, it
 
 Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
 
-- `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or by using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, *not* on an instance, if you try to use class properties to set up injections, computed properties, the action hash, and so on, you will see this error.
+- `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or by using decorators (`@service` or `@controller`) as discussed [above](#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, _not_ on an instance, if you try to use class properties to set up injections, computed properties, the action hash, and so on, you will see this error.
 
 - `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
 
@@ -605,8 +607,8 @@ You may sometimes see TypeScript errors indicating that you have duplicate type 
 
 There are two options here, neither of them _great_:
 
-* manually edit `yarn.lock` or `package-lock.json` and merge the conflicting
-* add a ["resolutions"] key to your `package.json` with the version you want to install of the types you're installing:
+- manually edit `yarn.lock` or `package-lock.json` and merge the conflicting
+- add a ["resolutions"] key to your `package.json` with the version you want to install of the types you're installing:
 
 ```json
 {
@@ -644,9 +646,9 @@ Often when developing an addon, it can be useful to run that addon in the contex
 
 When you do this for a TypeScript addon, by default your `.ts` files won't be consumed by the host app. In order for a linked addon to work, you need to take a few steps:
 
-* ensure `ember-cli-typescript` is installed and set up in the host app
-* override [`isDevelopingAddon()`](https://ember-cli.com/api/classes/Addon.html#method_isDevelopingAddon) in the linked addon to return `true`
-* update the `paths` and `include` entries in your `tsconfig.json` to instruct the compiler how to resolve imports and include the addon's TypeScript files:
+- ensure `ember-cli-typescript` is installed and set up in the host app
+- override [`isDevelopingAddon()`](https://ember-cli.com/api/classes/Addon.html#method_isDevelopingAddon) in the linked addon to return `true`
+- update the `paths` and `include` entries in your `tsconfig.json` to instruct the compiler how to resolve imports and include the addon's TypeScript files:
 
 ```js
 compilerOptions: {
@@ -713,8 +715,8 @@ include: [
 
 A few things to look out for when working with TypeScript in addons:
 
-* Normally, addons under development automatically return `true` from their `isDevelopingAddon()` hook, which `ember-cli-typescript` relies on to determine whether to process the addon's `.ts` files. However, if the name field in your `package.json` doesn't match the name in your `index.js`, this default behavior will fail and you'll need to override the method yourself.
-* TypeScript has very particular rules when generating declaration files to avoid letting private types leak out unintentionally. You may find it useful to run `ember ts:precompile` yourself as you're getting a feel for these rules to ensure everything will go smoothly when you publish.
+- Normally, addons under development automatically return `true` from their `isDevelopingAddon()` hook, which `ember-cli-typescript` relies on to determine whether to process the addon's `.ts` files. However, if the name field in your `package.json` doesn't match the name in your `index.js`, this default behavior will fail and you'll need to override the method yourself.
+- TypeScript has very particular rules when generating declaration files to avoid letting private types leak out unintentionally. You may find it useful to run `ember ts:precompile` yourself as you're getting a feel for these rules to ensure everything will go smoothly when you publish.
 
 ## Installing from git
 
