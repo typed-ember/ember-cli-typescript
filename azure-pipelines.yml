@@ -31,7 +31,7 @@ steps:
     displayName: 'Prepare CI environment'
 
   - script: |
-      ember test
+      ember test -r xunit > tests.xml
     displayName: 'Ember App Tests'
 
   - script: |
