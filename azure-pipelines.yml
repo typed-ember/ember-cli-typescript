@@ -31,14 +31,14 @@ steps:
     displayName: 'Prepare CI environment'
 
   - script: |
-      ember test -r xunit > tests.xml
+      ember test -r xunit > ember-tests.xml
     displayName: 'Ember App Tests'
 
   - script: |
-      mocha --recursive js/tests
+      mocha --recursive js/tests -R xunit > node-tests.xml
     displayName: 'Node Tests'
 
   - task: PublishTestResults@2
     inputs:
       testResultsFormat: 'xUnit'
-      testResultsFiles: 'tests.xml'
+      testResultsFiles: '*-tests.xml'
