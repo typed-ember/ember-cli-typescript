@@ -37,3 +37,8 @@ steps:
   - script: |
       mocha --recursive js/tests
     displayName: 'Node Tests'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'xUnit'
+      testResultsFiles: 'tests.xml'
