@@ -42,5 +42,5 @@ steps:
 
   - task: PublishTestResults@2
     inputs:
-      testResultsFormat: 'xUnit'
+      testResultsFormat: 'jUnit'
       testResultsFiles: '*-tests.xml'
