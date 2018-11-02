@@ -31,13 +31,14 @@ steps:
 
   - script: |
       ember test -r xunit
-      cat ember-tests.xml
     displayName: 'Ember App Tests'
 
   - script: |
       mocha --recursive js/tests -R xunit > node-tests.xml
-      cat node-tests.xml
     displayName: 'Node Tests'
+  - script: |
+      echo " --- EMBER TESTS --- " && cat ember-tests.xml && echo " --- NODE TESTS --- " && cat node-tests.xml
+    displayName: 'Log test output files'
 
   - task: PublishTestResults@2
     inputs:
