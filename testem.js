@@ -1,6 +1,10 @@
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
   disable_watching: true,
+  reporter: 'xunit',
+  report_file: 'ember-tests.xml',
+  xunit_exclude_stack: true, // we *probably* want this on to keep the xunit file clean
+  xunit_intermediate_output: true,
   launch_in_ci: ['Chrome'],
   launch_in_dev: ['Chrome'],
   browser_args: {
