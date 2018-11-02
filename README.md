@@ -82,6 +82,13 @@ To install or upgrade the addon, just run:
 ember install ember-cli-typescript@latest
 ```
 
+To work properly, ember addons must declare this library as a `dependency`, not a `devDependency`. You can "ember install" it by running 
+
+```
+ember install ember-cli-typescript@latest --save
+```
+
+
 All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
 
 In addition to ember-cli-typescript, we make the following changes to your project:
