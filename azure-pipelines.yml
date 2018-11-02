@@ -32,10 +32,12 @@ steps:
 
   - script: |
       ember test -r xunit > ember-tests.xml
+      cat ember-tests.xml
     displayName: 'Ember App Tests'
 
   - script: |
       mocha --recursive js/tests -R xunit > node-tests.xml
+      cat node-tests.xml
     displayName: 'Node Tests'
 
   - task: PublishTestResults@2
