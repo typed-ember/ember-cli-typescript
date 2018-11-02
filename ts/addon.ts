@@ -67,7 +67,6 @@ export default addon({
     // preprocessor registry, so we need to beat it to the punch.
     this._registerBabelExtension();
 
-    this._addPluginIfMissing('@babel/plugin-transform-typescript');
     this._addPluginIfMissing(
       '@babel/plugin-proposal-class-properties',
       { loose: true },
@@ -76,6 +75,10 @@ export default addon({
         after: ['@babel/plugin-proposal-decorators'],
       }
     );
+
+    // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
+    // "property initialization occurs in the right order")
+    this._addPluginIfMissing('@babel/plugin-transform-typescript');
   },
 
   shouldIncludeChildAddon(addon) {
