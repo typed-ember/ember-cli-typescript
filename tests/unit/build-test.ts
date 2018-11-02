@@ -27,4 +27,16 @@ module('Unit | Build', function() {
     assert.ok(fromTs);
     assert.equal(fromTs, 'From test-support');
   });
+
+  test('property initialization occurs in the right order', function(assert) {
+    class TestClass {
+      // we shouldn't encourage folks to write code like this, but tsc ensures
+      // that constructor param fields are set before field initializers run
+      field = this.constructorParam;
+      constructor(private constructorParam: string) {}
+    }
+
+    let instance = new TestClass('hello');
+    assert.equal(instance.field, 'hello');
+  });
 });
