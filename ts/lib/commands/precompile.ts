@@ -1,16 +1,16 @@
 /* eslint-env node */
 'use strict';
 
-const tmpdir = require('../utilities/tmpdir');
-const execa = require('execa');
-const fs = require('fs-extra');
-const path = require('path');
-const walkSync = require('walk-sync');
-const Command = require('ember-cli/lib/models/command'); // eslint-disable-line node/no-unpublished-require
+import tmpdir from '../utilities/tmpdir';
+import execa from 'execa';
+import fs from 'fs-extra';
+import path from 'path';
+import walkSync from 'walk-sync';
+import { command } from '../utilities/ember-cli-entities';
 
-const PRECOMPILE_MANIFEST = 'tmp/.ts-precompile-manifest';
+export const PRECOMPILE_MANIFEST = 'dist/.ts-precompile-manifest';
 
-module.exports = Command.extend({
+export default command({
   name: 'ts:precompile',
   works: 'insideProject',
   description:
@@ -18,7 +18,7 @@ module.exports = Command.extend({
 
   availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
 
-  run(options) {
+  async run(options: { manifestPath: string }) {
     let manifestPath = options.manifestPath;
     let project = this.project;
     let outDir = `${tmpdir()}/e-c-ts-precompile-${process.pid}`;
@@ -38,35 +38,35 @@ module.exports = Command.extend({
     // Ensure the output directory is created even if no files are generated
     fs.mkdirsSync(outDir);
 
-    return execa('tsc', flags).then(() => {
-      let output = [];
-      for (let declSource of walkSync(outDir, { globs: ['**/*.d.ts'] })) {
-        // We can only do anything meaningful with declarations for files in addon/ or src/
-        if (this._isAddonFile(declSource)) {
-          let declDest = declSource
-            .replace(/^addon\//, '')
-            .replace(/^addon-test-support/, 'test-support');
-          this._copyFile(output, `${outDir}/${declSource}`, declDest);
-        } else if (this._isSrcFile(declSource)) {
-          this._copyFile(output, `${outDir}/${declSource}`, declSource);
-        }
-      }
+    await execa('tsc', flags);
 
-      fs.mkdirsSync(path.dirname(manifestPath));
-      fs.writeFileSync(manifestPath, JSON.stringify(output.reverse()));
-      fs.remove(outDir);
-    });
+    let output: string[] = [];
+    for (let declSource of walkSync(outDir, { globs: ['**/*.d.ts'] })) {
+      // We can only do anything meaningful with declarations for files in addon/ or src/
+      if (this._isAddonFile(declSource)) {
+        let declDest = declSource
+          .replace(/^addon\//, '')
+          .replace(/^addon-test-support/, 'test-support');
+        this._copyFile(output, `${outDir}/${declSource}`, declDest);
+      } else if (this._isSrcFile(declSource)) {
+        this._copyFile(output, `${outDir}/${declSource}`, declSource);
+      }
+    }
+
+    fs.mkdirsSync(path.dirname(manifestPath));
+    fs.writeFileSync(manifestPath, JSON.stringify(output.reverse()));
+    fs.remove(outDir);
   },
 
-  _isAddonFile(source) {
+  _isAddonFile(source: string) {
     return source.indexOf('addon') === 0;
   },
 
-  _isSrcFile(source) {
+  _isSrcFile(source: string) {
     return source.indexOf('src') === 0;
   },
 
-  _copyFile(output, source, dest) {
+  _copyFile(output: string[], source: string, dest: string) {
     let segments = dest.split(/\/|\\/);
 
     // Make (and record the making of) any missing directories
@@ -82,5 +82,3 @@ module.exports = Command.extend({
     output.push(dest);
   },
 });
-
-module.exports.PRECOMPILE_MANIFEST = PRECOMPILE_MANIFEST;

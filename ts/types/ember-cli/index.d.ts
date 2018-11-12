@@ -42,9 +42,30 @@ declare module 'ember-cli/lib/models/addon' {
 
 declare module 'ember-cli/lib/models/command' {
   import CoreObject from 'core-object';
+  import UI from 'console-ui';
   import Project from 'ember-cli/lib/models/project';
 
-  export default class Command extends CoreObject {}
+  interface CommandOption {
+    name: string;
+    type: unknown;
+    description?: string;
+    required?: boolean;
+    default?: unknown;
+    aliases?: string[];
+  }
+
+  export default class Command extends CoreObject {
+    name: string;
+    works: 'insideProject' | 'outsideProject' | 'everywhere';
+    description: string;
+    availableOptions: CommandOption[];
+    anonymousOptions: string[];
+
+    ui: UI;
+    project: Project;
+
+    run(options: {}): void | Promise<unknown>;
+  }
 }
 
 declare module 'ember-cli/lib/models/project' {
