@@ -54,7 +54,7 @@
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
     "@typed-ember/renovate-config": "1.1.0",
-    "@types/ember": "2.8.13",
+    "@types/ember": "2.8.33",
     "@types/ember-qunit": "3.0.2",
     "@types/node": "9.6.7",
     "@types/qunit": "2.5.0",
@@ -99,7 +99,7 @@
     "typescript-eslint-parser": "15.0.1"
   },
   "resolutions": {
-    "@types/ember": "2.8.13"
+    "@types/ember": "2.8.33"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
