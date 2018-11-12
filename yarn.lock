@@ -48,10 +48,10 @@
   resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.1.0.tgz#813687da7c6696f36f83a1e9c96ca02deede108b"
   integrity sha512-wGmOPpI7J6cvQPoMJvosUkDcnq/JDsLexPvjXHunp2XKYo/p+wn2MFtkdMD2Uf9LUqCWjLS/zV3uVVW3Zj4Tow==
 
-"@types/ember-qunit@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@types/ember-qunit/-/ember-qunit-3.0.3.tgz#915ff520f7e3e53141bfc41d022f15690830ae9a"
-  integrity sha512-RRSOl3p6SMSra7dRBPGmAvivfQl/PxZ0uZBf6gNSjk6V9koo6m1b2/MvK7GfXFfeOQfhOqbYCwTl/Y3dR7REvw==
+"@types/ember-qunit@3.4.3":
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/@types/ember-qunit/-/ember-qunit-3.4.3.tgz#ad8532e735c7a46af764f5cb7d852896e6d28bfd"
+  integrity sha512-dBlWUh7XMHT3dr96P2c5U5hx8dLE4RZmtwKhUeaHycsgJyH4pCX1C462Bk308fWXFN1TWasZtkl+MhtW/mj3RA==
   dependencies:
     "@types/ember" "*"
     "@types/ember-test-helpers" "*"
