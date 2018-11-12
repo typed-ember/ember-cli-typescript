@@ -37,7 +37,6 @@ jobs:
         - test $MD_ONLY && echo "Skipped! 'yarn ci:test'"    || yarn ci:test
 
     - stage: 'Supported TypeScript & Ember-CLI Versions'
-      name: 'Supported TypeScript & Ember-CLI Versions'
       env: EMBER_TRY_SCENARIO=typescript-release
     - env: EMBER_TRY_SCENARIO=typescript-beta
     - env: EMBER_TRY_SCENARIO=ember-cli-release
