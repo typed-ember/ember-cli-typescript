@@ -916,7 +916,7 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@typed-ember/renovate-config@1.2.0":
+"@typed-ember/renovate-config@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.2.0.tgz#ba615873ddcb4fd9ad127739f43691f07db88ced"
   integrity sha512-EtXaX2o8ZnEOyhoadDJwIuXscvVgtKhfk3G2sB5As2MrZMnsKCX9k9f2lVkzbQob1gC0LmwLztxoFs38hWBegQ==

@@ -48,7 +48,7 @@ jobs:
 
     # Scenario: Things we keep an eye on, but do not technically support.
     #           This stuff should align with jobs->allow_failures above
-    - stage: 'Canary Tests'
+    - stage: 'Canary & Beta Tests (allowed to fail)'
       script:
         - test $MD_ONLY && echo "Skipped! 'yarn ci:prepare'" || yarn ci:prepare
         - test $MD_ONLY && echo "Skipped! 'yarn ci:test'"    || yarn ci:test

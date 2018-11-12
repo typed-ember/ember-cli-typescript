@@ -56,7 +56,7 @@
     "@commitlint/config-conventional": "7.1.2",
     "@commitlint/travis-cli": "7.2.1",
     "@ember/optional-features": "0.7.0",
-    "@typed-ember/renovate-config": "1.2.0",
+    "@typed-ember/renovate-config": "^1.2.0",
     "@types/ember": "2.8.33",
     "@types/ember-qunit": "3.4.3",
     "@types/node": "9.6.36",
@@ -131,7 +131,7 @@
     "proseWrap": "never"
   },
   "release": {
-    "extends": "@typed-ember/renovate-config"
+    "extends": "@typed-ember/semantic-release-config"
   },
   "commitlint": {
     "extends": [
