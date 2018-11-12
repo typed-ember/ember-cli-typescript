@@ -53,7 +53,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
-    "@typed-ember/renovate-config": "1.1.0",
+    "@typed-ember/renovate-config": "1.2.0",
     "@types/ember": "2.8.33",
     "@types/ember-qunit": "3.4.3",
     "@types/node": "9.6.36",
