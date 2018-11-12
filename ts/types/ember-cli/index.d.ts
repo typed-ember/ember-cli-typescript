@@ -77,6 +77,12 @@ declare module 'ember-cli/lib/models/project' {
     ui: UI;
     root: string;
     addons: Addon[];
+    pkg: {
+      name: string;
+      version: string;
+      dependencies?: Record<string, string>;
+      devDependencies?: Record<string, string>;
+    };
 
     name(): string;
     isEmberCLIAddon(): boolean;
