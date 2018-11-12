@@ -43,10 +43,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
-"@typed-ember/renovate-config@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.1.0.tgz#813687da7c6696f36f83a1e9c96ca02deede108b"
-  integrity sha512-wGmOPpI7J6cvQPoMJvosUkDcnq/JDsLexPvjXHunp2XKYo/p+wn2MFtkdMD2Uf9LUqCWjLS/zV3uVVW3Zj4Tow==
+"@typed-ember/renovate-config@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.2.0.tgz#ba615873ddcb4fd9ad127739f43691f07db88ced"
+  integrity sha512-EtXaX2o8ZnEOyhoadDJwIuXscvVgtKhfk3G2sB5As2MrZMnsKCX9k9f2lVkzbQob1gC0LmwLztxoFs38hWBegQ==
 
 "@types/ember-qunit@3.0.3":
   version "3.0.3"
