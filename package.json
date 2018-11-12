@@ -52,7 +52,7 @@
     "walk-sync": "^0.3.2"
   },
   "devDependencies": {
-    "@ember/optional-features": "0.6.4",
+    "@ember/optional-features": "0.7.0",
     "@typed-ember/renovate-config": "1.1.0",
     "@types/ember": "2.8.13",
     "@types/ember-qunit": "3.0.2",
