@@ -825,6 +825,16 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
+"@semantic-release/changelog@^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@semantic-release/changelog/-/changelog-3.0.1.tgz#d39a8130aa33c54541e529322769a1c8c51dfc54"
+  integrity sha512-N3lWwS3SUQmjBI/IoxwfQwPHAeQgYkvM63nzBpYkp2DXQ9zdLs5ZYpD1oln//wWCKVSIY2tPDs7KD4LVVh6u5Q==
+  dependencies:
+    "@semantic-release/error" "^2.1.0"
+    aggregate-error "^1.0.0"
+    fs-extra "^7.0.0"
+    lodash "^4.17.4"
+
 "@semantic-release/commit-analyzer@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@semantic-release/commit-analyzer/-/commit-analyzer-6.1.0.tgz#32bbe3c23da86e23edf072fbb276fa2f383fcb17"
@@ -837,12 +847,40 @@
     import-from "^2.1.0"
     lodash "^4.17.4"
 
-"@semantic-release/error@^2.2.0":
+"@semantic-release/error@^2.1.0", "@semantic-release/error@^2.2.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@semantic-release/error/-/error-2.2.0.tgz#ee9d5a09c9969eade1ec864776aeda5c5cddbbf0"
   integrity sha512-9Tj/qn+y2j+sjCI3Jd+qseGtHjOAeg7dU2/lVcqIQ9TV3QDaDXDYXcoOHU+7o2Hwh8L8ymL4gfuO7KxDs3q2zg==
 
-"@semantic-release/github@^5.1.0":
+"@semantic-release/exec@^3.0.2":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@semantic-release/exec/-/exec-3.3.0.tgz#3ceaf66084cee82fb4babde387583259701ed381"
+  integrity sha512-6a5nMGLyYJUl5me4orEIA89mf1Roz1jEVlv0GgIJv1k/yjEcmWicYQ76PrPfUzh81sVtfHfK0zLN5Vikz8f5oA==
+  dependencies:
+    "@semantic-release/error" "^2.1.0"
+    aggregate-error "^1.0.0"
+    debug "^4.0.0"
+    execa "^1.0.0"
+    lodash "^4.17.4"
+    parse-json "^4.0.0"
+
+"@semantic-release/git@^7.0.5":
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@semantic-release/git/-/git-7.0.5.tgz#640e66683dbbb0a0771e9968e2dc15ec5facaf38"
+  integrity sha512-90TDMAQw9S5BXjygpEb8zdwLCnUmP5G2GfKHUvmFapFNh3UsI1AJljEUe5hJh/GOuHiyBD/whnCMYExsp8a34Q==
+  dependencies:
+    "@semantic-release/error" "^2.1.0"
+    aggregate-error "^1.0.0"
+    debug "^4.0.0"
+    dir-glob "^2.0.0"
+    execa "^1.0.0"
+    fs-extra "^7.0.0"
+    globby "^8.0.1"
+    lodash "^4.17.4"
+    micromatch "^3.1.4"
+    p-reduce "^1.0.0"
+
+"@semantic-release/github@^5.0.2", "@semantic-release/github@^5.1.0":
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/@semantic-release/github/-/github-5.2.1.tgz#48a7cbd326471d7dc8d2fcea03580d2da58f4fc9"
   integrity sha512-EVh5MCMOSl5WfOIum+k7fb7ZaDBcZAepPvtMrJOn8HKa9MERK6PgT76OKro+tReWjT1PnGiaKjofjyRC4BhN6Q==
@@ -920,6 +958,22 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.2.0.tgz#ba615873ddcb4fd9ad127739f43691f07db88ced"
   integrity sha512-EtXaX2o8ZnEOyhoadDJwIuXscvVgtKhfk3G2sB5As2MrZMnsKCX9k9f2lVkzbQob1gC0LmwLztxoFs38hWBegQ==
+
+"@typed-ember/semantic-release-config@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@typed-ember/semantic-release-config/-/semantic-release-config-1.0.1.tgz#1a392afa6c7f73d6078ec8fa7f45b18ee25291aa"
+  integrity sha512-L+nOYbaSMRtr3cKHUXhDzzZeI81rKGu3dPt92GHVF05OKAiCDIh8l4fPBYBkelpdmDDxUMjP7vqkjeTtBbk94Q==
+  dependencies:
+    "@commitlint/cli" "7.2.1"
+    "@commitlint/config-conventional" "7.1.2"
+    "@commitlint/travis-cli" "7.2.1"
+    "@semantic-release/changelog" "^3.0.0"
+    "@semantic-release/error" "^2.2.0"
+    "@semantic-release/exec" "^3.0.2"
+    "@semantic-release/git" "^7.0.5"
+    "@semantic-release/github" "^5.0.2"
+    semantic-release "^15.9.9"
+    travis-deploy-once "^5.0.9"
 
 "@types/ember-qunit@3.4.3":
   version "3.4.3"
@@ -6632,7 +6686,7 @@ globby@^5.0.0:
     pify "^2.0.0"
     pinkie-promise "^2.0.0"
 
-globby@^8.0.0:
+globby@^8.0.0, globby@^8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/globby/-/globby-8.0.1.tgz#b5ad48b8aa80b35b814fc1281ecc851f1d2b5b50"
   integrity sha512-oMrYrJERnKBLXNLVTqhm3vPEdJ/b2ZE28xN4YARiix1NOIOBPEpOUnm844K1iu/BkphCaf2WNFwMszv8Soi1pw==
@@ -11503,6 +11557,38 @@ semantic-release@15.10.8:
     signale "^1.2.1"
     yargs "^12.0.0"
 
+semantic-release@^15.9.9:
+  version "15.11.0"
+  resolved "https://registry.yarnpkg.com/semantic-release/-/semantic-release-15.11.0.tgz#da4c2cc82361f1fcfb546a295931f3d728e5f8c2"
+  integrity sha512-WNni9nH7LlinGrJaby015XxTvy8m08vVtvivgiOIQ1orMFEvjQ5KuI069cUTsTBx7Kck4g3esRdnJXx6oMiLzg==
+  dependencies:
+    "@semantic-release/commit-analyzer" "^6.1.0"
+    "@semantic-release/error" "^2.2.0"
+    "@semantic-release/github" "^5.1.0"
+    "@semantic-release/npm" "^5.0.5"
+    "@semantic-release/release-notes-generator" "^7.1.2"
+    aggregate-error "^1.0.0"
+    cosmiconfig "^5.0.1"
+    debug "^4.0.0"
+    env-ci "^3.0.0"
+    execa "^1.0.0"
+    figures "^2.0.0"
+    find-versions "^3.0.0"
+    get-stream "^4.0.0"
+    git-log-parser "^1.2.0"
+    hook-std "^1.1.0"
+    hosted-git-info "^2.7.1"
+    lodash "^4.17.4"
+    marked "^0.5.0"
+    marked-terminal "^3.0.0"
+    p-locate "^3.0.0"
+    p-reduce "^1.0.0"
+    read-pkg-up "^4.0.0"
+    resolve-from "^4.0.0"
+    semver "^5.4.1"
+    signale "^1.2.1"
+    yargs "^12.0.0"
+
 semver-compare@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/semver-compare/-/semver-compare-1.0.0.tgz#0dee216a1c941ab37e9efb1788f6afc5ff5537fc"
@@ -12594,7 +12680,7 @@ traverse@~0.6.6:
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
-travis-deploy-once@5.0.9:
+travis-deploy-once@5.0.9, travis-deploy-once@^5.0.9:
   version "5.0.9"
   resolved "https://registry.yarnpkg.com/travis-deploy-once/-/travis-deploy-once-5.0.9.tgz#c5a2f639e17d8fd542f66d25ade126179d5e8acf"
   integrity sha512-cyHFErzq0HTEGY29RAq1clqFdt/IkCrlcOmyM1cGoGnEyukrrFi1fpy6JH3Mlf+88XsFwvluqKVWzj2bdz3k8A==
