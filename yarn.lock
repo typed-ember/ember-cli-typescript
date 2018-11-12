@@ -43,7 +43,7 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
-"@typed-ember/renovate-config@^1.1.0":
+"@typed-ember/renovate-config@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.1.0.tgz#813687da7c6696f36f83a1e9c96ca02deede108b"
   integrity sha512-wGmOPpI7J6cvQPoMJvosUkDcnq/JDsLexPvjXHunp2XKYo/p+wn2MFtkdMD2Uf9LUqCWjLS/zV3uVVW3Zj4Tow==
@@ -5393,15 +5393,12 @@ imurmurhash@^0.1.4:
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
   version "0.0.0"
-  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
   version "0.0.0"
-  uid ""
 
 "in-repo-c@link:tests/dummy/lib/in-repo-c":
   version "0.0.0"
-  uid ""
 
 indent-string@^2.1.0:
   version "2.1.0"
