@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '6'
+  - 8
 sudo: false
 dist: trusty
 addons:
@@ -20,24 +20,48 @@ jobs:
     - env: EMBER_TRY_SCENARIO=typescript-beta
     - env: EMBER_TRY_SCENARIO=ember-cli-beta
   include:
-    - stage: Tests
-      name: Tests
+    # Scenario: obey lockfile
+    - stage: 'Tests @ Locked Dependencies'
+      name: 'Tests @ Locked Dependencies'
+      install:
+        - yarn install --non-interactive # omitted usual --no-lockfile
       script:
-        - test $MD_ONLY && echo "Skipped!" || yarn lint:js
-        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
-        - test $MD_ONLY && echo "Skipped!" || yarn ci:test
-    - stage: Versioned Tests
+        - test $MD_ONLY && echo "Skipped! 'yarn lint:js'"    || yarn lint:js
+        - test $MD_ONLY && echo "Skipped! 'yarn ci:prepare'" || yarn ci:prepare
+        - test $MD_ONLY && echo "Skipped! 'yarn ci:test'"    || yarn ci:test
+
+    # Scenario: lockfile deleted & re-created
+    - name: 'Floating Dependencies'
+      script:
+        - test $MD_ONLY && echo "Skipped! 'yarn ci:prepare'" || yarn ci:prepare
+        - test $MD_ONLY && echo "Skipped! 'yarn ci:test'"    || yarn ci:test
+
+    - stage: 'Supported TypeScript & Ember-CLI Versions'
+      name: 'Supported TypeScript & Ember-CLI Versions'
       env: EMBER_TRY_SCENARIO=typescript-release
     - env: EMBER_TRY_SCENARIO=typescript-beta
     - env: EMBER_TRY_SCENARIO=ember-cli-release
+      node_js: 10 # slightly more modern node, so travis-deploy-once selects this job for publish
+      script:
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+        - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO && yarn travis-deploy-once "yarn semantic-release"
+    - env: EMBER_TRY_SCENARIO=ember-cli-beta
+
+    # Scenario: Things we keep an eye on, but do not technically support.
+    #           This stuff should align with jobs->allow_failures above
+    - stage: 'Canary Tests'
+      script:
+        - test $MD_ONLY && echo "Skipped! 'yarn ci:prepare'" || yarn ci:prepare
+        - test $MD_ONLY && echo "Skipped! 'yarn ci:test'"    || yarn ci:test
+      env: EMBER_TRY_SCENARIO=typescript-beta
     - env: EMBER_TRY_SCENARIO=ember-cli-beta
 before_install:
   - bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
 install:
-  - test $MD_ONLY && echo "Skipped!" || yarn install
+  - test $MD_ONLY && echo "Skipped!" || yarn install --no-lockfile --non-interactive
 script:
   - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
-  - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+  - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup && yarn travis-deploy-once "yarn semantic-release"
 branches:
   only:
     - master
