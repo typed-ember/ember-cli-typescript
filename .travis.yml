@@ -1,54 +1,43 @@
----
 language: node_js
 node_js:
-  - "6"
-
+  - '6'
 sudo: false
 dist: trusty
-
 addons:
   chrome: stable
-
 cache: yarn
-
 env:
   global:
-    # See https://git.io/vdao3 for details.
     - JOBS=1
+    # npm (ZYtF)
+    - secure: ZYtFfhPoZX+TVkGicbLaWmeL1btgHaY8BZj+IuEMFJJuCft0Q0ixOxFZ/e/9GjLfEZp0wjNSjE1TgQmJagH4V0Tis7cGD2Gv2V4ZHMgvR7UI9Ktwa+s4HYZs2Q6rhTHsXWG9EJ6cFW74x3Kjly8a49RoG4tXGeaZBjq3ANgTuLF6gBHTSTtSzwFYcyj2R7csF+1k7xFNf/mFUh+YTtpnUshng54UiYxk/Yz+tOQAYLF0tYlSiMpbwwHc2uwxaoZcJ2J1lkyHsP8nCYM18cLX6CGaueqbAVDNlBEDljgwb4Hnt0omiBOeR9iS/elNEDwAddERav8sIdR0IdGJxKEeg9HzEfSXd8Y0Wh/XB/u86c2WgTKyHW6hidUigVZD3uyudSjBc+ZBwc7zb7dhMWfEozYs1yC9JkiYKyI9TdIu24imqZwE1eCm3+vVVn0Qo/zcFFueUOZNp/cL884hJ4iRV4ed65PacVWzsf1/Q5ThiYYi2XRgNW9q1RR1V51BGQx2zEeBnnP4rwGzfExXHyLmsN76uTTUMONRoxAPIMfrAK0EQfiCTi6hfk7JgqUsgS3sdNbLTDcvqwtq0K09CRCnT51iUqZqlohH8QVMtv9SaWIKVpPHV1BICfxMdXIpdc4dmNKnEmYXNtUTfWRNb4EzVCA2j77T6emDrNZBwgHbHJY=
+    # gh (GbGD)
+    - secure: GbGD/yL0mIrM+66ACCR0v/tBe0Z2Qy5tkJ+Z8PYOLfFwE9ztkkH6Wfx93RTnolom8GQAnQQQ76zlnKYbW1PzGcGqCZ3Rmbk/0TxyAh2vJ0YRlF2xVWG2txr9p0am8nuS9po4M4dQ0wDBsh2drqeidlR6xe0ZiDh2/4bqmRSuQPt4Gf7a0rDIFSaqvG/dLUn3X9+AnZqpLuo9Y8ZoxL4XuPTTpQ1vcCHcOzGQLLCCet9jMxmnTRnrsOl1g7ypL+5PY7VgeTIYuWlKI5rg4ntcrpkRZ2CtpU2UeLU01AnwgbbU5y7DokL05P0Ixx4eGLXrVWeAi6lSHZLCNe3N9WXJGcsmHnNa8OhwjkX+5lLpj9vyVt7FNC/MEIEpzhM81Wu1W8ABcxfa2cSCS4cetWlGCfviwqkzCX2/Tsz3xFFElZJEYTX3ez9unvriU0E8jkw/ZAhnVxHbMpB5ekZbyjRK6sOFLvyMz+IK5j8gfYsp+HfiTCdeDxs/ExAh5cTBJSPebcBZCj+jgUb7Hn/6GKwoeBcApHnAew15bzM+zH8uK6pk2X31vhfrCbOFgdGG/7SBzlJKSdk7mUf2EIswbq1zDSCIeDMXWtjjd+xevXNp3wXxMvIbZEzyzxda8YxpqRgSrP1l1pi1pOhRFN/AkXP8KjXQ5KMGECxPzC1s4sf1sYs=
 
 jobs:
   fail_fast: true
   allow_failures:
     - env: EMBER_TRY_SCENARIO=typescript-beta
     - env: EMBER_TRY_SCENARIO=ember-cli-beta
-
   include:
-    - stage: "Tests"
-      name: "Tests"
+    - stage: Tests
+      name: Tests
       script:
         - test $MD_ONLY && echo "Skipped!" || yarn lint:js
         - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
         - test $MD_ONLY && echo "Skipped!" || yarn ci:test
-    - stage: "Versioned Tests"
+    - stage: Versioned Tests
       env: EMBER_TRY_SCENARIO=typescript-release
     - env: EMBER_TRY_SCENARIO=typescript-beta
     - env: EMBER_TRY_SCENARIO=ember-cli-release
     - env: EMBER_TRY_SCENARIO=ember-cli-beta
-
 before_install:
   - bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
-
 install:
   - test $MD_ONLY && echo "Skipped!" || yarn install
-
 script:
-  # Typecheck and compile the addon, then nuke the TS source so we're testing the code we would publish
   - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
-  # Usually, it's ok to finish the test scenario without reverting
-  #  to the addon's original dependency state, skipping "cleanup".
   - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
-
-# We build PRs, but don't trigger separate builds for the PR from the branch.
 branches:
   only:
     - master
