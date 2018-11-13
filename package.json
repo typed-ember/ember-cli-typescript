@@ -55,7 +55,7 @@
     "@types/ember": "2.8.13",
     "@types/ember-qunit": "^3.0.1",
     "@types/express": "4.16.0",
-    "@types/node": "9.6.35",
+    "@types/node": "9.6.37",
     "@types/qunit": "2.5.3",
     "@types/resolve": "0.0.8",
     "@types/semver": "5.5.0",
