@@ -84,7 +84,7 @@
     "eslint": "4.19.1",
     "eslint-plugin-ember": "5.4.0",
     "eslint-plugin-node": "7.0.1",
-    "esprima": "4.0.0",
+    "esprima": "4.0.1",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "in-repo-c": "link:tests/dummy/lib/in-repo-c",
