@@ -90,10 +90,10 @@
   resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.3.1.tgz#55758d44d422756d6329cbf54e6d41931d7ba28f"
   integrity sha512-N3h+rzN518yl2xKrW0o6KKdNmWZ+OwG6SoM5TBEQFF0tTv5wXPEsoOuYQ2Kt3/89XbcSZUJLdjiT/2c3BR/ApQ==
 
-"@types/node@9.6.36":
-  version "9.6.36"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.36.tgz#c4a2bdb16d3a79b34e01464b4bd38c1b849efdac"
-  integrity sha512-Fbw+AdRLL01vv7Rk7bYaNPecqmKoinJHGbpKnDpbUZmUj/0vj3nLqPQ4CNBzr3q2zso6Cq/4jHoCAdH78fvJrw==
+"@types/node@9.6.37":
+  version "9.6.37"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.37.tgz#0db79d7429a9ca21482630e653f3b27877291400"
+  integrity sha512-OaS6cqsBTqwvixmfJ9ju9ZxUK8s+3PVakNbCs4huxF17PCps/TdgG0fjv36MgVLfAzGCecDgtZdgS3FiuAU15w==
 
 "@types/qunit@2.5.3":
   version "2.5.3"
