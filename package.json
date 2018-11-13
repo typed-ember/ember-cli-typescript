@@ -90,7 +90,7 @@
     "in-repo-c": "link:tests/dummy/lib/in-repo-c",
     "loader.js": "4.7.0",
     "mktemp": "0.4.0",
-    "mocha": "5.1.0",
+    "mocha": "5.2.0",
     "qunit-dom": "0.8.0",
     "rimraf": "2.6.2",
     "testdouble": "3.7.0",
