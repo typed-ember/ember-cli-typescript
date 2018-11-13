@@ -49,7 +49,7 @@
     "walk-sync": "^0.3.2"
   },
   "devDependencies": {
-    "@ember/optional-features": "0.6.4",
+    "@ember/optional-features": "0.7.0",
     "@types/console-ui": "2.2.0",
     "@types/core-object": "3.0.0",
     "@types/ember": "2.8.13",
