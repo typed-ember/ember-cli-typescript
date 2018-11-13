@@ -25,15 +25,12 @@ export default command({
 
     // prettier-ignore
     await execa('tsc', [
-      '--declarationDir', outDir,
-      '--rootDir', rootDir || this.project.root,
       '--allowJs', 'false',
       '--noEmit', 'false',
+      '--rootDir', rootDir || this.project.root,
       '--declaration',
+      '--declarationDir', outDir,
       '--emitDeclarationOnly',
-      '--sourceMap', 'false',
-      '--inlineSourceMap', 'false',
-      '--inlineSources', 'false',
     ]);
 
     let manifestPath = options.manifestPath;

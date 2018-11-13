@@ -6,7 +6,7 @@ import path from 'path';
 import copyDeclarations from '../../lib/utilities/copy-declarations';
 import * as fixturify from 'fixturify';
 
-describe('Unit | copyDeclarations', function() {
+describe('Unit: copyDeclarations', function() {
   it('copies generated declarations for the correct package', function() {
     let { createdNodes, outputTree } = runCopy({
       packageName: 'my-package',
