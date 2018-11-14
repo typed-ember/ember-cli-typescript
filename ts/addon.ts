@@ -26,8 +26,8 @@ export default addon({
   includedCommands() {
     if (this.project.isEmberCLIAddon()) {
       return {
-        'ts:precompile': require('./lib/commands/precompile'),
-        'ts:clean': require('./lib/commands/clean'),
+        'ts:precompile': require('./lib/commands/precompile').default,
+        'ts:clean': require('./lib/commands/clean').default,
       };
     }
   },

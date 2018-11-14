@@ -19,7 +19,7 @@ describe('Acceptance: ts:clean command', function() {
   });
 
   it('removes all generated files', function() {
-    fs.ensureDirSync('tmp');
+    fs.ensureDirSync('dist');
     fs.ensureDirSync('app');
     fs.ensureDirSync('addon');
     fs.writeFileSync('app/test-file.ts', `export const testString: string = 'app';`);
