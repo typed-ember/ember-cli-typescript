@@ -674,7 +674,7 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/chai@^4.1.7":
+"@types/chai@4.1.7":
   version "4.1.7"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.7.tgz#1b8e33b61a8c09cbe1f85133071baa0dbf9fa71a"
   integrity sha512-2Y8uPt0/jwjhQ6EiluT0XCri1Dbplr0ZxfFXUz+ye13gaqE8u5gL5ppao1JrUYr9cIip5S6MvQzBS7Kke7U9VA==
@@ -698,10 +698,10 @@
   resolved "https://registry.yarnpkg.com/@types/core-object/-/core-object-3.0.0.tgz#3c7a9ff732dd5a66a09860c4a134751d7abd11a2"
   integrity sha512-SYM//l00O/LXbT0GqTaonlYQubkXDWyfOEpzEehiedtF+wEJCliP4G05/2tM+bulFNgqnBG4uRRe8k/HGQUA3A==
 
-"@types/ember-qunit@^3.0.1":
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/@types/ember-qunit/-/ember-qunit-3.4.3.tgz#ad8532e735c7a46af764f5cb7d852896e6d28bfd"
-  integrity sha512-dBlWUh7XMHT3dr96P2c5U5hx8dLE4RZmtwKhUeaHycsgJyH4pCX1C462Bk308fWXFN1TWasZtkl+MhtW/mj3RA==
+"@types/ember-qunit@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/ember-qunit/-/ember-qunit-3.0.1.tgz#ddf7f25e75eb0a91f18e159369876bf02496dd38"
+  integrity sha512-qXstV0xyCL8aNbmjHbt2UbmD995cRLeqa4woYLLarTNp62AKJWA1Qy+90BZSyLuV0CxZsNAPo7+TpAdyVDUsaw==
   dependencies:
     "@types/ember" "*"
     "@types/ember-test-helpers" "*"
@@ -730,7 +730,7 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.2.0.tgz#81a6731ce4df43619e5c8c945383b3e62a89ea86"
   integrity sha512-KEIlhXnIutzKwRbQkGWb/I4HFqBuUykAdHgDED6xqwXJfONCjF5VoE0cXEiurh3XauygxzeDzgtXUqvLkxFzzA==
 
-"@types/execa@^0.9.0":
+"@types/execa@0.9.0":
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@types/execa/-/execa-0.9.0.tgz#9b025d2755f17e80beaf9368c3f4f319d8b0fb93"
   integrity sha512-mgfd93RhzjYBUHHV532turHC2j4l/qxsF/PbfDmprHDEUHmNZGlDn1CEsulGK3AfsPdhkWzZQT/S/k0UGhLGsA==
@@ -755,7 +755,7 @@
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
 
-"@types/fs-extra@^5.0.4":
+"@types/fs-extra@5.0.4":
   version "5.0.4"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-5.0.4.tgz#b971134d162cc0497d221adde3dbb67502225599"
   integrity sha512-DsknoBvD8s+RFfSGjmERJ7ZOP1HI0UZRA3FSI+Zakhrc/Gy26YQsLI+m5V5DHxroHRJqCDLKJp7Hixn8zyaF7g==
@@ -792,7 +792,7 @@
   resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.0.tgz#5a7306e367c539b9f6543499de8dd519fac37a8b"
   integrity sha512-A2TAGbTFdBw9azHbpVd+/FkdW2T6msN1uct1O9bH3vTerEHKZhTXJUQXy+hNq1B0RagfU8U+KBdqiZpxjhOUQA==
 
-"@types/mocha@^5.2.5":
+"@types/mocha@5.2.5":
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/@types/mocha/-/mocha-5.2.5.tgz#8a4accfc403c124a0bafe8a9fc61a05ec1032073"
   integrity sha512-lAVp+Kj54ui/vLUFxsJTMtWvZraZxum3w3Nwkble2dNuV5VnPA+Mi2oGX9XYJAaIvZi3tn3cbjS/qcJXRb6Bww==
@@ -5058,7 +5058,7 @@ fixturify-project@^1.5.3:
     fixturify "^0.3.4"
     tmp "^0.0.33"
 
-fixturify@^0.3.4:
+fixturify@0.3.4, fixturify@^0.3.4:
   version "0.3.4"
   resolved "https://registry.yarnpkg.com/fixturify/-/fixturify-0.3.4.tgz#c676de404a7f8ee8e64d0b76118e62ec95ab7b25"
   integrity sha512-Gx+KSB25b6gMc4bf7UFRTA85uE0iZR+RYur0JHh6dg4AGBh0EksOv4FCHyM7XpGmiJO7Bc7oV7vxENQBT+2WEQ==
