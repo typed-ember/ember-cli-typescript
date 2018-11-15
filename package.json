@@ -59,7 +59,7 @@
     "@types/express": "4.16.0",
     "@types/fs-extra": "5.0.4",
     "@types/mocha": "5.2.5",
-    "@types/node": "9.6.38",
+    "@types/node": "9.6.39",
     "@types/qunit": "2.5.3",
     "@types/resolve": "0.0.8",
     "@types/semver": "5.5.0",
