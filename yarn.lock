@@ -802,10 +802,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.0.tgz#ea6dcbddbc5b584c83f06c60e82736d8fbb0c235"
   integrity sha512-3TUHC3jsBAB7qVRGxT6lWyYo2v96BMmD2PTcl47H25Lu7UXtFH/2qqmKiVrnel6Ne//0TFYf6uvNX+HW2FRkLQ==
 
-"@types/node@9.6.38":
-  version "9.6.38"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.38.tgz#01fb3f7ee5da861fa7dd4c518f1fa7b01ba39b7f"
-  integrity sha512-DQpoqhq5wxekTecxnf33SRGqpPNfyQLW/TmOZpNssSkZZStN9ujzRS6+aReY3qNzGuIyX77LoCUcm0qYgET7aQ==
+"@types/node@9.6.39":
+  version "9.6.39"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.39.tgz#111cb4f5591cb6945aad34733b4e40bfd59b58fc"
+  integrity sha512-c3OkjgNpSMdHan56WhklP0FMOk5ocilKz2Mpa0NOGzu8jw5YERjCf9FG0epYB1+TxScv/oI4uJ204u2mUg7Hcw==
 
 "@types/qunit@2.5.3":
   version "2.5.3"
