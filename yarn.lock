@@ -4512,7 +4512,7 @@ eslint@4.19.1:
     table "4.0.2"
     text-table "~0.2.0"
 
-eslint@^5.6.0:
+eslint@5.9.0, eslint@^5.6.0:
   version "5.9.0"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.9.0.tgz#b234b6d15ef84b5849c6de2af43195a2d59d408e"
   integrity sha512-g4KWpPdqN0nth+goDNICNXGfJF7nNnepthp46CAlJoJtC5K/cLu3NgCM3AHu1CkJ5Hzt9V0Y0PBAO6Ay/gGb+w==
