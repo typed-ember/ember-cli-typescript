@@ -10273,7 +10273,18 @@ terser@^3.7.5:
     source-map "~0.6.1"
     source-map-support "~0.5.6"
 
-testdouble@3.8.2, testdouble@^3.2.6:
+testdouble@3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.9.0.tgz#50f9c8a7e9dc131437a34d20094d57654ed0d3b9"
+  integrity sha512-On3pdvY57pH/07dfRZFJuGHZ31Tn+wQGqRdK+BIvOf50og+ZY3CwOfpUfUBb7+dUBg7296ArXWqME3XB7PQU1g==
+  dependencies:
+    es6-map "^0.1.5"
+    lodash "^4.17.11"
+    quibble "^0.5.5"
+    stringify-object-es5 "^2.5.0"
+    theredoc "^1.0.0"
+
+testdouble@^3.2.6:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.8.2.tgz#f9e8499c2bae2dc1ad1b438a23c74e2808afa058"
   integrity sha512-K1R8h5QGbYYZYHRMXnSkgKD8fVNYtj36Km1wZ5+GNcMmESjy2KwIpRhBdJiYVDaByLUKJ0EoLI0uWC6tku3yiw==
