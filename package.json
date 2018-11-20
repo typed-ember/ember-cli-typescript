@@ -38,7 +38,7 @@
     "broccoli-funnel": "^2.0.1",
     "broccoli-merge-trees": "^2.0.0",
     "broccoli-plugin": "^1.2.1",
-    "broccoli-stew": "^1.4.0",
+    "broccoli-stew": "^2.0.0",
     "chokidar": "^2.0.3",
     "debug": "^4.0.0",
     "ember-cli-typescript-blueprints": "^1.0.0",
