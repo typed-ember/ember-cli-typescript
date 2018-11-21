@@ -66,10 +66,10 @@
     "@types/jquery" "*"
     "@types/rsvp" "*"
 
-"@types/ember@*", "@types/ember@2.8.33":
-  version "2.8.33"
-  resolved "https://registry.yarnpkg.com/@types/ember/-/ember-2.8.33.tgz#f6519f1b26c14bf599662523e7adfb54113c1814"
-  integrity sha512-BH5012pUymCfCAv0N1oC1/Yqs0a6bRio0tL4hbTRaRGLdVheRg3wm2yCgfEA8XHOX1FVCivnGF5JfGkCuRWt4g==
+"@types/ember@*", "@types/ember@2.8.34":
+  version "2.8.34"
+  resolved "https://registry.yarnpkg.com/@types/ember/-/ember-2.8.34.tgz#f34fe35a4737185134be90856e7209d1555123bb"
+  integrity sha512-u8RyiQqdGSeHi0ewKwRoXkL/ig9RmmIoWyxrGuvbI26/v1HYADqpykybtF5Xy7kvNETBpTLL1s0qEb2w4LbXQQ==
   dependencies:
     "@types/handlebars" "*"
     "@types/jquery" "*"
