@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "broccoli-funnel": "^2.0.1",
-    "broccoli-merge-trees": "^2.0.0",
+    "broccoli-merge-trees": "^3.0.0",
     "broccoli-plugin": "^1.2.1",
     "broccoli-stew": "^2.0.0",
     "chokidar": "^2.0.3",
