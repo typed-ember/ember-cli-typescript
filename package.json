@@ -96,7 +96,7 @@
     "testdouble": "3.9.0",
     "ts-node": "7.0.1",
     "typescript": "2.9.2",
-    "typescript-eslint-parser": "15.0.1"
+    "typescript-eslint-parser": "21.0.1"
   },
   "resolutions": {
     "@types/ember": "3.0.25"
