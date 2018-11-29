@@ -9639,10 +9639,10 @@ term-size@^1.2.0:
   dependencies:
     execa "^0.7.0"
 
-testdouble@3.9.0:
-  version "3.9.0"
-  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.9.0.tgz#50f9c8a7e9dc131437a34d20094d57654ed0d3b9"
-  integrity sha512-On3pdvY57pH/07dfRZFJuGHZ31Tn+wQGqRdK+BIvOf50og+ZY3CwOfpUfUBb7+dUBg7296ArXWqME3XB7PQU1g==
+testdouble@3.9.1:
+  version "3.9.1"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.9.1.tgz#3c50f466e8b69836b6e94b140ab15474fceb75f4"
+  integrity sha512-GxbrMO8Fa58l+F1QODRh9FpKpb016ZqWte50HUoK9QvUgZQt9dxhx7NtYvvQzzsef2oBGSJxSsIaA3qBC0Bl6A==
   dependencies:
     es6-map "^0.1.5"
     lodash "^4.17.11"
