@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
+    "@typed-ember/renovate-config": "1.2.1",
     "@types/chai": "4.1.7",
     "@types/console-ui": "2.2.0",
     "@types/core-object": "3.0.0",
