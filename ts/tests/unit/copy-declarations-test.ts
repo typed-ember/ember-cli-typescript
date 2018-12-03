@@ -49,7 +49,7 @@ describe('Unit: copyDeclarations', function() {
 
     expect(createdNodes).to.deep.equal([
       'index.d.ts',
-      'src/',
+      'src',
       'src/file.d.ts',
     ]);
 
@@ -146,7 +146,7 @@ function runCopy(options: {
   fixturify.writeSync(inputBaseDir, options.input);
 
   let absoluteCopiedFiles = copyDeclarations(pathRoots, options.paths, options.packageName, outputBaseDir);
-  let createdNodes = absoluteCopiedFiles.map(path => path.replace(outputBaseDir + '/', ''));
+  let createdNodes = absoluteCopiedFiles.map(copiedFile => path.relative(outputBaseDir, copiedFile).replace(/\\/g, '/'));
   let outputTree = fixturify.readSync(outputBaseDir);
 
   fs.removeSync(tmpdir);

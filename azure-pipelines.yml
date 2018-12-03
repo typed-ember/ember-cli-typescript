@@ -34,7 +34,7 @@ steps:
     displayName: 'Ember App Tests'
 
   - script: |
-      mocha --recursive js/tests -R xunit > node-tests.xml
+      mocha -r register-ts-node -R xunit 'ts/tests/**/*.{ts,js}' > node-tests.xml
     displayName: 'Node Tests'
   - script: |
       echo " --- EMBER TESTS --- " && cat ember-tests.xml && echo " --- NODE TESTS --- " && cat node-tests.xml
