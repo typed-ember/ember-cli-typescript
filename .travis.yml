@@ -28,7 +28,8 @@ jobs:
       script:
         - test $MD_ONLY && echo "Skipped!" || yarn lint:js
         - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
-        - test $MD_ONLY && echo "Skipped!" || yarn ci:test
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:test:app
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:test:node
     - stage: "Versioned Tests"
       env: EMBER_TRY_SCENARIO=typescript-release
     - env: EMBER_TRY_SCENARIO=typescript-beta
