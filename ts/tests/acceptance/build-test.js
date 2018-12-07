@@ -65,6 +65,16 @@ describe('Acceptance: build', function() {
     expect(output).to.include(`Cannot find module 'nonexistent'`);
     expect(response.body).to.include(`Cannot find module 'nonexistent'`);
   }));
+
+  it("doesn't block builds for file changes that don't result in a typecheck", co.wrap(function*() {
+    let server = this.app.serve();
+
+    yield server.waitForBuild();
+
+    this.app.writeFile('app/some-template.hbs', '');
+
+    yield server.waitForBuild();
+  }));
 });
 
 function extractModuleBody(script, moduleName) {
