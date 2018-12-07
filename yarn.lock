@@ -704,7 +704,7 @@
   resolved "https://registry.yarnpkg.com/@types/core-object/-/core-object-3.0.0.tgz#3c7a9ff732dd5a66a09860c4a134751d7abd11a2"
   integrity sha512-SYM//l00O/LXbT0GqTaonlYQubkXDWyfOEpzEehiedtF+wEJCliP4G05/2tM+bulFNgqnBG4uRRe8k/HGQUA3A==
 
-"@types/debug@^0.0.31":
+"@types/debug@0.0.31":
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/@types/debug/-/debug-0.0.31.tgz#bac8d8aab6a823e91deb7f79083b2a35fa638f33"
   integrity sha512-LS1MCPaQKqspg7FvexuhmDbWUhE2yIJ+4AgVIyObfc06/UKZ8REgxGNjZc82wPLWmbeOm7S+gSsLgo75TanG4A==
@@ -6085,11 +6085,9 @@ imurmurhash@^0.1.4:
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
   version "0.0.0"
-  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
   version "0.0.0"
-  uid ""
 
 indent-string@^2.1.0:
   version "2.1.0"
