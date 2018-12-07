@@ -14,7 +14,7 @@ export default addon({
   included() {
     this._super.included.apply(this, arguments);
     this._checkDevelopment();
-    this._checkBabelVersion();
+    this._checkPeerVersions();
 
     // If we're a direct dependency of the host app, go ahead and start up the
     // typecheck worker so we don't wait until the end of the build to check
@@ -87,7 +87,7 @@ export default addon({
     return !['in-repo-a', 'in-repo-b'].includes(addon.name);
   },
 
-  _checkBabelVersion() {
+  _checkPeerVersions() {
     let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
     if (!babel || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
@@ -95,6 +95,15 @@ export default addon({
       this.ui.writeWarnLine(
         `ember-cli-typescript requires ember-cli-babel ^7.1.0, but you have ${versionString} installed; ` +
           'your TypeScript files may not be transpiled correctly.'
+      );
+    }
+
+    let cliPackage = this.project.require('ember-cli/package.json') as { version: string };
+    if (semver.lt(cliPackage.version, '3.5.0')) {
+      this.ui.writeWarnLine(
+        'ember-cli-typescript works best with ember-cli >= 3.5, which uses the system temporary directory ' +
+          'by default rather than a project-local one, minimizing file system events the TypeScript ' +
+          'compiler needs to keep track of.'
       );
     }
   },
