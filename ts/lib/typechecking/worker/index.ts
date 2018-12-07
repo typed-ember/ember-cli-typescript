@@ -1,5 +1,6 @@
 import resolve from 'resolve';
 import { defer } from 'rsvp';
+import logger from 'debug';
 import {
   Diagnostic,
   FileWatcherEventKind,
@@ -8,6 +9,15 @@ import {
   WatchOfConfigFile,
   WatchCompilerHostOfConfigFile,
 } from 'typescript';
+
+const debug = logger('ember-cli-typescript:typecheck-worker');
+
+// The compiler has a hard-coded 250ms wait between when it last sees an FS event and when it actually
+// begins a new build. Since we can't know ahead of time whether a given file change will necessarily
+// trigger a new check, we assume it will and set a timer to go back to the previous resolution if
+// a new check doesn't actually start.
+// https://github.com/Microsoft/TypeScript/blob/c0587191fc536ca62b68748b0e47072e6f881968/src/compiler/watch.ts#L812-L825
+const TYPECHECK_TIMEOUT = 300;
 
 interface TypecheckStatus {
   errors: string[];
@@ -18,6 +28,8 @@ export default class TypecheckWorker {
   private typecheckListeners: Array<(status: TypecheckStatus) => void> = [];
   private isChecking = true;
   private status = defer<TypecheckStatus>();
+  private lastSettledStatus = this.status;
+  private typecheckTimeout?: NodeJS.Timer;
 
   private projectRoot!: string;
   private ts!: typeof import('typescript');
@@ -54,21 +66,47 @@ export default class TypecheckWorker {
     return require(resolve.sync('typescript', { basedir: this.projectRoot }));
   }
 
+  private mayTypecheck(filePath: string) {
+    debug('File change at %s; watching for new typecheck', filePath);
+
+    this.beginCheck();
+    this.typecheckTimeout = setTimeout(() => {
+      debug(`File change didn't result in a typecheck; resolving`);
+      this.isChecking = false;
+      this.status.resolve(this.lastSettledStatus.promise);
+    }, TYPECHECK_TIMEOUT);
+  }
+
   private willTypecheck() {
-    if (!this.isChecking) {
-      this.status = defer();
-      this.isChecking = true;
-    }
+    debug('Typecheck starting');
+
+    this.beginCheck();
   }
 
   private didTypecheck(diagnostics: ReadonlyArray<Diagnostic>) {
-    let status = this.makeStatus(diagnostics);
+    if (this.isChecking) {
+      debug('Typecheck complete (%d diagnostics)', diagnostics.length);
 
-    this.isChecking = false;
-    this.status.resolve(status);
+      let status = this.makeStatus(diagnostics);
 
-    for (let listener of this.typecheckListeners) {
-      listener(status);
+      this.isChecking = false;
+      this.status.resolve(status);
+      this.lastSettledStatus = this.status;
+
+      for (let listener of this.typecheckListeners) {
+        listener(status);
+      }
+    }
+  }
+
+  private beginCheck() {
+    if (this.typecheckTimeout !== undefined) {
+      clearTimeout(this.typecheckTimeout);
+    }
+
+    if (!this.isChecking) {
+      this.isChecking = true;
+      this.status = defer();
     }
   }
 
@@ -98,25 +136,30 @@ export default class TypecheckWorker {
   // overriding methods and then calling the original. See the TypeScript wiki:
   // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
   private patchCompilerHostMethods(host: WatchCompilerHostOfConfigFile<SemanticDiagnosticsBuilderProgram>) {
-    let { watchFile, watchDirectory, afterProgramCreate = () => {} } = host;
+    let { watchFile, watchDirectory, createProgram, afterProgramCreate = () => {} } = host;
 
-    // Intercept tsc's `watchFile` to also invoke `didTypecheck()` when a `.ts` file changes
+    // Intercept tsc's `watchFile` to also invoke `mayTypecheck()` when a watched file changes
     host.watchFile = (path, callback, pollingInterval?) => {
       return watchFile.call(host, path, (filePath: string, eventKind: FileWatcherEventKind) => {
-        this.willTypecheck();
+        this.mayTypecheck(filePath);
         return callback(filePath, eventKind);
       }, pollingInterval);
     };
 
-    // Intercept tsc's `watchDirectory` callback to also invoke `didTypecheck()` when a
-    // `.ts` file is added to a watched directory
+    // Intercept tsc's `watchDirectory` callback to also invoke `mayTypecheck()` when a
+    // file is added or removed in a watched directory.
     host.watchDirectory = (path, callback, recursive?) => {
       return watchDirectory.call(host, path, (filePath: string) => {
-        if (filePath.endsWith('.ts')) {
-          this.willTypecheck();
-        }
+        this.mayTypecheck(filePath);
         return callback(filePath);
       }, recursive);
+    };
+
+    // Intercept `createProgram` to invoke `willTypecheck` beforehand, as we know at this
+    // point that a new check is definitively happening.
+    host.createProgram = (...params) => {
+      this.willTypecheck();
+      return createProgram.apply(host, params);
     };
 
     host.afterProgramCreate = program => {
