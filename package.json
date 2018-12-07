@@ -46,7 +46,7 @@
     "rsvp": "^4.8.1",
     "semver": "^5.5.1",
     "stagehand": "^1.0.0",
-    "walk-sync": "^0.3.2"
+    "walk-sync": "^1.0.0"
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
