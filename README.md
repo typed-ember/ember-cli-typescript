@@ -90,6 +90,17 @@ To work properly, ember addons must declare this library as a `dependency`, not 
 ember install ember-cli-typescript@latest --save
 ```
 
+Additionally, you must be using ember-cli-babel at version 7.1.0 or above (which requires ember-cli 2.13 or above). Once your ember app is running with the cli at 2.13 or higher, you may upgrade ember-cli-babel via
+
+```
+ember install ember-cli-babel@^7.1.0
+```
+
+Note: If you are also using ember-decorators (specifically the babel-transform that gets added with it), you will need update @ember-decorators/babel-transforms as well. Anything over 3.1.0 should work
+
+```
+ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
+```
 
 All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
 
