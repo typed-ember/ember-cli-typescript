@@ -7,6 +7,7 @@ import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
 import TypecheckWorker from './lib/typechecking/worker';
 import TypecheckMiddleware from './lib/typechecking/middleware';
+import { Application } from 'express';
 
 export default addon({
   name: 'ember-cli-typescript',
@@ -37,9 +38,11 @@ export default addon({
   },
 
   serverMiddleware({ app }) {
-    let workerPromise = this._getTypecheckWorker();
-    let middleware = new TypecheckMiddleware(this.project, workerPromise);
-    middleware.register(app);
+    this._addTypecheckMiddleware(app);
+  },
+
+  testemMiddleware(app) {
+    this._addTypecheckMiddleware(app);
   },
 
   async postBuild() {
@@ -143,6 +146,12 @@ export default addon({
     if (!extensions.includes('ts')) {
       extensions.push('ts');
     }
+  },
+
+  _addTypecheckMiddleware(app: Application) {
+    let workerPromise = this._getTypecheckWorker();
+    let middleware = new TypecheckMiddleware(this.project, workerPromise);
+    middleware.register(app);
   },
 
   _typecheckWorker: undefined as Promise<Remote<TypecheckWorker>> | undefined,

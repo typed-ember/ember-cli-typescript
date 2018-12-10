@@ -36,6 +36,7 @@ declare module 'ember-cli/lib/models/addon' {
     shouldIncludeChildAddon(addon: Addon): boolean;
     isDevelopingAddon(): boolean;
     serverMiddleware(options: { app: Application }): void | Promise<void>;
+    testemMiddleware(app: Application): void;
     setupPreprocessorRegistry(type: 'self' | 'parent', registry: unknown): void;
   }
 }
