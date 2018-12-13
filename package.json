@@ -74,7 +74,7 @@
     "ember-cli-dependency-checker": "3.0.0",
     "ember-cli-eslint": "5.0.0",
     "ember-cli-htmlbars": "3.0.1",
-    "ember-cli-htmlbars-inline-precompile": "2.0.0",
+    "ember-cli-htmlbars-inline-precompile": "2.1.0",
     "ember-cli-inject-live-reload": "2.0.1",
     "ember-cli-release": "0.2.9",
     "ember-cli-sri": "2.1.1",
