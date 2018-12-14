@@ -81,13 +81,13 @@ For issues relating to typescript compiler analysis, [create an issue in this pr
 To install or upgrade the addon, just run:
 
 ```
-ember install ember-cli-typescript@latest
+ember install ember-cli-typescript@next
 ```
 
 To work properly, ember addons must declare this library as a `dependency`, not a `devDependency`. You can "ember install" it by running 
 
 ```
-ember install ember-cli-typescript@latest --save
+ember install ember-cli-typescript@next --save
 ```
 
 Additionally, you must be using ember-cli-babel at version 7.1.0 or above (which requires ember-cli 2.13 or above). Once your ember app is running with the cli at 2.13 or higher, you may upgrade ember-cli-babel via
