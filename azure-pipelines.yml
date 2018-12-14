@@ -5,6 +5,9 @@
 pool:
   vmImage: 'vs2017-win2016'
 
+variables:
+  CI: true
+
 trigger:
   paths:
     exclude:
@@ -18,7 +21,7 @@ steps:
     displayName: 'Install Node.js'
 
   - script: |
-      npm install -g yarn ember-cli ts-node mocha
+      npm install -g yarn
     displayName: 'Setup global tools'
 
   - script: |
@@ -30,11 +33,11 @@ steps:
     displayName: 'Prepare CI environment'
 
   - script: |
-      ember test -r xunit
+      yarn ci:test:app -r xunit
     displayName: 'Ember App Tests'
 
   - script: |
-      mocha -R xunit --recursive js/tests > node-tests.xml
+      yarn ci:test:node -R xunit -O output=node-tests.xml
     displayName: 'Node Tests'
   - script: |
       echo " --- EMBER TESTS --- " && cat ember-tests.xml && echo " --- NODE TESTS --- " && cat node-tests.xml
