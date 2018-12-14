@@ -28,6 +28,7 @@ export default command({
       '--allowJs', 'false',
       '--noEmit', 'false',
       '--rootDir', rootDir || this.project.root,
+      '--isolatedModules', 'false',
       '--declaration',
       '--declarationDir', outDir,
       '--emitDeclarationOnly',
