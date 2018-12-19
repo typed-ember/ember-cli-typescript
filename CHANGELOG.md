@@ -6,6 +6,70 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.0-rc.1] - 2018-12-13
+
+## What Changed?
+
+For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
+https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
+
+### Fixed 🔧
+
+- Builds no longer hang if a changed TypeScript file did not trigger a TS rebuild (which can happen e.g. if it is not yet imported elsewhere).
+- Type-checking information now properly gets injected into the build pipeline for test builds as well as development and production builds.
+- Declaration maps now have test coverage to make sure they don't break.
+
+### Changed 💥
+
+- The build system now uses the `tsconfig.json` file's `paths` key to copy type definitions during precompile, rather than assuming Ember project structure.
+
+### Added ⭐️
+
+- The addon now checks to confirm you're using Ember CLI 3.5+, since the new approach to builds has serious performance problems with a local `tmp` directory.
+
+### Under the hood 🚗 
+
+- Bumped *many* dependency versions.
+- Set up Azure Pipelines configuration.
+- Updated internals to use TypeScript themselves.
+
+## Upgrading ⚙️
+
+```
+ember install ember-cli-typescript@next
+```
+
+## Contributors 🙇
+
+Thanks to everyone who opened/discovered an issue we fixed or PR we merged in this release!
+
+- @mike-north
+- @dfreeman
+- @jamescdavis 
+
+## [2.0.0-beta.3] - 2018-11-02
+
+## What Changed?
+
+For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
+https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
+
+### Fixed 🔧
+- Ensure consistency with `tsc` re: class property initialization order (#365)
+
+## Upgrading ⚙️
+
+```
+ember install ember-cli-typescript@beta
+```
+
+## Contributors 🙇
+
+Thanks to everyone who opened/discovered an issue we fixed or PR we merged in this release!
+
+- @runspired
+- @dfreeman
+
 ## [2.0.0-beta.2] - 2018-10-26
 
 ### Fixed
@@ -389,7 +453,9 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.5.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2
+[2.0.0-beta.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.3...v2.0.0-rc.1
+[2.0.0-beta.e]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.2...v2.0.0-beta.3
 [2.0.0-beta.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.1...v2.0.0-beta.2
 [2.0.0-beta.1]: https://github.com/typed-ember/ember-cli-typescript/compare/HEAD...v2.0.0-beta.1
 [1.5.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v1.4.4...v1.5.0
