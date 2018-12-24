@@ -414,6 +414,20 @@ export default class UserProfile extends Component {
 
 This also holds true for all other macros of the ember-decorators addon.
 
+#### Typing uninitialized properties
+
+For folks using babel@7 you may encounter problems when providing type definitions such as the following when working with Ember below `3.6`.
+
+```ts
+import Component from '@ember/component';
+
+export default class UserProfile extends Component {
+  username?: string;
+}
+```
+
+When invoked via a template `{{user-profile username='example123'}}`, you would expect that `username` would have the value of `example123`, however prior to the native class feature released in Ember `3.6`, this will result in `username` being undefined.  
+
 #### Ember Data lookups
 
 We use the same basic approach for Ember Data type lookups with string keys as we do for service or controller injections. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
