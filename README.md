@@ -439,6 +439,8 @@ export default class UserProfile extends Component {
 
 When invoked via a template `{{user-profile username='example123'}}`, you would expect that `username` would have the value of `example123`, however prior to the native class feature released in Ember `3.6`, this will result in `username` being undefined.  
 
+For users who remain on Ember versions below `3.6`, please use https://github.com/pzuraq/ember-native-class-polyfill 
+
 #### Ember Data lookups
 
 We use the same basic approach for Ember Data type lookups with string keys as we do for service or controller injections. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
