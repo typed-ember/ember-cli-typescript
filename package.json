@@ -83,7 +83,7 @@
     "ember-resolver": "5.0.1",
     "ember-source": "3.6.1",
     "ember-try": "1.1.0",
-    "eslint": "5.11.0",
+    "eslint": "5.11.1",
     "eslint-plugin-ember": "5.4.0",
     "eslint-plugin-node": "7.0.1",
     "esprima": "4.0.1",
