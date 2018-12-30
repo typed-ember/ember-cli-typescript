@@ -21,6 +21,7 @@ export default addon({
     // typecheck worker so we don't wait until the end of the build to check
     if (this.parent === this.project) {
       this._getTypecheckWorker();
+      this._checkInstallationLocation();
     }
   },
 
@@ -116,6 +117,18 @@ export default addon({
       this.ui.writeWarnLine(
         'ember-cli-typescript is in development but not being loaded from `.ts` sources — ' +
           'do you have compiled artifacts lingering in `/js`?'
+      );
+    }
+  },
+
+  _checkInstallationLocation() {
+    if (
+      this.project.isEmberCLIAddon() &&
+      this.project.pkg.devDependencies &&
+      this.project.pkg.devDependencies[this.name]
+    ) {
+      this.ui.writeWarnLine(
+        '`ember-cli-typescript` should be included in your `dependencies`, not `devDependencies`'
       );
     }
   },
