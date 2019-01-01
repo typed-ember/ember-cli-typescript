@@ -1994,6 +1994,17 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
+boilerplate-update@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.1.0.tgz#f5aff9f4f70565732fc46e26307d2da4fdf9041c"
+  integrity sha512-zbVRbteKhLO9kzzCfPmUjVZN4sPnwrbOWuDCFxIHcQh5Mt3643DHL7iIOxQ099pGL+zfxOuxEe1kMmnG2OtzEg==
+  dependencies:
+    debug "^4.1.1"
+    denodeify "^1.2.1"
+    execa "^1.0.0"
+    npx "^10.2.0"
+    tmp "0.0.33"
+
 boom@2.x.x:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/boom/-/boom-2.10.1.tgz#39c8918ceff5799f83f9492a848f625add0c766f"
@@ -3493,6 +3504,13 @@ debug@^4.0.0, debug@^4.0.1, debug@^4.1.0:
   dependencies:
     ms "^2.1.1"
 
+debug@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
+  integrity sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
+  dependencies:
+    ms "^2.1.1"
+
 debuglog@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/debuglog/-/debuglog-1.0.1.tgz#aa24ffb9ac3df9a2351837cfb2d279360cd78492"
@@ -4050,11 +4068,12 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.27.3:
-  version "0.27.3"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.3.tgz#c7e9acaf4af7a8ee8086984467a5cf8414c87af5"
-  integrity sha512-0l1cfnxsf0V93Cz1cHX/XzNwkIyuEx2vOXat31VzHV+JbSj+vmmuWLaqjdPLJYYela2eMQSXcRGERzqXExz5MA==
+ember-cli-update@0.27.4:
+  version "0.27.4"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.4.tgz#c230d7552cf33c272a5f2f96827f4aef805a4104"
+  integrity sha512-M1+whgMSxBicfSSAcdmaJUJvr4edZGiQSkbR17TC6TxePxymJndocH57kILfFsXU7C2wuVQh5rjZZ/3PpxS81w==
   dependencies:
+    boilerplate-update "^0.1.0"
     cpr "^3.0.1"
     debug "^4.0.0"
     denodeify "^1.2.1"
@@ -8299,7 +8318,7 @@ npm@5.1.0:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-npx@^10.0.1:
+npx@^10.0.1, npx@^10.2.0:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/npx/-/npx-10.2.0.tgz#f8c9ad30c68f2d13c36a4759cbbecd9c78388044"
   integrity sha512-DqjFkzET0DeaXYXNJnirnvEovwk4lBa33ZQCw1jxMuas4yH9jdU8q2U8L3cLaB2UqzgmW2Ssqk8lcGiPRL8pRg==
