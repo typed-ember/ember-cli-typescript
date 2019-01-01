@@ -2159,15 +2159,16 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
-boilerplate-update@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.1.0.tgz#f5aff9f4f70565732fc46e26307d2da4fdf9041c"
-  integrity sha512-zbVRbteKhLO9kzzCfPmUjVZN4sPnwrbOWuDCFxIHcQh5Mt3643DHL7iIOxQ099pGL+zfxOuxEe1kMmnG2OtzEg==
+boilerplate-update@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.2.0.tgz#29e1e904cf370a557a3c94f41f0e61d9073eec48"
+  integrity sha512-wgqPPC3Kj0MfnfgEoFeEs2zvGbZACKDfQKaWwtS7Zgh6mOUeEAm1XLtnSDfGScNlINjPhV39awvhWO1jEFqdvA==
   dependencies:
     debug "^4.1.1"
     denodeify "^1.2.1"
     execa "^1.0.0"
     npx "^10.2.0"
+    semver "^5.6.0"
     tmp "0.0.33"
 
 boom@2.x.x:
@@ -4215,12 +4216,12 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.27.4:
-  version "0.27.4"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.4.tgz#c230d7552cf33c272a5f2f96827f4aef805a4104"
-  integrity sha512-M1+whgMSxBicfSSAcdmaJUJvr4edZGiQSkbR17TC6TxePxymJndocH57kILfFsXU7C2wuVQh5rjZZ/3PpxS81w==
+ember-cli-update@0.27.5:
+  version "0.27.5"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.5.tgz#bffd2257a9f30096e2a7a52477f8d090a050eee9"
+  integrity sha512-6EM6MtsqkkhTr2GvI5JOOmPqatMdya3HWzr3mhl9fqyo6addJcOTkbgbJ4+0+YF3MRz1OHd1ZA35vCyeixunXA==
   dependencies:
-    boilerplate-update "^0.1.0"
+    boilerplate-update "^0.2.0"
     cpr "^3.0.1"
     debug "^4.0.0"
     denodeify "^1.2.1"
@@ -9619,7 +9620,7 @@ semver-diff@^2.0.0:
   dependencies:
     semver "^5.0.3"
 
-"semver@2 >=2.2.1 || 3.x || 4 || 5", "semver@2.x || 3.x || 4 || 5", "semver@^2.3.0 || 3.x || 4 || 5", semver@^5.0.3, semver@^5.3.0, semver@^5.5.1:
+"semver@2 >=2.2.1 || 3.x || 4 || 5", "semver@2.x || 3.x || 4 || 5", "semver@^2.3.0 || 3.x || 4 || 5", semver@^5.0.3, semver@^5.3.0, semver@^5.5.1, semver@^5.6.0:
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.6.0.tgz#7e74256fbaa49c75aa7c7a205cc22799cac80004"
   integrity sha512-RS9R6R35NYgQn++fkDWaOmqGoj4Ek9gGs+DPxNUZKuwE183xjJroKvyo1IzVFeXvUrvmALy6FWD5xrdJT25gMg==
