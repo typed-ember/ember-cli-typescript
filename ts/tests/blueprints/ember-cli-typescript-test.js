@@ -72,7 +72,6 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         expect(tsconfigJson.compilerOptions.inlineSourceMap).to.equal(true);
         expect(tsconfigJson.compilerOptions.inlineSources).to.equal(true);
-        expect(tsconfigJson.compilerOptions.isolatedModules).to.equal(true);
 
         expect(tsconfigJson.include).to.deep.equal(['app/**/*', 'tests/**/*', 'types/**/*']);
 
