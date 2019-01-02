@@ -94,7 +94,7 @@
     "mktemp": "0.4.0",
     "mocha": "5.2.0",
     "qunit-dom": "0.8.3",
-    "rimraf": "2.6.2",
+    "rimraf": "2.6.3",
     "testdouble": "3.9.2",
     "ts-node": "7.0.1",
     "typescript": "3.2.1",
