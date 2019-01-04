@@ -93,7 +93,7 @@
     "loader.js": "4.7.0",
     "mktemp": "0.4.0",
     "mocha": "5.2.0",
-    "qunit-dom": "0.8.3",
+    "qunit-dom": "0.8.4",
     "rimraf": "2.6.3",
     "testdouble": "3.9.2",
     "ts-node": "7.0.1",
