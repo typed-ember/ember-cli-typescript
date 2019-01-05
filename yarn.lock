@@ -4230,18 +4230,16 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.27.9:
-  version "0.27.9"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.9.tgz#93f0854bc9afaa651a30a0b97a1be126a885bca9"
-  integrity sha512-7zvqKUF8knsnmVY/VvgtI67G5uqawrBzUxsek1BwsYY3LyTMzwk+m+ykul0VxZvmecly157DPtKOEFDMaGhv3A==
+ember-cli-update@0.27.10:
+  version "0.27.10"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.10.tgz#ea97aac38303855030cdcbff4a576b775a7712b1"
+  integrity sha512-NbKXhTiKwj5K7TyEqpGfZ3vL2SjAhgq7Nq6qTcseMAcILeqB6zhYPP2VtiTQXIRoXZdeWEbYlSLiIfSe3bvUBw==
   dependencies:
     boilerplate-update "^0.6.0"
     co "^4.6.0"
     debug "^4.0.0"
-    execa "^1.0.0"
     git-diff-apply "^0.10.2"
     merge-package.json "^2.0.0"
-    npx "^10.0.1"
     opn "^5.3.0"
     resolve "^1.8.1"
     semver "^5.4.1"
@@ -8331,7 +8329,7 @@ npm@5.1.0:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
-npx@^10.0.1, npx@^10.2.0:
+npx@^10.2.0:
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/npx/-/npx-10.2.0.tgz#f8c9ad30c68f2d13c36a4759cbbecd9c78388044"
   integrity sha512-DqjFkzET0DeaXYXNJnirnvEovwk4lBa33ZQCw1jxMuas4yH9jdU8q2U8L3cLaB2UqzgmW2Ssqk8lcGiPRL8pRg==
