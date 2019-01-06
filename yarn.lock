@@ -1999,10 +1999,10 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
-boilerplate-update@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.10.0.tgz#120c7d559b87d0ffa870c90d267fd66fe09bb6c7"
-  integrity sha512-MjE39aeJpZ0eW93N51KKRnZEFHPzz+esOc25xwAaQqQSsmEyeky++joalGQdraxfnJI9NvhwxhxF9kym2J4SaA==
+boilerplate-update@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.11.0.tgz#0c894775c6afabc4b1f62cc3d77b9df6c75364ad"
+  integrity sha512-ua/AP2fBse42iTLW+wc2bGvUmEczzYIYP68PfrKVlyd8fPccDRDpBD5jLRO0inBXzuJK3VxorxV8rziZD2vKnw==
   dependencies:
     cpr "^3.0.1"
     debug "^4.1.1"
@@ -2012,6 +2012,7 @@ boilerplate-update@^0.10.0:
     inquirer "^6.2.1"
     merge-package.json "^2.0.0"
     npx "^10.2.0"
+    opn "^5.4.0"
     rimraf "^2.6.2"
     semver "^5.6.0"
     tmp "0.0.33"
@@ -4085,15 +4086,14 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.27.16:
-  version "0.27.16"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.16.tgz#d50293fa276a39d5fb09a16bf5d42b4d7d3841cb"
-  integrity sha512-aAxucQqpr/qMvTTpUNHHiUcT39er9xqotGSr7X51uXVMJbvizEyM+0/8M09RKQVbXAuh4H8PHKsSSbPufjoZUw==
+ember-cli-update@0.27.17:
+  version "0.27.17"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.27.17.tgz#db1d30501835c954e8de8557a453c1ddbffb43c3"
+  integrity sha512-Sm+zXx7Sb2PKo/mzyEMWXz4ZfNUzXHtZXpShKnSlvHV4FFJFm4g7q+78Csk7SNdyM36e2MCWau4LRJFFuPpbKQ==
   dependencies:
-    boilerplate-update "^0.10.0"
+    boilerplate-update "^0.11.0"
     co "^4.6.0"
     debug "^4.0.0"
-    opn "^5.3.0"
     resolve "^1.8.1"
     semver "^5.4.1"
     update-notifier "^2.5.0"
@@ -8465,7 +8465,7 @@ opener@~1.4.3:
   resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
   integrity sha1-XG2ixdflgx6P+jlklQ+NZnSskLg=
 
-opn@^5.3.0:
+opn@^5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/opn/-/opn-5.4.0.tgz#cb545e7aab78562beb11aa3bfabc7042e1761035"
   integrity sha512-YF9MNdVy/0qvJvDtunAOzFw9iasOQHpVthTCvGzxt61Il64AYSGdK+rYwld7NAfk9qJ7dt+hymBNSc9LNYS+Sw==
