@@ -366,43 +366,85 @@ describe('Acceptance: ember-cli-typescript generator', function() {
       });
   });
 
-  it('app with Mocha', function() {
-    const args = ['ember-cli-typescript'];
+  describe('ember-mocha', function() {
+    it('app with ember-cli-mocha', function() {
+      const args = ['ember-cli-typescript'];
 
-    return helpers
-      .emberNew()
-      .then(() => helpers.modifyPackages([
-        { name: 'ember-cli-mocha', dev: true },
-        { name: 'ember-qunit', delete: true }
-      ]))
-      .then(() => helpers.emberGenerate(args))
-      .then(() => {
-        const pkg = file('package.json');
-        expect(pkg).to.exist;
+      return helpers
+        .emberNew()
+        .then(() => helpers.modifyPackages([
+          { name: 'ember-cli-mocha', dev: true },
+          { name: 'ember-qunit', delete: true }
+        ]))
+        .then(() => helpers.emberGenerate(args))
+        .then(() => {
+          const pkg = file('package.json');
+          expect(pkg).to.exist;
 
-        const pkgJson = JSON.parse(pkg.content);
-        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
-        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
-      });
-  });
+          const pkgJson = JSON.parse(pkg.content);
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+        });
+    });
 
-  it('addon with Mocha', function() {
-    const args = ['ember-cli-typescript'];
+    it('app with ember-mocha', function() {
+      const args = ['ember-cli-typescript'];
 
-    return helpers
-      .emberNew({ target: 'addon' })
-      .then(() => helpers.modifyPackages([
-        { name: 'ember-cli-mocha', dev: true },
-        { name: 'ember-qunit', delete: true }
-      ]))
-      .then(() => helpers.emberGenerate(args))
-      .then(() => {
-        const pkg = file('package.json');
-        expect(pkg).to.exist;
+      return helpers
+        .emberNew()
+        .then(() => helpers.modifyPackages([
+          { name: 'ember-mocha', dev: true },
+          { name: 'ember-qunit', delete: true }
+        ]))
+        .then(() => helpers.emberGenerate(args))
+        .then(() => {
+          const pkg = file('package.json');
+          expect(pkg).to.exist;
 
-        const pkgJson = JSON.parse(pkg.content);
-        expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
-        expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
-      });
+          const pkgJson = JSON.parse(pkg.content);
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+        });
+    });
+
+    it('addon with ember-cli-mocha', function() {
+      const args = ['ember-cli-typescript'];
+
+      return helpers
+        .emberNew({ target: 'addon' })
+        .then(() => helpers.modifyPackages([
+          { name: 'ember-cli-mocha', dev: true },
+          { name: 'ember-qunit', delete: true }
+        ]))
+        .then(() => helpers.emberGenerate(args))
+        .then(() => {
+          const pkg = file('package.json');
+          expect(pkg).to.exist;
+
+          const pkgJson = JSON.parse(pkg.content);
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+        });
+    });
+
+    it('addon with ember-mocha', function() {
+      const args = ['ember-cli-typescript'];
+
+      return helpers
+        .emberNew({ target: 'addon' })
+        .then(() => helpers.modifyPackages([
+          { name: 'ember-mocha', dev: true },
+          { name: 'ember-qunit', delete: true }
+        ]))
+        .then(() => helpers.emberGenerate(args))
+        .then(() => {
+          const pkg = file('package.json');
+          expect(pkg).to.exist;
+
+          const pkgJson = JSON.parse(pkg.content);
+          expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
+          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+        });
+    });
   });
 });
