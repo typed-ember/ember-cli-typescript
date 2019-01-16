@@ -10318,10 +10318,10 @@ terser@^3.7.5:
     source-map "~0.6.1"
     source-map-support "~0.5.6"
 
-testdouble@3.9.2:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.9.2.tgz#5a7b01e480e73a26c0d7537d14741ecff39002b2"
-  integrity sha512-MVEM18XhnQM2tLsIkZjhPB8WM8vpf5vhnmc7hKbl1WrQx1JemBiLgPlCj3xoHN8/cjth5RBLla2YszLfoKthRw==
+testdouble@3.9.3:
+  version "3.9.3"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.9.3.tgz#d83f86a41f9ad8e23d1e6a2252f5fa79177de826"
+  integrity sha512-gzTDEd6azy1hUw4OP8TjDThR8OealIuXI8xaxk/JtXSW1zBkxg/BShOHdxWy2N7+kDg3cB8y/LVtugfRPLveqA==
   dependencies:
     es6-map "^0.1.5"
     lodash "^4.17.11"
