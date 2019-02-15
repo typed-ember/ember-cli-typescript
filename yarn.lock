@@ -778,10 +778,10 @@
   dependencies:
     "@types/sizzle" "*"
 
-"@types/node@9.6.41":
-  version "9.6.41"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.41.tgz#e57c3152eb2e7ec748c733cebd0c095b437c5d37"
-  integrity sha512-sPZWEbFMz6qAy9SLY7jh5cgepmsiwqUUHjvEm8lpU6kug2hmmcyuTnwhoGw/GWpI5Npue4EqvsiQQI0eWjW/ZA==
+"@types/node@9.6.42":
+  version "9.6.42"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.42.tgz#96fd9c8cf15fbf2c16fe525fc2be97c49cdd0c2f"
+  integrity sha512-SpeVQJFekfnEaZZO1yl4je/36upII36L7gOT4DBx51B1GeAB45mmDb3a5OBQB+ZeFxVVOP37r8Owsl940G/fBg==
 
 "@types/qunit@2.5.3":
   version "2.5.3"
