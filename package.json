@@ -56,8 +56,8 @@
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
     "@typed-ember/renovate-config": "1.2.1",
-    "@types/ember": "3.0.25",
-    "@types/ember-qunit": "3.4.3",
+    "@types/ember": "3.0.27",
+    "@types/ember-qunit": "3.4.5",
     "@types/node": "9.6.41",
     "@types/qunit": "2.5.3",
     "broccoli-asset-rev": "2.7.0",
@@ -101,7 +101,7 @@
     "typescript-eslint-parser": "21.0.2"
   },
   "resolutions": {
-    "@types/ember": "3.0.25"
+    "@types/ember": "3.0.27"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"
