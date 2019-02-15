@@ -492,7 +492,7 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...v2
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...HEAD
 [2.0.0-rc.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2.0.0-rc.2
 [2.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.3...v2.0.0-rc.1
 [2.0.0-beta.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.2...v2.0.0-beta.3
