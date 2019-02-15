@@ -4,6 +4,17 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
+## :construction: v2 Release Candidate :construction:
+
+This is a work-in-progress document for the v2 release (Soon™!) – in the meantime, if you need to see documentation for the 1.x, please refer to the README for earlier releases:
+
+- [1.5.0](https://github.com/typed-ember/ember-cli-typescript/blob/v1.5.0/README.md)
+- [1.4.4](https://github.com/typed-ember/ember-cli-typescript/blob/v1.4.4/README.md)
+- [1.3.4](https://github.com/typed-ember/ember-cli-typescript/blob/v1.3.4/README.md)
+- [1.2.2](https://github.com/typed-ember/ember-cli-typescript/blob/v1.2.2/README.md)
+
+## Contents of this README
+
 - [Getting Help](#getting-help)
 - [Setup and Configuration](#setup-and-configuration)
   - [Supported Ember & TypeScript Versions](#supported-ember-and-typescript-versions)
