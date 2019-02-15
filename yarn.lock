@@ -10512,12 +10512,11 @@ term-size@^1.2.0:
   dependencies:
     execa "^0.7.0"
 
-testdouble@3.9.2:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.9.2.tgz#5a7b01e480e73a26c0d7537d14741ecff39002b2"
-  integrity sha512-MVEM18XhnQM2tLsIkZjhPB8WM8vpf5vhnmc7hKbl1WrQx1JemBiLgPlCj3xoHN8/cjth5RBLla2YszLfoKthRw==
+testdouble@3.10.0:
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.10.0.tgz#5bb0149da39d3d5afc085dbea9bc5e45d0c1470f"
+  integrity sha512-rg8OUI+1TVoDPytrGvkN8FPuhtLorkxBdc1MAcDTEeo8C8IZYRUIMus9QNo5W1HbHAlJu8JXHDsYi2IJPTOI0A==
   dependencies:
-    es6-map "^0.1.5"
     lodash "^4.17.11"
     quibble "^0.5.5"
     stringify-object-es5 "^2.5.0"

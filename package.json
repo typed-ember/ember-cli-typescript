@@ -95,7 +95,7 @@
     "mocha": "5.2.0",
     "qunit-dom": "0.8.4",
     "rimraf": "2.6.3",
-    "testdouble": "3.9.2",
+    "testdouble": "3.10.0",
     "ts-node": "7.0.1",
     "typescript": "3.2.1",
     "typescript-eslint-parser": "21.0.2"
