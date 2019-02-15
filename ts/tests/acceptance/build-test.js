@@ -29,7 +29,7 @@ describe('Acceptance: build', function() {
     yield server.waitForBuild();
 
     expectModuleBody(this.app, 'skeleton-app/app', `
-      exports.add = add;
+      _exports.add = add;
       function add(a, b) {
         return a + b;
       }
@@ -42,7 +42,9 @@ describe('Acceptance: build', function() {
     yield server.waitForBuild();
 
     expectModuleBody(this.app, 'skeleton-app/app', `
-      var foo = exports.foo = 'hello';
+      _exports.foo = void 0;
+      var foo = 'hello';
+      _exports.foo = foo;
     `);
   }));
 
@@ -50,6 +52,28 @@ describe('Acceptance: build', function() {
     this.app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 
     yield expect(this.app.build()).to.be.rejectedWith(`Cannot find module 'nonexistent'`);
+  }));
+
+  it('serves a type error page when the build has failed', co.wrap(function*() {
+    this.app.writeFile('app/index.html', 'plain index');
+    this.app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
+
+    let server = this.app.serve();
+    let output = yield server.waitForOutput('Typechecking failed');
+    let response = yield server.request('/');
+
+    expect(output).to.include(`Cannot find module 'nonexistent'`);
+    expect(response.body).to.include(`Cannot find module 'nonexistent'`);
+  }));
+
+  it("doesn't block builds for file changes that don't result in a typecheck", co.wrap(function*() {
+    let server = this.app.serve();
+
+    yield server.waitForBuild();
+
+    this.app.writeFile('app/some-template.hbs', '');
+
+    yield server.waitForBuild();
   }));
 });
 

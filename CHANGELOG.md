@@ -6,6 +6,45 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.0-rc.2] - 2019-01-07
+
+For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
+https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
+
+### Fixed 🔧
+
+- Set `--isolatedModules` back to `false` in both precompilation and generated blueprints
+
+### Added ⭐️
+
+- We now warn you nicely if you try to use this in an addon via `devDependencies` instead of `dependencies`
+
+### Under the hood 🚗
+
+- Used the same tests commands across providers, so we get the same results
+
+## Upgrading ⚙️
+
+For apps:
+
+```
+ember install ember-cli-typescript@next
+```
+
+For addons:
+
+```
+ember install -S ember-cli-typescript@next
+```
+
+## Contributors 🙇
+
+Thanks to everyone who opened/discovered an issue we fixed or PR we merged in this release!
+
+- @alexlafroscia
+- @dfreeman
+- @happycollision
+
 ## [2.0.0-rc.1] - 2018-12-13
 
 ## What Changed?
@@ -453,7 +492,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...HEAD
+[2.0.0-rc.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2.0.0-rc.2
 [2.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.3...v2.0.0-rc.1
 [2.0.0-beta.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.2...v2.0.0-beta.3
 [2.0.0-beta.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.1...v2.0.0-beta.2

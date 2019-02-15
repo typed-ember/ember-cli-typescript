@@ -28,7 +28,6 @@ module.exports = {
   },
 
   locals() {
-    let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
@@ -48,6 +47,8 @@ module.exports = {
     return {
       includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(/\n/g, '\n  '),
       pathsFor: dasherizedName => {
+        // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
+        let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
         let appName = isAddon ? 'dummy' : dasherizedName;
         let paths = {
           [`${appName}/tests/*`]: ['tests/*'],
@@ -118,12 +119,13 @@ module.exports = {
     // Entity name is optional right now, creating this hook avoids an error.
   },
 
-  afterInstall() {
+  beforeInstall() {
     if (this.project.isEmberCLIAddon()) {
       this._installPrecompilationHooks();
     }
 
     let packages = [
+      { name: 'ember-cli-typescript-blueprints', target: '^2.0.0-beta.1' },
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },

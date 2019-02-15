@@ -4,6 +4,17 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
+## :construction: v2 Release Candidate :construction:
+
+This is a work-in-progress document for the v2 release (Soon™!) – in the meantime, if you need to see documentation for the 1.x, please refer to the README for earlier releases:
+
+- [1.5.0](https://github.com/typed-ember/ember-cli-typescript/blob/v1.5.0/README.md)
+- [1.4.4](https://github.com/typed-ember/ember-cli-typescript/blob/v1.4.4/README.md)
+- [1.3.4](https://github.com/typed-ember/ember-cli-typescript/blob/v1.3.4/README.md)
+- [1.2.2](https://github.com/typed-ember/ember-cli-typescript/blob/v1.2.2/README.md)
+
+## Contents of this README
+
 - [Getting Help](#getting-help)
 - [Setup and Configuration](#setup-and-configuration)
   - [Supported Ember & TypeScript Versions](#supported-ember-and-typescript-versions)
@@ -81,7 +92,25 @@ For issues relating to typescript compiler analysis, [create an issue in this pr
 To install or upgrade the addon, just run:
 
 ```
-ember install ember-cli-typescript@latest
+ember install ember-cli-typescript@next
+```
+
+To work properly, ember addons must declare this library as a `dependency`, not a `devDependency`. You can "ember install" it by running 
+
+```
+ember install ember-cli-typescript@next --save
+```
+
+Additionally, you must be using ember-cli-babel at version 7.1.0 or above (which requires ember-cli 2.13 or above). Once your ember app is running with the cli at 2.13 or higher, you may upgrade ember-cli-babel via
+
+```
+ember install ember-cli-babel@^7.1.0
+```
+
+Note: If you are also using ember-decorators (specifically the babel-transform that gets added with it), you will need update @ember-decorators/babel-transforms as well. Anything over 3.1.0 should work
+
+```
+ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
 ```
 
 All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.

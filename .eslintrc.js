@@ -73,7 +73,7 @@ module.exports = {
       rules: {
         // These are covered by tsc
         'no-undef': 'off',
-        'no-unused-var': 'off'
+        'no-unused-vars': 'off'
       }
     }
   ],

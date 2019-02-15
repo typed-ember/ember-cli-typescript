@@ -2,11 +2,8 @@ import { module, test } from 'qunit';
 
 import addonFileA from 'in-repo-a/test-file';
 import addonFileB from 'in-repo-b/test-file';
-import addonFileC from 'in-repo-c/src/test-file';
 import fileA from 'dummy/a';
 import fileB from 'dummy/b';
-import muFile from 'dummy/src/test-file';
-import shadowedFile from 'dummy/shadowed-file';
 import { description as fromAts } from 'in-repo-a/test-support/from-ats';
 import { description as fromTs } from 'dummy/tests/from-ts';
 
@@ -21,24 +18,25 @@ module('Unit | Build', function() {
     assert.equal(fileB, 'dummy/b');
   });
 
-  test('app files aren\'t shadowed by addons\' app tree files', function(assert) {
-    assert.equal(shadowedFile, 'dummy/shadowed-file');
-  });
-
-  test('MU app files wind up in the right place', function(assert) {
-    assert.equal(muFile, 'dummy/src/test-file');
-  });
-
-  test('MU addon files wind up in the right place', function(assert) {
-    assert.equal(addonFileC, 'in-repo-c/src/test-file');
-  });
-
   test('addon\'s addon-test-support files end up in <addon-name>/test-support/*', function (assert) {
     assert.ok(fromAts);
     assert.equal(fromAts, 'From addon-test-support');
   });
+
   test('addon\'s test-support files end up in dummy/tests/*', function (assert) {
     assert.ok(fromTs);
     assert.equal(fromTs, 'From test-support');
+  });
+
+  test('property initialization occurs in the right order', function(assert) {
+    class TestClass {
+      // we shouldn't encourage folks to write code like this, but tsc ensures
+      // that constructor param fields are set before field initializers run
+      field = this.constructorParam;
+      constructor(private constructorParam: string) {}
+    }
+
+    let instance = new TestClass('hello');
+    assert.equal(instance.field, 'hello');
   });
 });
