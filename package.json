@@ -88,7 +88,7 @@
     "ember-load-initializers": "2.0.0",
     "ember-maybe-import-regenerator": "0.1.6",
     "ember-qunit": "4.3.0",
-    "ember-resolver": "5.0.1",
+    "ember-resolver": "5.1.1",
     "ember-source": "3.7.3",
     "ember-try": "1.1.0",
     "eslint": "5.13.0",
