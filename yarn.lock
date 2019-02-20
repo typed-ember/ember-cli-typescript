@@ -730,10 +730,10 @@
   resolved "https://registry.yarnpkg.com/@types/core-object/-/core-object-3.0.0.tgz#3c7a9ff732dd5a66a09860c4a134751d7abd11a2"
   integrity sha512-SYM//l00O/LXbT0GqTaonlYQubkXDWyfOEpzEehiedtF+wEJCliP4G05/2tM+bulFNgqnBG4uRRe8k/HGQUA3A==
 
-"@types/debug@4.1.1":
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.1.tgz#0be64e2fbe7c0bb2a6cad6a152462127a1b0d45a"
-  integrity sha512-OKKcc+Tt1rLMg1DTnmgvWHRna3SN51GWs/ERxpgjFNRjCUUVhGG8FEKeFqVTzBv1jEGFqbkJRWfsHV6KAcLT+A==
+"@types/debug@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@types/debug/-/debug-4.1.2.tgz#84824e9259fc583dd9385635738359c9582f7f82"
+  integrity sha512-jkf6UiWUjcOqdQbatbvOm54/YbCdjt3JjiAzT/9KS2XtMmOkYHdKsI5u8fulhbuTUuiqNBfa6J5GSDiwjK+zLA==
 
 "@types/ember-qunit@3.4.5":
   version "3.4.5"
@@ -923,7 +923,6 @@
     "@types/node" "*"
 
 "@types/handlebars@*", "@types/handlebars@npm:handlebars@^4.1.0", handlebars@^4.0.11, handlebars@^4.0.4, handlebars@^4.1.0:
-  name "handlebars"
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
   integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
@@ -5811,11 +5810,9 @@ imurmurhash@^0.1.4:
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
   version "0.0.0"
-  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
   version "0.0.0"
-  uid ""
 
 indent-string@^2.1.0:
   version "2.1.0"
