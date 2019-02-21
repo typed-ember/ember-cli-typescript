@@ -107,7 +107,7 @@
     "rimraf": "2.6.3",
     "testdouble": "3.10.0",
     "ts-node": "8.0.2",
-    "typescript": "3.3.3",
+    "typescript": "3.3.3333",
     "typescript-eslint-parser": "21.0.2"
   },
   "resolutions": {
