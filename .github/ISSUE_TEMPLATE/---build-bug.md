@@ -23,6 +23,21 @@ about: A problem relating to how TS is built in your ember app
 
 -->
 
+### Please paste the version of `ember-cli-typescript` and `ember-cli-typescript-blueprints` here
+
+<!-- yarn
+yarn list --pattern 'ember-cli-typescript'
+-->
+
+<!-- npm
+npm list ember-cli-typescript ember-cli-typescript-blueprints
+-->
+
+<!-- example
+  ember-cli-typescript@2.0.0
+  ember-cli-typescript-blueprints@1.2.0
+-->
+
 ### Please paste your `tconfig.json` and `tslint.json` or `eslint.json` (if applicable) below
 
 
