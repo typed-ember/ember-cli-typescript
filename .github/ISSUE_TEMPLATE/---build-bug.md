@@ -23,7 +23,7 @@ about: A problem relating to how TS is built in your ember app
 
 -->
 
-### Please paste your `tconfig.json` and `tslint.json` or `eslint.json` (if applicable) below
+### Please paste your `tsconfig.json` and `tslint.json` or `eslint.json` (if applicable) below
 
 
 <details><summary><b>My tsconfig.json</b></summary><pre>
