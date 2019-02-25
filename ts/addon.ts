@@ -8,6 +8,8 @@ import fork from './lib/utilities/fork';
 import TypecheckWorker from './lib/typechecking/worker';
 import TypecheckMiddleware from './lib/typechecking/middleware';
 import { Application } from 'express';
+import walkSync from 'walk-sync';
+import fs from 'fs-extra';
 
 export default addon({
   name: 'ember-cli-typescript',
@@ -16,6 +18,7 @@ export default addon({
     this._super.included.apply(this, arguments);
     this._checkDevelopment();
     this._checkPeerVersions();
+    this._checkAddonAppFiles();
 
     // If we're a direct dependency of the host app, go ahead and start up the
     // typecheck worker so we don't wait until the end of the build to check
@@ -118,6 +121,27 @@ export default addon({
         'ember-cli-typescript is in development but not being loaded from `.ts` sources — ' +
           'do you have compiled artifacts lingering in `/js`?'
       );
+    }
+  },
+
+  _checkAddonAppFiles() {
+    // Emit a warning for addons that are under active development...
+    let isDevelopingAddon = !this.app && (this.parent as Addon).isDevelopingAddon();
+
+    // ...and are at the root of the project (i.e. not in-repo)...
+    let isRootAddon = this.parent.root === this.project.root;
+
+    // ...and have .ts files in their `app` directory.
+    let appDir = `${this.parent.root}/app`;
+    if (isDevelopingAddon && isRootAddon && fs.existsSync(appDir)) {
+      let tsFilesInApp = walkSync(appDir, { globs: ['**/*.ts'] });
+      if (tsFilesInApp.length) {
+        this.ui.writeWarnLine(
+          `found .ts files in ${appDir}\n` +
+          'ember-cli-typescript only compiles files in an addon\'s `addon` folder; ' +
+          'see https://github.com/typed-ember/ember-cli-typescript/issues/562'
+        );
+      }
     }
   },
 
