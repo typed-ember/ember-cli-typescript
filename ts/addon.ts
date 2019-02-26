@@ -17,7 +17,7 @@ export default addon({
   included() {
     this._super.included.apply(this, arguments);
     this._checkDevelopment();
-    this._checkAddonAppFiles();y
+    this._checkAddonAppFiles();
     this._checkBabelVersion();
 
     // If we're a direct dependency of the host app, go ahead and start up the
