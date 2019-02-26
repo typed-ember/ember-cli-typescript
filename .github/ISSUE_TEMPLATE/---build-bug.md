@@ -38,7 +38,7 @@ npm list ember-cli-typescript ember-cli-typescript-blueprints
   ember-cli-typescript-blueprints@1.2.0
 -->
 
-### Please paste your `tconfig.json` and `tslint.json` or `eslint.json` (if applicable) below
+### Please paste your `tsconfig.json` and `tslint.json` or `eslint.json` (if applicable) below
 
 
 <details><summary><b>My tsconfig.json</b></summary><pre>
