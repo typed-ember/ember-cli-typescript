@@ -17,14 +17,15 @@ export default addon({
   included() {
     this._super.included.apply(this, arguments);
     this._checkDevelopment();
-    this._checkPeerVersions();
-    this._checkAddonAppFiles();
+    this._checkAddonAppFiles();y
+    this._checkBabelVersion();
 
     // If we're a direct dependency of the host app, go ahead and start up the
     // typecheck worker so we don't wait until the end of the build to check
     if (this.parent === this.project) {
       this._getTypecheckWorker();
       this._checkInstallationLocation();
+      this._checkEmberCLIVersion();
     }
   },
 
@@ -94,7 +95,7 @@ export default addon({
     return !['in-repo-a', 'in-repo-b'].includes(addon.name);
   },
 
-  _checkPeerVersions() {
+  _checkBabelVersion() {
     let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
     if (!babel || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
@@ -104,7 +105,9 @@ export default addon({
           'your TypeScript files may not be transpiled correctly.'
       );
     }
+  },
 
+  _checkEmberCLIVersion() {
     let cliPackage = this.project.require('ember-cli/package.json') as { version: string };
     if (semver.lt(cliPackage.version, '3.5.0')) {
       this.ui.writeWarnLine(
