@@ -753,10 +753,10 @@
     "@types/jquery" "*"
     "@types/rsvp" "*"
 
-"@types/ember@*", "@types/ember@3.0.27":
-  version "3.0.27"
-  resolved "https://registry.yarnpkg.com/@types/ember/-/ember-3.0.27.tgz#2915984038f3ae3609142f8e700b4a783a30be5d"
-  integrity sha512-amYMGBiDsqBoA/+8Hv3TFdz+pTeLbmp3EgiVVuP4AhK59ljdiigi1MBNMmOlr0u9OGDlRrK/M4DURJRWOC2KiA==
+"@types/ember@*", "@types/ember@3.0.28":
+  version "3.0.28"
+  resolved "https://registry.yarnpkg.com/@types/ember/-/ember-3.0.28.tgz#62002c34187256f7d6bf5d1245c94fbd27f7a7b0"
+  integrity sha512-1loc3Za0/8yPJWS7GxSOQL6C2wBTMGOP+srNRJWJb8L5yOikSIlmd7Rg5RYNNDN7mv7nfws5yq4JAP4HhY3ASw==
   dependencies:
     "@types/ember__application" "*"
     "@types/ember__array" "*"
@@ -773,7 +773,6 @@
     "@types/ember__string" "*"
     "@types/ember__test" "*"
     "@types/ember__utils" "*"
-    "@types/handlebars" "*"
     "@types/htmlbars-inline-precompile" "*"
     "@types/jquery" "*"
     "@types/rsvp" "*"
@@ -922,8 +921,8 @@
   dependencies:
     "@types/node" "*"
 
-"@types/handlebars@*", "@types/handlebars@npm:handlebars@^4.1.0", handlebars@^4.0.11, handlebars@^4.0.4, handlebars@^4.1.0:
-  name "handlebars"
+"@types/handlebars@*", handlebars@^4.0.11, handlebars@^4.0.4, handlebars@^4.1.0:
+  name handlebars
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
   integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
