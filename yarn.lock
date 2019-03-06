@@ -871,12 +871,10 @@
   dependencies:
     "@types/ember__object" "*"
 
-"@types/ember__string@*":
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/@types/ember__string/-/ember__string-3.0.5.tgz#b3b2dc872ffd6f49ac564061a9796ca8cc9ff7ca"
-  integrity sha512-pquqP3jbPsfNQ9dnJK2azOr9SSY6z0Fy2f21uuEYXmW+/1fQev/Vt55ij2PCf23AHAFBnUzhJe3sO96umHO3Xg==
-  dependencies:
-    "@types/handlebars" "*"
+"@types/ember__string@*", "@types/ember__string@3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/ember__string/-/ember__string-3.0.6.tgz#79b10b0fc0136a9c86536bc55cbd18cae9a9bd3b"
+  integrity sha512-VBKH8nR/uK2tlr9eob8Nl+0cKP62GNtFWqq4PVGusnBMPFktGley1gsUhqNYJ9G3y2mvVfikicxM2/bE5AMYLA==
 
 "@types/ember__test@*":
   version "3.0.4"
@@ -920,18 +918,6 @@
   integrity sha512-w7iqhDH9mN8eLClQOYTkhdYUOSpp25eXxfc6VbFOGtzxW34JcvctH2bKjj4jD4++z4R5iO5D+pg48W2e03I65A==
   dependencies:
     "@types/node" "*"
-
-"@types/handlebars@*", handlebars@^4.0.11, handlebars@^4.0.4, handlebars@^4.1.0:
-  name handlebars
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
-  integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
-  dependencies:
-    async "^2.5.0"
-    optimist "^0.6.1"
-    source-map "^0.6.1"
-  optionalDependencies:
-    uglify-js "^3.1.4"
 
 "@types/htmlbars-inline-precompile@*":
   version "1.0.1"
@@ -5496,6 +5482,17 @@ growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
+
+handlebars@^4.0.11, handlebars@^4.0.4, handlebars@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
+  integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
+  dependencies:
+    async "^2.5.0"
+    optimist "^0.6.1"
+    source-map "^0.6.1"
+  optionalDependencies:
+    uglify-js "^3.1.4"
 
 har-schema@^1.0.5:
   version "1.0.5"

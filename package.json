@@ -111,7 +111,8 @@
     "typescript-eslint-parser": "21.0.2"
   },
   "resolutions": {
-    "@types/ember": "3.0.28"
+    "@types/ember": "3.0.28",
+    "@types/ember__string": "3.0.6"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
