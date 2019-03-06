@@ -5483,7 +5483,7 @@ growly@^1.3.0:
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
   integrity sha1-8QdIy+dq+WS3yWyTxrzCivEgwIE=
 
-handlebars@^4.0.11, handlebars@^4.0.4, handlebars@^4.1.0:
+handlebars@4.1.0, handlebars@^4.0.11, handlebars@^4.0.4:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/handlebars/-/handlebars-4.1.0.tgz#0d6a6f34ff1f63cecec8423aa4169827bf787c3a"
   integrity sha512-l2jRuU1NAWK6AW5qqcTATWQJvNPEwkM7NEKSiv/gqOsoSQbVoWyqVEY5GS+XPQ88zLNmqASRpzfdm8d79hJS+w==
@@ -5807,11 +5807,9 @@ imurmurhash@^0.1.4:
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
   version "0.0.0"
-  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
   version "0.0.0"
-  uid ""
 
 indent-string@^2.1.0:
   version "2.1.0"
