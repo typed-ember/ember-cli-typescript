@@ -9764,7 +9764,17 @@ terser@^3.7.5:
     source-map "~0.6.1"
     source-map-support "~0.5.9"
 
-testdouble@3.10.0, testdouble@^3.2.6:
+testdouble@3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.11.0.tgz#17d3c3afa21acd2e8144c86f8a0708d49a81a695"
+  integrity sha512-hmF04fDUiTHy8yVQx6mucpOeyH5qElb3UtMos4xWZtJR2MsS/nzLEN+5wQ4QiGS4TV1X32eMSzLgh53uKg9ufA==
+  dependencies:
+    lodash "^4.17.11"
+    quibble "^0.5.5"
+    stringify-object-es5 "^2.5.0"
+    theredoc "^1.0.0"
+
+testdouble@^3.2.6:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.10.0.tgz#5bb0149da39d3d5afc085dbea9bc5e45d0c1470f"
   integrity sha512-rg8OUI+1TVoDPytrGvkN8FPuhtLorkxBdc1MAcDTEeo8C8IZYRUIMus9QNo5W1HbHAlJu8JXHDsYi2IJPTOI0A==
