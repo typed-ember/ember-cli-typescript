@@ -102,7 +102,7 @@
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "loader.js": "4.7.0",
     "mktemp": "0.4.0",
-    "mocha": "5.2.0",
+    "mocha": "6.0.2",
     "qunit-dom": "0.8.4",
     "rimraf": "2.6.3",
     "testdouble": "3.11.0",
