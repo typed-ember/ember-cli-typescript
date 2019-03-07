@@ -4,52 +4,64 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 [![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
-## :construction: v2 Release Candidate :construction:
-
-This is a work-in-progress document for the v2 release (Soon™!) – in the meantime, if you need to see documentation for the 1.x, please refer to the README for earlier releases:
-
-- [1.5.0](https://github.com/typed-ember/ember-cli-typescript/blob/v1.5.0/README.md)
-- [1.4.4](https://github.com/typed-ember/ember-cli-typescript/blob/v1.4.4/README.md)
-- [1.3.4](https://github.com/typed-ember/ember-cli-typescript/blob/v1.3.4/README.md)
-- [1.2.2](https://github.com/typed-ember/ember-cli-typescript/blob/v1.2.2/README.md)
-
 ## Contents of this README
 
+- [Usage](#usage)
+    - [Upgrading from 1.x](#upgrading-from-1.x)
+- [Documentation](#documentation)
 - [Getting Help](#getting-help)
-- [Setup and Configuration](#setup-and-configuration)
-  - [Supported Ember & TypeScript Versions](#supported-ember-and-typescript-versions)
-  - [`tsconfig.json`](#tsconfigjson)
-  - [Sourcemaps](#sourcemaps)
-- [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
-  - [Incremental adoption](#incremental-adoption)
-  - [Install other types!](#install-other-types)
-  - [The `types` directory](#the-types-directory)
-    - [Global types for your package](#global-types-for-your-package)
-    - [Environment configuration typings](#environment-configuration-typings)
-  - [String-keyed lookups](#string-keyed-lookups)
-    - [`this` type workaround](#this-type-workaround)
-    - [Nested keys in `get` or `set`](#nested-keys-in-get-or-set)
-    - [Service and controller injections](#service-and-controller-injections)
-      - [Using `.extend`](#using-extend)
-      - [Using decorators](#using-decorators)
-    - [Ember Data lookups](#ember-data-lookups)
-      - [Opt-in unsafety](#opt-in-unsafety)
-      - [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
-  - [Class property setup errors](#class-property-setup-errors)
-  - [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
-  - [ember-cli-mirage](#ember-cli-mirage)
-  - ["TypeScript is complaining about multiple copies of the same types"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
-    - [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
-    - [Why is this happening?](#why-is-this-happening)
-- [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
-  - [Publishing](#publishing)
-  - [Linking Addons](#linking-addons)
-  - [In-Repo Addons](#in-repo-addons)
-  - [Gotchas](#gotchas)
-- [Installing from git](#installing-from-git)
-- [Current limitations](#current-limitations)
-  - [Some `import`s don't resolve](#some-imports-dont-resolve)
-  - [Type safety when invoking actions](#type-safety-when-invoking-actions)
+    - [💬 Getting Started](#-getting-started)
+    - [📚 Issues With Ember Type Definitions](#-issues-with-ember-type-definitions)
+    - [⚙️ Issues With Adding TypeScript Support To Apps and Addons](#️-issues-with-adding-typescript-support-to-apps-and-addons)
+    - [✅ Issues With Linting TypeScript](#-issues-with-linting-typescript)
+        - [Example:](#example)
+
+## Usage
+
+***Note:* Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!**
+
+- **In apps:**
+
+    ```sh
+    ember install ember-cli-typescript@latest
+    ```
+
+- **In addons:**
+
+    To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. You can `ember install` it by running:
+
+    ```sh
+    ember install ember-cli-typescript@latest --save
+    ```
+
+Additionally, you must be using ember-cli-babel at version 7.1.0 or above (which requires ember-cli 2.13 or above). Once your ember app is running with the cli at 2.13 or higher, you may upgrade ember-cli-babel via:
+
+```sh
+ember install ember-cli-babel@^7.1.0
+```
+
+Note: If you are also using ember-decorators (specifically the babel-transform that gets added with it), you will need update @ember-decorators/babel-transforms as well. Anything over 3.1.0 should work
+
+```
+ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
+```
+
+All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
+
+### Upgrading from 1.x
+
+<!-- TODO: WRITE ME! -->
+
+## Documentation
+
+For more details, see [the documentation](https://typed-ember.github.io/ember-cli-typescript/), which includes:
+
+- troubleshooting tips
+- a walkthrough for using TypeScript with Ember effectively
+- guides for publishing addons written in TypeScript
+- more details on how the addon sets up your project during installation
+
+…and much more!
 
 ## Getting Help
 
@@ -57,7 +69,7 @@ When seeking help, you should first consider what you need, and which aspect of 
 
 ### 💬 Getting Started
 
-We have a channel (#e-typescript) on the [Ember Community Discord server](https://discordapp.com/invite/zT3asNS) where you can ask about getting started, good resources for self-directed learning and more.
+We have a channel (**`#e-typescript`**) on the [Ember Community Discord server](https://discordapp.com/invite/zT3asNS) where you can ask about getting started, good resources for self-directed learning and more.
 
 ### 📚 Issues With Ember Type Definitions
 
@@ -71,11 +83,11 @@ If you run into a problem with the way TypeScript is compiled in Ember apps (i.e
 
 If you don't find an answer, please [open an enhancement request or bug report in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose).
 
-### ✅ Issues With Static Analysis of TypeScript In Ember Apps and Addons
+### ✅ Issues With Linting TypeScript
 
-The TypeScript compiler does some very basic static analysis of your code, and most developers use Palantir's TSLint tool for more thorough checking.
+The TypeScript compiler does some very basic linting of your code, but most developers use (and Microsoft now officially recommends) ESLint.
 
-One sure way to tell which tool is generating an error message is that _Linters like [TSLint](https://github.com/palantir/tslint/) and [ESLint](https://eslint.org/) will always mention their name, and the name of the pertinent rule, when it alerts you to a violation_.
+One sure way to tell which tool is generating an error message is that _Linters like [ESLint](https://eslint.org/) or [TSLint](https://github.com/palantir/tslint/) will always mention their name, and the name of the pertinent rule, when it alerts you to a violation_.
 
 ##### Example:
 
@@ -87,70 +99,53 @@ One sure way to tell which tool is generating an error message is that _Linters 
 
 For issues relating to typescript compiler analysis, [create an issue in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new). If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
 
-## Setup and Configuration
+## Contents of this README
 
-To install or upgrade the addon, just run:
-
-```
-ember install ember-cli-typescript@next
-```
-
-To work properly, ember addons must declare this library as a `dependency`, not a `devDependency`. You can "ember install" it by running 
-
-```
-ember install ember-cli-typescript@next --save
-```
-
-Additionally, you must be using ember-cli-babel at version 7.1.0 or above (which requires ember-cli 2.13 or above). Once your ember app is running with the cli at 2.13 or higher, you may upgrade ember-cli-babel via
-
-```
-ember install ember-cli-babel@^7.1.0
-```
-
-Note: If you are also using ember-decorators (specifically the babel-transform that gets added with it), you will need update @ember-decorators/babel-transforms as well. Anything over 3.1.0 should work
-
-```
-ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
-```
-
-All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
-
-In addition to ember-cli-typescript, we make the following changes to your project:
-
-### Other Packages This Addon Installs
-
-- We install the following packages—all at their current "latest" value—or generated:
-
-  - [`typescript`](https://github.com/Microsoft/TypeScript)
-  - **@types/ember** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js) which includes
-    - **@types/ember\_\_string** ([npm](https://www.npmjs.com/package/@types/ember__string) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__string)) - types for the [`@ember/string` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fstring)
-    - **@types/ember\_\_object** ([npm](https://www.npmjs.com/package/@types/ember__object) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__object)) - types for the [`@ember/object` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fobject)
-    - **@types/ember\_\_utils** ([npm](https://www.npmjs.com/package/@types/ember__utils) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__utils)) - types for the [`@ember/utils` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Futils)
-    - **@types/ember\_\_array** ([npm](https://www.npmjs.com/package/@types/ember__array) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__array)) - types for the [`@ember/array` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Farray)
-    - **@types/ember\_\_component** ([npm](https://www.npmjs.com/package/@types/ember__component) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__component)) - types for the [`@ember/component` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcomponent)
-    - **@types/ember\_\_engine** ([npm](https://www.npmjs.com/package/@types/ember__engine) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__engine)) - types for the [`@ember/engine` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fengine)
-    - **@types/ember\_\_application** ([npm](https://www.npmjs.com/package/@types/ember__application) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__application)) - types for the [`@ember/application` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fapplication)
-    - **@types/ember\_\_controller** ([npm](https://www.npmjs.com/package/@types/ember__controller) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__controller)) - types for the [`@ember/controller` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fcontroller)
-    - **@types/ember\_\_service** ([npm](https://www.npmjs.com/package/@types/ember__service) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__service)) - types for the [`@ember/service` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fservice)
-    - **@types/ember\_\_runloop** ([npm](https://www.npmjs.com/package/@types/ember__runloop) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__runloop)) - types for the [`@ember/runloop` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frunloop)
-    - **@types/ember\_\_error** ([npm](https://www.npmjs.com/package/@types/ember__error) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__error)) - types for the [`@ember/error` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ferror)
-    - **@types/ember\_\_polyfills** ([npm](https://www.npmjs.com/package/@types/ember__polyfills) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__polyfills)) - types for the [`@ember/polyfills` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fpolyfills)
-    - **@types/ember\_\_debug** ([npm](https://www.npmjs.com/package/@types/ember__debug) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__debug)) - types for the [`@ember/debug` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fdebug)
-    - **@types/ember\_\_test** ([npm](https://www.npmjs.com/package/@types/ember__test) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test)) - types for the [`@ember/test` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Ftest)
-    - **@types/ember\_\_routing** ([npm](https://www.npmjs.com/package/@types/ember__routing) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__routing)) - types for the [`@ember/routing` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Frouting)
-  - **@types/ember-data** - ([npm](https://www.npmjs.com/package/@types/ember-data) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-data)) - Types for [Ember-Data](https://github.com/emberjs/data)
-  - **@types/rsvp** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
-  - **@types/ember-test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-test-helpers)) Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers), which arose from [RFC #232](https://github.com/emberjs/rfcs/blob/master/text/0232-simplify-qunit-testing-api.md)
-  - **@types/ember-testing-helpers** - ([npm](https://www.npmjs.com/package/@types/ember-testing-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember-testing-helpers)) – Types for [Ember's built-in globally-available test helpers](https://github.com/emberjs/ember.js/tree/master/packages/ember-testing/lib/helpers)
-  - **@types/ember\_\_test-helpers** - ([npm](https://www.npmjs.com/package/@types/ember__test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test-helpers)) – Types for [ember-test-helpers](https://github.com/emberjs/ember-test-helpers) when imported as `@ember/test-helpers`.
-
-### Files this addon Generates
-
-- We add the following files to your project:
-
-  - [`tsconfig.json`](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
-  - `types/<app name>/index.d.ts` – the location for any global type declarations you need to write for you own application; see [Global types for your package](#global-types-for-your-package) for information on its default contents and how to use it effectively
-  - `app/config/environment.d.ts` – a basic set of types defined for the contents of the `config/environment.js` file in your app; see [Environment and configuration typings](#environment-and-configuration-typings) for details
+- [ember-cli-typescript](#ember-cli-typescript)
+  - [Contents of this README](#contents-of-this-readme)
+  - [Usage](#usage)
+    - [Upgrading from 1.x](#upgrading-from-1x)
+  - [Documentation](#documentation)
+  - [Getting Help](#getting-help)
+    - [💬 Getting Started](#-getting-started)
+    - [📚 Issues With Ember Type Definitions](#-issues-with-ember-type-definitions)
+    - [⚙️ Issues With Adding TypeScript Support To Apps and Addons](#️-issues-with-adding-typescript-support-to-apps-and-addons)
+    - [✅ Issues With Linting TypeScript](#-issues-with-linting-typescript)
+        - [Example:](#example)
+  - [Contents of this README](#contents-of-this-readme-1)
+    - [Supported Ember and TypeScript versions](#supported-ember-and-typescript-versions)
+    - [`tsconfig.json`](#tsconfigjson)
+    - [Sourcemaps](#sourcemaps)
+  - [Using TypeScript with Ember effectively](#using-typescript-with-ember-effectively)
+    - [Incremental adoption](#incremental-adoption)
+    - [Install other types!](#install-other-types)
+    - [The `types` directory](#the-types-directory)
+      - [Global types for your package](#global-types-for-your-package)
+      - [Environment configuration typings](#environment-configuration-typings)
+    - [String-keyed lookups](#string-keyed-lookups)
+      - [`this` type workaround](#this-type-workaround)
+      - [Nested keys in `get` or `set`](#nested-keys-in-get-or-set)
+      - [Service and controller injections](#service-and-controller-injections)
+        - [Using `.extend`](#using-extend)
+        - [Using decorators](#using-decorators)
+      - [Ember Data lookups](#ember-data-lookups)
+        - [Opt-in unsafety](#opt-in-unsafety)
+        - [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
+      - [Class property setup errors](#class-property-setup-errors)
+    - [Type definitions outside `node_modules/@types`](#type-definitions-outside-node_modulestypes)
+    - [ember-cli-mirage](#ember-cli-mirage)
+    - ["TypeScript is complaining about multiple copies of the same types!"](#typescript-is-complaining-about-multiple-copies-of-the-same-types)
+      - [Just tell me how to fix it](#just-tell-me-how-to-fix-it)
+      - [Why is this happening?](#why-is-this-happening)
+  - [Using ember-cli-typescript with Ember CLI addons](#using-ember-cli-typescript-with-ember-cli-addons)
+    - [Publishing](#publishing)
+    - [Linking Addons](#linking-addons)
+    - [In-Repo Addons](#in-repo-addons)
+    - [Gotchas](#gotchas)
+  - [Installing from git](#installing-from-git)
+  - [Current limitations](#current-limitations)
+    - [Some `import`s don't resolve](#some-imports-dont-resolve)
+    - [Type safety when invoking actions](#type-safety-when-invoking-actions)
 
 ### Supported Ember and TypeScript versions
 
