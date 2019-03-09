@@ -95,7 +95,7 @@
     "eslint-plugin-ember": "6.2.0",
     "eslint-plugin-node": "8.0.1",
     "esprima": "4.0.1",
-    "fixturify": "0.3.4",
+    "fixturify": "1.0.1",
     "got": "8.3.2",
     "handlebars": "4.1.0",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
