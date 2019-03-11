@@ -22,7 +22,7 @@ Templates are currently totally non-type-checked. This means that you lose any s
 
 Addons need to import templates from the associated `.hbs` file to bind to the layout of any components they export. The TypeScript compiler will report that it cannot resolve the module, since it does not know how to resolve files ending in `.hbs`. To resolve this, you can provide this set of definitions to `my-addon/types/my-addon.d.ts`, which will allow the import to succeed:
 
-```ts
+{{#docs-snippet name='my-addon.d.ts' title='my-addon/types/my-addon.d.ts' showCopy=true language='ts'}}
 declare module '*/template' {
   import { TemplateFactory } from 'htmlbars-inline-precompile';
 
@@ -43,13 +43,13 @@ declare module 'addon/templates/*' {
   const template: TemplateFactory;
   export default template;
 }
-```
+{{/docs-snippet}}
 
 ### Type safety when invoking actions
 
 TypeScript won't detect a mismatch between this action and the corresponding call in the template:
 
-```typescript
+{{#docs-snippet name='my-game.ts' title='my-app/components/my-game.ts' showCopy=false language='ts'}}
 import Component from '@ember/component';
 import { action } from '@ember-decorators/object';
 
@@ -59,15 +59,15 @@ export default class MyGame extends Component {
     // ...
   }
 }
-```
+{{/docs-snippet}}
 
-```htmlbars
+{{#docs-snippet name='my-game.hbs' title='my-app/templates/components/my-game.hbs' showCopy=false language='htmlbars'}}
 <button onclick={{action 'turnWheel' 'NOT-A-NUMBER'}}>Click Me</button>
-```
+{{/docs-snippet}}
 
 Likewise, it won't notice a problem when you use the `send` method:
 
-```typescript
+{{#docs-snippet name='nested-component.ts' title='my-app/components/nested-component.ts' showCopy=false language='ts'}}
 // TypeScript compiler won't detect this type mismatch
 this.send('turnWheel', 'ALSO-NOT-A-NUMBER');
-```
+{{/docs-snippet}}
