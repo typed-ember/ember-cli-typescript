@@ -1,4 +1,4 @@
-## Using ember-cli-typescript with Ember CLI addons
+## Building Addons in TypeScript
 
 During development, your `.ts` files will be watched and rebuilt just like any other sources in your addon when you run `ember serve`, `ember test`, etc.
 
