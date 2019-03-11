@@ -1,9 +1,9 @@
-<DocsHeader @prefix='Ember CLI' />
+<DocsHeader @prefix='Ember CLI' @name='TypeScript' />
 
 {{#docs-viewer as |viewer|}}
   {{#viewer.nav as |nav|}}
     {{nav.section 'Introduction'}}
-    {{nav.item 'Installation' 'docs.install-notes'}}
+    {{nav.item 'Installation' 'docs.index'}}
     {{nav.item 'Upgrading from 1.x' 'docs.upgrade-notes'}}
     {{nav.item 'Configuration' 'docs.configuration'}}
 
@@ -13,7 +13,7 @@
     {{nav.item 'Current Limitations' 'docs.ts-guide.current-limitations'}}
   {{/viewer.nav}}
 
-  {{#viewer.main}}
+  <viewer.main>
     {{outlet}}
-  {{/viewer.main}}
+  </viewer.main>
 {{/docs-viewer}}

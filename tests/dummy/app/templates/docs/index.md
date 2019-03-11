@@ -1,6 +1,6 @@
 # Installation
 
-***Note:* Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!**
+_**Note:** Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!_
 
 ## In apps
 

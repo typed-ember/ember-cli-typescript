@@ -8,7 +8,6 @@ const Router = AddonDocsRouter.extend({
 
 Router.map(function() {
   docsRoute(this, function() {
-    this.route('install-notes');
     this.route('upgrade-notes');
     this.route('configuration');
     this.route('ts-guide', function() {
