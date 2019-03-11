@@ -22,19 +22,21 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 ***Note:* Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!**
 
-- **In apps:**
+#### In apps
 
-    ```sh
-    ember install ember-cli-typescript@latest
-    ```
+In apps, you can simply `ember install` the dependency like normal:
 
-- **In addons:**
+```sh
+ember install ember-cli-typescript@latest
+```
 
-    To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. You can `ember install` it by running:
+#### In addons
 
-    ```sh
-    ember install ember-cli-typescript@latest --save
-    ```
+To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. You can `ember install` it by running:
+
+```sh
+ember install ember-cli-typescript@latest --save
+```
 
 All dependencies will be added to your `package.json`, and you're ready to roll! **If you're upgrading from a previous release, see below!** you should check to merge any tweaks you've made to `tsconfig.json`.
 
@@ -88,17 +90,74 @@ Follow the same process of deduplication, reinstallation, and re-deduplication a
 
 #### Update ember-cli-typescript
 
-<!-- TODO: ADD THIS STEP YO -->
+***Note:* Because ember-cli-typescript is part of the build pipeline, the process for updating it differs slightly between apps and addons!**
 
-##### Addon-specific changes
+##### In apps
 
-In addition to the above steps, **addons must move `ember-cli-typescript` from `devDependencies` to `dependencies` in their `package.json`.**
+In apps, you can simply `ember install` the dependency like normal:
 
-ember-cli-typescript v2 uses Babel to compile your code, and the TypeScript compiler only to *check* your code. This makes for much faster builds, and eliminates the differences between Babel and TypeScript in the build output that could cause problems in v1. However, because of those differences, you’ll need to make a few changes in the process of upgrading:
+```sh
+ember install ember-cli-typescript@latest
+```
 
-- `const enum` is not supported at all. You will need to 
-- using ES5 getters or settings with `this` type annotations is not supported through at least Babel 7.3 (but should also be unnecessary)
-- <!-- TODO: elaborate! -->
+##### In addons
+
+To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. **This is a *change* from ember-cli-typescript v1.**
+
+1. Remove ember-cli-typescript from your dependencies.
+
+    With yarn:
+    
+    ```sh
+    yarn remove ember-cli-typescript 
+    ```
+
+    With npm:
+    
+    ```sh
+    npm uninstall ember-cli-typescript
+    ```
+
+2. Re-install it with `ember install`:
+
+    ```sh
+    ember install ember-cli-typescript@latest --save
+    ```
+
+##### Account for addon build pipeline changes
+
+Since we now integrate in a more traditional way into Ember CLI's build pipeline, there are two changes required for addons using TypeScript.
+
+- Addons can no longer use `.ts` in `app`, because an addon's `app` directory gets merged with and uses the *host's* (i.e. the other addon or app's) preprocessors, and we cannot guarantee the host has TS support. Note that `.ts` will continue to work for in-repo addons because the app build works with the host's (i.e. the app's, not the addon's) preprocessors.
+
+- Similarly, apps must use `.js` to override addon defaults in `app`, since the different file extension means apps no long consistently "win" over addon versions (a limitation of how Babel + app merging interact).
+
+##### Fix TS → Babel issues
+
+ember-cli-typescript v2 uses Babel to compile your code, and the TypeScript compiler only to *check* your code. This makes for much faster builds, and eliminates the differences between Babel and TypeScript in the build output that could cause problems in v1. However, because of those differences, you’ll need to make a few changes in the process of upgrading.
+
+- `const enum` is not supported at all. You will need to replace all uses of `const enum` with simply `enum` or constants.
+
+- Using ES5 getters or settings with `this` type annotations is not supported through at least Babel 7.3. However, they should also be unnecessary with ES6 classes, so you can simply *remove* the `this` type annotation.
+
+- Trailing commas after rest function parameters (`function foo(...bar[],) {}`) are disallowed by the ECMAScript spec, so Babel also disallows them.
+
+- Re-exports of types have to be disambiguated to be *types*, rather than values. Neither of these will work:
+
+  ```ts
+  export { FooType } from 'foo';
+  ```
+  ```ts
+  import { FooType } from 'foo';
+  export { FooType };
+  ```
+
+  In both cases, Babel attempts to emit a *value* export, not just a *type* export, and fails because there is no actual value to emit. You can do this instead as a workaround:
+
+  ```ts
+  import * as Foo from 'foo';
+  export type FooType = Foo.FooType;
+  ```
 
 ## Documentation
 
@@ -152,7 +211,13 @@ For issues relating to typescript compiler analysis, [create an issue in this pr
 - [ember-cli-typescript](#ember-cli-typescript)
   - [Contents of this README](#contents-of-this-readme)
   - [Usage](#usage)
+    - [Installation and Setup](#installation-and-setup)
     - [Upgrading from 1.x](#upgrading-from-1x)
+      - [Order of operations](#order-of-operations)
+      - [Update ember-cli-babel](#update-ember-cli-babel)
+      - [Update ember-decorators](#update-ember-decorators)
+      - [Update ember-cli-typescript](#update-ember-cli-typescript)
+        - [Addon-specific changes](#addon-specific-changes)
   - [Documentation](#documentation)
   - [Getting Help](#getting-help)
     - [💬 Getting Started](#-getting-started)
@@ -176,6 +241,7 @@ For issues relating to typescript compiler analysis, [create an issue in this pr
       - [Service and controller injections](#service-and-controller-injections)
         - [Using `.extend`](#using-extend)
         - [Using decorators](#using-decorators)
+      - [Typing uninitialized properties](#typing-uninitialized-properties)
       - [Ember Data lookups](#ember-data-lookups)
         - [Opt-in unsafety](#opt-in-unsafety)
         - [Fixing the Ember Data `error TS2344` problem](#fixing-the-ember-data-error-ts2344-problem)
