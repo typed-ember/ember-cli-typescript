@@ -18,6 +18,8 @@ Use TypeScript in your Ember 2.x and 3.x apps!
 
 ## Usage
 
+### Installation and Setup
+
 ***Note:* Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!**
 
 - **In apps:**
@@ -34,23 +36,69 @@ Use TypeScript in your Ember 2.x and 3.x apps!
     ember install ember-cli-typescript@latest --save
     ```
 
-Additionally, you must be using ember-cli-babel at version 7.1.0 or above (which requires ember-cli 2.13 or above). Once your ember app is running with the cli at 2.13 or higher, you may upgrade ember-cli-babel via:
+All dependencies will be added to your `package.json`, and you're ready to roll! **If you're upgrading from a previous release, see below!** you should check to merge any tweaks you've made to `tsconfig.json`.
 
-```sh
-ember install ember-cli-babel@^7.1.0
+### Upgrading from 1.x
+
+There are a number of important changes between ember-cli-typescript v1 and v2!
+
+#### Order of operations
+
+The most successful path to upgrade from an older version of ember-cli-typescript is:
+
+1. Update ember-cli-babel. Fix any problems introduced during the upgrade.
+2. Update ember-decorators. Fix any problems introduced during the upgrade.
+3. Update ember-cli-typescript. Follow the detailed upgrade guide below to fix discrepancies between Babel and TypeScript's compiled output.
+
+If you deviate from this order, you are likely to have a *much* more difficult time upgrading!
+
+#### Update ember-cli-babel
+
+ember-cli-typescript **requires** ember-cli-babel at version 7.1.0 or above, which requires ember-cli 2.13 or above. It also **requires** @babel/core 7.2.0 or higher.
+
+The recommended approach here is to deduplicate existing installations of the dependency, remove and reinstall ember-cli-babel to make sure that all its transitive dependencies are updated to the latest possible, and then to deduplicate *again*.
+
+If using yarn:
+    
+```
+npx yarn-deduplicate
+yarn remove ember-cli-babel
+yarn add --dev ember-cli-babel
+npx yarn-deduplicate
 ```
 
-Note: If you are also using ember-decorators (specifically the babel-transform that gets added with it), you will need update @ember-decorators/babel-transforms as well. Anything over 3.1.0 should work
+If using npm:
+      
+```
+npm dedupe
+npm uninstall ember-cli-babel
+npm install --save-dev ember-cli-babel
+npm dedupe
+```
+
+Note: If you are also using ember-decorators—and specifically the babel-transform that gets added with it—you will need update @ember-decorators/babel-transforms as well (anything over 3.1.0 should work):
 
 ```
 ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
 ```
 
-All dependencies will be added to your `package.json`, and you're ready to roll! If you're upgrading from a previous release, you should check to merge any tweaks you've made to `tsconfig.json`.
+#### Update ember-decorators
 
-### Upgrading from 1.x
+Follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms transitive dependency.
 
-<!-- TODO: WRITE ME! -->
+#### Update ember-cli-typescript
+
+<!-- TODO: ADD THIS STEP YO -->
+
+##### Addon-specific changes
+
+In addition to the above steps, **addons must move `ember-cli-typescript` from `devDependencies` to `dependencies` in their `package.json`.**
+
+ember-cli-typescript v2 uses Babel to compile your code, and the TypeScript compiler only to *check* your code. This makes for much faster builds, and eliminates the differences between Babel and TypeScript in the build output that could cause problems in v1. However, because of those differences, you’ll need to make a few changes in the process of upgrading:
+
+- `const enum` is not supported at all. You will need to 
+- using ES5 getters or settings with `this` type annotations is not supported through at least Babel 7.3 (but should also be unnecessary)
+- <!-- TODO: elaborate! -->
 
 ## Documentation
 
