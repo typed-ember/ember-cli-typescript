@@ -147,7 +147,7 @@ module.exports = {
       ]);
     }
 
-    if (this._has('ember-cli-mocha')) {
+    if (this._has('ember-cli-mocha') || this._has('ember-mocha')) {
       packages = packages.concat([
         { name: '@types/ember-mocha', target: 'latest' },
         { name: '@types/mocha', target: 'latest' },
