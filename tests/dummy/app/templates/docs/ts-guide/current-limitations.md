@@ -21,17 +21,19 @@ Writing these missing type definitions is a great way to pitch in! Jump in `#e-t
 TypeScript won't detect a mismatch between this action and the corresponding call in the template:
 
 ```typescript
-Ember.Component.extend({
-  actions: {
-    turnWheel(degrees: number) {
-      // ...
-    },
-  },
-});
+import Component from '@ember/component';
+import { action } from '@ember-decorators/object';
+
+export default class MyGame extends Component {
+  @action
+  turnWheel(degrees: number) {
+    // ...
+  }
+}
 ```
 
-```hbs
-<button onclick={{action 'turnWheel' 'NOT-A-NUMBER'}}> Click Me </button>
+```htmlbars
+<button onclick={{action 'turnWheel' 'NOT-A-NUMBER'}}>Click Me</button>
 ```
 
 Likewise, it won't notice a problem when you use the `send` method:
