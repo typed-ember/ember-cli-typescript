@@ -1,6 +1,6 @@
 ## Why TypeScript?
 
-<aside>Just want to dive in? {{docs-link 'Click here' 'docs.index'}}.</aside>
+<aside>Just want to dive in? {{docs-link (html-safe 'Click here &rarr;') 'docs.index'}}</aside>
 
 What is TypeScript, and why should you adopt it?
 
