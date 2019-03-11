@@ -1,0 +1,16 @@
+<DocsHeader @prefix='Ember CLI' />
+
+{{#docs-viewer as |viewer|}}
+  {{#viewer.nav as |nav|}}
+    {{nav.section 'Introduction'}}
+    {{nav.item 'Installation' 'docs.install-notes'}}
+    {{nav.item 'Configuration' 'docs.configuration'}}
+
+    {{nav.section 'Using TypeScript with Ember'}}
+    {{nav.item 'Using TypeScript Effectively' 'docs.ts-guide.using-ts-effectively'}}
+  {{/viewer.nav}}
+
+  {{#viewer.main}}
+    {{outlet}}
+  {{/viewer.main}}
+{{/docs-viewer}}

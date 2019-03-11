@@ -134,17 +134,7 @@ The workaround is simply to do one of two things:
 
 Ember does service and controller lookups with the `inject` functions at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way.
 
-This means that if you do things the normal Ember way, you will have to specify the type of your service or controller explicitly everywhere you use it. But… where should we put that? If we try to set it up as a [class property], we'll get an error as of Ember 3.1 (and it only accidentally works before that): computed properties and injections must be installed on the prototype.
-
-[class property]: https://basarat.gitbooks.io/typescript/docs/classes.html#property-initializer
-
-There are two basic approaches we can take. The first uses the `.extend` method in conjunction with class definitions to make sure the injections are set up correctly; the second leans on the still-experimental [Ember Decorators][decorators] project to let us do everything in the class body while still getting the niceties of ES6 classes. The decorators approach is much nicer, and likely to eventually become the standard across Ember in general assuming the decorators spec stabilizes. For today, however, it's an opt-in rather than the default because it remains an experimental extension to the JavaScript standard.
-
-[decorators]: https://github.com/ember-decorators/ember-decorators
-
-##### Using `.extend`
-
-The officially supported method for injections uses a combination of class body and traditional `EmberObject.extend` functionality. We generate a service like normal by running `ember generate service my-session`. The resulting definition will look like this:
+The officially supported method for injections with TypeScritp uses *decorators*, from the ember-decorators package (and soon in Ember itself).
 
 ```ts
 // my-app/services/my-session.ts
@@ -164,79 +154,37 @@ declare module '@ember/service' {
 }
 ```
 
-You'll need to add that module and interface declaration to all your existing service and controller declarations for this to work (again, see the [blog post][pt4] for further details), but once you do that, you'll have this much nicer experience throughout! It's not quite vanilla Ember.js, but it's close—and this way, you still get all those type-checking and auto-completion benefits, but with a lot less noise! Moreover, you actually get a significant benefit over "vanilla" Ember: we type-check that you typed the key correctly in the `service` invocation.
-
-Then we can use the service as usual:
+Then we can use the service as we usually would with a decorator, but adding a type annotation to it so TypeScript knows what it's looking at:
 
 ```ts
 // my-app/components/user-profile.ts
 import Component from '@ember/component';
-import { inject as service } from '@ember/service';
+import { service } from '@ember-decorators/service';
 
-export default class UserProfile extends Component.extend({
-  mySession: service('my-session'),
-}) {
+import MySession from 'my-app/services/my-session';
+
+export default class UserProfile extends Component {
+  @service mySession!: MySession;
+
   login(email: string, password: string) {
     this.session.login(email, password);
   }
 }
 ```
 
-Notice that the type of `mySession` will be the `MySession` type here: TypeScript is using the "registry" set up in the last lines of the `my-session` module to look up the type by its name. If we had written just `service()` instead, Ember would have resolved the correct type at runtime as usual, but TypeScript would not be able to tell _which_ service we had, only that it was a `Service`. In that case, the `this.session` would not have a `login` property from TS's perspective, and this would fail to type-check. That extra string gives TS the information it needs to resolve the type and give us auto-completion, type-checking, etc.
+Note that we need the `MySession` type annotation this way, but we _don't_ need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
 
-(In Ember 3.0 or earlier, we would have `this.get('session').login(email, password);` instead.)
-
-Although this may look a little strange, everything works correctly. We can use other ES6 class functionality and behaviors (including class properties) as normal; it is just the special Ember pieces which have to be set up on the prototype like this: injections, computed properties, and the `actions` hash.
-
-##### Using decorators
-
-The alternative here is to use [Ember Decorators][decorators]. In that case, we'd have precisely the same definition for our `MySession` service, but a much cleaner implementation in the component class:
-
-```ts
-// my-app/components/user-profile.ts
-import Component from '@ember/component';
-import { service } from '@ember-decorators/service';
-import MySession from 'my-app/services/my-session';
-
-export default class UserProfile extends Component {
-  @service
-  mySession!: MySession;
-
-  login(this: UserProfile, email: string, password: string) {
-    this.session.login(email, password);
-  }
-}
-```
-
-Note that we need the `MySession` type annotation this way, but we _don't_ need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators (as of TS 2.8 – 3.0) are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
-
-Also use the [`!` non-null assertion operator](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator) to prevent [`TS2564`](https://github.com/kaorun343/vue-property-decorator/issues/81), that is caused by enabling `strictPropertyInitialization` in `tsconfig.json`.
-
-If you're on an Ember version below 3.1, you'll want to wrap your service type in [`ComputedProperty`](https://www.emberjs.com/api/ember/release/classes/ComputedProperty), because [native ES5 getters](https://github.com/emberjs/rfcs/blob/master/text/0281-es5-getters.md) are not available there, which means that instead of accessing the service via `this.mySession`, you would have to access it as `this.get('mySession')` or `get(this, 'mySession')`. This means the above code would rather look like:
-
-```ts
-// my-app/components/user-profile.ts
-import Component from '@ember/component';
-import { get } from '@ember/object';
-import ComputedProperty from '@ember/object/computed';
-import { service } from '@ember-decorators/service';
-import MySession from 'my-app/services/my-session';
-
-export default class UserProfile extends Component {
-  @service
-  mySession!: ComputedProperty<MySession>;
-
-  login(this: UserProfile, email: string, password: string) {
-    get(this, 'session').login(email, password);
-  }
-}
-```
+Also notice the [`!` non-null assertion operator](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator), which is required to prevent [`TS2564`](https://github.com/kaorun343/vue-property-decorator/issues/81), that is caused by enabling `strictPropertyInitialization` in `tsconfig.json`.
 
 This also holds true for all other macros of the ember-decorators addon.
 
-#### Typing uninitialized properties
+#### Earlier Ember versions
 
-For folks using babel@7 you may encounter problems when providing type definitions such as the following when working with Ember below `3.6`.
+A couple notes for consumers on earlier Ember versions:
+
+On Ember versions **earlier than 3.1**, you'll want to wrap your service type in [`ComputedProperty`](https://www.emberjs.com/api/ember/release/classes/ComputedProperty), because [native ES5 getters](https://github.com/emberjs/rfcs/blob/master/text/0281-es5-getters.md) are not available there, which means that instead of accessing the service via `this.mySession`, you would have to access it as `this.get('mySession')` or `get(this, 'mySession')`.
+
+On Ember versions **earlier than 3.6**, you may encounter problems when providing type definitions like this:
 
 ```ts
 import Component from '@ember/component';
