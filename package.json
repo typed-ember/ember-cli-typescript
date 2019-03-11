@@ -112,7 +112,8 @@
   },
   "resolutions": {
     "@types/ember": "3.0.29",
-    "@types/ember__string": "3.0.6"
+    "@types/ember__string": "3.0.6",
+    "hawk": "7"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
