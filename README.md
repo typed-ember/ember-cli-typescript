@@ -14,14 +14,13 @@
     - [In apps](#in-apps)
     - [In addons](#in-addons)
   - [Upgrading from 1.x](#upgrading-from-1x)
-    - [Order of operations](#order-of-operations)
     - [Update ember-cli-babel](#update-ember-cli-babel)
     - [Update ember-decorators](#update-ember-decorators)
     - [Update ember-cli-typescript](#update-ember-cli-typescript)
       - [In apps](#in-apps-1)
       - [In addons](#in-addons-1)
       - [Account for addon build pipeline changes](#account-for-addon-build-pipeline-changes)
-      - [Fix TS → Babel issues](#fix-ts--babel-issues)
+      - [Account for TS → Babel issues](#account-for-ts--babel-issues)
 - [Getting Help](#getting-help)
   - [💬 Getting Started](#-getting-started)
   - [📚 Issues With Ember Type Definitions](#-issues-with-ember-type-definitions)
@@ -67,11 +66,7 @@ All dependencies will be added to your `package.json`, and you're ready to roll!
 
 ### Upgrading from 1.x
 
-There are a number of important changes between ember-cli-typescript v1 and v2!
-
-#### Order of operations
-
-The most successful path to upgrade from an older version of ember-cli-typescript is:
+There are a number of important changes between ember-cli-typescript v1 and v2, which mean the upgrade process is *straightforward* but *specific*:
 
 1. Update ember-cli-babel. Fix any problems introduced during the upgrade.
 2. Update ember-decorators. Fix any problems introduced during the upgrade.
@@ -111,7 +106,7 @@ ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
 
 #### Update ember-decorators
 
-Follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms transitive dependency.
+Follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms dependency.
 
 #### Update ember-cli-typescript
 
@@ -157,7 +152,7 @@ Since we now integrate in a more traditional way into Ember CLI's build pipeline
 
 - Similarly, apps must use `.js` to override addon defaults in `app`, since the different file extension means apps no long consistently "win" over addon versions (a limitation of how Babel + app merging interact).
 
-##### Fix TS → Babel issues
+##### Account for TS → Babel issues
 
 ember-cli-typescript v2 uses Babel to compile your code, and the TypeScript compiler only to *check* your code. This makes for much faster builds, and eliminates the differences between Babel and TypeScript in the build output that could cause problems in v1. However, because of those differences, you’ll need to make a few changes in the process of upgrading.
 
@@ -210,21 +205,23 @@ The TypeScript compiler does some very basic linting of your code, but most deve
 
 One sure way to tell which tool is generating an error message is that _Linters like [ESLint](https://eslint.org/) or [TSLint](https://github.com/palantir/tslint/) will always mention their name, and the name of the pertinent rule, when it alerts you to a violation_.
 
-**Example:**
+For example, in VS Code, you might see a popover with this message:
 
+```plain
+[eslint] variable name must be in lowerCamelCase, PascalCase or UPPER_CASE (variable-name)
 ```
-[tslint] variable name must be in lowerCamelCase, PascalCase or UPPER_CASE (variable-name)
-```
 
-`variable-name` is the name of the rule.
+Here, `variable-name` is the name of the rule, and `[eslint]` is the *source* of the rule.
 
-For issues relating to typescript compiler analysis, [create an issue in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose). For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new). If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
+- For issues relating to typescript compiler analysis, [create an issue in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose).
+- If you run into issues with using ESLint with Ember, create an issue [here](https://github.com/ember-cli/ember-cli-eslint/issues/new).
+- For TSLint-related concerns, please create an issue in the [`ember-cli-tslint`](https://github.com/typed-ember/ember-cli-tslint) project by clicking [here](https://github.com/typed-ember/ember-cli-tslint/issues/new).
 
 ## Supported Ember and TypeScript versions
 
-ember-cli-typescript runs its test suite against the 2.12 LTS, the 2.16 LTS, the 2.18 LTS, the current release, the beta branch, and the canary branch. It's also in active use in several large applications. Any breakage for upcoming releases _should_ be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
+ember-cli-typescript runs its test suite against Ember CLI current and beta. It's also in active use in several large applications. Any breakage for upcoming releases _should_ be detected and fixed ahead of those releases, but you can help us guarantee that by running your own Ember.js+TypeScript app with beta and canary turned on and let us know if you run into issues with upcoming Ember.js releases.
 
-This library supports the current version of TypeScript [![TS Version](https://img.shields.io/github/tag/Microsoft/typescript.svg?label=latest%20typescript%20release)](https://github.com/Microsoft/TypeScript/releases/latest) and at least one previous minor or major release (i.e., if `3.0` is the latest release, we **do** support `3.0.x`, `2.9.x`, and **might** support `2.8` as well).
+This library supports the current version of TypeScript [![TS Version](https://img.shields.io/github/tag/Microsoft/typescript.svg?label=latest%20typescript%20release)](https://github.com/Microsoft/TypeScript/releases/latest) and at least one previous minor or major release. In other words, if `3.4` is the latest release, we **do** support `3.4.x`, `3.3.x`, and **might** support `3.2.x` as well. (The test suite only runs against the current release and `next` branch, but the TS versions do not affect the build process in the same way they do type definitions.)
 
 ## Installing from git
 
