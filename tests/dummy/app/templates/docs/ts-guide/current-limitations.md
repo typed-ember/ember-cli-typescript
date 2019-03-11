@@ -4,12 +4,6 @@ While TS already works nicely for many things in Ember, there are a number of co
 
 [existing typings]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember
 
-We are hard at work (and would welcome your help!) [writing new typings][ember-typings] for Ember and the surrounding ecosystem. If you'd like to try those out, please see instructions in [that repo][ember-typings]!
-
-[ember-typings]: https://github.com/typed-ember/ember-typings
-
-Here is the short list of things which do _not_ work yet in the version of the typings published on DefinitelyTyped.
-
 ### Some `import`s don't resolve
 
 You'll frequently see errors for imports which TypeScript doesn't know how to resolve. For example, if you use Ember Concurrency today and try to import its `task` helper:
