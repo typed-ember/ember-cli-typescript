@@ -1,4 +1,26 @@
-### Other Packages This Addon Installs
+# Installation
+
+***Note:* Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!**
+
+## In apps
+
+In apps, you can simply `ember install` the dependency like normal:
+
+```sh
+ember install ember-cli-typescript@latest
+```
+
+## In addons
+
+To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. You can `ember install` it by running:
+
+```sh
+ember install ember-cli-typescript@latest --save
+```
+
+All dependencies will be added to your `package.json`, and you're ready to roll! **If you're upgrading from a previous release, see below!** you should check to merge any tweaks you've made to `tsconfig.json`.
+
+## Other Packages This Addon Installs
 
 - We install the following packages—all at their current "latest" value—or generated:
 
