@@ -16,6 +16,35 @@ You'll see an error, because there aren't yet type definitions for it. You may s
 
 Writing these missing type definitions is a great way to pitch in! Jump in `#e-typescript` on the [Ember Community Discord server](https://discord.gg/zT3asNS) and we'll be happy to help you.
 
+### Templates
+
+Templates are currently totally non-type-checked. This means that you lose any safety when moving into a template context, even if using a Glimmer `Component` in Ember Octane.
+
+Addons need to import templates from the associated `.hbs` file to bind to the layout of any components they export. The TypeScript compiler will report that it cannot resolve the module, since it does not know how to resolve files ending in `.hbs`. To resolve this, you can provide this set of definitions to `my-addon/types/my-addon.d.ts`, which will allow the import to succeed:
+
+```ts
+declare module '*/template' {
+  import { TemplateFactory } from 'htmlbars-inline-precompile';
+
+  const template: TemplateFactory;
+  export default template;
+}
+
+declare module 'app/templates/*' {
+  import { TemplateFactory } from 'htmlbars-inline-precompile';
+
+  const template: TemplateFactory;
+  export default template;
+}
+
+declare module 'addon/templates/*' {
+  import { TemplateFactory } from 'htmlbars-inline-precompile';
+
+  const template: TemplateFactory;
+  export default template;
+}
+```
+
 ### Type safety when invoking actions
 
 TypeScript won't detect a mismatch between this action and the corresponding call in the template:
