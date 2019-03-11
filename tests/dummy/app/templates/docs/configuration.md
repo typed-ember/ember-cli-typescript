@@ -14,10 +14,11 @@ However, there are a few things worth noting if you're already familiar with Typ
 
 3. Since your application is built by Babel, and only *type-checked* by TypeScript, we set the `target` key in `tsconfig.json` to the current version of the ECMAScript standard so that type-checking uses the latest and greatest from the JavaScript standard library. The Babel configuration in your app's `config/targets.js` and any included polyfills will determine the final build output.
 
-4. If you make changes to the paths included in or excluded from the build via your `tsconfig.json` (using the `"include"`, `"exclude"`, or `"files"` keys), you will need to restart the server to take the changes into account: ember-cli-typescript does not currently watch the `tsconfig.json` file.
+4. If you make changes to the paths included in or excluded from the build via your `tsconfig.json` (using the `"include"`, `"exclude"`, or `"files"` keys), you will need to restart the server to take the changes into account: ember-cli-typescript does not currently watch the `tsconfig.json` file. For more details, see [the TypeScript reference materials for `tsconfig.json`][tsconfig].
 
 [blueprint]: https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json
 [Broccoli]: http://broccolijs.com/
+[tsconfig]: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
 
 ## Enabling Sourcemaps
 
