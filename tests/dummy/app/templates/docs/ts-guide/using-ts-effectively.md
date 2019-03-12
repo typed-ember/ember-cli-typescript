@@ -1,6 +1,6 @@
-## Using TypeScript with Ember effectively
+# Using TypeScript with Ember effectively
 
-### Incremental adoption
+## Incremental adoption
 
 If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your wins – even if they're small! – with your team, especially if some people are not convinced yet. We would also love to hear your stories!
 
@@ -38,7 +38,7 @@ You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as
 
 [typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
 
-### Install other types!
+## Install other types!
 
 You'll want to use other type definitions as much as possible. The first thing you should do, for example, is install the types for your testing framework of choice: `@types/ember-mocha` or `@types/ember-qunit`. Beyond that, look for types from other addons: it will mean writing `any` a lot less and getting a lot more help both from your editor and from the compiler.
 
@@ -47,7 +47,7 @@ To make this easier, we're maintaining [a list of addons with known type definit
 [known-typings]: ./known-typings.md
 [definitely typed]: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-### The `types` directory
+## The `types` directory
 
 During installation, we create a `types` directory in the root of your application and add a `"paths"` mapping that includes that directory in any type lookups TypeScript tries to do. This is convenient for a few things:
 
@@ -57,7 +57,7 @@ During installation, we create a `types` directory in the root of your applicati
 
 These are all fallbacks, of course, you should use the types supplied directly with a package
 
-#### Global types for your package
+### Global types for your package
 
 At the root of your application or addon, we include a `types/<your app>` directory with an `index.d.ts` file in it. Anything which is part of your application but which must be declared globally can go in this file. For example, if you have data attached to the `Window` object when the page is loaded (for bootstrapping or whatever other reason), this is a good place to declare it.
 
@@ -65,13 +65,13 @@ In the case of applications (but not for addons), we also automatically include 
 
 [disabling]: https://guides.emberjs.com/v2.18.0/configuring-ember/disabling-prototype-extensions/
 
-#### Environment configuration typings
+### Environment configuration typings
 
 Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `app/config/environment.d.ts`. This interface will likely require some changes to match your app.
 
 We install this file because the actual `config/environment.js` is (a) not actually identical with the types as you inherit them in the content of an application, but rather a superset of what an application has access to, and (b) not in a the same location as the path at which you look it up. The actual `config/environment.js` file executes in Node during the build, and Ember CLI writes its result as `<my-app>/config/environment` into your build for consumption at runtime.
 
-### String-keyed lookups
+## String-keyed lookups
 
 Ember makes heavy use of string-based APIs to allow for a high degree of dynamicism. With some limitations, you can nonetheless use TypeScript very effectively to get auto-complete/IntelliSense as well as to accurately type-check your applications.
 
@@ -89,7 +89,7 @@ The "Update" sequence in the Typing Your Ember has detailed explanations and gui
 
 A few of the most common speed-bumps are listed here to help make this easier:
 
-#### `this` type workaround
+### `this` type workaround
 
 One important note for using `class` types effectively with today's Ember typings: you will (at least for now) need to explicitly write out a `this` type for methods, computed property callbacks, and actions if you are going to use `get` or `set`
 
@@ -106,7 +106,7 @@ export default class UserProfile extends Component {
 
 This is a workaround for how incredibly dynamic `Ember.Object` instances are and hopefully will improve over time as we continue to iterate on the type definitions. Again, see [the relevant blog post for details][pt2].
 
-#### Nested keys in `get` or `set`
+### Nested keys in `get` or `set`
 
 In general, `this.get` and `this.set` will work as you'd expect _if_ you're doing lookups only a single layer deep. Things like `this.get('a.b.c')` don't (and can't ever!) type-check; see the blog posts for a more detailed discussion of why.
 
@@ -130,7 +130,7 @@ The workaround is simply to do one of two things:
 
    It's usually best to include an explanation of _why_ you're ignoring a lookup!
 
-#### Service and controller injections
+### Service and controller injections
 
 Ember does service and controller lookups with the `inject` functions at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way.
 
@@ -178,7 +178,7 @@ Also notice the [`!` non-null assertion operator](https://github.com/Microsoft/T
 
 This also holds true for all other macros of the ember-decorators addon.
 
-#### Earlier Ember versions
+### Earlier Ember versions
 
 A couple notes for consumers on earlier Ember versions:
 
@@ -198,7 +198,7 @@ When invoked via a template `{{user-profile username='example123'}}`, you would 
 
 For users who remain on Ember versions below `3.6`, please use https://github.com/pzuraq/ember-native-class-polyfill 
 
-#### Ember Data lookups
+### Ember Data lookups
 
 We use the same basic approach for Ember Data type lookups with string keys as we do for service or controller injections. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
 
@@ -272,7 +272,7 @@ In addition to the registry, note the oddly defined class for `DS.Model`s. This 
 
 [pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
 
-##### Opt-in unsafety
+#### Opt-in unsafety
 
 Also notice that unlike with service and controller injections, there is no unsafe fallback method by default, because there isn't an argument-less variant of the functions to use as there is for `Service` and `Controller` injection. If for some reason you want to opt _out_ of the full type-safe lookup for the strings you pass into methods like `findRecord`, `adapterFor`, and `serializerFor`, you can add these declarations somewhere in your project:
 
@@ -298,7 +298,7 @@ declare module 'ember-data/types/registries/serializer' {
 
 However, we **_strongly_** recommend that you simply take the time to add the few lines of declarations to each of your `DS.Model`, `DS.Adapter`, and `DS.Serializer` instances instead. It will save you time in even the short run!
 
-##### Fixing the Ember Data `error TS2344` problem
+#### Fixing the Ember Data `error TS2344` problem
 
 If you're developing an Ember app or addon and _not_ using Ember Data (and accordingly not even have the Ember Data types installed), you may see an error like this and be confused:
 
@@ -322,7 +322,7 @@ This works because (a) we include things in your types directory automatically a
 
 If you're developing an addon and concerned that this might affect consumers, it won't. Your types directory will never be referenced by consumers at all!
 
-#### Class property setup errors
+### Class property setup errors
 
 Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
 
@@ -330,7 +330,7 @@ Some common stumbling blocks for people switching to ES6 classes from the tradit
 
 - `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
 
-### Type definitions outside `node_modules/@types`
+## Type definitions outside `node_modules/@types`
 
 By default, the TypeScript compiler loads all type definitions found in `node_modules/@types`. If the type defs you need are not found there and are not supplied in the root of the package you're referencing, you can register a custom value in `paths` in the `tsconfig.json` file. For example, if you're using [ember-browserify], you're used to writing imports like this:
 
@@ -353,7 +353,7 @@ If `my-module` has types, you will not be able to resolve them this way by defau
 }
 ```
 
-### ember-cli-mirage
+## ember-cli-mirage
 
 Mirage adds files from a nonstandard location to your application tree, so you'll need to tell the TypeScript compiler about how that layout works.
 
@@ -394,11 +394,11 @@ And for an addon:
 
 Note that if Mirage was present when you installed ember-cli-typescript (or if you run `ember g ember-cli-typescript`), this configuration should be automatically set up for you.
 
-### "TypeScript is complaining about multiple copies of the same types!"
+## "TypeScript is complaining about multiple copies of the same types!"
 
 You may sometimes see TypeScript errors indicating that you have duplicate type definitions for Ember, Ember Data, etc. This is usually the result of an annoying quirk of the way both npm and yarn resolve your dependencies in their lockfiles.
 
-#### Just tell me how to fix it
+### Just tell me how to fix it
 
 There are two options here, neither of them _great_:
 
@@ -415,6 +415,6 @@ There are two options here, neither of them _great_:
 
 ["resolutions"]: https://yarnpkg.com/lang/en/docs/selective-version-resolutions/
 
-#### Why is this happening?
+### Why is this happening?
 
 If you're using another package which includes these types, and then you trigger an upgrade for your own copy of the type definitions, npm and yarn will both try to preserve the existing installation and simply add a new one for your updated version. In most cases, this is sane behavior, because it prevents transitive dependency breakage hell. However, in the _specific_ case of type definitions, it causes TypeScript to get confused.
