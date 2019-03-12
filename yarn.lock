@@ -4074,10 +4074,10 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.31.1:
-  version "0.31.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.31.1.tgz#664ea45fcba9574734cdc66d7a9def4bd16c4dcb"
-  integrity sha512-c9KUvIaXbYkpMCzkHUkrzoyXWF/2CUA2yVB2Ypw71CdfsJzT/4j7cazudqveEt0BxzNNnQoDWtJvN1N54vz64A==
+ember-cli-update@0.31.2:
+  version "0.31.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.31.2.tgz#cc50f15e5246f476619743f9744c733fa61be3af"
+  integrity sha512-paLo+QoAXSUGGJysJ94tf7EBXUBElpJYMuoJqgq+5xjHJj+azx9h654uh2TYb17EqjURakps79eKIk4jX/y1qQ==
   dependencies:
     boilerplate-update "^0.19.0"
     co "^4.6.0"
@@ -5908,11 +5908,9 @@ imurmurhash@^0.1.4:
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
   version "0.0.0"
-  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
   version "0.0.0"
-  uid ""
 
 indexof@0.0.1:
   version "0.0.1"
