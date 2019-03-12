@@ -6,7 +6,7 @@ By default, ember-cli-typescript installs the [ember-cli-typescript-blueprints][
 
 [blueprints]: https://github.com/typed-ember/ember-cli-typescript-blueprints
 
-If you want to stick with the normal JavaScript blueprints&mdash;say, because your team isn't ready to dive into the deep end with making *everything* typescript yet&mdash;you can simply uninstall the blueprints package.
+If you want to stick with the normal JavaScript blueprints&mdash;say, because your team isn't ready to dive into the deep end with making *everything* TypeScript yet&mdash;you can simply uninstall the blueprints package.
 
 With yarn:
 
