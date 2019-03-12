@@ -4074,10 +4074,10 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.31.2:
-  version "0.31.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.31.2.tgz#cc50f15e5246f476619743f9744c733fa61be3af"
-  integrity sha512-paLo+QoAXSUGGJysJ94tf7EBXUBElpJYMuoJqgq+5xjHJj+azx9h654uh2TYb17EqjURakps79eKIk4jX/y1qQ==
+ember-cli-update@0.31.3:
+  version "0.31.3"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.31.3.tgz#2ab5fcd3a635b3d2cf73b5bf68ae43164eb7f836"
+  integrity sha512-moZF9N0oqnSdTfGUO7aqN/rpVHvuXxI9/u4vp+zCXPcymsDfBqb/vh+E3XXMKr7hivrggVTlYgyvAV7anh+ugg==
   dependencies:
     boilerplate-update "^0.19.0"
     co "^4.6.0"
