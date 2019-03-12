@@ -32,7 +32,7 @@ Some specific tips for success on the technical front:
 
     - Go more slowly, but write down at least minimally accurate types as you go. (This is easier if you follow the leaves-first strategy recommended above.) This is much harder, but allows you to have much higher confidence as you work through the app.
 
-    There is an inherent tradeoff between these two approaches; which works best will depend on your team and your app.
+  There is an inherent tradeoff between these two approaches; which works best will depend on your team and your app.
 
 You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
 
