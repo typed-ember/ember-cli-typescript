@@ -1,0 +1,19 @@
+<DocsHeader @prefix='Ember CLI' @name='TypeScript' />
+
+{{#docs-viewer as |viewer|}}
+  <viewer.nav as |nav|>
+    {{nav.section 'Introduction'}}
+    {{nav.item 'Installation' 'docs.index'}}
+    {{nav.item 'Upgrading from 1.x' 'docs.upgrade-notes'}}
+    {{nav.item 'Configuration' 'docs.configuration'}}
+
+    {{nav.section 'Using TypeScript with Ember'}}
+    {{nav.item 'Using TypeScript Effectively' 'docs.ts-guide.using-ts-effectively'}}
+    {{nav.item 'Building Addons in TypeScript' 'docs.ts-guide.with-addons'}}
+    {{nav.item 'Current Limitations' 'docs.ts-guide.current-limitations'}}
+  </viewer.nav>
+
+  <viewer.main>
+    {{outlet}}
+  </viewer.main>
+{{/docs-viewer}}
