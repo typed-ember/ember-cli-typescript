@@ -42,10 +42,9 @@ You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as
 
 You'll want to use other type definitions as much as possible. The first thing you should do, for example, is install the types for your testing framework of choice: `@types/ember-mocha` or `@types/ember-qunit`. Beyond that, look for types from other addons: it will mean writing `any` a lot less and getting a lot more help both from your editor and from the compiler.
 
-To make this easier, we're maintaining [a list of addons with known type definitions][known-typings] either on [Definitely Typed] or as part of the addon itself. (If you know of typings that aren't in that list, please open a pull request to add them!)
+*Where can I find types?* Some addons will ship them with their packages, and work out of the box. For others, you can search for them on [Definitely Typed], or on npm under the `@types` namespace. (In the future we hope to maintain a list of known types; keep your eyes open!)
 
-[known-typings]: ./known-typings.md
-[definitely typed]: https://github.com/DefinitelyTyped/DefinitelyTyped
+[Definitely Typed]: https://github.com/DefinitelyTyped/DefinitelyTyped
 
 ## The `types` directory
 
