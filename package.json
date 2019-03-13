@@ -55,7 +55,7 @@
     "@typed-ember/renovate-config": "1.2.1",
     "@types/chai": "4.1.7",
     "@types/console-ui": "2.2.0",
-    "@types/core-object": "3.0.0",
+    "@types/core-object": "3.0.1",
     "@types/debug": "4.1.2",
     "@types/ember": "3.0.29",
     "@types/ember-qunit": "3.4.6",

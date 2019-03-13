@@ -725,10 +725,10 @@
   dependencies:
     "@types/inquirer" "*"
 
-"@types/core-object@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@types/core-object/-/core-object-3.0.0.tgz#3c7a9ff732dd5a66a09860c4a134751d7abd11a2"
-  integrity sha512-SYM//l00O/LXbT0GqTaonlYQubkXDWyfOEpzEehiedtF+wEJCliP4G05/2tM+bulFNgqnBG4uRRe8k/HGQUA3A==
+"@types/core-object@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/core-object/-/core-object-3.0.1.tgz#be88eb826be92c3d8132cd6782447f3343295e70"
+  integrity sha512-dRtFrg2BooE2WATrVyYMgdRpwBjwpSmPaS2SgsGUQegtbuXQ7MOgwBSvbtxPj/fOS0TXqHrMwpDwpsq0uGTUGA==
 
 "@types/debug@4.1.2":
   version "4.1.2"
