@@ -1,4 +1,3 @@
 {
-  "extends": "@typed-ember/renovate-config",
-  "baseBranches": ["master", "v2"]
+  "extends": "@typed-ember/renovate-config"
 }
