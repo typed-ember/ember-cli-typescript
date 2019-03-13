@@ -4,5 +4,11 @@
     "name": "update-docs",
     "sha": "f0bc6b7b97a050af62959b4bec395ee752bcd778",
     "tag": null
+  },
+  "master": {
+    "path": "versions/master",
+    "name": "master",
+    "sha": "2ec4b589db132aebbeff5cf64b0bdc3fe5104e9f",
+    "tag": null
   }
 }
