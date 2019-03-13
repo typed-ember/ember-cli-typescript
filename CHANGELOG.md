@@ -6,6 +6,50 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.0] - 2019-03-13
+
+The bullets below comprise a Greatest Hits list of the fixes and additions from 1.x, but the 2.0 release constitutes a ground-up rewrite of how we handle both transpiling and typechecking TypeScript code. For a full guide for upgrading from 1.x to 2.0, see the [Upgrade Notes document](https://github.com/typed-ember/ember-cli-typescript/blob/13015d2e7ebef9d7b9b8b5acb84a35b8dfde5502/tests/dummy/app/templates/docs/upgrade-notes.md).
+
+### Fixed 🔧
+
+- We now play nicely with other JS/TS processors, like `ember-auto-import` ([#287](https://github.com/typed-ember/ember-cli-typescript/issues/287))
+- Compilation across projects in monorepos no longer causes `tsc` to panic ([#314](https://github.com/typed-ember/ember-cli-typescript/issues/314))
+
+### Added ⭐️
+
+- Typechecking now occurs off of the main build thread, so the two are no longer in competition for CPU time on multi-core systems.
+- Much nicer formatting for type errors in both the console and browser when running `ember serve`.
+- TS code is now transpiled by Babel, allowing it to benefit from the same caching and parallelization as JS transpilation, and ensuring consistent language semantics between TS and JS files.
+
+## Upgrading ⚙️
+
+See the [2.0 Upgrade Notes](https://github.com/typed-ember/ember-cli-typescript/blob/13015d2e7ebef9d7b9b8b5acb84a35b8dfde5502/tests/dummy/app/templates/docs/upgrade-notes.md) for detailed instructions on upgrading from 1.x to 2.0.
+
+## Contributors 🙇
+
+Thanks to everyone who opened/discovered an issue we fixed or PR we merged over the course of our 2.0 stabilization process!
+
+- @acorncom
+- @allenylzhou
+- @alexlafroscia
+- @anmaikul
+- @Bouke
+- @boris-petrov
+- @championswimmer
+- @chriskrycho
+- @dwickern
+- @dfreeman
+- @ef4
+- @Gaurav0
+- @happycollision
+- @jamescdavis
+- @lifeart
+- @mfeckie
+- @mike-north
+- @runspired
+- @simonihmig
+- @theseyi
+
 ## [2.0.0-rc.2] - 2019-01-07
 
 For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
@@ -66,7 +110,7 @@ https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
 
 - The addon now checks to confirm you're using Ember CLI 3.5+, since the new approach to builds has serious performance problems with a local `tmp` directory.
 
-### Under the hood 🚗 
+### Under the hood 🚗
 
 - Bumped *many* dependency versions.
 - Set up Azure Pipelines configuration.
@@ -84,7 +128,7 @@ Thanks to everyone who opened/discovered an issue we fixed or PR we merged in th
 
 - @mike-north
 - @dfreeman
-- @jamescdavis 
+- @jamescdavis
 
 ## [2.0.0-beta.3] - 2018-11-02
 
@@ -492,7 +536,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...v2.0.0
 [2.0.0-rc.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2.0.0-rc.2
 [2.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.3...v2.0.0-rc.1
 [2.0.0-beta.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.2...v2.0.0-beta.3
