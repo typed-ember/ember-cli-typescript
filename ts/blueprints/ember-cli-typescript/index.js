@@ -125,7 +125,7 @@ module.exports = {
     }
 
     let packages = [
-      { name: 'ember-cli-typescript-blueprints', target: '^2.0.0-beta.1' },
+      { name: 'ember-cli-typescript-blueprints', target: 'latest' },
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },
