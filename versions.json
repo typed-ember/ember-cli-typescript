@@ -1,10 +1,4 @@
 {
-  "update-docs": {
-    "path": "versions/update-docs",
-    "name": "update-docs",
-    "sha": "f0bc6b7b97a050af62959b4bec395ee752bcd778",
-    "tag": null
-  },
   "master": {
     "path": "versions/master",
     "name": "master",
