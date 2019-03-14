@@ -133,7 +133,7 @@ The workaround is simply to do one of two things:
 
 Ember does service and controller lookups with the `inject` functions at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way.
 
-The officially supported method for injections with TypeScritp uses *decorators*, from the ember-decorators package (and soon in Ember itself).
+The officially supported method for injections with TypeScript uses *decorators*, from the ember-decorators package (and soon in Ember itself).
 
 ```ts
 // my-app/services/my-session.ts
