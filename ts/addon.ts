@@ -11,8 +11,10 @@ import { Application } from 'express';
 import walkSync from 'walk-sync';
 import fs from 'fs-extra';
 
+export const ADDON_NAME = 'ember-cli-typescript';
+
 export default addon({
-  name: 'ember-cli-typescript',
+  name: ADDON_NAME,
 
   included() {
     this._super.included.apply(this, arguments);

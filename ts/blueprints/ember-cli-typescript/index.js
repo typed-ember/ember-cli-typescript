@@ -38,6 +38,8 @@ declare module '${projectName}/ui/components/*/template' { ${moduleBody}}`;
   }
 }
 
+const { ADDON_NAME } = require('../../addon');
+
 module.exports = {
   APP_DECLARATIONS,
 
@@ -157,7 +159,7 @@ module.exports = {
 
   beforeInstall() {
     if (this.project.isEmberCLIAddon()) {
-      this._installPrecompilationHooks();
+      this._transformAddonPackage();
     }
 
     let packages = [
@@ -207,13 +209,20 @@ module.exports = {
     return this.project.isModuleUnification && this.project.isModuleUnification();
   },
 
-  _installPrecompilationHooks() {
-    let pkgPath = `${this.project.root}/package.json`;
+  _transformAddonPackage() {
+    const pkgPath = `${this.project.root}/package.json`;
+
     let pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
     // Really `prepack` and `postpack` would be ideal, but yarn doesn't execute those when publishing
     this._addScript(pkg.scripts, 'prepublishOnly', 'ember ts:precompile');
     this._addScript(pkg.scripts, 'postpublish', 'ember ts:clean');
+
+    // avoid being placed in devDependencies
+    if (pkg.devDependencies[ADDON_NAME]) {
+      pkg.dependencies[ADDON_NAME] = pkg.devDependencies[ADDON_NAME];
+      delete pkg.devDependencies[ADDON_NAME];
+    }
 
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
   },
@@ -222,7 +231,7 @@ module.exports = {
     if (scripts[type] && scripts[type] !== script) {
       this.ui.writeWarnLine(
         `Found a pre-existing \`${type}\` script in your package.json. ` +
-          `By default, ember-cli-typescripts expects to run \`${script}\` in this hook.`
+          `By default, ember-cli-typescript expects to run \`${script}\` in this hook.`
       );
       return;
     }

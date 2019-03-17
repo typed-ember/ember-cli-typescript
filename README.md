@@ -44,22 +44,9 @@ This README focuses on basic information about setting up and using the addon. F
 
 ### Installation and Setup
 
-***Note:* Because ember-cli-typescript is part of the build pipeline, the process for installing it differs slightly between apps and addons!**
-
-#### In apps
-
-In apps, you can simply `ember install` the dependency like normal:
-
+You can simply `ember install` the dependency like normal:
 ```sh
 ember install ember-cli-typescript@latest
-```
-
-#### In addons
-
-To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. You can `ember install` it by running:
-
-```sh
-ember install ember-cli-typescript@latest --save
 ```
 
 All dependencies will be added to your `package.json`, and you're ready to roll! **If you're upgrading from a previous release, see below!** you should check to merge any tweaks you've made to `tsconfig.json`.
@@ -110,39 +97,13 @@ Follow the same process of deduplication, reinstallation, and re-deduplication a
 
 #### Update ember-cli-typescript
 
-***Note:* Because ember-cli-typescript is part of the build pipeline, the process for updating it differs slightly between apps and addons!**
-
-##### In apps
-
-In apps, you can simply `ember install` the dependency like normal:
+Now you can simply `ember install` the dependency like normal:
 
 ```sh
 ember install ember-cli-typescript@latest
 ```
 
-##### In addons
-
-To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. **This is a *change* from ember-cli-typescript v1.**
-
-1. Remove ember-cli-typescript from your dependencies.
-
-    With yarn:
-    
-    ```sh
-    yarn remove ember-cli-typescript 
-    ```
-
-    With npm:
-    
-    ```sh
-    npm uninstall ember-cli-typescript
-    ```
-
-2. Re-install it with `ember install`:
-
-    ```sh
-    ember install ember-cli-typescript@latest --save
-    ```
+***Note:* To work properly, starting from v2, ember-cli-typescript must be declared as a `dependency`, not a `devDependency` for addons. With `ember install` this migration will be automatically handled for you.**
 
 ##### Account for addon build pipeline changes
 
