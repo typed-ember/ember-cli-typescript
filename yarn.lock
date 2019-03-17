@@ -2637,17 +2637,17 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
-boilerplate-update@^0.19.1:
-  version "0.19.2"
-  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.19.2.tgz#d10d42ff6cbe3e4115a7a84ddb29cde06069cc99"
-  integrity sha512-xAf2ooBxSUVZzDgPyLDSK8IE1zCLyWmGQDMziDFHHe2TyTBER0yhLt+4pmgKJcYoOXvnAWU7+LCjEG/fZsfjUA==
+boilerplate-update@^0.19.4:
+  version "0.19.4"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.19.4.tgz#6c5668d05e1d19a91c8c43fbd34f99b85928a49b"
+  integrity sha512-eYDcZ8D3xHHkxWEjrnQODNnzBh/5H+Zi5X15rOk3kilQzECHjaPVggm7DS6JVCzeZsXMWPdo4x8uGGXesfDcmA==
   dependencies:
     co "^4.6.0"
     cpr "^3.0.1"
     debug "^4.1.1"
     denodeify "^1.2.1"
     execa "^1.0.0"
-    git-diff-apply "^0.14.2"
+    git-diff-apply "^0.14.8"
     inquirer "^6.2.2"
     merge-package.json "^2.0.2"
     npx "^10.2.0"
@@ -5493,12 +5493,12 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.31.4:
-  version "0.31.4"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.31.4.tgz#c0c5f4f53759a423ac26d40e2d17bfa2bc109dce"
-  integrity sha512-QwYSK+/UKCR3ZO58b1EiLcZF8XoMBp/IpYQybFiYeo2yT5WDWjbaNo4xY/2LUEfSh6dvzxERbncKi/XiyI1/iA==
+ember-cli-update@0.31.6:
+  version "0.31.6"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.31.6.tgz#5a77f7979de48b4e6d6f15ff64a5e1b52131428b"
+  integrity sha512-W/5tOLyDrCklhe/4Cm2lLwmttx5a8B6C6hwuQV44fQEPjYBp1Pquzp5M4PBuzRVKdVqsZ8ZvmRX6ypI+duMg5g==
   dependencies:
-    boilerplate-update "^0.19.1"
+    boilerplate-update "^0.19.4"
     co "^4.6.0"
     debug "^4.1.1"
     resolve "^1.10.0"
@@ -7195,16 +7195,17 @@ git-config-path@^1.0.1:
     fs-exists-sync "^0.1.0"
     homedir-polyfill "^1.0.0"
 
-git-diff-apply@^0.14.2:
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/git-diff-apply/-/git-diff-apply-0.14.3.tgz#fd6927c0ea4ee4b92f8ac37fcb2c46973114578c"
-  integrity sha512-oFybGrlu2zkWWFPS+QAl1ocaurds2Vff2nNTuYcYRMKA/t+KJ5g2xBVpgEyDV0BKafTa1PL3qsX6ZbJh5jpZmg==
+git-diff-apply@^0.14.8:
+  version "0.14.8"
+  resolved "https://registry.yarnpkg.com/git-diff-apply/-/git-diff-apply-0.14.8.tgz#3eaf19980b4c5922f813dbb4d7e667dfe2207327"
+  integrity sha512-Jenqx+wLy5IVOVvUGL+AZxIrEWMLQhPJMASuDk8a+nbFeWNc3mpyg0s9h+EWcnQ5BbZKzeOHyPmuKIY1q3h2sw==
   dependencies:
     co "^4.6.0"
     debug "^4.0.0"
     denodeify "^1.2.1"
     fixturify "^1.0.0"
     fs-extra "^7.0.0"
+    klaw "^3.0.0"
     tmp "0.0.33"
     uuid "^3.1.0"
     yargs "^12.0.0"
@@ -8660,6 +8661,13 @@ klaw@^1.0.0:
   resolved "https://registry.yarnpkg.com/klaw/-/klaw-1.3.1.tgz#4088433b46b3b1ba259d78785d8e96f73ba02439"
   integrity sha1-QIhDO0azsbolnXh4XY6W9zugJDk=
   optionalDependencies:
+    graceful-fs "^4.1.9"
+
+klaw@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/klaw/-/klaw-3.0.0.tgz#b11bec9cf2492f06756d6e809ab73a2910259146"
+  integrity sha512-0Fo5oir+O9jnXu5EefYbVK+mHMBeEVEy2cmctR1O1NECcCkPRreJKrS6Qt/j3KC2C148Dfo9i3pCmCMsdqGr0g==
+  dependencies:
     graceful-fs "^4.1.9"
 
 latest-version@^3.0.0:
