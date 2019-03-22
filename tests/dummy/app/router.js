@@ -15,6 +15,12 @@ Router.map(function() {
       this.route('using-ts-effectively');
       this.route('current-limitations');
     });
+    this.route('troubleshooting', function() {
+      this.route('conflicting-types');
+    });
+    this.route('type-defs', function() {
+      this.route('package-names');
+    });
   });
 });
 

@@ -90,6 +90,49 @@ Since we now integrate in a more traditional way into Ember CLI's build pipeline
 
 ember-cli-typescript v2 uses Babel to compile your code, and the TypeScript compiler only to *check* your code. This makes for much faster builds, and eliminates the differences between Babel and TypeScript in the build output that could cause problems in v1. However, because of those differences, you’ll need to make a few changes in the process of upgrading.
 
+Any place where a type annotation overrides a *getter*
+
+- Fields like `element`, `disabled`, etc. as annotated defined on a subclass of `Component` and (correctly) not initialized to anything, e.g.:
+
+    ```ts
+    import Component from '@ember/component';
+
+    export default class Person extends Component {
+      element!: HTMLImageElement;
+    }
+    ```
+
+    This breaks because `element` is a getter on `Component`. This declaration then shadows the getter declaration on the base class and stomps it to `undefined` (effectively `Object.defineProperty(this, 'element', void 0)`.
+
+    Two solutions—
+
+    1. Annotate locally (slightly more annoying, but less likely to troll you):
+
+        ```ts
+        class Image extends Component {
+          useElement() {
+            let element = this.element as HTMLImageElement;
+            console.log(element.src);
+          }
+        }
+        ```
+
+    2. Use a local getter:
+
+        ```ts
+        class Image extends Component {
+          // We do this because...
+          get _element(): HTMLImageElement {
+            return this.element as HTMLImageElement;
+          }
+          
+          useElement() {
+            console.log(this._element.src);
+          }
+        }
+        ```
+
+
 - `const enum` is not supported at all. You will need to replace all uses of `const enum` with simply `enum` or constants.
 
 - Using ES5 getters or settings with `this` type annotations is not supported through at least Babel 7.3. However, they should also be unnecessary with ES6 classes, so you can simply *remove* the `this` type annotation.
