@@ -36,7 +36,7 @@ error Command failed with exit code 1.
 
 </details>
 
-This occurs whenever your `yarn.lock` or `package-lock.json` files include more than a single copy of a given set of type definitions—here, types for `@ember/object`, named `@types/ember__object`. See below for details on the yarn behavior, and TODO for details on the package names.
+This occurs whenever your `yarn.lock` or `package-lock.json` files include more than a single copy of a given set of type definitions—here, types for `@ember/object`, named `@types/ember__object`. See below for details on the yarn behavior, and {{#link-to 'docs.type-defs.package-names'}}<b>Understanding the Package Names</b>{{/link-to}} for details on the package names.
 
 ## Workarounds
 
@@ -52,12 +52,14 @@ There are currently two recommended workarounds for this:
     }
     ```
 
-- You can identify the dependencies which installed the type dependencies transitively, and uninstall and reinstall them. For example, if running `yarn why` reported you had one version of `@types/ember__object` from the normally-installed set of packages (TODO: LINK TO THEM), and one from `some-cool-ts-addon`, you could run this:
+- You can identify the dependencies which installed the type dependencies transitively, and uninstall and reinstall them. For example, if running `yarn why` reported you had one version of `@types/ember__object` from [the normally-installed set of packages][default packages], and one from `some-cool-ts-addon`, you could run this:
 
     ```sh
     yarn remove @types/ember some-cool-ts-addon
     yarn add -D @types/ember some-cool-ts-addon
     ```
+
+[default packages]: ../../docs#other-packages-this-addon-installs
 
 ## Understanding the Problem
 

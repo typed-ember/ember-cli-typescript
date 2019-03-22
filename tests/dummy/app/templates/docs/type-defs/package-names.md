@@ -7,7 +7,7 @@ See also:
 - [Microsoft/types-publisher#155]
 - [Microsoft/Typescript#14819]
 
-[packages]: ../docs#other-packages-this-addon-installs
+[packages]: ../../docs#other-packages-this-addon-installs
 [DefinitelyTyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 [types-publisher]: https://github.com/Microsoft/types-publisher
 [readme-h]: https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master#what-about-scoped-packages
