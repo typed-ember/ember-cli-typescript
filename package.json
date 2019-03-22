@@ -57,7 +57,7 @@
     "@types/console-ui": "2.2.0",
     "@types/core-object": "3.0.1",
     "@types/debug": "4.1.2",
-    "@types/ember": "3.0.29",
+    "@types/ember": "3.1.0",
     "@types/ember-qunit": "3.4.6",
     "@types/execa": "0.9.0",
     "@types/express": "4.16.1",
@@ -117,7 +117,7 @@
     "typescript-eslint-parser": "21.0.2"
   },
   "resolutions": {
-    "@types/ember": "3.0.29",
+    "@types/ember": "3.1.0",
     "@types/ember__string": "3.0.6",
     "hawk": "7"
   },
