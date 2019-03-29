@@ -75,14 +75,19 @@ export default addon({
     // preprocessor registry, so we need to beat it to the punch.
     this._registerBabelExtension();
 
-    this._addPluginIfMissing(
-      '@babel/plugin-proposal-class-properties',
-      { loose: true },
-      {
-        // Needs to come after the decorators plugin, if present
-        after: ['@babel/plugin-proposal-decorators'],
-      }
-    );
+    // Newer versions of ember-cli-babel add the transforms automatically, so we
+    // only need to add ours on older versions.
+    let babelVersion = this._getBabelVersion();
+    if (!babelVersion || semver.lt(babelVersion, '7.7.0')) {
+      this._addPluginIfMissing(
+        '@babel/plugin-proposal-class-properties',
+        { loose: true },
+        {
+          // Needs to come after the decorators plugin, if present
+          after: ['@babel/plugin-proposal-decorators'],
+        }
+      );
+    }
 
     // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
     // "property initialization occurs in the right order")
@@ -95,11 +100,15 @@ export default addon({
     return !['in-repo-a', 'in-repo-b'].includes(addon.name);
   },
 
-  _checkBabelVersion() {
+  _getBabelVersion() {
     let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
-    let version = babel && babel.pkg.version;
-    if (!babel || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
-      let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
+    return babel && babel.pkg.version;
+  },
+
+  _checkBabelVersion() {
+    let version = this._getBabelVersion();
+    if (!version || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
+      let versionString = version ? `version ${version}` : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
         `ember-cli-typescript requires ember-cli-babel ^7.1.0, but you have ${versionString} installed; ` +
           'your TypeScript files may not be transpiled correctly.'
