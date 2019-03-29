@@ -1,10 +1,10 @@
 'use strict';
 
-const fs = require('fs-extra');
-const walkSync = require('walk-sync');
+import * as fs from 'fs-extra';
+import walkSync from 'walk-sync';
 
-const ember = require('ember-cli-blueprint-test-helpers/lib/helpers/ember');
-const blueprintHelpers = require('ember-cli-blueprint-test-helpers/helpers');
+import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
+import  blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 

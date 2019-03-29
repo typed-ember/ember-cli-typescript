@@ -1,13 +1,13 @@
 'use strict';
 
-const fs = require('fs-extra');
-const path = require('path');
-const helpers = require('ember-cli-blueprint-test-helpers/helpers');
-const chaiHelpers = require('ember-cli-blueprint-test-helpers/chai');
-const Blueprint = require('ember-cli/lib/models/blueprint');
-const Project = require('ember-cli/lib/models/project');
+import fs from 'fs-extra';
+import path from 'path';
+import helpers from 'ember-cli-blueprint-test-helpers/helpers';
+import chaiHelpers from 'ember-cli-blueprint-test-helpers/chai';
+import Blueprint from 'ember-cli/lib/models/blueprint';
+import Project from 'ember-cli/lib/models/project';
 
-const ects = require('../../blueprints/ember-cli-typescript');
+import ects from '../../blueprints/ember-cli-typescript/index';
 
 const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
@@ -22,10 +22,11 @@ describe('Acceptance: ember-cli-typescript generator', function() {
       if (taskName === 'npm-install') {
         // Mock npm-install that only modifies package.json
         return {
-          run: function(options) {
+          run: function(options: { packages: string[] }) {
             let pkgJson = fs.readJsonSync('package.json');
             options.packages.forEach(function(pkg) {
               let pkgName = pkg.match(/^(.*)@[^@]*$/);
+              if (!pkgName) throw new Error(`Improperly-formatted package name: ${pkgName}`);
               pkgJson['devDependencies'][pkgName[1]] = '*';
             });
             fs.writeJsonSync('package.json', pkgJson);

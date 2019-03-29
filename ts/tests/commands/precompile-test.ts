@@ -1,13 +1,13 @@
 'use strict';
 
-const fs = require('fs-extra');
+import * as fs from 'fs-extra';
 
-const ember = require('ember-cli-blueprint-test-helpers/lib/helpers/ember');
-const blueprintHelpers = require('ember-cli-blueprint-test-helpers/helpers');
+import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
+import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 
-const chai = require('ember-cli-blueprint-test-helpers/chai');
+import * as chai from 'ember-cli-blueprint-test-helpers/chai';
 const expect = chai.expect;
 const file = chai.file;
 
