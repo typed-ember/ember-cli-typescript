@@ -134,6 +134,16 @@ describe('Acceptance: ember-cli-typescript generator', function() {
         expect(projectTypes).to.exist;
         expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
 
+        const globalTypes = file('types/global.d.ts');
+        expect(globalTypes).to.exist;
+        expect(globalTypes)
+          .to.include("declare module 'my-addon/templates/*'")
+          .to.include(`
+  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  const tmpl: TemplateFactory;
+  export default tmpl;
+`);
+
         const environmentTypes = file('tests/dummy/app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
 
@@ -194,6 +204,15 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           expect(projectTypes).to.exist;
           expect(projectTypes).to.include(ects.APP_DECLARATIONS);
 
+          const globalTypes = file('types/global.d.ts');
+          expect(globalTypes).to.exist;
+          expect(globalTypes)
+            .to.include("declare module 'my-app/ui/components/*/template'")
+            .to.include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  const tmpl: TemplateFactory;
+  export default tmpl;
+`);
+
           const environmentTypes = file('config/environment.d.ts');
           expect(environmentTypes).to.exist;
 
@@ -240,6 +259,15 @@ describe('Acceptance: ember-cli-typescript generator', function() {
           const projectTypes = file('types/dummy/index.d.ts');
           expect(projectTypes).to.exist;
           expect(projectTypes).not.to.include(ects.APP_DECLARATIONS);
+
+          const globalTypes = file('types/global.d.ts');
+          expect(globalTypes).to.exist;
+          expect(globalTypes)
+            .to.include("declare module 'my-addon/ui/components/*/template'")
+            .to.include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  const tmpl: TemplateFactory;
+  export default tmpl;
+`);
 
           const environmentTypes = file('tests/dummy/config/environment.d.ts');
           expect(environmentTypes).to.exist;

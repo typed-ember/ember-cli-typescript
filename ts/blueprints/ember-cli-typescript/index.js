@@ -3,16 +3,36 @@
 const fs = require('fs');
 const path = require('path');
 
-const APP_DECLARATIONS = `
-import Ember from 'ember';
+const APP_DECLARATIONS = `import Ember from 'ember';
 
 declare global {
   interface Array<T> extends Ember.ArrayPrototypeExtensions<T> {}
   // interface Function extends Ember.FunctionPrototypeExtensions {}
 }
 
-export {};
+export {};`;
+
+/**
+ * @param {string} projectName
+ * @param {'classic' | 'pods' | 'mu'} layout
+ */
+function buildTemplateDeclarations(projectName, layout) {
+  const comment = '// Types for compiled templates';
+  const moduleBody = `
+  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  const tmpl: TemplateFactory;
+  export default tmpl;
 `;
+  switch (layout) {
+    case 'classic': return `${comment}
+declare module '${projectName}/templates/*' { ${moduleBody}}`;
+    case 'pods': return `${comment}
+declare module '${projectName}/components/*/template' { ${moduleBody}}`;
+    case 'mu': return `${comment}
+declare module '${projectName}/ui/components/*/template' { ${moduleBody}}`;
+    default: throw new Error(`Unexpecte project layout type: "${layout}"`);
+  }
+}
 
 module.exports = {
   APP_DECLARATIONS,
@@ -33,6 +53,7 @@ module.exports = {
     let isAddon = this.project.isEmberCLIAddon();
     let isMU = this._detectMU();
     let includes = isMU ? ['src'] : ['app', isAddon && 'addon'].filter(Boolean);
+    const isPods = this.pod;
 
     includes = includes.concat(['tests', 'types']).concat(inRepoAddons);
 
@@ -88,11 +109,19 @@ module.exports = {
 
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
       },
-      baseDeclarations: dasherizedName => {
+      indexDeclarations: dasherizedName => {
         const isDummyApp = dasherizedName === 'dummy';
         const useAppDeclarations = !(isAddon || isDummyApp);
         return useAppDeclarations ? APP_DECLARATIONS : '';
       },
+      globalDeclarations: dasherizedName => {
+        /** @type {'classic' | 'pods' | 'mu'} */
+        let projectLayout;
+        if (isPods) projectLayout = 'pods';
+        else if (isMU) projectLayout = 'mu';
+        else projectLayout = 'classic';
+        return buildTemplateDeclarations(dasherizedName, projectLayout);
+      }
     };
   },
 
