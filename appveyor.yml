@@ -29,7 +29,7 @@ test_script:
   - yarn versions
   # Typecheck and compile the addon, then nuke the TS source so we're testing the code we would publish
   - cmd: yarn ci:prepare
-  - cmd: yarn ember try:one defaults
+  - cmd: yarn ci:test
 
 # Don't actually build.
 build: off
