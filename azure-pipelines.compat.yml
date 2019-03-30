@@ -1,0 +1,49 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+pool:
+  vmImage: 'vs2017-win2016'
+
+variables:
+  CI: true
+
+trigger:
+  paths:
+    exclude:
+      - README.md
+      - CHANGELOG.md
+      - CODE_OF_CONDUCT.md
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '8.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install -g yarn
+    displayName: 'Setup global tools'
+
+  - script: |
+      yarn install
+    displayName: 'Build'
+
+  - script: |
+      yarn ci:prepare
+    displayName: 'Prepare CI environment'
+
+  - script: |
+      yarn ci:test:app -r xunit
+    displayName: 'Ember App Tests'
+
+  - script: |
+      yarn ci:test:node -R xunit -O output=node-tests.xml
+    displayName: 'Node Tests'
+  - script: |
+      echo " --- EMBER TESTS --- " && cat ember-tests.xml && echo " --- NODE TESTS --- " && cat node-tests.xml
+    displayName: 'Log test output files'
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'jUnit'
+      testResultsFiles: '*-tests.xml'
