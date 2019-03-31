@@ -2,8 +2,6 @@ import co from 'co';
 import SkeletonApp from '../helpers/skeleton-app';
 import chai from 'ember-cli-blueprint-test-helpers/chai';
 import * as esprima from 'esprima';
-import psList from 'ps-list';
-import { differenceBy as arrDifferenceBy } from 'lodash';
 import {
   ExpressionStatement,
   Statement,
@@ -25,26 +23,6 @@ describe('Acceptance: build', function() {
 
   afterEach(function() {
     app.teardown();
-  });
-
-  let processesBefore: psList.ProcessDescriptor[];
-  let processesAfter: psList.ProcessDescriptor[];
-
-  function logLingeringProcesses() {
-    const lingeringProcesses = arrDifferenceBy(
-      processesBefore.map(p => p.pid),
-      processesAfter.map(p => p.pid),
-      'id'
-    );
-    console.log('Lingering Processes: ', JSON.stringify(lingeringProcesses, null, '  '));
-  }
-
-  before(async function() {
-    processesBefore = await psList();
-  });
-  after(async function() {
-    processesAfter = await psList();
-    logLingeringProcesses();
   });
 
   it(
