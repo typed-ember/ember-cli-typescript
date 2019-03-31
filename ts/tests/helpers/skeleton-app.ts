@@ -1,17 +1,32 @@
-'use strict';
+import fs from 'fs-extra';
+import path from 'path';
+import tmp from 'tmp';
+import execa from 'execa';
+import { EventEmitter } from 'events';
+import got from 'got';
+import debugLib from 'debug';
 
-const fs = require('fs-extra');
-const path = require('path');
-const mktemp = require('mktemp');
-const execa = require('execa');
-const EventEmitter = require('events').EventEmitter;
-const got = require('got');
-const debug = require('debug')('skeleton-app');
+tmp.setGracefulCleanup();
 
-module.exports = class SkeletonApp {
+const debug = debugLib('skeleton-app');
+
+const getEmberPort = (() => {
+  let lastPort = 4210;
+  return () => lastPort++;
+})();
+
+export default class SkeletonApp {
+  port = getEmberPort();
+  watched: WatchedBuild | null = null;
+  tmpDir = tmp.dirSync({
+    tries: 10,
+    unsafeCleanup: true,
+    dir: process.cwd(),
+    template: 'test-skeleton-app-XXXXXX',
+  });
+  root = this.tmpDir.name;
+
   constructor() {
-    this._watched = null;
-    this.root = mktemp.createDirSync('test-skeleton-app-XXXXXX');
     fs.copySync(`${__dirname}/../../../test-fixtures/skeleton-app`, this.root);
   }
 
@@ -20,69 +35,53 @@ module.exports = class SkeletonApp {
   }
 
   serve() {
-    if (this._watched) {
+    if (this.watched) {
       throw new Error('Already serving');
     }
-
-    return this._watched = new WatchedBuild(this._ember(['serve']));
+    return (this.watched = new WatchedBuild(
+      this._ember(['serve', '--port', `${this.port}`]),
+      this.port
+    ));
   }
 
-  updatePackageJSON(callback) {
+  updatePackageJSON(callback: (arg: any) => string) {
     let pkgPath = `${this.root}/package.json`;
     let pkg = fs.readJSONSync(pkgPath);
     fs.writeJSONSync(pkgPath, callback(pkg) || pkg, { spaces: 2 });
   }
 
-  writeFile(filePath, contents) {
+  writeFile(filePath: string, contents: string) {
     let fullPath = `${this.root}/${filePath}`;
     fs.ensureDirSync(path.dirname(fullPath));
     fs.writeFileSync(fullPath, contents, 'utf-8');
   }
 
-  readFile(path) {
+  readFile(path: string) {
     return fs.readFileSync(`${this.root}/${path}`, 'utf-8');
   }
 
-  removeFile(path) {
+  removeFile(path: string) {
     return fs.unlinkSync(`${this.root}/${path}`);
   }
 
   teardown() {
-    if (this._watched) {
-      this._watched.kill();
+    if (this.watched) {
+      this.watched.kill();
     }
-
-    this._cleanupRootDir({ retries: 1 });
+    this.tmpDir.removeCallback();
   }
 
-  _ember(args) {
+  _ember(args: string[]) {
     let ember = require.resolve('ember-cli/bin/ember');
-    return execa('node', [ember].concat(args), { cwd: this.root });
+    return execa('node', [ember].concat(args), { cwd: this.root, cleanup: true });
   }
-
-  _cleanupRootDir(options) {
-    let retries = options && options.retries || 0;
-
-    try {
-      fs.removeSync(this.root);
-    } catch (error) {
-      if (retries > 0) {
-        // Windows doesn't necessarily kill the process immediately, so
-        // leave a little time before trying to remove the directory.
-        setTimeout(() => this._cleanupRootDir({ retries: retries - 1 }), 250);
-      } else {
-        // eslint-disable-next-line no-console
-        console.warn(`Warning: unable to remove skeleton-app tmpdir ${this.root} (${error.code})`);
-      }
-    }
-  }
-}
+};
 
 class WatchedBuild extends EventEmitter {
-  constructor(ember) {
+
+  constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
-    this._ember = ember;
-    this._ember.stdout.on('data', (data) => {
+    this.ember.stdout.on('data', data => {
       let output = data.toString();
       if (output.includes('Build successful')) {
         this.emit('did-rebuild');
@@ -91,33 +90,33 @@ class WatchedBuild extends EventEmitter {
       debug(output);
     });
 
-    this._ember.stderr.on('data', (data) => {
+    this.ember.stderr.on('data', data => {
       debug(data.toString());
     });
 
-    this._ember.catch((error) => {
+    this.ember.catch(error => {
       this.emit('did-error', error);
     });
   }
 
-  request(path) {
-    return got(`http://localhost:4200${path}`);
+  request(path: string) {
+    return got(`http://localhost:${this.port}${path}`);
   }
 
-  waitForOutput(target) {
+  waitForOutput(target: string) {
     return new Promise(resolve => {
       let output = '';
-      let listener = (data) => {
+      let listener = (data: string | Buffer) => {
         output += data.toString();
         if (output.includes(target)) {
-          this._ember.stdout.removeListener('data', listener);
-          this._ember.stderr.removeListener('data', listener);
+          this.ember.stdout.removeListener('data', listener);
+          this.ember.stderr.removeListener('data', listener);
           resolve(output);
         }
       };
 
-      this._ember.stdout.on('data', listener);
-      this._ember.stderr.on('data', listener);
+      this.ember.stdout.on('data', listener);
+      this.ember.stderr.on('data', listener);
     });
   }
 
@@ -129,6 +128,6 @@ class WatchedBuild extends EventEmitter {
   }
 
   kill() {
-    this._ember.kill();
+    this.ember.kill();
   }
 }

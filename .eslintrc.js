@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module',
@@ -63,6 +64,7 @@ module.exports = {
       },
       rules: {
         'node/no-unpublished-require': 'off',
+        'node/no-unsupported-features/es-syntax': 'off',
       },
     },
 
@@ -73,8 +75,8 @@ module.exports = {
       rules: {
         // These are covered by tsc
         'no-undef': 'off',
-        'no-unused-vars': 'off'
-      }
-    }
+        'no-unused-vars': 'off',
+      },
+    },
   ],
 };
