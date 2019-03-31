@@ -75,7 +75,7 @@ export default class SkeletonApp {
     let ember = require.resolve('ember-cli/bin/ember');
     return execa('node', [ember].concat(args), { cwd: this.root, cleanup: true });
   }
-};
+}
 
 class WatchedBuild extends EventEmitter {
 
