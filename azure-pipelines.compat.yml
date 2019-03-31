@@ -1,12 +1,21 @@
-# Node.js
-# Build a general Node.js project with npm.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+strategy:
+  matrix:
+    ember_cli_release:
+      ember_cli_version: 'latest'
+    ember_cli_beta:
+      ember_cli_version: 'beta'
+    ts_release:
+      ts_version: 'latest'
+    ts_beta:
+      ts_version: 'next'
+
 pool:
-  vmImage: 'vs2017-win2016'
+  vmImage: 'ubuntu-16.04'
 
 variables:
   CI: true
+  ember_cli_version: ''
+  ts_version: ''
 
 trigger:
   paths:
@@ -23,6 +32,14 @@ steps:
   - script: |
       npm install -g yarn
     displayName: 'Setup global tools'
+
+  - script: yarn add -D ember-cli@$(ember_cli_version)
+    condition: not(eq(variables['ember_cli_version'], ''))
+    displayName: 'Testing against specified ember-cli version: $(ember_cli_version)'
+
+  - script: yarn add -D typescript@$(ts_version)
+    condition: not(eq(variables['ts_version'], ''))
+    displayName: 'Testing against specified TypeScript version: $(ts_version)'
 
   - script: |
       yarn install

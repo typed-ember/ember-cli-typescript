@@ -158,7 +158,7 @@ function extractModuleBody(script: string, moduleName: string) {
     .filter(isExpressionStatement)
     .map(stmt => stmt.expression)
     .filter(isSpecialCallExpression)
-    .filter(expr => (expr.arguments[0] as any).value === moduleName);
+    .filter(expr => expr.arguments[0].value === moduleName);
   if (!definition) throw new Error('Definition for call expression not found');
   let moduleDef = definition.arguments[2].body;
 
