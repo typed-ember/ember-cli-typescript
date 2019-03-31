@@ -29,6 +29,10 @@ steps:
     displayName: 'Build'
 
   - script: |
+      yarn lint:js
+    displayName: 'Lint JS/TS code'
+
+  - script: |
       yarn ci:prepare
     displayName: 'Prepare CI environment'
 
