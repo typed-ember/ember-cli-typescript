@@ -41,6 +41,13 @@ declare module 'ember-cli/lib/models/addon' {
   }
 }
 
+declare module 'ember-cli/lib/models/blueprint' {
+  class Blueprint {
+    taskFor(taskName: string): void;
+  }
+  export = Blueprint;
+}
+
 declare module 'ember-cli/lib/models/command' {
   import CoreObject from 'core-object';
   import UI from 'console-ui';
@@ -88,5 +95,6 @@ declare module 'ember-cli/lib/models/project' {
     name(): string;
     isEmberCLIAddon(): boolean;
     require(module: string): unknown;
+    isModuleUnification(): boolean;
   }
 }

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
+    "target": "es2016",
     "module": "commonjs",
     "moduleResolution": "node",
     "allowJs": true,
@@ -8,6 +8,7 @@
     "noEmit": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
+    "strict": true,
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "noUnusedLocals": true,
