@@ -71,7 +71,7 @@
     "@types/node": "9.6.47",
     "@types/qunit": "2.5.4",
     "@types/resolve": "0.0.8",
-    "@types/semver": "5.5.0",
+    "@types/semver": "6.0.0",
     "@types/tmp": "0.0.34",
     "babel-eslint": "10.0.1",
     "broccoli-asset-rev": "3.0.0",
