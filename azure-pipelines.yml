@@ -20,6 +20,7 @@ jobs:
         runLint: true
 
 - job: windows
+  dependsOn: linux_fixed
   displayName: 'windows'
   pool:
     vmImage: 'vs2017-win2016'
@@ -41,6 +42,7 @@ jobs:
 - job: ts_versions
   displayName: 'ts'
   dependsOn: linux_fixed
+  dependsOn: linux_floating
   pool:
     vmImage: 'ubuntu-16.04'
   strategy:
@@ -57,6 +59,7 @@ jobs:
 - job: ember_cli_versions
   displayName: 'ember-cli'
   dependsOn: linux_fixed
+  dependsOn: linux_floating
   pool:
     vmImage: 'ubuntu-16.04'
   strategy:
