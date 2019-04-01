@@ -19,22 +19,36 @@ env:
 jobs:
   fail_fast: true
   allow_failures:
-    - env: EMBER_TRY_SCENARIO=typescript-beta
-    - env: EMBER_TRY_SCENARIO=ember-cli-beta
+    - name: "Typescript beta"
+    - name: "Ember CLI beta"
 
   include:
-    - stage: "Tests"
-      name: "Tests"
+    - stage: "Basic Tests"
+      name: "Linting, Node & Ember Tests"
+      before_script: echo "no before_script"
       script:
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:log-version-info
         - test $MD_ONLY && echo "Skipped!" || yarn lint:js
         - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
         - test $MD_ONLY && echo "Skipped!" || yarn ci:test:app
         - test $MD_ONLY && echo "Skipped!" || yarn ci:test:node
     - stage: "Versioned Tests"
-      env: EMBER_TRY_SCENARIO=typescript-release
-    - env: EMBER_TRY_SCENARIO=typescript-beta
-    - env: EMBER_TRY_SCENARIO=ember-cli-release
-    - env: EMBER_TRY_SCENARIO=ember-cli-beta
+      name: "TypeScript Release"
+      before_script:
+        - test $MD_ONLY && echo "Skipped!" || yarn add -D typescript@latest
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+    - name: "Typescript beta"
+      before_script:
+        - test $MD_ONLY && echo "Skipped!" || yarn add -D typescript@next
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+    - name: "Ember CLI latest"
+      before_script:
+        - test $MD_ONLY && echo "Skipped!" || yarn add -D ember-cli@latest
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+    - name: "Ember CLI beta"
+      before_script:
+        - test $MD_ONLY && echo "Skipped!" || yarn add -D ember-cli@beta
+        - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
 
 before_install:
   - bash ./is_md_only.sh && MD_ONLY=true && echo "Only .md files have changed!" || test true
@@ -44,14 +58,15 @@ before_install:
 install:
   - test $MD_ONLY && echo "Skipped!" || yarn install
 
-script:
+before_script:
   # Typecheck and compile the addon, then nuke the TS source so we're testing the code we would publish
   - test $MD_ONLY && echo "Skipped!" || yarn ci:prepare
+
+script:
   # Usually, it's ok to finish the test scenario without reverting
   #  to the addon's original dependency state, skipping "cleanup".
-  - test $MD_ONLY && echo "Skipped!" || yarn ember try:one $EMBER_TRY_SCENARIO --skip-cleanup
+  - test $MD_ONLY && echo "Skipped!" || yarn ci:test
 
-# We build PRs, but don't trigger separate builds for the PR from the branch.
 branches:
   only:
     - master

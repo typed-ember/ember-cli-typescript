@@ -26,3 +26,4 @@ package.json.ember-try
 # TypeScript
 jsconfig.json
 *-tests.xml
+test-skeleton-app*
