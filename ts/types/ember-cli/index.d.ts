@@ -98,8 +98,3 @@ declare module 'ember-cli/lib/models/project' {
     isModuleUnification(): boolean;
   }
 }
-
-declare module 'ember-cli-blueprint-test-helpers/helpers';
-declare module 'ember-cli-blueprint-test-helpers/chai';
-declare module 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
-declare module 'mktemp';
