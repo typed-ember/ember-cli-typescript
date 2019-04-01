@@ -27,7 +27,7 @@ function buildTemplateDeclarations(projectName, layout) {
     case 'classic': return `${comment}
 declare module '${projectName}/templates/*' { ${moduleBody}}`;
     case 'pods': return `${comment}
-declare module '${projectName}/components/*/template' { ${moduleBody}}`;
+declare module '${projectName}/*/template' { ${moduleBody}}`;
     case 'mu': return `${comment}
 declare module '${projectName}/ui/components/*/template' { ${moduleBody}}`;
     default: throw new Error(`Unexpecte project layout type: "${layout}"`);
