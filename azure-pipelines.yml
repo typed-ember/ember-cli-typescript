@@ -77,9 +77,15 @@ jobs:
     - windows
     - linux_floating
     - linux_fixed
-  - task: Npm@1
-    inputs:
-      command: publish
-      publishRegistry: useFeed
-      publishFeed: e-cli-ts-prerelease
-    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: ${{ parameters.nodeVersion }}
+      displayName: 'Install Node.js'
+
+    - task: Npm@1
+      inputs:
+        command: publish
+        publishRegistry: useFeed
+        publishFeed: e-cli-ts-prerelease
+      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
