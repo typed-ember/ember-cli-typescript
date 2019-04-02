@@ -34,7 +34,7 @@
     "ci:test": "yarn ci:log-version-info && yarn ci:test:app && yarn ci:test:node",
     "ci:test:app": "ember test",
     "ci:test:node": "mocha --recursive js/tests",
-    "prepublishOnly": "yarn tsc --project ts --noEmit false",
+    "prepublishOnly": "yarn tsc --noEmit false --project ts",
     "postpublish": "rimraf js"
   },
   "dependencies": {
