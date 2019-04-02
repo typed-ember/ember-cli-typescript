@@ -1,1 +1,1 @@
-<%= baseDeclarations(dasherizedPackageName) %>
+<%= indexDeclarations(dasherizedPackageName) %>
