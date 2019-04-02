@@ -82,7 +82,7 @@ jobs:
       inputs:
         versionSpec: '10'
       displayName: 'Install Node.js'
-
+    - script: yarn install
     - task: Npm@1
       inputs:
         command: publish
