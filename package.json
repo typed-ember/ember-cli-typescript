@@ -35,7 +35,8 @@
     "ci:test:app": "ember test",
     "ci:test:node": "mocha --recursive js/tests",
     "prepublishOnly": "yarn tsc --noEmit false --project ts",
-    "postpublish": "rimraf js"
+    "postpublish": "rimraf js",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -u"
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
@@ -81,6 +82,7 @@
     "ember-cli": "3.9.0",
     "ember-cli-addon-docs": "0.6.8",
     "commitlint-azure-pipelines-cli": "^1.0.1",
+    "conventional-changelog-cli": "^2.0.12",
     "ember-cli-addon-docs-esdoc": "0.2.1",
     "ember-cli-app-version": "3.2.0",
     "ember-cli-babel": "7.7.3",
