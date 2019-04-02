@@ -80,7 +80,7 @@ jobs:
   steps:
     - task: NodeTool@0
       inputs:
-        versionSpec: ${{ parameters.nodeVersion }}
+        versionSpec: '10'
       displayName: 'Install Node.js'
 
     - task: Npm@1
