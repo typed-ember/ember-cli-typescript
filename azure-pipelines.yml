@@ -69,3 +69,17 @@ jobs:
     - template: .azure/ci-template.yml
       parameters:
         emberCliVersion: $(eCliVersion)
+
+-job: deploy
+  dependsOn:
+    - ember_cli_versions
+    - ts_versions
+    - windows
+    - linux_floating
+    - linux_fixed
+  - task: Npm@1
+    inputs:
+      command: publish
+      publishRegistry: useFeed
+      publishFeed: e-cli-ts-prerelease
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
