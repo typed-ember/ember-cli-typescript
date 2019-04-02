@@ -69,3 +69,10 @@ jobs:
     - template: .azure/ci-template.yml
       parameters:
         emberCliVersion: $(eCliVersion)
+
+-job: deploy
+  - task: Npm@1
+  inputs:
+    command: publish
+    publishRegistry: useFeed
+    publishFeed: e-cli-ts-prerelease
