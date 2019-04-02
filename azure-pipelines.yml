@@ -10,83 +10,62 @@ trigger:
       - CODE_OF_CONDUCT.md
 
 jobs:
-- job: linux_fixed
-  displayName: 'linux - fixed dependencies'
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure/ci-template.yml
-      parameters:
-        runLint: true
+  - job: linux_fixed
+    displayName: 'linux - fixed dependencies'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - template: .azure/ci-template.yml
+        parameters:
+          runLint: true
 
-- job: windows
-  displayName: 'windows 10'
-  pool:
-    vmImage: 'vs2017-win2016'
-  steps:
-    - template: .azure/ci-template.yml
-      parameters:
-        nodeTestExtraArgs: '--exit'
+  - job: windows
+    displayName: 'windows 10'
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+      - template: .azure/ci-template.yml
+        parameters:
+          nodeTestExtraArgs: '--exit'
 
-- job: linux_floating
-  displayName: 'linux - floating dependencies'
-  dependsOn: linux_fixed
-  pool:
-    vmImage: 'ubuntu-16.04'
-  steps:
-    - template: .azure/ci-template.yml
-      parameters:
-        runLint: true
+  - job: linux_floating
+    displayName: 'linux - floating dependencies'
+    dependsOn: linux_fixed
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - template: .azure/ci-template.yml
+        parameters:
+          runLint: true
 
-- job: ts_versions
-  displayName: 'typescript'
-  dependsOn: linux_fixed
-  pool:
-    vmImage: 'ubuntu-16.04'
-  strategy:
-    matrix:
-      release:
-        typeScriptVersion: latest
-      beta:
-        typeScriptVersion: next
-  steps:
-    - template: .azure/ci-template.yml
-      parameters:
-        tsVersion: $(typeScriptVersion)
+  - job: ts_versions
+    displayName: 'typescript'
+    dependsOn: linux_fixed
+    pool:
+      vmImage: 'ubuntu-16.04'
+    strategy:
+      matrix:
+        release:
+          typeScriptVersion: latest
+        beta:
+          typeScriptVersion: next
+    steps:
+      - template: .azure/ci-template.yml
+        parameters:
+          tsVersion: $(typeScriptVersion)
 
-- job: ember_cli_versions
-  displayName: 'ember-cli'
-  dependsOn: linux_fixed
-  pool:
-    vmImage: 'ubuntu-16.04'
-  strategy:
-    matrix:
-      release:
-        eCliVersion: latest
-      beta:
-        eCliVersion: beta
-  steps:
-    - template: .azure/ci-template.yml
-      parameters:
-        emberCliVersion: $(eCliVersion)
-
-- job: deploy
-  dependsOn:
-    - ember_cli_versions
-    - ts_versions
-    - windows
-    - linux_floating
-    - linux_fixed
-  steps:
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '10'
-      displayName: 'Install Node.js'
-      enabled: false
-    - script: yarn install
-    - task: Npm@1
-      inputs:
-        command: publish
-        publishRegistry: useFeed
-        publishFeed: e-cli-ts-prerelease
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  - job: ember_cli_versions
+    displayName: 'ember-cli'
+    dependsOn: linux_fixed
+    pool:
+      vmImage: 'ubuntu-16.04'
+    strategy:
+      matrix:
+        release:
+          eCliVersion: latest
+        beta:
+          eCliVersion: beta
+    steps:
+      - template: .azure/ci-template.yml
+        parameters:
+          emberCliVersion: $(eCliVersion)
