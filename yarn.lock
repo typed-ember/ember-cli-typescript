@@ -2744,19 +2744,19 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
-boilerplate-update@^0.19.5:
-  version "0.19.8"
-  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.19.8.tgz#e6718bbb929198b6ebd3801cbee507e157e33fb1"
-  integrity sha512-Fo3v3aAeaqV/WxmVhpu2zQ1N8k7imwPiqZyL6Q8QUaW5b7P137VUbItVWEWuBkEsrsHncz/evMFADwUBo3XwGA==
+boilerplate-update@^0.19.9:
+  version "0.19.9"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.19.9.tgz#7796d9593658a7a689ce5870785a97d19629c644"
+  integrity sha512-9c4BODr39sPOKH2N5nQvNPkGlYjIEN/newZAMX/mJwBdhXine/VtGqx5CX47/9ySOIU/SqirGJKpTUgeuO03Dg==
   dependencies:
     co "^4.6.0"
     cpr "^3.0.1"
     debug "^4.1.1"
     denodeify "^1.2.1"
     execa "^1.0.0"
-    git-diff-apply "^0.15.0"
+    git-diff-apply "^0.15.5"
     inquirer "^6.2.2"
-    merge-package.json "^2.0.2"
+    merge-package.json "^2.0.3"
     npx "^10.2.0"
     opn "^5.4.0"
     p-reduce "^1.0.0"
@@ -5603,12 +5603,12 @@ ember-cli-uglify@2.1.0:
     broccoli-uglify-sourcemap "^2.1.1"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.32.4:
-  version "0.32.4"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.32.4.tgz#fa4f4a7176422801e7d70e429d783c7a364c48ec"
-  integrity sha512-cXe8QDbb3x3K+bcgeLPY3qQvT3HjDGshyOg6tfZy+NRrpV5qdePbBcF+thFORcDTEoXtPZJb0rXHo6xbvq6IbA==
+ember-cli-update@0.32.5:
+  version "0.32.5"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.32.5.tgz#4a306278a027ed395024d2fb2ae7b3474f436329"
+  integrity sha512-0l+XsQvWGFCPrSMGhexX86pAds3/BhTyGq07lEkgQRTC0Mcn2IMwz7ABmrNyMUw7aZJX76GdPRkPelkFn7m68Q==
   dependencies:
-    boilerplate-update "^0.19.5"
+    boilerplate-update "^0.19.9"
     co "^4.6.0"
     debug "^4.1.1"
     fs-extra "^7.0.0"
@@ -7327,10 +7327,10 @@ git-config-path@^1.0.1:
     fs-exists-sync "^0.1.0"
     homedir-polyfill "^1.0.0"
 
-git-diff-apply@^0.15.0:
-  version "0.15.4"
-  resolved "https://registry.yarnpkg.com/git-diff-apply/-/git-diff-apply-0.15.4.tgz#d88bbffdb150a35df1298deaa93c19a291f36d96"
-  integrity sha512-PcIDusPU77/4y3SXCqPK0r95h4Uxjl5Jjgd+/Og7Hye3lINZNijCvuXPFAB/umW3rVM7S3YGu3d4vxQgdOUvlg==
+git-diff-apply@^0.15.5:
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/git-diff-apply/-/git-diff-apply-0.15.5.tgz#2a91e717a7fd30459cf01de51f608e64a0902a0e"
+  integrity sha512-lkQRUNGV9dKrjsqCmHiExFA7mHz7jO1JzccfrNNLzxwnw3WSHZIqYYBiEzJHBPSlJqL4543pRzmwjxxPaI4aTQ==
   dependencies:
     co "^4.6.0"
     debug "^4.0.0"
@@ -9714,13 +9714,13 @@ merge-descriptors@1.0.1:
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
-merge-package.json@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/merge-package.json/-/merge-package.json-2.0.2.tgz#50a97955b912e1077b17d880bdfc28c2495bbd08"
-  integrity sha512-7q+cG20M4g6/BEsY4efS0h+OPWYznr3i3c9B8w3UJ9NzJAkOikkPNC/KFu80cBbVGwx8bqrMWtEsQfAReKsGPQ==
+merge-package.json@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/merge-package.json/-/merge-package.json-2.0.3.tgz#174cdb28e10cfa2069ec26128f0f8680ac325ccc"
+  integrity sha512-N+kMlIc83RYP67j9BsVaikRFGBBZKK+YKL8C6iNFqcr7bOmhK/IwrkITGXmq/3Jj4t7/ydxsHF+oqlW8lCJwpg==
   dependencies:
     rfc6902-ordered "^3.1.1"
-    three-way-merger "^0.5.5"
+    three-way-merger "^0.5.7"
 
 merge-trees@^1.0.1:
   version "1.0.1"
@@ -13130,12 +13130,12 @@ theredoc@^1.0.0:
   resolved "https://registry.yarnpkg.com/theredoc/-/theredoc-1.0.0.tgz#bcace376af6feb1873efbdd0f91ed026570ff062"
   integrity sha512-KU3SA3TjRRM932jpNfD3u4Ec3bSvedyo5ITPI7zgWYnKep7BwQQaxlhI9qbO+lKJoRnoAbEVfMcAHRuKVYikDA==
 
-three-way-merger@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/three-way-merger/-/three-way-merger-0.5.5.tgz#3f0d9b309fbffe34f0f4dc8a0a5b3c5e6698213e"
-  integrity sha512-zRmsTqSU3B3ObzM83ueb4jiJQhaF8YfL4K9SXUR+KuW7YvdLg8GdJElrQ5PU57QEiqLe2KKcR+YM2lvrDkLyyg==
+three-way-merger@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/three-way-merger/-/three-way-merger-0.5.7.tgz#00d8ee4a74076fad391479838e4c9e3340487e5d"
+  integrity sha512-aD2nvGowCgJxoH49Izou5uR4PLCuH2yiw6+BJPg0H7RCLzpLy/4J9onM9sPXetmsq/AVfZ8fEyf8lbGKxKPrcA==
   dependencies:
-    semver "^5.4.1"
+    semver "^6.0.0"
 
 through2-filter@^3.0.0:
   version "3.0.0"
