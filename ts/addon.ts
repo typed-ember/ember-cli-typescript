@@ -112,7 +112,7 @@ export default addon({
 
   _checkBabelVersion() {
     let version = this._getBabelVersion();
-    if (!version || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
+    if (!version || !(semver.gte(version, '7.1.0') && semver.lt(version, '8.0.0'))) {
       let versionString = version ? `version ${version}` : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
         `ember-cli-typescript requires ember-cli-babel ^7.1.0, but you have ${versionString} installed; ` +
