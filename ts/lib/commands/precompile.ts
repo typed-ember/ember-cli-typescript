@@ -36,6 +36,15 @@ export default command({
 
     let manifestPath = options.manifestPath;
     let packageName = this.project.pkg.name;
+
+    // Ensure that if we are dealing with an addon that is using a different
+    // addon name from its package name, we use the addon name, since that is
+    // how it will be written for imports.
+    let addon = this.project.addons.find(addon => addon.root === this.project.root);
+    if (addon && addon.name !== packageName) {
+      packageName = addon.name;
+    }
+
     let createdFiles = copyDeclarations(pathRoots, paths, packageName, this.project.root);
 
     fs.mkdirsSync(path.dirname(manifestPath));
@@ -66,5 +75,5 @@ export default command({
     ];
 
     return { rootDir, paths, pathRoots };
-  }
+  },
 });
