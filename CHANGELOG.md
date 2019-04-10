@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.1] - 2019-04-10
+
+### Fixed 🔧
+
+- Correctly handles a mismatch between package and addon names ([#669](https://github.com/typed-ember/ember-cli-typescript/pull/669))
+- Uses [Notion](https://www.notionjs.com) to specify Node and Yarn versions correctly. ([#667](https://github.com/typed-ember/ember-cli-typescript/pull/667))
+
 ## [2.0.0] - 2019-03-13
 
 The bullets below comprise a Greatest Hits list of the fixes and additions from 1.x, but the 2.0 release constitutes a ground-up rewrite of how we handle both transpiling and typechecking TypeScript code. For a full guide for upgrading from 1.x to 2.0, see the [Upgrade Notes document](https://github.com/typed-ember/ember-cli-typescript/blob/13015d2e7ebef9d7b9b8b5acb84a35b8dfde5502/tests/dummy/app/templates/docs/upgrade-notes.md).
@@ -536,7 +543,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...HEAD
+[2.0.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...v2.0.0
 [2.0.0-rc.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2.0.0-rc.2
 [2.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-beta.3...v2.0.0-rc.1
