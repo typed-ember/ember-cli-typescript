@@ -19,6 +19,19 @@ jobs:
         parameters:
           runLint: true
 
+  - job: commitlint
+    displayName: 'conventional commits'
+    pool:
+      vmImage: 'ubuntu-16.04'
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: 10.x
+      - script: |
+          yarn install
+          yarn commitlint-azure-pipelines
+        displayName: Lint commits
+
   - job: windows
     displayName: 'windows 10'
     pool:
