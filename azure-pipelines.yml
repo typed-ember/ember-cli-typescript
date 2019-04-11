@@ -91,7 +91,11 @@ jobs:
           versionSpec: '10'
         displayName: 'Install Node.js'
       - script: yarn install
+        displayName: 'Installing Dependencies'
+      - script: node scripts/bump-version.js
+        displayName: 'Bump Version'
       - script: yarn prepublishOnly
+        displayName: 'Prepublish Tasks'
       - task: Npm@1
         inputs:
           command: publish

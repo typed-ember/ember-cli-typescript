@@ -30,6 +30,7 @@ module.exports = {
         'config/**/*.js',
         'tests/dummy/config/**/*.js',
         'ts/**/*.js',
+        'scripts/**/*.js',
       ],
       excludedFiles: ['app/**', 'addon/**', 'tests/dummy/app/**'],
       parserOptions: {
