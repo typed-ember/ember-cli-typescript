@@ -34,7 +34,7 @@
     "ci:test": "yarn ci:log-version-info && yarn ci:test:app && yarn ci:test:node",
     "ci:test:app": "ember test",
     "ci:test:node": "mocha --recursive js/tests",
-    "prepublishOnly": "yarn tsc --noEmit false --project ts",
+    "prepublishOnly": "tsc --noEmit false --project ts",
     "postpublish": "rimraf js",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -u"
   },
