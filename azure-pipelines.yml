@@ -10,78 +10,78 @@ trigger:
       - CODE_OF_CONDUCT.md
 
 jobs:
-  - job: linux_fixed
-    displayName: 'linux - fixed dependencies'
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - template: .azure/ci-template.yml
-        parameters:
-          runLint: true
+  # - job: linux_fixed
+  #   displayName: 'linux - fixed dependencies'
+  #   pool:
+  #     vmImage: 'ubuntu-16.04'
+  #   steps:
+  #     - template: .azure/ci-template.yml
+  #       parameters:
+  #         runLint: true
 
-  - job: commitlint
-    displayName: 'conventional commits'
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: 10.x
-      - script: |
-          yarn install
-          yarn commitlint-azure-pipelines
-        displayName: Lint commits
+  # - job: commitlint
+  #   displayName: 'conventional commits'
+  #   pool:
+  #     vmImage: 'ubuntu-16.04'
+  #   steps:
+  #     - task: NodeTool@0
+  #       inputs:
+  #         versionSpec: 10.x
+  #     - script: |
+  #         yarn install
+  #         yarn commitlint-azure-pipelines
+  #       displayName: Lint commits
 
-  - job: windows
-    displayName: 'windows 10'
-    pool:
-      vmImage: 'vs2017-win2016'
-    steps:
-      - template: .azure/ci-template.yml
-        parameters:
-          nodeTestExtraArgs: '--exit'
+  # - job: windows
+  #   displayName: 'windows 10'
+  #   pool:
+  #     vmImage: 'vs2017-win2016'
+  #   steps:
+  #     - template: .azure/ci-template.yml
+  #       parameters:
+  #         nodeTestExtraArgs: '--exit'
 
-  - job: linux_floating
-    displayName: 'linux - floating dependencies'
-    dependsOn: linux_fixed
-    pool:
-      vmImage: 'ubuntu-16.04'
-    steps:
-      - template: .azure/ci-template.yml
-        parameters:
-          runLint: true
+  # - job: linux_floating
+  #   displayName: 'linux - floating dependencies'
+  #   dependsOn: linux_fixed
+  #   pool:
+  #     vmImage: 'ubuntu-16.04'
+  #   steps:
+  #     - template: .azure/ci-template.yml
+  #       parameters:
+  #         runLint: true
 
-  - job: ts_versions
-    displayName: 'typescript'
-    dependsOn: linux_fixed
-    pool:
-      vmImage: 'ubuntu-16.04'
-    strategy:
-      matrix:
-        release:
-          typeScriptVersion: latest
-        beta:
-          typeScriptVersion: next
-    steps:
-      - template: .azure/ci-template.yml
-        parameters:
-          tsVersion: $(typeScriptVersion)
+  # - job: ts_versions
+  #   displayName: 'typescript'
+  #   dependsOn: linux_fixed
+  #   pool:
+  #     vmImage: 'ubuntu-16.04'
+  #   strategy:
+  #     matrix:
+  #       release:
+  #         typeScriptVersion: latest
+  #       beta:
+  #         typeScriptVersion: next
+  #   steps:
+  #     - template: .azure/ci-template.yml
+  #       parameters:
+  #         tsVersion: $(typeScriptVersion)
 
-  - job: ember_cli_versions
-    displayName: 'ember-cli'
-    dependsOn: linux_fixed
-    pool:
-      vmImage: 'ubuntu-16.04'
-    strategy:
-      matrix:
-        release:
-          eCliVersion: latest
-        beta:
-          eCliVersion: beta
-    steps:
-      - template: .azure/ci-template.yml
-        parameters:
-          emberCliVersion: $(eCliVersion)
+  # - job: ember_cli_versions
+  #   displayName: 'ember-cli'
+  #   dependsOn: linux_fixed
+  #   pool:
+  #     vmImage: 'ubuntu-16.04'
+  #   strategy:
+  #     matrix:
+  #       release:
+  #         eCliVersion: latest
+  #       beta:
+  #         eCliVersion: beta
+  #   steps:
+  #     - template: .azure/ci-template.yml
+  #       parameters:
+  #         emberCliVersion: $(eCliVersion)
 
   - job: release
     pool:
@@ -91,6 +91,7 @@ jobs:
         inputs:
           versionSpec: '10'
         displayName: 'Install Node.js'
+      -
       - script: yarn prepublishOnly
       - task: Npm@1
         inputs:
