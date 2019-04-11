@@ -1,5 +1,4 @@
 trigger:
-  batch: true
   branches:
     include:
       - master
@@ -91,6 +90,7 @@ jobs:
         inputs:
           versionSpec: '10'
         displayName: 'Install Node.js'
+      - script: yarn install
       - script: yarn prepublishOnly
       - task: Npm@1
         inputs:
