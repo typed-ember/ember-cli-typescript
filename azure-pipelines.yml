@@ -91,7 +91,6 @@ jobs:
         inputs:
           versionSpec: '10'
         displayName: 'Install Node.js'
-      -
       - script: yarn prepublishOnly
       - task: Npm@1
         inputs:
