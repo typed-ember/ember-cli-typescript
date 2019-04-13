@@ -24,13 +24,17 @@ function buildTemplateDeclarations(projectName, layout) {
   export default tmpl;
 `;
   switch (layout) {
-    case 'classic': return `${comment}
+    case 'classic':
+      return `${comment}
 declare module '${projectName}/templates/*' { ${moduleBody}}`;
-    case 'pods': return `${comment}
+    case 'pods':
+      return `${comment}
 declare module '${projectName}/*/template' { ${moduleBody}}`;
-    case 'mu': return `${comment}
+    case 'mu':
+      return `${comment}
 declare module '${projectName}/ui/components/*/template' { ${moduleBody}}`;
-    default: throw new Error(`Unexpecte project layout type: "${layout}"`);
+    default:
+      throw new Error(`Unexpecte project layout type: "${layout}"`);
   }
 }
 
@@ -66,7 +70,10 @@ module.exports = {
     }
 
     return {
-      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(/\n/g, '\n  '),
+      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(
+        /\n/g,
+        '\n  '
+      ),
       pathsFor: dasherizedName => {
         // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
         let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
@@ -121,7 +128,7 @@ module.exports = {
         else if (isMU) projectLayout = 'mu';
         else projectLayout = 'classic';
         return buildTemplateDeclarations(dasherizedName, projectLayout);
-      }
+      },
     };
   },
 
@@ -140,7 +147,7 @@ module.exports = {
         } else {
           return options.inAddon ? 'tests/dummy/app' : 'app';
         }
-      }
+      },
     };
   },
 
@@ -164,9 +171,7 @@ module.exports = {
     ];
 
     if (this._has('ember-data')) {
-      packages.push(
-        { name: '@types/ember-data', target: 'latest' }
-      );
+      packages.push({ name: '@types/ember-data', target: 'latest' });
     }
 
     if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {

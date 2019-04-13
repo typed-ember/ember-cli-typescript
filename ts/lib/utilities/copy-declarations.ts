@@ -11,7 +11,10 @@ export default function copyDeclarations(
   let output: string[] = [];
   for (let logicalPath of Object.keys(paths)) {
     let physicalPaths = paths[logicalPath];
-    if (logicalPath.startsWith(`${packageName}/`) && logicalPath.indexOf('/*') === logicalPath.length - 2) {
+    if (
+      logicalPath.startsWith(`${packageName}/`) &&
+      logicalPath.indexOf('/*') === logicalPath.length - 2
+    ) {
       let subdirectory = logicalPath
         .replace(packageName, '')
         .replace('/*', '')
@@ -36,7 +39,9 @@ function copySubpathDeclarations(
       }
 
       let fullRoot = path.resolve(pathRoot, physicalPath.replace(/\/\*$/, ''));
-      if (!fs.existsSync(fullRoot)) { continue; }
+      if (!fs.existsSync(fullRoot)) {
+        continue;
+      }
 
       for (let file of walkSync(fullRoot, { globs: ['**/*.d.ts'] })) {
         let destinationPath = path.join(destDir, file);

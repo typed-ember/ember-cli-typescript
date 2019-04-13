@@ -1,6 +1,8 @@
 declare namespace Chai {
   interface ChaiStatic {
-    file(name: string): {
+    file(
+      name: string
+    ): {
       content: string;
     };
   }

@@ -12,22 +12,22 @@ describe('Unit: copyDeclarations', function() {
       packageName: 'my-package',
       paths: {
         'dummy/*': ['app/*', 'tests/dummy/app/*'],
-        'my-package/*': ['addon/*']
+        'my-package/*': ['addon/*'],
       },
       input: {
         addon: {
           'index.d.ts': 'export declare const foo: string',
         },
         app: {
-          'app.d.ts': 'ignore me please'
-        }
-      }
+          'app.d.ts': 'ignore me please',
+        },
+      },
     });
 
     expect(createdNodes).to.deep.equal(['index.d.ts']);
     expect(outputTree).to.deep.equal({
-      'index.d.ts': 'export declare const foo: string'
-    })
+      'index.d.ts': 'export declare const foo: string',
+    });
   });
 
   it('copies and merges generated declarations from subdirectories', function() {
@@ -35,29 +35,25 @@ describe('Unit: copyDeclarations', function() {
       packageName: 'my-package',
       paths: {
         'my-package/*': ['addon/*'],
-        'my-package/src/*': ['src/*']
+        'my-package/src/*': ['src/*'],
       },
       input: {
         addon: {
           'index.d.ts': 'export declare const foo: string',
         },
         src: {
-          'file.d.ts': 'µ'
-        }
-      }
+          'file.d.ts': 'µ',
+        },
+      },
     });
 
-    expect(createdNodes).to.deep.equal([
-      'index.d.ts',
-      'src',
-      'src/file.d.ts',
-    ]);
+    expect(createdNodes).to.deep.equal(['index.d.ts', 'src', 'src/file.d.ts']);
 
     expect(outputTree).to.deep.equal({
       'index.d.ts': 'export declare const foo: string',
       src: {
-        'file.d.ts': 'µ'
-      }
+        'file.d.ts': 'µ',
+      },
     });
   });
 
@@ -66,35 +62,31 @@ describe('Unit: copyDeclarations', function() {
       packageName: 'my-package',
       pathRoots: ['addon-files', 'generated-declarations'],
       paths: {
-        'my-package/*': ['addon/*']
+        'my-package/*': ['addon/*'],
       },
       input: {
         'addon-files': {
           addon: {
             'file.d.ts': 'declaration for file in addon',
             'file.js': 'js source for file',
-            'addon-file.d.ts': 'declaration for addon-file'
-          }
+            'addon-file.d.ts': 'declaration for addon-file',
+          },
         },
         'generated-declarations': {
           addon: {
             'file.d.ts': 'declaration for file in generated declarations',
-            'generated-file.d.ts': 'declaration for generated-file'
-          }
-        }
-      }
+            'generated-file.d.ts': 'declaration for generated-file',
+          },
+        },
+      },
     });
 
-    expect(createdNodes).to.deep.equal([
-      'addon-file.d.ts',
-      'file.d.ts',
-      'generated-file.d.ts'
-    ]);
+    expect(createdNodes).to.deep.equal(['addon-file.d.ts', 'file.d.ts', 'generated-file.d.ts']);
 
     expect(outputTree).to.deep.equal({
       'addon-file.d.ts': 'declaration for addon-file',
       'file.d.ts': 'declaration for file in addon',
-      'generated-file.d.ts': 'declaration for generated-file'
+      'generated-file.d.ts': 'declaration for generated-file',
     });
   });
 
@@ -102,38 +94,40 @@ describe('Unit: copyDeclarations', function() {
     let { createdNodes, outputTree } = runCopy({
       packageName: 'my-package',
       paths: {
-        'my-package/*': ['addon/*']
+        'my-package/*': ['addon/*'],
       },
       input: {
         addon: {
           'file.d.ts': 'hello',
-          'style.css': 'ignore me please'
-        }
-      }
+          'style.css': 'ignore me please',
+        },
+      },
     });
 
     expect(createdNodes).to.deep.equal(['file.d.ts']);
     expect(outputTree).to.deep.equal({
-      'file.d.ts': 'hello'
+      'file.d.ts': 'hello',
     });
   });
 
   it('rejects invalid path mappings', function() {
-    expect(() => runCopy({
-      packageName: 'my-package',
-      input: {},
-      paths: {
-        'my-package/*': ['addon']
-      }
-    })).to.throw('Missing trailing \'*\' in path mapping: addon');
+    expect(() =>
+      runCopy({
+        packageName: 'my-package',
+        input: {},
+        paths: {
+          'my-package/*': ['addon'],
+        },
+      })
+    ).to.throw("Missing trailing '*' in path mapping: addon");
   });
 });
 
 function runCopy(options: {
-  packageName: string,
-  pathRoots?: string[],
-  paths: Record<string, string[]>,
-  input: fixturify.Directory
+  packageName: string;
+  pathRoots?: string[];
+  paths: Record<string, string[]>;
+  input: fixturify.Directory;
 }) {
   let tmpdir = `${os.tmpdir()}/e-c-tests`;
   let inputBaseDir = `${tmpdir}/compiled`;
@@ -145,8 +139,15 @@ function runCopy(options: {
 
   fixturify.writeSync(inputBaseDir, options.input);
 
-  let absoluteCopiedFiles = copyDeclarations(pathRoots, options.paths, options.packageName, outputBaseDir);
-  let createdNodes = absoluteCopiedFiles.map(copiedFile => path.relative(outputBaseDir, copiedFile).replace(/\\/g, '/'));
+  let absoluteCopiedFiles = copyDeclarations(
+    pathRoots,
+    options.paths,
+    options.packageName,
+    outputBaseDir
+  );
+  let createdNodes = absoluteCopiedFiles.map(copiedFile =>
+    path.relative(outputBaseDir, copiedFile).replace(/\\/g, '/')
+  );
   let outputTree = fixturify.readSync(outputBaseDir);
 
   fs.removeSync(tmpdir);

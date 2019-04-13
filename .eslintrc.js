@@ -1,16 +1,18 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
-  plugins: ['ember'],
+  plugins: ['ember', '@typescript-eslint', 'prettier'],
   extends: ['eslint:recommended', 'plugin:ember/recommended'],
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    "prettier/prettier": "error"
+  },
   settings: {
     node: {
       // Honor both extensions when enforcing e.g. `node/no-missing-require`
@@ -41,10 +43,14 @@ module.exports = {
         node: true,
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
-        'ember/avoid-leaking-state-in-ember-objects': 'off',
-      }),
+      rules: Object.assign(
+        {},
+        require('eslint-plugin-node').configs.recommended.rules,
+        {
+          // add your custom rules and overrides for node files here
+          'ember/avoid-leaking-state-in-ember-objects': 'off',
+        }
+      ),
     },
 
     // test files
@@ -71,7 +77,6 @@ module.exports = {
     // all TypeScript files
     {
       files: ['**/*.ts'],
-      parser: 'typescript-eslint-parser',
       rules: {
         // These are covered by tsc
         'no-undef': 'off',

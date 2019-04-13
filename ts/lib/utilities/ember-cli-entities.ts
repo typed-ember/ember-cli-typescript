@@ -15,6 +15,8 @@ export function addon<T extends ExtendOptions<Addon>>(options: T & ExtendThisTyp
 }
 
 /** Configuration for defining an Ember CLI command */
-export function command<T extends ExtendOptions<Command>>(options: T & ExtendThisType<Command, T>): T {
+export function command<T extends ExtendOptions<Command>>(
+  options: T & ExtendThisType<Command, T>
+): T {
   return options;
 }

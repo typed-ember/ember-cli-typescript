@@ -78,7 +78,6 @@ export default class SkeletonApp {
 }
 
 class WatchedBuild extends EventEmitter {
-
   constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
     this.ember.stdout.on('data', data => {

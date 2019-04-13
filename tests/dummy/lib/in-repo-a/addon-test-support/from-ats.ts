@@ -1,1 +1,1 @@
-export const description = "From addon-test-support";
+export const description = 'From addon-test-support';

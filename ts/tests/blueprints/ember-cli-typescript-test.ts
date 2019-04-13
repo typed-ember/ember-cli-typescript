@@ -13,7 +13,9 @@ const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
 
 describe('Acceptance: ember-cli-typescript generator', function() {
-  helpers.setupTestHooks(this, { disabledTasks: ['addon-install', 'bower-install'] });
+  helpers.setupTestHooks(this, {
+    disabledTasks: ['addon-install', 'bower-install'],
+  });
 
   const originalTaskForFn = Blueprint.prototype.taskFor;
 
@@ -30,7 +32,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
               pkgJson['devDependencies'][pkgName[1]] = '*';
             });
             fs.writeJsonSync('package.json', pkgJson);
-          }
+          },
         };
       }
       return originalTaskForFn.call(this, taskName);
@@ -136,9 +138,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         const globalTypes = file('types/global.d.ts');
         expect(globalTypes).to.exist;
-        expect(globalTypes)
-          .to.include("declare module 'my-addon/templates/*'")
-          .to.include(`
+        expect(globalTypes).to.include("declare module 'my-addon/templates/*'").to.include(`
   import { TemplateFactory } from 'htmlbars-inline-precompile';
   const tmpl: TemplateFactory;
   export default tmpl;
@@ -206,9 +206,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const globalTypes = file('types/global.d.ts');
           expect(globalTypes).to.exist;
-          expect(globalTypes)
-            .to.include("declare module 'my-app/ui/components/*/template'")
-            .to.include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
+          expect(globalTypes).to.include("declare module 'my-app/ui/components/*/template'").to
+            .include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
   const tmpl: TemplateFactory;
   export default tmpl;
 `);
@@ -262,9 +261,8 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const globalTypes = file('types/global.d.ts');
           expect(globalTypes).to.exist;
-          expect(globalTypes)
-            .to.include("declare module 'my-addon/ui/components/*/template'")
-            .to.include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
+          expect(globalTypes).to.include("declare module 'my-addon/ui/components/*/template'").to
+            .include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
   const tmpl: TemplateFactory;
   export default tmpl;
 `);
@@ -401,10 +399,12 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
       return helpers
         .emberNew()
-        .then(() => helpers.modifyPackages([
-          { name: 'ember-cli-mocha', dev: true },
-          { name: 'ember-qunit', delete: true }
-        ]))
+        .then(() =>
+          helpers.modifyPackages([
+            { name: 'ember-cli-mocha', dev: true },
+            { name: 'ember-qunit', delete: true },
+          ])
+        )
         .then(() => helpers.emberGenerate(args))
         .then(() => {
           const pkg = file('package.json');
@@ -412,7 +412,10 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const pkgJson = JSON.parse(pkg.content);
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
-          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+          expect(pkgJson.devDependencies).to.not.have.any.keys(
+            '@types/ember-qunit',
+            '@types/qunit'
+          );
         });
     });
 
@@ -421,10 +424,12 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
       return helpers
         .emberNew()
-        .then(() => helpers.modifyPackages([
-          { name: 'ember-mocha', dev: true },
-          { name: 'ember-qunit', delete: true }
-        ]))
+        .then(() =>
+          helpers.modifyPackages([
+            { name: 'ember-mocha', dev: true },
+            { name: 'ember-qunit', delete: true },
+          ])
+        )
         .then(() => helpers.emberGenerate(args))
         .then(() => {
           const pkg = file('package.json');
@@ -432,7 +437,10 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const pkgJson = JSON.parse(pkg.content);
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
-          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+          expect(pkgJson.devDependencies).to.not.have.any.keys(
+            '@types/ember-qunit',
+            '@types/qunit'
+          );
         });
     });
 
@@ -441,10 +449,12 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
       return helpers
         .emberNew({ target: 'addon' })
-        .then(() => helpers.modifyPackages([
-          { name: 'ember-cli-mocha', dev: true },
-          { name: 'ember-qunit', delete: true }
-        ]))
+        .then(() =>
+          helpers.modifyPackages([
+            { name: 'ember-cli-mocha', dev: true },
+            { name: 'ember-qunit', delete: true },
+          ])
+        )
         .then(() => helpers.emberGenerate(args))
         .then(() => {
           const pkg = file('package.json');
@@ -452,7 +462,10 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const pkgJson = JSON.parse(pkg.content);
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
-          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+          expect(pkgJson.devDependencies).to.not.have.any.keys(
+            '@types/ember-qunit',
+            '@types/qunit'
+          );
         });
     });
 
@@ -461,10 +474,12 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
       return helpers
         .emberNew({ target: 'addon' })
-        .then(() => helpers.modifyPackages([
-          { name: 'ember-mocha', dev: true },
-          { name: 'ember-qunit', delete: true }
-        ]))
+        .then(() =>
+          helpers.modifyPackages([
+            { name: 'ember-mocha', dev: true },
+            { name: 'ember-qunit', delete: true },
+          ])
+        )
         .then(() => helpers.emberGenerate(args))
         .then(() => {
           const pkg = file('package.json');
@@ -472,7 +487,10 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const pkgJson = JSON.parse(pkg.content);
           expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-mocha', '@types/mocha');
-          expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-qunit', '@types/qunit');
+          expect(pkgJson.devDependencies).to.not.have.any.keys(
+            '@types/ember-qunit',
+            '@types/qunit'
+          );
         });
     });
   });
