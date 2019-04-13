@@ -29,6 +29,26 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
+"@babel/core@^7.3.4":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.4.3.tgz#198d6d3af4567be3989550d97e068de94503074f"
+  integrity sha512-oDpASqKFlbspQfzAE7yaeTmdljSH2ADIvBlb0RwbStltTuWa0+7CCI1fYVINNv9saHPa1W7oaKeuNuKj+RQCvA==
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
+    "@babel/generator" "^7.4.0"
+    "@babel/helpers" "^7.4.3"
+    "@babel/parser" "^7.4.3"
+    "@babel/template" "^7.4.0"
+    "@babel/traverse" "^7.4.3"
+    "@babel/types" "^7.4.0"
+    convert-source-map "^1.1.0"
+    debug "^4.1.0"
+    json5 "^2.1.0"
+    lodash "^4.17.11"
+    resolve "^1.3.2"
+    semver "^5.4.1"
+    source-map "^0.5.0"
+
 "@babel/generator@^7.3.4", "@babel/generator@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.4.0.tgz#c230e79589ae7a729fd4631b9ded4dc220418196"
@@ -226,6 +246,15 @@
     "@babel/traverse" "^7.1.5"
     "@babel/types" "^7.3.0"
 
+"@babel/helpers@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/helpers/-/helpers-7.4.3.tgz#7b1d354363494b31cb9a2417ae86af32b7853a3b"
+  integrity sha512-BMh7X0oZqb36CfyhvtbSmcWc3GXocfxv3yNsAEuM0l+fAqSO22rQrUpijr3oE/10jCTrB6/0b9kzmG4VetCj8Q==
+  dependencies:
+    "@babel/template" "^7.4.0"
+    "@babel/traverse" "^7.4.3"
+    "@babel/types" "^7.4.0"
+
 "@babel/highlight@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/highlight/-/highlight-7.0.0.tgz#f710c38c8d458e6dd9a201afb637fcb781ce99e4"
@@ -239,6 +268,11 @@
   version "7.4.2"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.4.2.tgz#b4521a400cb5a871eab3890787b4bc1326d38d91"
   integrity sha512-9fJTDipQFvlfSVdD/JBtkiY0br9BtfvW2R8wo6CX/Ej2eMuV0gWPk1M67Mt3eggQvBqYW1FCEk8BN7WvGm/g5g==
+
+"@babel/parser@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.4.3.tgz#eb3ac80f64aa101c907d4ce5406360fe75b7895b"
+  integrity sha512-gxpEUhTS1sGA63EGQGuA+WESPR/6tz6ng7tSHFCmaTJK/cGK8y37cBTspX+U2xCAue2IQVvF6Z0oigmjwD8YGQ==
 
 "@babel/plugin-proposal-async-generator-functions@^7.2.0":
   version "7.2.0"
@@ -645,7 +679,7 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/template@^7.1.0":
+"@babel/template@^7.1.0", "@babel/template@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.0.tgz#12474e9c077bae585c5d835a95c0b0b790c25c8b"
   integrity sha512-SOWwxxClTTh5NdbbYZ0BmaBVzxzTh2tO/TeLTbF6MO6EzVhHTnff8CdBXx3mEtazFBoysmEM6GU/wF+SuSx4Fw==
@@ -689,6 +723,21 @@
     "@babel/helper-split-export-declaration" "^7.0.0"
     "@babel/parser" "^7.3.4"
     "@babel/types" "^7.3.4"
+    debug "^4.1.0"
+    globals "^11.1.0"
+    lodash "^4.17.11"
+
+"@babel/traverse@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.4.3.tgz#1a01f078fc575d589ff30c0f71bf3c3d9ccbad84"
+  integrity sha512-HmA01qrtaCwwJWpSKpA948cBvU5BrmviAief/b3AVw936DtcdsTexlbyzNuDnthwhOQ37xshn7hvQaEQk7ISYQ==
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
+    "@babel/generator" "^7.4.0"
+    "@babel/helper-function-name" "^7.1.0"
+    "@babel/helper-split-export-declaration" "^7.4.0"
+    "@babel/parser" "^7.4.3"
+    "@babel/types" "^7.4.0"
     debug "^4.1.0"
     globals "^11.1.0"
     lodash "^4.17.11"
@@ -3583,22 +3632,22 @@ broccoli-templater@^2.0.1:
     rimraf "^2.6.2"
     walk-sync "^0.3.3"
 
-broccoli-uglify-sourcemap@^2.1.1:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/broccoli-uglify-sourcemap/-/broccoli-uglify-sourcemap-2.2.0.tgz#2ff49389bdf342a550c3596750ba2dde95a8f7d4"
-  integrity sha1-L/STib3zQqVQw1lnULot3pWo99Q=
+broccoli-uglify-sourcemap@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/broccoli-uglify-sourcemap/-/broccoli-uglify-sourcemap-3.1.0.tgz#424abcb2c1c70fd1857165c5f191d59a37ee33ff"
+  integrity sha512-8urQlRfoL6TDP65EylZgbqTwYkSMuZkWE+bwYgC+GMhncSb6bCc0zHn4AGaC+1DRaAsEjb8uyhtYnKCil4NRPA==
   dependencies:
     async-promise-queue "^1.0.4"
     broccoli-plugin "^1.2.1"
-    debug "^3.1.0"
+    debug "^4.1.0"
     lodash.defaultsdeep "^4.6.0"
-    matcher-collection "^1.0.5"
+    matcher-collection "^2.0.0"
     mkdirp "^0.5.0"
     source-map-url "^0.4.0"
     symlink-or-copy "^1.0.1"
-    terser "^3.7.5"
-    walk-sync "^0.3.2"
-    workerpool "^2.3.0"
+    terser "^3.17.0"
+    walk-sync "^1.1.3"
+    workerpool "^3.1.2"
 
 broccoli-writer@^0.1.1:
   version "0.1.1"
@@ -6065,12 +6114,12 @@ ember-cli-typescript@^2.0.0-beta.2:
     stagehand "^1.0.0"
     walk-sync "^1.0.0"
 
-ember-cli-uglify@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-uglify/-/ember-cli-uglify-2.1.0.tgz#4a0641fe4768d7ab7d4807aca9924cc77c544184"
-  integrity sha512-lDzdAUfhGx5AMBsgyR54ibENVp/LRQuHNWNaP2SDjkAXDyuYFgW0iXIAfGbxF6+nYaesJ9Tr9AKOfTPlwxZDSg==
+ember-cli-uglify@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-uglify/-/ember-cli-uglify-3.0.0.tgz#8819665b2cc5fe70e3ba9fe7a94645209bc42fd6"
+  integrity sha512-n3QxdBfAgBdb2Cnso82Kt/nxm3ppIjnYWM8uhOEhF1aYxNXfM7AJrc+yiqTCDUR61Db8aCpHfAMvChz3kyme7g==
   dependencies:
-    broccoli-uglify-sourcemap "^2.1.1"
+    broccoli-uglify-sourcemap "^3.1.0"
     lodash.defaultsdeep "^4.6.0"
 
 ember-cli-update@0.32.5:
@@ -10276,7 +10325,7 @@ match-media@^0.2.0:
   resolved "https://registry.yarnpkg.com/match-media/-/match-media-0.2.0.tgz#ea4e09742e7253cc7d7e1599ba627e0fa29fbc50"
   integrity sha1-6k4JdC5yU8x9fhWZumJ+D6KfvFA=
 
-matcher-collection@^1.0.0, matcher-collection@^1.0.5, matcher-collection@^1.1.1:
+matcher-collection@^1.0.0, matcher-collection@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/matcher-collection/-/matcher-collection-1.1.2.tgz#1076f506f10ca85897b53d14ef54f90a5c426838"
   integrity sha512-YQ/teqaOIIfUHedRam08PB3NK7Mjct6BvzRnJmpGDm8uFXpNr1sbY4yuflI5JcEs6COpYA0FpRQhSDBf1tT95g==
@@ -13987,7 +14036,7 @@ terser-webpack-plugin@^1.1.0:
     webpack-sources "^1.1.0"
     worker-farm "^1.5.2"
 
-terser@^3.16.1, terser@^3.7.5:
+terser@^3.16.1, terser@^3.17.0:
   version "3.17.0"
   resolved "https://registry.yarnpkg.com/terser/-/terser-3.17.0.tgz#f88ffbeda0deb5637f9d24b0da66f4e15ab10cb2"
   integrity sha512-/FQzzPJmCpjAH9Xvk2paiWrFq+5M6aVOf+2KRbwhByISDX/EujxsK+BAvrhb6H+2rtrLCHK9N01wO014vrIwVQ==
@@ -14963,6 +15012,15 @@ workerpool@^3.1.1:
   integrity sha512-VzYD/kM3Gk9L7GR0LtrcyiZA8+h8Fse503aq4WkYwRBXreHTixVEcqKLjiFS6gM0fyaEt0pjSLf1ANGQXM27cg==
   dependencies:
     object-assign "4.1.1"
+
+workerpool@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-3.1.2.tgz#b34e79243647decb174b7481ab5b351dc565c426"
+  integrity sha512-WJFA0dGqIK7qj7xPTqciWBH5DlJQzoPjsANvc3Y4hNB0SScT+Emjvt0jPPkDBUjBNngX1q9hHgt1Gfwytu6pug==
+  dependencies:
+    "@babel/core" "^7.3.4"
+    object-assign "4.1.1"
+    rsvp "^4.8.4"
 
 wrap-ansi@^2.0.0:
   version "2.1.0"
