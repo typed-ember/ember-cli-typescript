@@ -4,7 +4,7 @@
 
 <center>
 
-[![*nix build status (master)](https://travis-ci.org/typed-ember/ember-cli-typescript.svg?branch=master)](https://travis-ci.org/typed-ember/ember-cli-typescript) [![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+[![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
 </center>
 
