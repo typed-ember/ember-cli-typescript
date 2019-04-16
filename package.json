@@ -77,7 +77,6 @@
     "@types/semver": "6.0.0",
     "@types/tmp": "0.1.0",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
-    "babel-eslint": "10.0.1",
     "broccoli-asset-rev": "3.0.0",
     "co": "4.6.0",
     "commitlint-azure-pipelines-cli": "1.0.1",
