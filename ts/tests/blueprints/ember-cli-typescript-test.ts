@@ -206,11 +206,14 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const globalTypes = file('types/global.d.ts');
           expect(globalTypes).to.exist;
-          expect(globalTypes).to.include("declare module 'my-app/ui/components/*/template'").to
-            .include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
+          expect(globalTypes)
+            .to.include("declare module 'my-app/ui/components/*/template'")
+            .to.include(
+              `  import { TemplateFactory } from 'htmlbars-inline-precompile';
   const tmpl: TemplateFactory;
   export default tmpl;
-`);
+`
+            );
 
           const environmentTypes = file('config/environment.d.ts');
           expect(environmentTypes).to.exist;
@@ -261,11 +264,14 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
           const globalTypes = file('types/global.d.ts');
           expect(globalTypes).to.exist;
-          expect(globalTypes).to.include("declare module 'my-addon/ui/components/*/template'").to
-            .include(`  import { TemplateFactory } from 'htmlbars-inline-precompile';
+          expect(globalTypes)
+            .to.include("declare module 'my-addon/ui/components/*/template'")
+            .to.include(
+              `  import { TemplateFactory } from 'htmlbars-inline-precompile';
   const tmpl: TemplateFactory;
   export default tmpl;
-`);
+`
+            );
 
           const environmentTypes = file('tests/dummy/config/environment.d.ts');
           expect(environmentTypes).to.exist;
