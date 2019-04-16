@@ -1,4 +1,4 @@
-import  { LIVE_RELOAD_PATH } from '.';
+import { LIVE_RELOAD_PATH } from '.';
 import ANSIConverter from 'ansi-to-html';
 
 // Taken almost whole-cloth from broccoli-middleware:
@@ -8,7 +8,7 @@ export default function renderErrorPage(errors: string[], environmentInfo: strin
   let converter = new ANSIConverter();
   let errorHTML = converter.toHtml(errors.join('\n'));
 
-  return /* html */`
+  return /* html */ `
     <!DOCTYPE html>
     <html>
       <head>

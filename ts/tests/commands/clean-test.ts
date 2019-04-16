@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import walkSync from 'walk-sync';
 
 import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
-import  blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
+import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 

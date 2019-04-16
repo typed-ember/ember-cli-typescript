@@ -4,7 +4,7 @@ const REGISTER_TS_NODE_PATH = `${__dirname}/../../../register-ts-node`;
 
 export default function fork(path: string) {
   let child = ChildProcess.fork(path, [], {
-    execArgv: execArgs()
+    execArgv: execArgs(),
   });
 
   // Terminate the child when ember-cli shuts down

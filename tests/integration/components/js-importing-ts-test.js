@@ -13,9 +13,7 @@ module('Integration | Component | js importing ts', function(hooks) {
     await render(hbs`{{js-importing-ts}}`);
 
     assert.equal(
-      this.element.textContent
-        .replace(/\s+/g, ' ')
-        .trim(),
+      this.element.textContent.replace(/\s+/g, ' ').trim(),
       'js-importing-ts.hbs false Ts helper: my type of help Js helper: js please help me'
     );
   });

@@ -135,24 +135,36 @@ export default class TypecheckWorker {
   // The preferred means of being notified when things happen in the compiler is
   // overriding methods and then calling the original. See the TypeScript wiki:
   // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
-  private patchCompilerHostMethods(host: WatchCompilerHostOfConfigFile<SemanticDiagnosticsBuilderProgram>) {
+  private patchCompilerHostMethods(
+    host: WatchCompilerHostOfConfigFile<SemanticDiagnosticsBuilderProgram>
+  ) {
     let { watchFile, watchDirectory, createProgram, afterProgramCreate = () => {} } = host;
 
     // Intercept tsc's `watchFile` to also invoke `mayTypecheck()` when a watched file changes
     host.watchFile = (path, callback, pollingInterval?) => {
-      return watchFile.call(host, path, (filePath: string, eventKind: FileWatcherEventKind) => {
-        this.mayTypecheck(filePath);
-        return callback(filePath, eventKind);
-      }, pollingInterval);
+      return watchFile.call(
+        host,
+        path,
+        (filePath: string, eventKind: FileWatcherEventKind) => {
+          this.mayTypecheck(filePath);
+          return callback(filePath, eventKind);
+        },
+        pollingInterval
+      );
     };
 
     // Intercept tsc's `watchDirectory` callback to also invoke `mayTypecheck()` when a
     // file is added or removed in a watched directory.
     host.watchDirectory = (path, callback, recursive?) => {
-      return watchDirectory.call(host, path, (filePath: string) => {
-        this.mayTypecheck(filePath);
-        return callback(filePath);
-      }, recursive);
+      return watchDirectory.call(
+        host,
+        path,
+        (filePath: string) => {
+          this.mayTypecheck(filePath);
+          return callback(filePath);
+        },
+        recursive
+      );
     };
 
     // Intercept `createProgram` to invoke `willTypecheck` beforehand, as we know at this

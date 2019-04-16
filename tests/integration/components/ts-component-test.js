@@ -13,9 +13,7 @@ module('Integration | Component | ts component', function(hooks) {
     await render(hbs`{{ts-component}}`);
 
     assert.equal(
-      this.element.textContent
-        .replace(/\s+/g, ' ')
-        .trim(),
+      this.element.textContent.replace(/\s+/g, ' ').trim(),
       'ts-component.hbs Component defines someValue property as: from component Ts helper: my type of help Js helper: js please help me'
     );
   });

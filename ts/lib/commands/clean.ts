@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { command } from "../utilities/ember-cli-entities";
+import { command } from '../utilities/ember-cli-entities';
 import { PRECOMPILE_MANIFEST } from './precompile';
 
 export default command({

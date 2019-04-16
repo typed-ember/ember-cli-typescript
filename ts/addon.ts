@@ -1,7 +1,12 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import { hasPlugin, addPlugin, AddPluginOptions, BabelPluginConfig } from 'ember-cli-babel-plugin-helpers';
+import {
+  hasPlugin,
+  addPlugin,
+  AddPluginOptions,
+  BabelPluginConfig,
+} from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
@@ -108,7 +113,9 @@ export default addon({
   },
 
   _checkEmberCLIVersion() {
-    let cliPackage = this.project.require('ember-cli/package.json') as { version: string };
+    let cliPackage = this.project.require('ember-cli/package.json') as {
+      version: string;
+    };
     if (semver.lt(cliPackage.version, '3.5.0')) {
       this.ui.writeWarnLine(
         'ember-cli-typescript works best with ember-cli >= 3.5, which uses the system temporary directory ' +
@@ -141,8 +148,8 @@ export default addon({
       if (tsFilesInApp.length) {
         this.ui.writeWarnLine(
           `found .ts files in ${appDir}\n` +
-          'ember-cli-typescript only compiles files in an addon\'s `addon` folder; ' +
-          'see https://github.com/typed-ember/ember-cli-typescript/issues/562'
+            "ember-cli-typescript only compiles files in an addon's `addon` folder; " +
+            'see https://github.com/typed-ember/ember-cli-typescript/issues/562'
         );
       }
     }

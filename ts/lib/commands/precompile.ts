@@ -19,7 +19,9 @@ export default command({
     let outDir = `${os.tmpdir()}/e-c-ts-precompile-${process.pid}`;
     let { paths, rootDir, pathRoots } = this._loadConfig(outDir);
     if (!paths) {
-      this.ui.writeLine('No `paths` were found in your `tsconfig.json`, so `ts:precompile` is a no-op.');
+      this.ui.writeLine(
+        'No `paths` were found in your `tsconfig.json`, so `ts:precompile` is a no-op.'
+      );
       return;
     }
 
@@ -60,7 +62,11 @@ export default command({
     }
 
     let configSource = ts.readJsonConfigFile(configPath, ts.sys.readFile);
-    let config = ts.parseJsonSourceFileConfigFileContent(configSource, ts.sys, path.dirname(configPath));
+    let config = ts.parseJsonSourceFileConfigFileContent(
+      configSource,
+      ts.sys,
+      path.dirname(configPath)
+    );
 
     let { paths, rootDir, baseUrl } = config.options;
     let configDir = path.dirname(configPath);

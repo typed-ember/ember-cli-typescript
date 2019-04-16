@@ -22,12 +22,11 @@ describe('Acceptance: ts:precompile command', function() {
     fs.ensureDirSync('addon');
     fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'hello';`);
 
-    return ember(['ts:precompile'])
-      .then(() => {
-        let declaration = file('test-file.d.ts');
-        expect(declaration).to.exist;
-        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
-      });
+    return ember(['ts:precompile']).then(() => {
+      let declaration = file('test-file.d.ts');
+      expect(declaration).to.exist;
+      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+    });
   });
 
   it('generates nothing from the app tree', function() {
@@ -51,19 +50,21 @@ describe('Acceptance: ts:precompile command', function() {
       tsconfig.compilerOptions.paths[`${pkg.name}/src/*`] = ['src/*'];
       fs.writeJSONSync('tsconfig.json', tsconfig);
 
-      return ember(['ts:precompile'])
-        .then(() => {
-          let declaration = file('src/test-file.d.ts');
-          expect(declaration).to.exist;
-          expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
-        });
+      return ember(['ts:precompile']).then(() => {
+        let declaration = file('src/test-file.d.ts');
+        expect(declaration).to.exist;
+        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      });
     });
   });
 
   describe('addon-test-support', function() {
     it('generates .d.ts files in remapped locations', function() {
       fs.ensureDirSync('addon-test-support');
-      fs.writeFileSync('addon-test-support/test-file.ts', `export const testString: string = 'hello';`);
+      fs.writeFileSync(
+        'addon-test-support/test-file.ts',
+        `export const testString: string = 'hello';`
+      );
 
       let pkg = fs.readJsonSync('package.json');
       let tsconfig = fs.readJSONSync('tsconfig.json');
@@ -71,29 +72,30 @@ describe('Acceptance: ts:precompile command', function() {
       tsconfig.compilerOptions.paths[`${pkg.name}/*`] = ['addon-test-support/*'];
       fs.writeJSONSync('tsconfig.json', tsconfig);
 
-      return ember(['ts:precompile'])
-        .then(() => {
-          let declaration = file('test-file.d.ts');
-          expect(declaration).to.exist;
-          expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
-        });
+      return ember(['ts:precompile']).then(() => {
+        let declaration = file('test-file.d.ts');
+        expect(declaration).to.exist;
+        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      });
     });
   });
 
   it('generates .d.ts files when addon and package names do not match', function() {
     fs.ensureDirSync('addon-test-support');
-    fs.writeFileSync('addon-test-support/test-file.ts', `export const testString: string = 'hello';`);
+    fs.writeFileSync(
+      'addon-test-support/test-file.ts',
+      `export const testString: string = 'hello';`
+    );
     fs.writeFileSync('index.js', `module.exports = { name: 'my-addon' };`);
 
     const pkg = fs.readJSONSync('package.json');
-    pkg.name = '@foo/my-addon';  // addon `name` is `my-addon`
+    pkg.name = '@foo/my-addon'; // addon `name` is `my-addon`
     fs.writeJSONSync('package.json', pkg);
 
-    return ember(['ts:precompile'])
-      .then(() => {
-        const declaration = file('test-support/test-file.d.ts');
-        expect(declaration).to.exist;
-        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
-      });
+    return ember(['ts:precompile']).then(() => {
+      const declaration = file('test-support/test-file.d.ts');
+      expect(declaration).to.exist;
+      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+    });
   });
 });
