@@ -78,7 +78,9 @@ describe('Acceptance: build', function() {
     co.wrap(function*() {
       app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 
-      yield expect(app.build()).to.be.rejectedWith(`Cannot find module 'nonexistent'`);
+      yield expect(app.build()).to.be.rejectedWith(
+        `Cannot find module 'nonexistent'`
+      );
     })
   );
 
@@ -111,7 +113,9 @@ describe('Acceptance: build', function() {
   );
 });
 
-function isExpressionStatement(stmt: Statement | ModuleDeclaration): stmt is ExpressionStatement {
+function isExpressionStatement(
+  stmt: Statement | ModuleDeclaration
+): stmt is ExpressionStatement {
   return stmt.type === 'ExpressionStatement';
 }
 

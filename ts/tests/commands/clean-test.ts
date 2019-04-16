@@ -15,15 +15,23 @@ describe('Acceptance: ts:clean command', function() {
   setupTestHooks(this);
 
   beforeEach(function() {
-    return emberNew({ target: 'addon' }).then(() => ember(['generate', 'ember-cli-typescript']));
+    return emberNew({ target: 'addon' }).then(() =>
+      ember(['generate', 'ember-cli-typescript'])
+    );
   });
 
   it('removes all generated files', function() {
     fs.ensureDirSync('dist');
     fs.ensureDirSync('app');
     fs.ensureDirSync('addon');
-    fs.writeFileSync('app/test-file.ts', `export const testString: string = 'app';`);
-    fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'addon';`);
+    fs.writeFileSync(
+      'app/test-file.ts',
+      `export const testString: string = 'app';`
+    );
+    fs.writeFileSync(
+      'addon/test-file.ts',
+      `export const testString: string = 'addon';`
+    );
 
     let before = walkSync(process.cwd());
     return ember(['ts:precompile'])

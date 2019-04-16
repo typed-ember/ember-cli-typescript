@@ -81,7 +81,11 @@ describe('Unit: copyDeclarations', function() {
       },
     });
 
-    expect(createdNodes).to.deep.equal(['addon-file.d.ts', 'file.d.ts', 'generated-file.d.ts']);
+    expect(createdNodes).to.deep.equal([
+      'addon-file.d.ts',
+      'file.d.ts',
+      'generated-file.d.ts',
+    ]);
 
     expect(outputTree).to.deep.equal({
       'addon-file.d.ts': 'declaration for addon-file',
@@ -132,7 +136,9 @@ function runCopy(options: {
   let tmpdir = `${os.tmpdir()}/e-c-tests`;
   let inputBaseDir = `${tmpdir}/compiled`;
   let outputBaseDir = `${tmpdir}/output`;
-  let pathRoots = (options.pathRoots || ['.']).map(dir => path.resolve(inputBaseDir, dir));
+  let pathRoots = (options.pathRoots || ['.']).map(dir =>
+    path.resolve(inputBaseDir, dir)
+  );
 
   fs.ensureDirSync(inputBaseDir);
   fs.ensureDirSync(outputBaseDir);

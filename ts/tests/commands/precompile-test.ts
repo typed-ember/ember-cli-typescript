@@ -15,23 +15,33 @@ describe('Acceptance: ts:precompile command', function() {
   setupTestHooks(this);
 
   beforeEach(function() {
-    return emberNew({ target: 'addon' }).then(() => ember(['generate', 'ember-cli-typescript']));
+    return emberNew({ target: 'addon' }).then(() =>
+      ember(['generate', 'ember-cli-typescript'])
+    );
   });
 
   it('generates .d.ts files from the addon tree', function() {
     fs.ensureDirSync('addon');
-    fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'hello';`);
+    fs.writeFileSync(
+      'addon/test-file.ts',
+      `export const testString: string = 'hello';`
+    );
 
     return ember(['ts:precompile']).then(() => {
       let declaration = file('test-file.d.ts');
       expect(declaration).to.exist;
-      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      expect(declaration.content.trim()).to.equal(
+        `export declare const testString: string;`
+      );
     });
   });
 
   it('generates nothing from the app tree', function() {
     fs.ensureDirSync('app');
-    fs.writeFileSync('app/test-file.ts', `export const testString: string = 'hello';`);
+    fs.writeFileSync(
+      'app/test-file.ts',
+      `export const testString: string = 'hello';`
+    );
 
     return ember(['ts:precompile']).then(() => {
       let declaration = file('test-file.d.ts');
@@ -42,7 +52,10 @@ describe('Acceptance: ts:precompile command', function() {
   describe('module unification', function() {
     it('generates .d.ts files from the src tree', function() {
       fs.ensureDirSync('src');
-      fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
+      fs.writeFileSync(
+        'src/test-file.ts',
+        `export const testString: string = 'hello';`
+      );
 
       let pkg = fs.readJsonSync('package.json');
       let tsconfig = fs.readJSONSync('tsconfig.json');
@@ -53,7 +66,9 @@ describe('Acceptance: ts:precompile command', function() {
       return ember(['ts:precompile']).then(() => {
         let declaration = file('src/test-file.d.ts');
         expect(declaration).to.exist;
-        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+        expect(declaration.content.trim()).to.equal(
+          `export declare const testString: string;`
+        );
       });
     });
   });
@@ -69,13 +84,17 @@ describe('Acceptance: ts:precompile command', function() {
       let pkg = fs.readJsonSync('package.json');
       let tsconfig = fs.readJSONSync('tsconfig.json');
       tsconfig.include.push('src');
-      tsconfig.compilerOptions.paths[`${pkg.name}/*`] = ['addon-test-support/*'];
+      tsconfig.compilerOptions.paths[`${pkg.name}/*`] = [
+        'addon-test-support/*',
+      ];
       fs.writeJSONSync('tsconfig.json', tsconfig);
 
       return ember(['ts:precompile']).then(() => {
         let declaration = file('test-file.d.ts');
         expect(declaration).to.exist;
-        expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+        expect(declaration.content.trim()).to.equal(
+          `export declare const testString: string;`
+        );
       });
     });
   });
@@ -95,7 +114,9 @@ describe('Acceptance: ts:precompile command', function() {
     return ember(['ts:precompile']).then(() => {
       const declaration = file('test-support/test-file.d.ts');
       expect(declaration).to.exist;
-      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      expect(declaration.content.trim()).to.equal(
+        `export declare const testString: string;`
+      );
     });
   });
 });

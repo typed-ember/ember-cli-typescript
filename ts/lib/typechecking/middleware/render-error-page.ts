@@ -4,7 +4,10 @@ import ANSIConverter from 'ansi-to-html';
 // Taken almost whole-cloth from broccoli-middleware:
 // https://github.com/ember-cli/broccoli-middleware/blob/27888b45ea9638b5bf843720afb4c78e0715c726/lib/templates/error.html
 
-export default function renderErrorPage(errors: string[], environmentInfo: string) {
+export default function renderErrorPage(
+  errors: string[],
+  environmentInfo: string
+) {
   let converter = new ANSIConverter();
   let errorHTML = converter.toHtml(errors.join('\n'));
 

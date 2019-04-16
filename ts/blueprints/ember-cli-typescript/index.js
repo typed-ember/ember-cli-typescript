@@ -53,7 +53,8 @@ module.exports = {
 
   locals() {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
-    let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
+    let hasMirage =
+      'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
     let isMU = this._detectMU();
     let includes = isMU ? ['src'] : ['app', isAddon && 'addon'].filter(Boolean);
@@ -70,10 +71,11 @@ module.exports = {
     }
 
     return {
-      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(
-        /\n/g,
-        '\n  '
-      ),
+      includes: JSON.stringify(
+        includes.map(include => `${include}/**/*`),
+        null,
+        2
+      ).replace(/\n/g, '\n  '),
       pathsFor: dasherizedName => {
         // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
         let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
@@ -83,7 +85,9 @@ module.exports = {
         };
 
         if (hasMirage) {
-          paths[`${appName}/mirage/*`] = [`${isAddon ? 'tests/dummy/' : ''}mirage/*`];
+          paths[`${appName}/mirage/*`] = [
+            `${isAddon ? 'tests/dummy/' : ''}mirage/*`,
+          ];
         }
 
         if (isMU) {
@@ -104,7 +108,9 @@ module.exports = {
             paths[dasherizedName] = ['addon'];
             paths[`${dasherizedName}/*`] = ['addon/*'];
             paths[`${dasherizedName}/test-support`] = ['addon-test-support'];
-            paths[`${dasherizedName}/test-support/*`] = ['addon-test-support/*'];
+            paths[`${dasherizedName}/test-support/*`] = [
+              'addon-test-support/*',
+            ];
           }
         }
 
@@ -199,14 +205,18 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (!this._has('ember-data')) {
-      files = files.filter(file => file !== 'types/ember-data/types/registries/model.d.ts');
+      files = files.filter(
+        file => file !== 'types/ember-data/types/registries/model.d.ts'
+      );
     }
 
     return files;
   },
 
   _detectMU() {
-    return this.project.isModuleUnification && this.project.isModuleUnification();
+    return (
+      this.project.isModuleUnification && this.project.isModuleUnification()
+    );
   },
 
   _installPrecompilationHooks() {

@@ -20,7 +20,12 @@ export default function copyDeclarations(
         .replace('/*', '')
         .replace(/^\//, '');
 
-      copySubpathDeclarations(output, pathRoots, path.join(destDir, subdirectory), physicalPaths);
+      copySubpathDeclarations(
+        output,
+        pathRoots,
+        path.join(destDir, subdirectory),
+        physicalPaths
+      );
     }
   }
   return output;
@@ -35,7 +40,9 @@ function copySubpathDeclarations(
   for (let pathRoot of pathRoots) {
     for (let physicalPath of physicalPaths) {
       if (!physicalPath.endsWith('/*')) {
-        throw new Error(`Missing trailing '*' in path mapping: ${physicalPath}`);
+        throw new Error(
+          `Missing trailing '*' in path mapping: ${physicalPath}`
+        );
       }
 
       let fullRoot = path.resolve(pathRoot, physicalPath.replace(/\/\*$/, ''));

@@ -10,7 +10,9 @@ import Command from 'ember-cli/lib/models/command';
  */
 
 /** Configuration for defining an Ember CLI addon */
-export function addon<T extends ExtendOptions<Addon>>(options: T & ExtendThisType<Addon, T>): T {
+export function addon<T extends ExtendOptions<Addon>>(
+  options: T & ExtendThisType<Addon, T>
+): T {
   return options;
 }
 

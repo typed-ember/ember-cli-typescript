@@ -13,7 +13,9 @@ export default command({
   description:
     'Generates JS and declaration files from TypeScript sources in preparation for publishing.',
 
-  availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
+  availableOptions: [
+    { name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST },
+  ],
 
   async run(options: { manifestPath: string }) {
     let outDir = `${os.tmpdir()}/e-c-ts-precompile-${process.pid}`;
@@ -42,12 +44,19 @@ export default command({
     // Ensure that if we are dealing with an addon that is using a different
     // addon name from its package name, we use the addon name, since that is
     // how it will be written for imports.
-    let addon = this.project.addons.find(addon => addon.root === this.project.root);
+    let addon = this.project.addons.find(
+      addon => addon.root === this.project.root
+    );
     if (addon && addon.name !== packageName) {
       packageName = addon.name;
     }
 
-    let createdFiles = copyDeclarations(pathRoots, paths, packageName, this.project.root);
+    let createdFiles = copyDeclarations(
+      pathRoots,
+      paths,
+      packageName,
+      this.project.root
+    );
 
     fs.mkdirsSync(path.dirname(manifestPath));
     fs.writeFileSync(manifestPath, JSON.stringify(createdFiles.reverse()));

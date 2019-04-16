@@ -101,10 +101,17 @@ export default addon({
   },
 
   _checkBabelVersion() {
-    let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
+    let babel = this.parent.addons.find(
+      addon => addon.name === 'ember-cli-babel'
+    );
     let version = babel && babel.pkg.version;
-    if (!babel || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
-      let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
+    if (
+      !babel ||
+      !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))
+    ) {
+      let versionString = babel
+        ? `version ${babel.pkg.version}`
+        : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
         `ember-cli-typescript requires ember-cli-babel ^7.1.0, but you have ${versionString} installed; ` +
           'your TypeScript files may not be transpiled correctly.'
@@ -126,7 +133,11 @@ export default addon({
   },
 
   _checkDevelopment() {
-    if (this.isDevelopingAddon() && !process.env.CI && __filename.endsWith('.js')) {
+    if (
+      this.isDevelopingAddon() &&
+      !process.env.CI &&
+      __filename.endsWith('.js')
+    ) {
       this.ui.writeWarnLine(
         'ember-cli-typescript is in development but not being loaded from `.ts` sources — ' +
           'do you have compiled artifacts lingering in `/js`?'
@@ -136,7 +147,8 @@ export default addon({
 
   _checkAddonAppFiles() {
     // Emit a warning for addons that are under active development...
-    let isDevelopingAddon = !this.app && (this.parent as Addon).isDevelopingAddon();
+    let isDevelopingAddon =
+      !this.app && (this.parent as Addon).isDevelopingAddon();
 
     // ...and are at the root of the project (i.e. not in-repo)...
     let isRootAddon = this.parent.root === this.project.root;
@@ -167,12 +179,18 @@ export default addon({
     }
   },
 
-  _addPluginIfMissing(name: string, config?: unknown, constraints?: AddPluginOptions) {
+  _addPluginIfMissing(
+    name: string,
+    config?: unknown,
+    constraints?: AddPluginOptions
+  ) {
     let target = this._getConfigurationTarget();
 
     if (!hasPlugin(target, name)) {
       let resolvedPath = require.resolve(name);
-      let pluginEntry: BabelPluginConfig = config ? [resolvedPath, config] : resolvedPath;
+      let pluginEntry: BabelPluginConfig = config
+        ? [resolvedPath, config]
+        : resolvedPath;
       addPlugin(target, pluginEntry, constraints);
     }
   },

@@ -138,7 +138,12 @@ export default class TypecheckWorker {
   private patchCompilerHostMethods(
     host: WatchCompilerHostOfConfigFile<SemanticDiagnosticsBuilderProgram>
   ) {
-    let { watchFile, watchDirectory, createProgram, afterProgramCreate = () => {} } = host;
+    let {
+      watchFile,
+      watchDirectory,
+      createProgram,
+      afterProgramCreate = () => {},
+    } = host;
 
     // Intercept tsc's `watchFile` to also invoke `mayTypecheck()` when a watched file changes
     host.watchFile = (path, callback, pollingInterval?) => {
@@ -179,7 +184,9 @@ export default class TypecheckWorker {
       // `createWatchProgram`, meaning we can enter `didTypecheck` before we're fully set up
       // (e.g. before `compilerOptions` has been set). We use `nextTick` to ensure that
       // `didTypecheck` is only ever invoked after the worker is fully ready.
-      process.nextTick(() => this.didTypecheck(program.getSemanticDiagnostics()));
+      process.nextTick(() =>
+        this.didTypecheck(program.getSemanticDiagnostics())
+      );
 
       return afterProgramCreate.call(host, program);
     };
@@ -201,7 +208,9 @@ export default class TypecheckWorker {
     );
 
     if (!configPath) {
-      throw new Error(`Unable to locate tsconfig.json for project at ${this.projectRoot}`);
+      throw new Error(
+        `Unable to locate tsconfig.json for project at ${this.projectRoot}`
+      );
     }
 
     return configPath;

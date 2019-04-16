@@ -32,7 +32,10 @@ declare module 'ember-cli/lib/models/addon' {
 
     blueprintsPath(): string;
     included(includer: EmberApp | Project): void;
-    includedCommands(): Record<string, typeof Command | ExtendOptions<Command>> | void;
+    includedCommands(): Record<
+      string,
+      typeof Command | ExtendOptions<Command>
+    > | void;
     shouldIncludeChildAddon(addon: Addon): boolean;
     isDevelopingAddon(): boolean;
     serverMiddleware(options: { app: Application }): void | Promise<void>;
