@@ -138,11 +138,15 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
         const globalTypes = file('types/global.d.ts');
         expect(globalTypes).to.exist;
-        expect(globalTypes).to.include("declare module 'my-addon/templates/*'").to.include(`
+        expect(globalTypes)
+          .to.include("declare module 'my-addon/templates/*'")
+          .to.include(
+            `
   import { TemplateFactory } from 'htmlbars-inline-precompile';
   const tmpl: TemplateFactory;
   export default tmpl;
-`);
+`
+          );
 
         const environmentTypes = file('tests/dummy/app/config/environment.d.ts');
         expect(environmentTypes).to.exist;
