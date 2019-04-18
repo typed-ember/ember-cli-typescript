@@ -1,8 +1,4 @@
 trigger:
-  batch: true
-  branches:
-    include:
-      - master
   paths:
     exclude:
       - README.md
@@ -10,6 +6,9 @@ trigger:
       - CODE_OF_CONDUCT.md
 
 jobs:
+  - job: example_warning
+    steps:
+      - script: test "" || echo -e "\043#vso[task.logissue type=warning;] Yikes!!"
   - job: linux_fixed
     displayName: 'linux - fixed dependencies'
     pool:
@@ -60,25 +59,31 @@ jobs:
       matrix:
         release:
           typeScriptVersion: latest
+          allowFailures: false
         beta:
           typeScriptVersion: next
+          allowFailures: true
     steps:
       - template: .azure/ci-template.yml
         parameters:
           tsVersion: $(typeScriptVersion)
+          allowFailures: $(allowFailures)
 
   - job: ember_cli_versions
     displayName: 'ember-cli'
-    dependsOn: linux_fixed
+    # dependsOn: linux_fixed
     pool:
       vmImage: 'ubuntu-16.04'
     strategy:
       matrix:
         release:
           eCliVersion: latest
+          allowFailures: false
         beta:
           eCliVersion: beta
+          allowFailures: true
     steps:
       - template: .azure/ci-template.yml
         parameters:
           emberCliVersion: $(eCliVersion)
+          allowFailures: $(allowFailures)
