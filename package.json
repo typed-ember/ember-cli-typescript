@@ -120,7 +120,7 @@
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "loader.js": "4.7.0",
-    "mocha": "6.1.3",
+    "mocha": "6.1.4",
     "prettier": "1.17.0",
     "qunit-dom": "0.8.4",
     "testdouble": "3.11.0",
