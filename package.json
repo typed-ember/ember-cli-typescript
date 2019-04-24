@@ -80,7 +80,7 @@
     "broccoli-asset-rev": "3.0.0",
     "co": "4.6.0",
     "commitlint-azure-pipelines-cli": "1.0.1",
-    "conventional-changelog-cli": "2.0.12",
+    "conventional-changelog-cli": "2.0.17",
     "ember-cli": "3.9.0",
     "ember-cli-addon-docs": "0.6.10",
     "ember-cli-addon-docs-esdoc": "0.2.1",
