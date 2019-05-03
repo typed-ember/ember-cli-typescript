@@ -1,5 +1,3 @@
-'use strict';
-
 import * as fs from 'fs-extra';
 import walkSync from 'walk-sync';
 
@@ -14,11 +12,12 @@ const expect = chai.expect;
 describe('Acceptance: ts:clean command', function() {
   setupTestHooks(this);
 
-  beforeEach(function() {
-    return emberNew({ target: 'addon' }).then(() => ember(['generate', 'ember-cli-typescript']));
+  beforeEach(async () => {
+    await emberNew({ target: 'addon' });
+    await ember(['generate', 'ember-cli-typescript']);
   });
 
-  it('removes all generated files', function() {
+  it('removes all generated files', async () => {
     fs.ensureDirSync('dist');
     fs.ensureDirSync('app');
     fs.ensureDirSync('addon');
@@ -26,11 +25,10 @@ describe('Acceptance: ts:clean command', function() {
     fs.writeFileSync('addon/test-file.ts', `export const testString: string = 'addon';`);
 
     let before = walkSync(process.cwd());
-    return ember(['ts:precompile'])
-      .then(() => ember(['ts:clean']))
-      .then(() => {
-        let after = walkSync(process.cwd());
-        expect(after).to.deep.equal(before);
-      });
+    await ember(['ts:precompile']);
+    await ember(['ts:clean']);
+
+    let after = walkSync(process.cwd());
+    expect(after).to.deep.equal(before);
   });
 });

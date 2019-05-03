@@ -15,5 +15,6 @@
     "ember-beta": true,
     "ember-canary": true,
     "ember-default": true
-  }
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
