@@ -72,7 +72,7 @@
     "@types/got": "8.3.5",
     "@types/mocha": "5.2.6",
     "@types/node": "9.6.48",
-    "@types/qunit": "2.5.4",
+    "@types/qunit": "2.9.0",
     "@types/resolve": "0.0.8",
     "@types/semver": "6.0.0",
     "@types/tmp": "0.1.0",
