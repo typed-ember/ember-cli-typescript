@@ -53,7 +53,7 @@
     "walk-sync": "^1.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "7.6.0",
+    "@commitlint/cli": "7.6.1",
     "@commitlint/config-conventional": "7.6.0",
     "@ember/optional-features": "0.7.0",
     "@typed-ember/renovate-config": "1.2.1",
