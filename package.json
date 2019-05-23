@@ -28,7 +28,7 @@
     "start": "ember serve",
     "test": "yarn test:app && yarn test:node",
     "test:app": "ember test",
-    "test:node": "mocha -r register-ts-node ts/tests/**/*.{ts,js}",
+    "test:node": "mocha -r register-ts-node ts/tests/**/*.ts",
     "ci:prepare": "yarn prepublishOnly && rimraf ts",
     "ci:log-version-info": "echo '---- Ember CLI ----' && ember -v && echo '---- TypeScript ----' && tsc -v",
     "ci:test": "yarn ci:log-version-info && yarn ci:test:app && yarn ci:test:node",

@@ -6,10 +6,11 @@ if (!require.extensions['.ts']) {
 
   // If we're operating in the context of another project, which might happen
   // if someone has installed ember-cli-typescript from git, only perform
-  // transpilation and skip the default ignore glob (which prevents anything
-  // in node_modules from being transpiled)
+  // transpilation. In this case, we also overwrite the default ignore glob
+  // (which ignores everything in `node_modules`) to instead ignore anything
+  // that doesn't end with `.ts`.
   if (process.cwd() !== __dirname) {
-    options.skipIgnore = true;
+    options.ignore = [/\.(?!ts$)\w+$/];
     options.transpileOnly = true;
   }
 
