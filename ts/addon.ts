@@ -1,12 +1,7 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import {
-  hasPlugin,
-  addPlugin,
-  AddPluginOptions,
-  BabelPluginConfig,
-} from 'ember-cli-babel-plugin-helpers';
+import { hasPlugin, addPlugin } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
@@ -80,18 +75,15 @@ export default addon({
     // preprocessor registry, so we need to beat it to the punch.
     this._registerBabelExtension();
 
-    this._addPluginIfMissing(
-      '@babel/plugin-proposal-class-properties',
-      { loose: true },
-      {
-        // Needs to come after the decorators plugin, if present
-        after: ['@babel/plugin-proposal-decorators'],
-      }
-    );
+    let pluginTarget = this._getConfigurationTarget();
 
-    // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
-    // "property initialization occurs in the right order")
-    this._addPluginIfMissing('@babel/plugin-transform-typescript');
+    if (!hasPlugin(pluginTarget, '@babel/plugin-transform-typescript')) {
+      // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
+      // "property initialization occurs in the right order")
+      addPlugin(pluginTarget, require.resolve('@babel/plugin-transform-typescript'), {
+        after: ['@babel/plugin-proposal-class-properties'],
+      });
+    }
   },
 
   shouldIncludeChildAddon(addon) {
@@ -103,10 +95,10 @@ export default addon({
   _checkBabelVersion() {
     let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
-    if (!babel || !(semver.gte(version!, '7.1.0') && semver.lt(version!, '8.0.0'))) {
+    if (!babel || !(semver.gte(version!, '7.7.3') && semver.lt(version!, '8.0.0'))) {
       let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
-        `ember-cli-typescript requires ember-cli-babel ^7.1.0, but you have ${versionString} installed; ` +
+        `ember-cli-typescript requires ember-cli-babel ^7.7.3, but you have ${versionString} installed; ` +
           'your TypeScript files may not be transpiled correctly.'
       );
     }
@@ -164,16 +156,6 @@ export default addon({
       this.ui.writeWarnLine(
         '`ember-cli-typescript` should be included in your `dependencies`, not `devDependencies`'
       );
-    }
-  },
-
-  _addPluginIfMissing(name: string, config?: unknown, constraints?: AddPluginOptions) {
-    let target = this._getConfigurationTarget();
-
-    if (!hasPlugin(target, name)) {
-      let resolvedPath = require.resolve(name);
-      let pluginEntry: BabelPluginConfig = config ? [resolvedPath, config] : resolvedPath;
-      addPlugin(target, pluginEntry, constraints);
     }
   },
 
