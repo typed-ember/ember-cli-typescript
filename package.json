@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-transform-typescript": "^7.1.0",
+    "@babel/plugin-transform-typescript": "~7.4.5",
     "ansi-to-html": "^0.6.6",
     "debug": "^4.0.0",
     "ember-cli-babel-plugin-helpers": "^1.0.0",
