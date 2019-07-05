@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-typescript",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Allow ember apps to use typescript files.",
   "keywords": [
     "ember-addon",
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.1.0",
-    "@babel/plugin-transform-typescript": "^7.1.0",
+    "@babel/plugin-transform-typescript": "~7.4.0",
     "ansi-to-html": "^0.6.6",
     "debug": "^4.0.0",
     "ember-cli-babel-plugin-helpers": "^1.0.0",
