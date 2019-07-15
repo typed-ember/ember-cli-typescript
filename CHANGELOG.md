@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [2.0.2] - 2019-07-05
+
+- Lock `@babel/plugin-transform-typescript` version pending a fix to [babel/babel#10162](https://github.com/babel/babel/issues/10162) ([#751](https://github.com/typed-ember/ember-cli-typescript/pull/751))
+
 ## [2.0.1] - 2019-04-10
 
 ### Fixed 🔧
@@ -543,7 +547,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.2...HEAD
+[2.0.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...v2.0.0
 [2.0.0-rc.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.1...v2.0.0-rc.2
