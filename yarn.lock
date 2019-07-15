@@ -951,10 +951,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/console-ui@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@types/console-ui/-/console-ui-2.2.0.tgz#8d73211b6131291c89b72bc27e2a986b49e9b5c5"
-  integrity sha512-AfEHvsPMDnbn2QTa7/qMYCdA2Zqt+wS9MGJZ0vKagX7tiaZOLv1AL1h/0W+cl7WSqV/P1ZQnut1h2TMmgsxj3g==
+"@types/console-ui@2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@types/console-ui/-/console-ui-2.2.1.tgz#eaa6e5921e90ac8fc65d5b208d68d5585f5cd565"
+  integrity sha512-AJchytWL9Ibb6lJF8rQ2LNDx5qnhFtR2ENg635AwRAghMCjXsar4c/nqbKosSSl3PTRE7fZV8iItJszPm6kXZQ==
   dependencies:
     "@types/inquirer" "*"
 
@@ -8494,12 +8494,10 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 include-path-searcher@^0.1.0:
   version "0.1.0"
