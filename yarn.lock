@@ -4455,10 +4455,10 @@ comment-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/comment-regex/-/comment-regex-1.0.1.tgz#e070d2c4db33231955d0979d27c918fcb6f93565"
   integrity sha512-IWlN//Yfby92tOIje7J18HkNmWRR7JESA/BK8W7wqY/akITpU5B0JQWnbTjCfdChSrDNb0DrdA9jfAxiiBXyiQ==
 
-commitlint-azure-pipelines-cli@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/commitlint-azure-pipelines-cli/-/commitlint-azure-pipelines-cli-1.0.1.tgz#a027541b4c584794e2107d41859f72087c2b98c8"
-  integrity sha512-GfJqcfZbw28Pjnkh2Sx32jv6anIkvE7dbK44EZJl03g6r8C8XU5BYPBxatOJwc39A4yeAlc9E0K64jkz2CqQCQ==
+commitlint-azure-pipelines-cli@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/commitlint-azure-pipelines-cli/-/commitlint-azure-pipelines-cli-1.0.2.tgz#75ae58420173095180e4fe73dc943fc08746aec7"
+  integrity sha512-Uj5QatjR1HAifoJI7ZjNx3O8iuH0lUnTmja9jGIA4KjEPLfbyctob4i1JgOZ7tGQK918n1uoolyZBjbQ7h/WSw==
   dependencies:
     execa "^1.0.0"
 
