@@ -72,7 +72,7 @@
     "@types/node": "9.6.49",
     "@types/qunit": "2.9.0",
     "@types/resolve": "0.0.8",
-    "@types/semver": "6.0.0",
+    "@types/semver": "6.0.1",
     "@types/tmp": "0.1.0",
     "@typescript-eslint/eslint-plugin": "1.8.0",
     "broccoli-asset-rev": "3.0.0",
