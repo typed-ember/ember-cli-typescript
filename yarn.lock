@@ -10067,6 +10067,11 @@ lodash@^3.10.0:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
   integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
 
+lodash@^4.17.14:
+  version "4.17.14"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
+  integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
+
 log-symbols@2.2.0, log-symbols@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/log-symbols/-/log-symbols-2.2.0.tgz#5740e1c5d6f0dfda4ad9323b5332107ef6b4c40a"
@@ -12207,6 +12212,14 @@ quibble@^0.5.5:
     lodash "^4.17.2"
     resolve "^1.7.1"
 
+quibble@^0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/quibble/-/quibble-0.5.6.tgz#f692fcf22dc8da832b212cde9b11fe88296bd582"
+  integrity sha512-nAqsl6RxhWK36grfglqEXC0ihA3Q+DaCKeqJti/uz8CpiE92590hx3TRob+z89udYqj3PoUpQvjW77T1IR70mw==
+  dependencies:
+    lodash "^4.17.14"
+    resolve "^1.11.1"
+
 quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
@@ -14022,7 +14035,17 @@ terser@^3.16.1, terser@^3.17.0:
     source-map "~0.6.1"
     source-map-support "~0.5.10"
 
-testdouble@3.11.0, testdouble@^3.2.6:
+testdouble@3.12.2:
+  version "3.12.2"
+  resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.12.2.tgz#a70c11cc83f1396a91f120cf8d0a3037aeb83f37"
+  integrity sha512-+K1+JZZZUYFkeiIbNWDUVpyTrtYzNLHc8nRXADCvQ70913DA/xGgRkE+mWEbyZQTBRH5c5aVR4YjXvCY4hnT3w==
+  dependencies:
+    lodash "^4.17.14"
+    quibble "^0.5.6"
+    stringify-object-es5 "^2.5.0"
+    theredoc "^1.0.0"
+
+testdouble@^3.2.6:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/testdouble/-/testdouble-3.11.0.tgz#17d3c3afa21acd2e8144c86f8a0708d49a81a695"
   integrity sha512-hmF04fDUiTHy8yVQx6mucpOeyH5qElb3UtMos4xWZtJR2MsS/nzLEN+5wQ4QiGS4TV1X32eMSzLgh53uKg9ufA==
