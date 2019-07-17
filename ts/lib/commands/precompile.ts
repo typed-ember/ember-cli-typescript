@@ -34,7 +34,9 @@ export default command({
       '--declaration',
       '--declarationDir', outDir,
       '--emitDeclarationOnly',
-    ]);
+    ], {
+      preferLocal: true
+    });
 
     let manifestPath = options.manifestPath;
     let packageName = this.project.pkg.name;

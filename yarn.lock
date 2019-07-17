@@ -1258,13 +1258,6 @@
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
   integrity sha512-EaObqwIvayI5a8dCzhFrjKzVwKLxjoG9T6Ppd5CEo07LRKfQ8Yokw54r5+Wq7FaBQ+yXRvQAYPrHwya1/UFt9g==
 
-"@types/execa@0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@types/execa/-/execa-0.9.0.tgz#9b025d2755f17e80beaf9368c3f4f319d8b0fb93"
-  integrity sha512-mgfd93RhzjYBUHHV532turHC2j4l/qxsF/PbfDmprHDEUHmNZGlDn1CEsulGK3AfsPdhkWzZQT/S/k0UGhLGsA==
-  dependencies:
-    "@types/node" "*"
-
 "@types/express-serve-static-core@*":
   version "4.16.1"
   resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.16.1.tgz#35df7b302299a4ab138a643617bd44078e74d44e"
@@ -5709,7 +5702,7 @@ ember-cli-addon-docs-esdoc@0.2.2:
   dependencies:
     broccoli-caching-writer "^3.0.3"
     ember-cli-babel "^6.6.0"
-    esdoc "github:pzuraq/esdoc#015a342"
+    esdoc pzuraq/esdoc#015a342
     esdoc-accessor-plugin "^1.0.0"
     esdoc-ecmascript-proposal-plugin "^1.0.0"
     fs-extra "^5.0.0"
@@ -6963,7 +6956,6 @@ esdoc-ecmascript-proposal-plugin@^1.0.0:
 
 "esdoc@github:pzuraq/esdoc#015a342":
   version "1.0.4"
-  uid "015a3426b2e53b2b0270a9c00133780db3f1d144"
   resolved "https://codeload.github.com/pzuraq/esdoc/tar.gz/015a3426b2e53b2b0270a9c00133780db3f1d144"
   dependencies:
     babel-generator "6.26.0"
@@ -8797,10 +8789,12 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "1.0.0"
+  version "0.0.0"
+  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "1.0.0"
+  version "0.0.0"
+  uid ""
 
 include-path-searcher@^0.1.0:
   version "0.1.0"

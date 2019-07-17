@@ -72,7 +72,12 @@ describe('Acceptance: build', function() {
   it('fails the build when noEmitOnError is set and an error is emitted', async () => {
     app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 
-    await expect(app.build()).to.be.rejectedWith(`Cannot find module 'nonexistent'`);
+    try {
+      await app.build();
+      expect.fail('Build should have failed');
+    } catch (error) {
+      expect(error.all).to.include(`Cannot find module 'nonexistent'`);
+    }
   });
 
   it('serves a type error page when the build has failed', async () => {
