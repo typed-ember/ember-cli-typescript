@@ -73,7 +73,7 @@ export default class SkeletonApp {
 
   _ember(args: string[]) {
     let ember = require.resolve('ember-cli/bin/ember');
-    return execa('node', [ember].concat(args), { cwd: this.root });
+    return execa.node(ember, args, { cwd: this.root });
   }
 }
 
