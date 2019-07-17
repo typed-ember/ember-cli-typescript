@@ -49,7 +49,7 @@
     "rsvp": "^4.8.1",
     "semver": "^6.0.0",
     "stagehand": "^1.0.0",
-    "walk-sync": "^1.0.0"
+    "walk-sync": "^2.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "8.1.0",
