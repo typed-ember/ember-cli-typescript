@@ -165,8 +165,6 @@ module.exports = {
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
       { name: '@types/rsvp', target: 'latest' },
-      { name: '@types/ember-test-helpers', target: 'latest' },
-      { name: '@types/ember-testing-helpers', target: 'latest' },
       { name: '@types/ember__test-helpers', target: 'latest' },
     ];
 

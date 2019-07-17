@@ -23,11 +23,10 @@ about: A problem with the type information for Ember & Ember-Data
   - [ ] @types/ember__routing
   - [ ] @types/ember__application
   - [ ] @types/ember__test
+  - [ ] @types/ember__test-helpers
   - [ ] @types/ember__service
   - [ ] @types/ember-data
   - [ ] @types/rsvp
-  - [ ] @types/ember-test-helpers
-  - [ ] @types/ember-testing-helpers
   - [ ] Other
   - [ ] I don't know
 

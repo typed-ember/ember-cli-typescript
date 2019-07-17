@@ -23,11 +23,10 @@ about: A feature request for the type information of Ember & Ember-Data
   - [ ] @types/ember__routing
   - [ ] @types/ember__application
   - [ ] @types/ember__test
+  - [ ] @types/ember__test-helpers
   - [ ] @types/ember__service
   - [ ] @types/ember-data
   - [ ] @types/rsvp
-  - [ ] @types/ember-test-helpers
-  - [ ] @types/ember-testing-helpers
   - [ ] Other
   - [ ] I don't know
 
@@ -35,8 +34,8 @@ about: A feature request for the type information of Ember & Ember-Data
 
 Follow the form
 
-> *As a **role**, I want **feature** so that **reason**.* 
+> *As a **role**, I want **feature** so that **reason**.*
 
-> Example: 
+> Example:
 >
 > As an **addon publisher**, I want tobe able to **precompile my addon's typescript into js**, so that **my consumers can use my code, regardless of whether their app is written in typescript**
