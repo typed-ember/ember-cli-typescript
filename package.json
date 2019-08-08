@@ -60,7 +60,7 @@
     "@types/chai-as-promised": "7.1.1",
     "@types/console-ui": "2.2.1",
     "@types/core-object": "3.0.1",
-    "@types/debug": "4.1.4",
+    "@types/debug": "4.1.5",
     "@types/ember": "3.1.0",
     "@types/ember-qunit": "3.4.6",
     "@types/esprima": "4.0.2",
