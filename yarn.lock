@@ -7037,13 +7037,13 @@ esdoc@pzuraq/esdoc#015a342:
     minimist "1.2.0"
     taffydb "2.7.2"
 
-eslint-plugin-ember@6.9.0:
-  version "6.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.9.0.tgz#8d6566c4754803f7fc88595eb6eb3ad7ae2136e6"
-  integrity sha512-dY1lMDsqMPRgTj8S+U/6FkVRa0zNSc7dwD3JHyx6KNuz9zoQWs6XW6KmNN5nrwo4TeTvWehUIlaOahWjboAp9A==
+eslint-plugin-ember@6.9.1:
+  version "6.9.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-6.9.1.tgz#fdf6284cda35d757cec3801366030f6a5e2b6f6e"
+  integrity sha512-bzaH+3+R62ClPNNjQJBl06yXpMil5GZEiymf6XJ5duD3RFDZA8I0q8nmPzupR3/dzWDMiQkehL4YlI0hbX9Fuw==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
-    ember-rfc176-data "^0.3.9"
+    ember-rfc176-data "^0.3.10"
     snake-case "^2.1.0"
 
 eslint-plugin-es@^1.4.0:
