@@ -105,6 +105,42 @@ ember install ember-cli-typescript@latest
 
 ***Note:* To work properly, starting from v2, ember-cli-typescript must be declared as a `dependency`, not a `devDependency` for addons. With `ember install` this migration will be automatically handled for you.**
 
+If you choose to make the upgrade manually with yarn or npm, here are the steps you need to follow:
+
+1. Remove ember-cli-typescript from your `devDependencies`.
+
+    With yarn:
+
+    ```sh
+    yarn remove ember-cli-typescript
+    ```
+
+    With npm:
+
+    ```sh
+    npm uninstall ember-cli-typescript
+    ```
+
+2. Install the latest of ember-cli-typescript as a `dependency`:
+
+    With yarn:
+
+    ```sh
+    yarn add ember-cli-typescript@latest
+    ```
+
+    With npm:
+
+    ```sh
+    npm install --save ember-cli-typescript@latest
+    ```
+
+3. Run `ember generate`:
+
+    ```sh
+    ember generate ember-cli-typescript
+    ```
+
 ##### Account for addon build pipeline changes
 
 Since we now integrate in a more traditional way into Ember CLI's build pipeline, there are two changes required for addons using TypeScript.
