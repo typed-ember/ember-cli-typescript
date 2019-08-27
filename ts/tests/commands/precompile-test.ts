@@ -38,8 +38,8 @@ describe('Acceptance: ts:precompile command', function() {
     expect(declaration).not.to.exist;
   });
 
-  describe('module unification', function() {
-    it('generates .d.ts files from the src tree', async () => {
+  describe('custom project layout', function() {
+    it('generates .d.ts files from the specified source tree', async () => {
       fs.ensureDirSync('src');
       fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
 

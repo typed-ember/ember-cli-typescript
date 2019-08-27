@@ -95,6 +95,5 @@ declare module 'ember-cli/lib/models/project' {
     name(): string;
     isEmberCLIAddon(): boolean;
     require(module: string): unknown;
-    isModuleUnification(): boolean;
   }
 }

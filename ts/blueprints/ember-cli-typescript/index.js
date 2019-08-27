@@ -14,7 +14,7 @@ export {};`;
 
 /**
  * @param {string} projectName
- * @param {'classic' | 'pods' | 'mu'} layout
+ * @param {'classic' | 'pods'} layout
  */
 function buildTemplateDeclarations(projectName, layout) {
   const comment = '// Types for compiled templates';
@@ -30,9 +30,6 @@ declare module '${projectName}/templates/*' { ${moduleBody}}`;
     case 'pods':
       return `${comment}
 declare module '${projectName}/*/template' { ${moduleBody}}`;
-    case 'mu':
-      return `${comment}
-declare module '${projectName}/ui/components/*/template' { ${moduleBody}}`;
     default:
       throw new Error(`Unexpecte project layout type: "${layout}"`);
   }
@@ -57,13 +54,12 @@ module.exports = {
     let inRepoAddons = (this.project.pkg['ember-addon'] || {}).paths || [];
     let hasMirage = 'ember-cli-mirage' in (this.project.pkg.devDependencies || {});
     let isAddon = this.project.isEmberCLIAddon();
-    let isMU = this._detectMU();
-    let includes = isMU ? ['src'] : ['app', isAddon && 'addon'].filter(Boolean);
+    let includes = ['app', isAddon && 'addon'].filter(Boolean);
     const isPods = this.pod;
 
     includes = includes.concat(['tests', 'types']).concat(inRepoAddons);
 
-    if (isAddon && !isMU) {
+    if (isAddon) {
       includes.push('test-support', 'addon-test-support');
     }
     // Mirage is already covered for addons because it's under `tests/`
@@ -88,26 +84,17 @@ module.exports = {
           paths[`${appName}/mirage/*`] = [`${isAddon ? 'tests/dummy/' : ''}mirage/*`];
         }
 
-        if (isMU) {
-          if (isAddon) {
-            paths[`${appName}/src/*`] = ['tests/dummy/src/*'];
-            paths[`${dasherizedName}/src/*`] = ['src/*'];
-          } else {
-            paths[`${appName}/src/*`] = ['src/*'];
-          }
+        if (isAddon) {
+          paths[`${appName}/*`] = ['tests/dummy/app/*', 'app/*'];
         } else {
-          if (isAddon) {
-            paths[`${appName}/*`] = ['tests/dummy/app/*', 'app/*'];
-          } else {
-            paths[`${appName}/*`] = ['app/*'];
-          }
+          paths[`${appName}/*`] = ['app/*'];
+        }
 
-          if (isAddon) {
-            paths[dasherizedName] = ['addon'];
-            paths[`${dasherizedName}/*`] = ['addon/*'];
-            paths[`${dasherizedName}/test-support`] = ['addon-test-support'];
-            paths[`${dasherizedName}/test-support/*`] = ['addon-test-support/*'];
-          }
+        if (isAddon) {
+          paths[dasherizedName] = ['addon'];
+          paths[`${dasherizedName}/*`] = ['addon/*'];
+          paths[`${dasherizedName}/test-support`] = ['addon-test-support'];
+          paths[`${dasherizedName}/test-support/*`] = ['addon-test-support/*'];
         }
 
         for (let addon of inRepoAddons) {
@@ -124,10 +111,9 @@ module.exports = {
         return useAppDeclarations ? APP_DECLARATIONS : '';
       },
       globalDeclarations: dasherizedName => {
-        /** @type {'classic' | 'pods' | 'mu'} */
+        /** @type {'classic' | 'pods'} */
         let projectLayout;
         if (isPods) projectLayout = 'pods';
-        else if (isMU) projectLayout = 'mu';
         else projectLayout = 'classic';
         return buildTemplateDeclarations(dasherizedName, projectLayout);
       },
@@ -135,8 +121,6 @@ module.exports = {
   },
 
   fileMapTokens(/*options*/) {
-    let isMU = this._detectMU();
-
     // Return custom tokens to be replaced in your files.
     return {
       __app_name__(options) {
@@ -144,11 +128,7 @@ module.exports = {
       },
 
       __config_root__(options) {
-        if (isMU) {
-          return options.inAddon ? 'tests/dummy' : '.';
-        } else {
-          return options.inAddon ? 'tests/dummy/app' : 'app';
-        }
+        return options.inAddon ? 'tests/dummy/app' : 'app';
       },
     };
   },
@@ -203,10 +183,6 @@ module.exports = {
     }
 
     return files;
-  },
-
-  _detectMU() {
-    return this.project.isModuleUnification && this.project.isModuleUnification();
   },
 
   _transformAddonPackage() {
