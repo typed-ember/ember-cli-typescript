@@ -15,8 +15,8 @@ ember-cli-typescript **requires** ember-cli-babel at version 7.1.0 or above, whi
 The recommended approach here is to deduplicate existing installations of the dependency, remove and reinstall ember-cli-babel to make sure that all its transitive dependencies are updated to the latest possible, and then to deduplicate *again*.
 
 If using yarn:
-    
-```
+
+```sh
 npx yarn-deduplicate
 yarn remove ember-cli-babel
 yarn add --dev ember-cli-babel
@@ -24,8 +24,8 @@ npx yarn-deduplicate
 ```
 
 If using npm:
-      
-```
+
+```sh
 npm dedupe
 npm uninstall ember-cli-babel
 npm install --save-dev ember-cli-babel
@@ -34,7 +34,7 @@ npm dedupe
 
 Note: If you are also using ember-decorators—and specifically the babel-transform that gets added with it—you will need update @ember-decorators/babel-transforms as well (anything over 3.1.0 should work):
 
-```
+```sh
 ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
 ```
 
@@ -44,38 +44,48 @@ Follow the same process of deduplication, reinstallation, and re-deduplication a
 
 ## Update ember-cli-typescript
 
-***Note:* Because ember-cli-typescript is part of the build pipeline, the process for updating it differs slightly between apps and addons!**
-
-### In apps
-
-In apps, you can simply `ember install` the dependency like normal:
+Now you can simply `ember install` the dependency like normal:
 
 ```sh
 ember install ember-cli-typescript@latest
 ```
 
-### In addons
+***Note:* To work properly, starting from v2, ember-cli-typescript must be declared as a `dependency`, not a `devDependency` for addons. With `ember install` this migration would be automatically handled for you.**
 
-To work properly, Ember addons must declare this library as a `dependency`, not a `devDependency`. **This is a *change* from ember-cli-typescript v1.**
+If you choose to make the upgrade manually with yarn or npm, here are the steps you need to follow:
 
-1. Remove ember-cli-typescript from your dependencies.
+1. Remove ember-cli-typescript from your `devDependencies`.
 
     With yarn:
-    
+
     ```sh
-    yarn remove ember-cli-typescript 
+    yarn remove ember-cli-typescript
     ```
 
     With npm:
-    
+
     ```sh
     npm uninstall ember-cli-typescript
     ```
 
-2. Re-install it with `ember install`:
+2. Install the latest of ember-cli-typescript as a `dependency`:
+
+    With yarn:
 
     ```sh
-    ember install ember-cli-typescript@latest --save
+    yarn add ember-cli-typescript@latest
+    ```
+
+    With npm:
+
+    ```sh
+    npm install --save ember-cli-typescript@latest
+    ```
+
+3. Run `ember generate`:
+
+    ```sh
+    ember generate ember-cli-typescript
     ```
 
 ### Account for addon build pipeline changes
@@ -104,7 +114,7 @@ Any place where a type annotation overrides a *getter*
 
     This breaks because `element` is a getter on `Component`. This declaration then shadows the getter declaration on the base class and stomps it to `undefined` (effectively `Object.defineProperty(this, 'element', void 0)`.
 
-    Two solutions—
+    Two solutions:
 
     1. Annotate locally (slightly more annoying, but less likely to troll you):
 
@@ -144,6 +154,7 @@ Any place where a type annotation overrides a *getter*
   ```ts
   export { FooType } from 'foo';
   ```
+
   ```ts
   import { FooType } from 'foo';
   export { FooType };
