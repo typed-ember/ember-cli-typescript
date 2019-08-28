@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+### 💥 Breaking
+
+- Removes support in the default blueprint for initializing new Module Unification projects, in line with [MU's removal][MU] from Ember's roadmap in favor of other directions. Existing MU projects should continue to build and typecheck according to the local `tsconfig.json`. ([#826](https://github.com/typed-ember/ember-cli-typescript/pull/826))
+
+[MU]: https://blog.emberjs.com/2019/03/11/update-on-module-unification-and-octane.html
+
 ## [2.0.2] - 2019-07-05
 
 - Lock `@babel/plugin-transform-typescript` version pending a fix to [babel/babel#10162](https://github.com/babel/babel/issues/10162) ([#751](https://github.com/typed-ember/ember-cli-typescript/pull/751))
