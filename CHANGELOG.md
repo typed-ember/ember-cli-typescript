@@ -6,11 +6,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
-### 💥 Breaking
+## [3.0.0] - 2019-08-30
 
+### Added ⭐️
+
+- In addons, `ember-cli-typescript` now installs itself into `dependencies` regardless of what `ember install` command you use. [#623]
+
+### Breaking 💥
+
+- No longer adds the Babel class properties plugin. This is a *fix* for [#707], but it will break against ember-cli-babel versions before 7.7.
 - Removes support in the default blueprint for initializing new Module Unification projects, in line with [MU's removal][MU] from Ember's roadmap in favor of other directions. Existing MU projects should continue to build and typecheck according to the local `tsconfig.json`. ([#826](https://github.com/typed-ember/ember-cli-typescript/pull/826))
+- Drops support for Node 6.
 
 [MU]: https://blog.emberjs.com/2019/03/11/update-on-module-unification-and-octane.html
+[#623]: https://github.com/typed-ember/ember-cli-typescript/issues/623
+[#707]: https://github.com/typed-ember/ember-cli-typescript/issues/707
 
 ## [2.0.2] - 2019-07-05
 
@@ -553,7 +563,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.2...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0-rc.2...v2.0.0
