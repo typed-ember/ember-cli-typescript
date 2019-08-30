@@ -6424,10 +6424,10 @@ ember-cli-test-loader@^2.2.0:
   dependencies:
     ember-cli-babel "^6.8.1"
 
-ember-cli-typescript-blueprints@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-typescript-blueprints/-/ember-cli-typescript-blueprints-2.0.0.tgz#a8cc6f2ea481a68315008c8264781c4932275751"
-  integrity sha512-doBO4V9CdT9/QUofmsArgUs1dixnbggS8yGSTasRGEvd7x8u/2cNEst8QxAxRSbOc3gSzcrk6qPwumaPc+Sxeg==
+ember-cli-typescript-blueprints@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-typescript-blueprints/-/ember-cli-typescript-blueprints-3.0.0.tgz#88595df71ddca9a7cb3ef1fb1626a1c2528da1b6"
+  integrity sha512-nJScjIjwDY96q9eiIBse9npLht/1FNmDRMpoTLJUrgSTzmx7/S6JhlH4BrMELkLCvtPkWoduDNBGiGBdCqf9FA==
   dependencies:
     chalk "^2.4.1"
     ember-cli-babel "^7.0.0"
@@ -6439,9 +6439,9 @@ ember-cli-typescript-blueprints@2.0.0:
     ember-cli-test-info "^1.0.0"
     ember-cli-valid-component-name "^1.0.0"
     ember-cli-version-checker "^3.0.0"
-    ember-router-generator "^1.2.3"
+    ember-router-generator "^2.0.0"
     exists-sync "^0.1.0"
-    fs-extra "^7.0.0"
+    fs-extra "^8.0.0"
     inflection "^1.12.0"
     silent-error "^1.1.0"
 
