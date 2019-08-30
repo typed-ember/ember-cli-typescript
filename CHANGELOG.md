@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [3.0.0] - 2019-08-30
 
+### Added ⭐️
+
+- In addons, `ember-cli-typescript` now installs itself into `dependencies` regardless of what `ember install` command you use. [#623]
+
 ### Breaking 💥
 
 - No longer adds the Babel class properties plugin. This is a *fix* for [#707], but it will break against ember-cli-babel versions before 7.7.
@@ -15,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Drops support for Node 6.
 
 [MU]: https://blog.emberjs.com/2019/03/11/update-on-module-unification-and-octane.html
+[#623]: https://github.com/typed-ember/ember-cli-typescript/issues/623
 [#707]: https://github.com/typed-ember/ember-cli-typescript/issues/707
 
 ## [2.0.2] - 2019-07-05
