@@ -6175,10 +6175,10 @@ ember-cli-dependency-checker@3.2.0:
     resolve "^1.5.0"
     semver "^5.3.0"
 
-ember-cli-deploy-build@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-1.1.1.tgz#de515b04536a569f42626ef28aea139f32ef00e8"
-  integrity sha512-q6Svm9PhEO2t5bCjsHfwkm36Cdou1eTdzvw00dU/nAHnysmai7sIqEzT7k20zawjGws7CgttZzMz6Oek5TOZ1w==
+ember-cli-deploy-build@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/ember-cli-deploy-build/-/ember-cli-deploy-build-1.1.2.tgz#396b665e5673b91c472f710069bb6de5b7eacd74"
+  integrity sha512-D5rjlSXfwt9BAeaGD1OLegF30Fr96dLrDYEB4DT5XVTrHWBcQp5cg5PVkFfp7Ov3AYx4xOyugxQVMy0FqrQAkA==
   dependencies:
     chalk "^1.0.0"
     ember-cli-deploy-plugin "^0.2.1"
