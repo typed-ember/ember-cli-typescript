@@ -8,7 +8,6 @@ import copyDeclarations from '../utilities/copy-declarations';
 export const PRECOMPILE_MANIFEST = 'dist/.ts-precompile-manifest';
 
 export default class PrecompileCommand extends Command {
-  name = 'ts:precompile';
   works = 'insideProject' as const;
   description =
     'Generates JS and declaration files from TypeScript sources in preparation for publishing.';
@@ -85,3 +84,6 @@ export default class PrecompileCommand extends Command {
     return { rootDir, paths, pathRoots };
   }
 }
+
+// https://github.com/ember-cli/ember-cli/blob/cf55d3c36118e6a04ace1cf183951f310cfca9cd/lib/cli/lookup-command.js#L18
+PrecompileCommand.prototype.name = 'ts:precompile';
