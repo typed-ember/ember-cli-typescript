@@ -7287,13 +7287,13 @@ esdoc-ecmascript-proposal-plugin@^1.0.0:
     minimist "1.2.0"
     taffydb "2.7.2"
 
-eslint-plugin-ember@7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-7.0.0.tgz#75412b62501a8489b5b6345ccb6adfb877ceb38a"
-  integrity sha512-cMdYuKs46hpF5DEPQ2cccNjgC5xy0C1GcFfP47qiHTKAAAkHUttD/6DdEH3OwlreK/uFbF4fFaHxuq84xkaOgA==
+eslint-plugin-ember@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ember/-/eslint-plugin-ember-7.1.0.tgz#1ae46ead1f17efa489e2dcba3fe3880b95fc162b"
+  integrity sha512-Tbh/vCxzQrOpzXX2zhEA+FJyZWHscisXi3pKPHmy49MHz0ZjGxBmhR4Y72xw6qeiwwtVNkU4+iCYTLgNeA05TQ==
   dependencies:
     "@ember-data/rfc395-data" "^0.0.4"
-    ember-rfc176-data "^0.3.11"
+    ember-rfc176-data "^0.3.12"
     snake-case "^2.1.0"
 
 eslint-plugin-es@^2.0.0:
@@ -9158,10 +9158,10 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "0.0.0"
+  version "1.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "0.0.0"
+  version "1.0.0"
 
 include-path-searcher@^0.1.0:
   version "0.1.0"
