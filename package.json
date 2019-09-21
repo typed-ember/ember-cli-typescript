@@ -54,7 +54,7 @@
   "devDependencies": {
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
-    "@ember/optional-features": "0.7.0",
+    "@ember/optional-features": "1.0.0",
     "@typed-ember/renovate-config": "1.2.1",
     "@types/chai": "4.2.3",
     "@types/chai-as-promised": "7.1.2",
