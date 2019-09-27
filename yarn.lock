@@ -1255,10 +1255,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/console-ui@2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@types/console-ui/-/console-ui-2.2.2.tgz#6bf0bd9ab1a5746e5d500282efdefb84caf27831"
-  integrity sha512-SFen1G8liI1Zb8UQUjzlqPQYJA9a3fQ59vuejs7osxIxC4jrOo3vmMNO3n5kcLbI+9KC3TnQdS21hl4Qj2msMg==
+"@types/console-ui@2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@types/console-ui/-/console-ui-2.2.3.tgz#14fb18729de6820d07c9b9d81249add14a7c5eba"
+  integrity sha512-7liVkn1GHdFNiI9QQr6MJJnOFdRFsxbhyljGlrZz0pu87HNDMK8bB2ICsv5Xud73KbU0ZR+Uf9jbzVDovG9Hsw==
   dependencies:
     "@types/inquirer" "*"
 
