@@ -106,7 +106,7 @@
     "ember-resolver": "5.3.0",
     "ember-source": "3.13.2",
     "ember-try": "1.2.1",
-    "eslint": "6.5.0",
+    "eslint": "6.5.1",
     "eslint-plugin-ember": "7.1.0",
     "eslint-plugin-node": "10.0.0",
     "eslint-plugin-prettier": "3.1.1",
