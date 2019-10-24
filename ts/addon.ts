@@ -1,7 +1,7 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import { hasPlugin, addPlugin } from 'ember-cli-babel-plugin-helpers';
+import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
@@ -77,15 +77,19 @@ export default addon({
     // preprocessor registry, so we need to beat it to the punch.
     this._registerBabelExtension();
 
-    let pluginTarget = this._getConfigurationTarget();
-
-    if (!hasPlugin(pluginTarget, '@babel/plugin-transform-typescript')) {
-      // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
-      // "property initialization occurs in the right order")
-      addPlugin(pluginTarget, require.resolve('@babel/plugin-transform-typescript'), {
-        after: ['@babel/plugin-proposal-class-properties'],
-      });
+    // As of 3.7, TS supports the optional chaining and nullish coalescing proposals.
+    // https://devblogs.microsoft.com/typescript/announcing-typescript-3-7-beta/
+    let tsVersion = this._getProjectTypeScriptVersion();
+    if (semver.gte(tsVersion, '3.7.0-alpha.0')) {
+      this._addBabelPluginIfNotPresent('@babel/plugin-proposal-optional-chaining');
+      this._addBabelPluginIfNotPresent('@babel/plugin-proposal-nullish-coalescing-operator');
     }
+
+    // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
+    // "property initialization occurs in the right order")
+    this._addBabelPluginIfNotPresent('@babel/plugin-transform-typescript', {
+      after: ['@babel/plugin-proposal-class-properties'],
+    });
   },
 
   shouldIncludeChildAddon(addon) {
@@ -176,6 +180,24 @@ export default addon({
 
     if (!extensions.includes('ts')) {
       extensions.push('ts');
+    }
+  },
+
+  _addBabelPluginIfNotPresent(pluginName: string, pluginOptions?: AddPluginOptions) {
+    let target = this._getConfigurationTarget();
+    if (!hasPlugin(target, pluginName)) {
+      addPlugin(target, pluginName, pluginOptions);
+    }
+  },
+
+  _getProjectTypeScriptVersion() {
+    try {
+      let pkg = this.project.require('typescript/package.json') as { version: string };
+      return pkg.version;
+    } catch {
+      throw new Error(
+        `[ember-cli-typescript] Unable to determine project TypeScript version; is it installed?`
+      );
     }
   },
 
