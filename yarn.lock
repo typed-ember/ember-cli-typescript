@@ -1545,10 +1545,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.3.tgz#7c6b0f8eaf16ae530795de2ad1b85d34bf2f5c58"
   integrity sha512-wp6IOGu1lxsfnrD+5mX6qwSwWuqsdkKKxTN4aQc4wByHAKZJf9/D4KXPQ1POUjEbnCP5LMggB0OEFNY9OTsMqg==
 
-"@types/node@9.6.52":
-  version "9.6.52"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.52.tgz#ddba1f1fdaf1487a0a992ee238c43f5318ba5625"
-  integrity sha512-d6UdHtc8HKe3NTruj9mHk2B8EiHZyuG/00aYbUedHvy9sBhtLAX1gaxSNgvcheOvIZavvmpJYlwfHjjxlU/Few==
+"@types/node@9.6.53":
+  version "9.6.53"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.53.tgz#dce152f939cc626dca9248ae8a84b93139a73183"
+  integrity sha512-I8M/wFHTVi2BBNENbm5rizhYdgaXMdJPWjGDB55ON2q8FTMOL6lIoYODDl0PyRZey42yesbvs0IbdHSHePtOLQ==
 
 "@types/node@^12.0.2":
   version "12.6.6"
