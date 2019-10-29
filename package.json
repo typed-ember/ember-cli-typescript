@@ -113,7 +113,7 @@
     "esprima": "4.0.1",
     "fixturify": "1.2.0",
     "got": "8.3.2",
-    "handlebars": "4.4.5",
+    "handlebars": "4.5.1",
     "husky": "3.0.9",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
