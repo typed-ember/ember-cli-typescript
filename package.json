@@ -71,7 +71,7 @@
     "@types/node": "9.6.53",
     "@types/qunit": "2.9.0",
     "@types/resolve": "0.0.8",
-    "@types/semver": "6.0.2",
+    "@types/semver": "6.2.0",
     "@types/tmp": "0.1.0",
     "@typescript-eslint/eslint-plugin": "2.6.0",
     "@typescript-eslint/parser": "2.6.0",
