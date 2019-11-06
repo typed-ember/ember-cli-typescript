@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
-## [3.0.0] - 2019-08-30
+## [3.1.1] - 2019-11-06
+
+### Added ⭐️
+
+- Adds appropriate Babel plugins to support the [nullish coalescing][nullish-coalescing] and [optional chaining][optional-chaining] proposals, both supported in TypeScript [starting with 3.7][ts-3.7]. ([#914], [#936])
+
+[nullish-coalescing]: https://github.com/tc39/proposal-nullish-coalescing
+[optional-chaining]: https://github.com/tc39/proposal-optional-chaining
+[ts-3.7]: https://devblogs.microsoft.com/typescript/announcing-typescript-3-7/
+[#914]: https://github.com/typed-ember/ember-cli-typescript/pull/914
+[#936]: https://github.com/typed-ember/ember-cli-typescript/pull/936
 
 ### Added ⭐️
 
@@ -563,7 +573,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.0.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...HEAD
+[3.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.0.0...v3.1.1
 [3.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...v2.0.2
 [2.0.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.0...v2.0.1
