@@ -18,6 +18,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [#914]: https://github.com/typed-ember/ember-cli-typescript/pull/914
 [#936]: https://github.com/typed-ember/ember-cli-typescript/pull/936
 
+## 3.1.0 - 2019-11-06
+
+3.1.0 was a bad release on npm, and was yanked accordingly. See **3.1.1**!
+
+## [3.0.0] - 2019-08-30
+
 ### Added ⭐️
 
 - In addons, `ember-cli-typescript` now installs itself into `dependencies` regardless of what `ember install` command you use. [#623]
@@ -574,6 +580,10 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
 [unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...HEAD
+<!--
+  Note that 3.1.1 *intentionally* includes all the changes between 3.0.0 and
+  3.1.1 and there is no entry for 3.1.0. This is because 3.1.0 was yanked.
+-->
 [3.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.0.0...v3.1.1
 [3.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...v2.0.2
