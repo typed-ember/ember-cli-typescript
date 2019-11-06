@@ -99,6 +99,8 @@ Now, looking at that bit of code, you might be wondering how it knows what the t
 ```ts
 class Component<Args extends {} = {}> {
   args: Args;
+
+  constructor(owner: unknown, args: Args);
 }
 ```
 
