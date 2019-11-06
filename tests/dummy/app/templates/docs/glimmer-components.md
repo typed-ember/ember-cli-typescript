@@ -74,7 +74,7 @@ Notice that we have to start by calling `super` with `owner` and `args`. This ma
 
 The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly *don’t* need to know about. The `args` are `object` because a Glimmer component *always* receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
 
-The `args` are also available on `this`, just as you’d expect, so we could change our definition to return the names of the arguments from a getter:
+The `args` passed to a Glimmer Component [are available on `this`](https://github.com/glimmerjs/glimmer.js/blob/2f840309f013898289af605abffe7aee7acc6ed5/packages/%40glimmer/component/src/component.ts#L12), so we could change our definition to return the names of the arguments from a getter:
 
 ```ts
 import Component from '@glimmer/component';
