@@ -39,4 +39,13 @@ module('Unit | Build', function() {
     let instance = new TestClass('hello');
     assert.equal(instance.field, 'hello');
   });
+
+  // TODO: enable once a release of Prettier comes out that supports this syntax
+  // test('optional chaining and nullish coalescing are transpiled correctly', function(assert) {
+  //   let value = { a: 'hello' } as { a?: string; b?: string };
+  //   assert.equal(value?.a, 'hello');
+  //   assert.equal(value?.b, undefined);
+  //   assert.equal(value?.a ?? 'ok', 'hello');
+  //   assert.equal(value?.b ?? 'ok', 'ok');
+  // });
 });
