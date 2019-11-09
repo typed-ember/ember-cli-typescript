@@ -2,7 +2,7 @@
 
 <aside>
 
-If you’re entirely unfamiliar with Glimmer components, we recommend [the Ember Guides][guides-component] to understand that first!
+If you’re entirely unfamiliar with Glimmer components, we recommend [the Ember Guides][guides-component] to understand that first! Throughout this guide, we’ll link back to the main Ember Guide when there are specific concepts that we will not explain here but which are important for understanding what we’re covering!
 
 </aside>
 
@@ -39,7 +39,7 @@ export default class Counter extends Component {
 }
 ```
 
-Notice that there are no type declarations here – but this *is* actually a well-typed component. The type of `count` is `number`, and if we accidentally wrote something like `this.count = null` the compiler would give us an error.
+Notice that there are no type declarations here – but this *is* actually a well-typed component. The type of `count` is `number`, and if we accidentally wrote something like `this.count = "hello"` the compiler would give us an error.
 
 ## A component with arguments
 
@@ -72,7 +72,19 @@ If you’re used to the classic Ember Object model, there are two important diff
 
 Notice that we have to start by calling `super` with `owner` and `args`. This may be a bit different from what you’re used to in Ember or other frameworks, but is normal for sub-classes in TypeScript. If the compiler just accepted any `...arguments`, a lot of potentially *very* unsafe invocations would go through. So, instead of using `...arguments`, we explicitly pass the *specific* arguments and make sure their types match up with what the super-class expects.
 
-The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly *don’t* need to know about. The `args` are `object` because a Glimmer component *always* receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
+The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly *don’t* need to know about. The `args` are `` because a Glimmer component *always* receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
+
+<aside>
+
+`{}` is an empty object type – all objects extend from it, but there will be no properties on it. This is distinct from the `object` type, which the TypeScript docs describe as:
+
+> any thing that is not `number`, `string`, `boolean`, `symbol`, `null`, or `undefined`.
+
+If we used `object`, we could end up with TypeScript thinking `args` were an array, or a `Set`, or anything else that isn’t a primitive. Since we have `{}`, we .
+
+For some further details, check out [this blog post](https://mariusschulz.com/blog/the-object-type-in-typescript).
+
+</aside>
 
 The `args` passed to a Glimmer Component [are available on `this`](https://github.com/glimmerjs/glimmer.js/blob/2f840309f013898289af605abffe7aee7acc6ed5/packages/%40glimmer/component/src/component.ts#L12), so we could change our definition to return the names of the arguments from a getter:
 
