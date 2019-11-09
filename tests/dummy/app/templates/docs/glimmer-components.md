@@ -72,7 +72,7 @@ If you’re used to the classic Ember Object model, there are two important diff
 
 Notice that we have to start by calling `super` with `owner` and `args`. This may be a bit different from what you’re used to in Ember or other frameworks, but is normal for sub-classes in TypeScript. If the compiler just accepted any `...arguments`, a lot of potentially *very* unsafe invocations would go through. So, instead of using `...arguments`, we explicitly pass the *specific* arguments and make sure their types match up with what the super-class expects.
 
-The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly *don’t* need to know about. The `args` are `` because a Glimmer component *always* receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
+The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly *don’t* need to know about. The `args` are `{}` because a Glimmer component *always* receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
 
 <aside>
 
