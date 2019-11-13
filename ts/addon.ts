@@ -185,7 +185,7 @@ export default addon({
   _addBabelPluginIfNotPresent(pluginName: string, pluginOptions?: AddPluginOptions) {
     let target = this._getConfigurationTarget();
     if (!hasPlugin(target, pluginName)) {
-      addPlugin(target, pluginName, pluginOptions);
+      addPlugin(target, require.resolve(pluginName), pluginOptions);
     }
   },
 
