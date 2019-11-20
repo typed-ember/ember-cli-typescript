@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+### Under the hood 🚗
+
+- Switch from Azure Pipelines to GitHub Actions. Hopefully our Windows builds will be much more stable now! 🤞
+
 ## [3.1.1] - 2019-11-06
 
 ### Added ⭐️
