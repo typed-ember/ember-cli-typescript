@@ -99,7 +99,7 @@
     "ember-cli-sri": "2.1.1",
     "ember-cli-typescript-blueprints": "3.0.0",
     "ember-cli-uglify": "3.0.0",
-    "ember-cli-update": "0.43.10",
+    "ember-cli-update": "0.45.0",
     "ember-disable-prototype-extensions": "1.1.3",
     "ember-export-application-global": "2.0.1",
     "ember-load-initializers": "2.1.1",
