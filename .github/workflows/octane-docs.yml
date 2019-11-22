@@ -1,0 +1,28 @@
+name: Publish Draft Octane Docs
+
+on:
+  push:
+    branches:
+      - octane-docs
+
+jobs:
+  deploy-docs:
+    name: Deploy Docs Preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '^8.12'
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "Tomster"
+          git config --global user.email "tomster@emberjs.com"
+      - name: Publish Docs
+        run: yarn ember deploy production
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

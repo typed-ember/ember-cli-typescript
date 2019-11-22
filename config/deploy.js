@@ -4,6 +4,7 @@
 module.exports = function(deployTarget) {
   let ENV = {
     build: {},
+    git: {},
     // include other plugin configuration that applies to all deploy targets here
   };
 
@@ -20,6 +21,11 @@ module.exports = function(deployTarget) {
   if (deployTarget === 'production') {
     ENV.build.environment = 'production';
     // configure other plugins for production deploy target here
+  }
+
+  const { GITHUB_ACTOR, GITHUB_TOKEN } = process.env;
+  if (GITHUB_ACTOR && GITHUB_TOKEN) {
+    ENV.git.repo = `https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/typed-ember/ember-cli-typescript.git`;
   }
 
   // Note: if you need to build some configuration asynchronously, you can return
