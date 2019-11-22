@@ -79,11 +79,10 @@ export default addon({
 
     // As of 3.7, TS supports the optional chaining and nullish coalescing proposals.
     // https://devblogs.microsoft.com/typescript/announcing-typescript-3-7-beta/
-    let tsVersion = this._getProjectTypeScriptVersion();
-    if (semver.gte(tsVersion, '3.7.0-alpha.0')) {
-      this._addBabelPluginIfNotPresent('@babel/plugin-proposal-optional-chaining');
-      this._addBabelPluginIfNotPresent('@babel/plugin-proposal-nullish-coalescing-operator');
-    }
+    // Since we can't necessarily know what version of TS an addon was developed with,
+    // we unconditionally add the Babel plugins for both proposals.
+    this._addBabelPluginIfNotPresent('@babel/plugin-proposal-optional-chaining');
+    this._addBabelPluginIfNotPresent('@babel/plugin-proposal-nullish-coalescing-operator');
 
     // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
     // "property initialization occurs in the right order")
@@ -186,18 +185,7 @@ export default addon({
   _addBabelPluginIfNotPresent(pluginName: string, pluginOptions?: AddPluginOptions) {
     let target = this._getConfigurationTarget();
     if (!hasPlugin(target, pluginName)) {
-      addPlugin(target, pluginName, pluginOptions);
-    }
-  },
-
-  _getProjectTypeScriptVersion() {
-    try {
-      let pkg = this.project.require('typescript/package.json') as { version: string };
-      return pkg.version;
-    } catch {
-      throw new Error(
-        `[ember-cli-typescript] Unable to determine project TypeScript version; is it installed?`
-      );
+      addPlugin(target, require.resolve(pluginName), pluginOptions);
     }
   },
 

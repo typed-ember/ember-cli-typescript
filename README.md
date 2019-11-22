@@ -4,7 +4,7 @@
 
 <center>
 
-[![Build Status](https://dev.azure.com/typed-ember/ember-cli-typescript/_apis/build/status/typed-ember.ember-cli-typescript)](https://dev.azure.com/typed-ember/ember-cli-typescript/_build/latest?definitionId=2) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
+[![Actions Status](https://github.com/typed-ember/ember-cli-typescript/workflows/CI/badge.svg)](https://github.com/typed-ember/ember-cli-typescript/actions) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-typescript.svg)](https://emberobserver.com/addons/ember-cli-typescript)
 
 </center>
 
