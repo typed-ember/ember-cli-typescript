@@ -26,3 +26,4 @@ jobs:
         run: yarn ember deploy production
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ADDON_DOCS_VERSION_PATH: 'octane-docs'
