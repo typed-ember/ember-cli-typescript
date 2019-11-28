@@ -27,7 +27,7 @@ export default command({
 
     // prettier-ignore
     await execa('tsc', [
-      '--allowJs', 'false',
+      '--allowJs', 'true',
       '--noEmit', 'false',
       '--rootDir', rootDir || this.project.root,
       '--isolatedModules', 'false',
