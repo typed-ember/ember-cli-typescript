@@ -125,7 +125,7 @@
     "qunit-dom": "0.9.2",
     "testdouble": "3.12.4",
     "tmp": "0.1.0",
-    "ts-node": "8.5.3",
+    "ts-node": "8.5.4",
     "typescript": "3.7.2"
   },
   "resolutions": {
