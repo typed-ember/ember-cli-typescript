@@ -14,7 +14,7 @@ import {
 const { expect } = chai;
 
 describe('Acceptance: build', function() {
-  this.timeout(30 * 1000);
+  this.timeout(60 * 1000);
   let app: SkeletonApp;
   beforeEach(function() {
     app = new SkeletonApp();
