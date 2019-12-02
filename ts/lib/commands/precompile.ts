@@ -25,18 +25,25 @@ export default command({
       return;
     }
 
-    // prettier-ignore
-    await execa('tsc', [
-      '--allowJs', 'false',
-      '--noEmit', 'false',
-      '--rootDir', rootDir || this.project.root,
-      '--isolatedModules', 'false',
-      '--declaration',
-      '--declarationDir', outDir,
-      '--emitDeclarationOnly',
-    ], {
-      preferLocal: true
-    });
+    try {
+      // prettier-ignore
+      await execa('tsc', [
+        '--allowJs', 'false',
+        '--noEmit', 'false',
+        '--rootDir', rootDir || this.project.root,
+        '--isolatedModules', 'false',
+        '--declaration',
+        '--declarationDir', outDir,
+        '--emitDeclarationOnly',
+        '--pretty', 'true',
+      ], {
+        preferLocal: true,
+        all: true,
+      });
+    } catch (e) {
+      console.error(`\n${e.all}\n`);
+      throw e;
+    }
 
     let manifestPath = options.manifestPath;
     let packageName = this.project.pkg.name;
