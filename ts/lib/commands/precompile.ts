@@ -38,6 +38,8 @@ export default command({
         '--pretty', 'true',
       ], {
         preferLocal: true,
+
+        // Capture a string with stdout and stderr interleaved for error reporting
         all: true,
       });
     } catch (e) {
