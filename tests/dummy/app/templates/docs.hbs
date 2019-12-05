@@ -1,11 +1,24 @@
 <DocsHeader @prefix='Ember CLI' @name='TypeScript' />
-
-{{#docs-viewer as |viewer|}}
+<DocsViewer as |viewer|>
   <viewer.nav as |nav|>
-    {{nav.section 'Introduction'}}
-    {{nav.item 'Installation' 'docs.index'}}
-    {{nav.item 'Upgrading from 1.x' 'docs.upgrade-notes'}}
-    {{nav.item 'Configuration' 'docs.configuration'}}
+    {{nav.section 'Getting Started'}}
+    {{nav.item 'Installation' 'docs.setup'}}
+    {{nav.item 'Configuration' 'docs.setup.configuration'}}
+
+    {{nav.section 'Guide'}}
+    {{nav.item 'Overview' 'docs.guide.overview'}}
+    {{nav.item 'Components' 'docs.guide.components'}}
+    {{nav.item 'Services' 'docs.guide.services'}}
+    {{nav.item 'Routes' 'docs.guide.routes'}}
+    {{nav.item 'Helpers' 'docs.guide.helpers'}}
+    {{nav.item 'Testing' 'docs.guide.testing'}}
+    {{nav.item 'Controllers' 'docs.guide.controllers'}}
+
+    {{nav.section 'Legacy Guide'}}
+    {{nav.item 'Overview' 'docs.legacy.overview'}}
+    {{nav.item 'EmberObject' 'docs.legacy.ember-object'}}
+    {{nav.item 'Mixins' 'docs.legacy.mixins'}}
+    {{nav.item 'EmberComponent' 'docs.legacy.ember-component'}}
 
     {{nav.section 'Using TypeScript with Ember'}}
     {{nav.item 'Using TypeScript Effectively' 'docs.ts-guide.using-ts-effectively'}}
@@ -17,9 +30,13 @@
 
     {{nav.section 'Troubleshooting'}}
     {{nav.item 'Conflicting Type Dependencies' 'docs.troubleshooting.conflicting-types'}}
+
+    {{nav.section 'Upgrading'}}
+    {{nav.item '1.x → 2.x' 'docs.upgrade-notes'}}
+    {{nav.item '2.x → 3.x' 'docs.upgrade-notes'}}
   </viewer.nav>
 
   <viewer.main>
     {{outlet}}
   </viewer.main>
-{{/docs-viewer}}
+</DocsViewer>

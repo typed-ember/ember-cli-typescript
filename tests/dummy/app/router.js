@@ -8,8 +8,30 @@ const Router = AddonDocsRouter.extend({
 
 Router.map(function() {
   docsRoute(this, function() {
+    this.route('setup', function() {
+      this.route('installation');
+      this.route('configuration');
+    });
+
+    this.route('guide', function() {
+      this.route('overview');
+      this.route('components');
+      this.route('services');
+      this.route('testing');
+      this.route('routes');
+      this.route('controllers');
+      this.route('helpers');
+      this.route('apps-and-addons');
+    });
+
+    this.route('legacy', function() {
+      this.route('overview');
+      this.route('ember-object');
+      this.route('mixins');
+      this.route('ember-component');
+    });
+
     this.route('upgrade-notes');
-    this.route('configuration');
     this.route('ts-guide', function() {
       this.route('with-addons');
       this.route('using-ts-effectively');
