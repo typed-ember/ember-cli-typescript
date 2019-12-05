@@ -1503,7 +1503,7 @@
     "@types/connect" "*"
     "@types/node" "*"
 
-"@types/capture-console@^1.0.0":
+"@types/capture-console@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/capture-console/-/capture-console-1.0.0.tgz#8730d90248d862c4ccdaf5a623bfee0272d9a934"
   integrity sha512-v6XDGk++qgUNmL5oqjmrK/tYIRmekq9FO8vgVv4xAx9frJYTwWUI+iOa+2z48zw+ZHfVVTNxL1qT9wuZZUrDVg==
@@ -4666,7 +4666,7 @@ caniuse-lite@^1.0.30001010:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001011.tgz#0d6c4549c78c4a800bb043a83ca0cbe0aee6c6e1"
   integrity sha512-h+Eqyn/YA6o6ZTqpS86PyRmNWOs1r54EBDcd2NTwwfsXQ8re1B38SnB+p2RKF8OUsyEIjeDU8XGec1RGO/wYCg==
 
-capture-console@^1.0.1:
+capture-console@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/capture-console/-/capture-console-1.0.1.tgz#db63c39ac73239019badd7fbb10143eda380ff71"
   integrity sha1-22PDmscyOQGbrdf7sQFD7aOA/3E=
@@ -9581,12 +9581,10 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 include-path-searcher@^0.1.0:
   version "0.1.0"
