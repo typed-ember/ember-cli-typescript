@@ -150,18 +150,6 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ],
-    "rules": {
-      "header-max-length": [
-        0,
-        "always",
-        288
-      ]
-    }
-  },
   "prettier": {
     "printWidth": 100,
     "semi": true,
