@@ -2,7 +2,7 @@
 
 <aside>
 
-If you’re entirely unfamiliar with Glimmer components, we recommend [the Ember Guides][guides-component] to understand that first! Throughout this guide, we’ll link back to the main Ember Guide when there are specific concepts that we will not explain here but which are important for understanding what we’re covering!
+New to Ember or the Octane edition specifically? You may want to read [the Ember Guides’ material on `Component`s][guides-component] first!
 
 </aside>
 
