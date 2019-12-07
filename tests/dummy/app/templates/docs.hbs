@@ -1,6 +1,6 @@
 <DocsHeader @prefix='Ember CLI' @name='TypeScript' />
-<DocsViewer as |viewer|>
-  <viewer.nav as |nav|>
+<DocsViewer as |Viewer|>
+  <Viewer.nav as |nav|>
     {{nav.section 'Getting Started'}}
     {{nav.item 'Installation' 'docs.getting-started.installation'}}
     {{nav.item 'Configuration' 'docs.getting-started.configuration'}}
@@ -34,9 +34,9 @@
     {{nav.section 'Upgrading'}}
     {{nav.item '1.x → 2.x' 'docs.upgrade-notes'}}
     {{nav.item '2.x → 3.x' 'docs.upgrade-notes'}}
-  </viewer.nav>
+  </Viewer.nav>
 
-  <viewer.main>
+  <Viewer.main>
     {{outlet}}
-  </viewer.main>
+  </Viewer.main>
 </DocsViewer>
