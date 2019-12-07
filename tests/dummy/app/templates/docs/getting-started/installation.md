@@ -1,4 +1,4 @@
-# Installation
+## Installation
 
 You can simply `ember install` the dependency like normal:
 
@@ -7,8 +7,6 @@ ember install ember-cli-typescript@latest
 ```
 
 All dependencies will be added to your `package.json`, and you're ready to roll! **If you're upgrading from a previous release, see below!** you should check to merge any tweaks you've made to `tsconfig.json`.
-
-## Installation Results
 
 Installing ember-cli-typescript modifies your project in two ways:
 

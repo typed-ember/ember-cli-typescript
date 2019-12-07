@@ -8,7 +8,7 @@ const Router = AddonDocsRouter.extend({
 
 Router.map(function() {
   docsRoute(this, function() {
-    this.route('setup', function() {
+    this.route('getting-started', function() {
       this.route('installation');
       this.route('configuration');
     });

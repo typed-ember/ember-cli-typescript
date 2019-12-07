@@ -1,4 +1,4 @@
-# Configuring ember-cli-typescript
+# Configuration
 
 ## Blueprints
 
