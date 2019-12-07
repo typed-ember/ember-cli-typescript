@@ -4,11 +4,9 @@ Testing with TypeScript mostly works just the same as you'd expect in a non-Type
 
 [Testing Guides]: https://guides.emberjs.com/release/testing/
 
-When working with TypeScript in Ember tests, there are a few differences in your experience, and there are
+When working with TypeScript in Ember tests, there are a few differences in your experience, and there are also differences in how you should handle testing app code vs. addon code.
 
-##  Differences
-
-### App tests
+## App tests
 
 One major difference when working with TypeScript in *app* code is that once your app is fully converted, there are a bunch of kinds of tests you just don't need to write any more: things like testing bad inputs to functions. We'll use an admittedly silly and contrived example here, an `add` function to add two numbers together, so that we can focus on the differences between JavaScript and TypeScript, rather than getting hung up on the details of this particular function.
 
@@ -109,7 +107,7 @@ export function add(a: number, b: number): number {
 }
 ```
 
-### Addon tests
+## Addon tests
 
 Note, however, that this *only* applies to *app code*. If you're writing an Ember addon (or any other library), you cannot assume that everyone consuming your code is using TypeScript. You still need to account for these kinds of cases. This will require you to do something that probably feels a bit gross: casting a bunch of values `as any` for your tests, so that you can test what happens when people feed bad data to your addon!
 
