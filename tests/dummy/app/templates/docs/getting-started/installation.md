@@ -1,4 +1,4 @@
-## Installation
+# Installation
 
 You can simply `ember install` the dependency like normal:
 
@@ -13,7 +13,7 @@ Installing ember-cli-typescript modifies your project in two ways:
 - installing a number of other packages to make TypeScript work in your app or addon
 - generating a number of files in your project
 
-### Other packages this addon installs
+## Other packages this addon installs
 
 We install the following packages—all at their current "latest" value—or generated:
 
@@ -38,7 +38,7 @@ We install the following packages—all at their current "latest" value—or gen
 - **`@types/rsvp`** - ([npm](https://www.npmjs.com/package/@types/rsvp) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/rsvp)) - Types for [RSVP.js](https://github.com/tildeio/rsvp.js/)
 - **`@types/ember__test-helpers`** - ([npm](https://www.npmjs.com/package/@types/ember__test-helpers) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__test-helpers)) – Types for [@ember/test-helpers](https://github.com/emberjs/ember-test-helpers).
 
-### Files this addon generates
+## Files this addon generates
 
 We add the following files to your project:
 
