@@ -8,6 +8,6 @@ This is *not* an introduction to Ember. Throughout this guide, we’ll link back
 
 </aside>
 
-- To get started, check out the instructions in <LinkTo @route='docs.setup'>Getting Started</LinkTo>.
+- To get started, check out the instructions in <LinkTo @route='docs.getting-started'>Getting Started</LinkTo>.
 - If you're totally new to using TypeScript, or to using TypeScript with Ember, start by following the <LinkTo @route='docs.guide'>Guide</LinkTo>.
 - If you're experienced with both TypeScript and Ember, you might be interested in the [Reference](TODO)
