@@ -3522,10 +3522,10 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
-boilerplate-update@0.29.5:
-  version "0.29.5"
-  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.29.5.tgz#862ba9ddfc049fae1ca21118fe029c96cb7da0dc"
-  integrity sha512-V/DrfG7b2cU7gC4XbUqKf6AKPm2Oo0rSYqJ1DZIzpVuMbc9qsBahe1DZpNwZmO/vWbvXE0A79VUAagXTmzh72w==
+boilerplate-update@0.29.6:
+  version "0.29.6"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.29.6.tgz#e8d40ca434ec0e35c8ddf3b8ad4e8f22f886006c"
+  integrity sha512-gYWkmz97Ft7v3NhccP+KFCTiYgmsyLtS8sLp4fx3ql8qxh3qWiTchWReMXUU8dEVk4bKkTaAnSxV8qSsUqqpaw==
   dependencies:
     cpr "^3.0.1"
     debug "^4.1.1"
@@ -6993,12 +6993,12 @@ ember-cli-uglify@3.0.0:
     broccoli-uglify-sourcemap "^3.1.0"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.46.6:
-  version "0.46.6"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.46.6.tgz#a6bff959432ef52e70a1ace3762edde876370643"
-  integrity sha512-KtV5Fe+EEm7V9eWasmg8pDmm76SilVRLkGMgcPUA/ccHREJvjlpafD/fnZzZTlJRvGP1xXPdVynq+NhKw6p8GA==
+ember-cli-update@0.47.0:
+  version "0.47.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.47.0.tgz#52aa6b9e9e8ae02ed1b4b2b14068290adf1c7899"
+  integrity sha512-Tq9EMFoobbuEpZtK9ZEJNZUMY7CPkoh/6CLcZ55rEgC5KbuW39uBkE9ciU5GO9RZoz6eeksVIy6UhTh8q0pj5A==
   dependencies:
-    boilerplate-update "0.29.5"
+    boilerplate-update "0.29.6"
     debug "^4.1.1"
     execa "^3.4.0"
     fs-extra "^8.0.0"
@@ -9692,12 +9692,10 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 include-path-searcher@^0.1.0:
   version "0.1.0"
