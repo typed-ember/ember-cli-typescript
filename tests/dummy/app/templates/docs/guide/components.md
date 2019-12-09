@@ -2,7 +2,7 @@
 
 <aside>
 
-New to Ember or the Octane edition specifically? You may want to read [the Ember Guides’ material on `Component`s][guides-component] first!
+New to Ember or the Octane edition specifically? You may want to read [the Ember Guides’ material on `Component`s](https://guides.emberjs.com/release/components/) first!
 
 </aside>
 
@@ -19,7 +19,7 @@ A *very* simple Glimmer component which lets you change the count of a value mig
 
 Notice that there are no type declarations here – but this *is* actually a well-typed component. The type of `count` is `number`, and if we accidentally wrote something like `this.count = "hello"` the compiler would give us an error.
 
-## A component with arguments
+## Adding arguments
 
 So far so good, but of course most components aren’t quite this simple! Instead, they’re invoked by other templates and they can invoke other components themselves in their own templates.
 
@@ -69,7 +69,7 @@ The `args` passed to a Glimmer Component [are available on `this`](https://githu
   <demo.snippet @name='args-getter.hbs' @label='args-getter.hbs' />
 </DocsDemo>
 
-## Understanding `args`
+### Understanding `args`
 
 Now, looking at that bit of code, you might be wondering how it knows what the type of `this.args` is. In the `constructor` version, we explicitly *named* the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
 
@@ -77,7 +77,7 @@ Now, looking at that bit of code, you might be wondering how it knows what the t
 
 <aside>
 
-Not sure what’s up with `<Args>` *at all*? We highly recommend the [TypeScript Deep Dive ](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
+Not sure what’s up with `<Args>` *at all*? We highly recommend the [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
 
 </aside>
 
@@ -94,8 +94,16 @@ let a = [1, 2, 3];  // Array<number>
 let b = ["hello", "goodbye"]; // Array<string>
 ```
 
-In the case of the Component, we have the types the way we do so that you can’t accidentally define `args` as a string, or `undefined` , or whatever: it *has* to be an object. Thus, `Component<Args extends {}>` . But we also want to make it so that you can just write `extends Component` , so that needs to have a default value. Thus, `Component<Args extends {} = {}>` .
+In the case of the Component, we have the types the way we do so that you can’t accidentally define `args` as a string, or `undefined` , or whatever: it *has* to be an object. Thus, `Component<Args extends {}>` . But we also want to make it so that you can just write `extends Component` , so that needs to have a default value. Thus, `Component<Args extends {} = {}>`.
 
+### Giving `args` a type
 
+Now let’s put this to use. Imagine we’re constructing a user profile component which displays the user’s name and optionally an avatar and bio. The template might look something like this:
 
-[guides-component]: https://guides.emberjs.com/release/components/
+<DocsSnippet @name='user-profile.hbs' @title='my-app/components/user-profile.hbs' @showCopy={{true}} />
+
+Then we could capture the types for the profile with an interface representing the *arguments*:
+
+<DocsSnippet @name='user-profile.ts' @title='my-app/components/user-profile.ts' @showCopy={{true}} />
+
+Assuming the default `tsconfig.json` settings (with `strictNullChecks: true`), this wouldn't type-check if we didn't *check* whether the `bio` argument were set, or if our `isURL` didn't account for the possibility of the string not being set.

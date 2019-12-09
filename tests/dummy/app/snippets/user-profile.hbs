@@ -1,0 +1,8 @@
+{{! BEGIN-SNIPPET user-profile.hbs }}
+<div class='user-profile' ...attributes>
+  {{#if this.avatar}}
+  <img src={{this.avatar}} class='user-profile__avatar'>
+  {{/if}}
+  <p class='user-profile__bio'>{{this.userInfo}}</p>
+</div>
+{{! END-SNIPPET }}
