@@ -64,7 +64,7 @@ Glimmer components can receive both *arguments* and *attributes* when they are i
 If you’re used to the classic Ember Object model, there are two important differences in the constructor itself:
 
 - we use `super` instead of `this._super`
-- we *must* call `super` before we do anything else with `this`
+- we *must* call `super` before we do anything else with `this`, because in a subclass `this` is set up by running the superclass's constructor first (as implied by [the JavaScript spec](https://tc39.es/ecma262/#sec-runtime-semantics-classdefinitionevaluation))
 
 </aside>
 
