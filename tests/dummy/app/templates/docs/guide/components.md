@@ -13,29 +13,9 @@ Glimmer Components are defined in one of three ways: with templates only, with a
 
 A *very* simple Glimmer component which lets you change the count of a value might look like this:
 
-<DocsSnippet @name='up-and-down.hbs' @title='my-app/components/up-and-down.hbs' @showCopy={{true}} @language='hbs'>
-  <button {{on "click" this.minus}}>&minus;</button>
-  {{this.count}}
-  <button {{on "click" this.plus}}>+</button>
-</DocsSnippet>
+<DocsSnippet @name='up-and-down.hbs' @title='my-app/components/up-and-down.hbs' @showCopy={{true}} />
 
-<DocsSnippet @name='up-and-down.ts' @title='my-app/components/up-and-down.ts' @showCopy={{true}} @language='ts'>
-  import Component from '@glimmer/component';
-  import { tracked } from '@glimmer/tracking'
-  import { action } from '@ember/object';
-
-  export default class Counter extends Component {
-    @tracked count = 0;
-    
-    @action plus() {
-      this.count += 1;
-    }
-    
-    @action minus() {
-      this.count -= 1;
-    }
-  }
-</DocsSnippet>
+<DocsSnippet @name='up-and-down.ts' @title='my-app/components/up-and-down.ts' @showCopy={{true}} />
 
 Notice that there are no type declarations here – but this *is* actually a well-typed component. The type of `count` is `number`, and if we accidentally wrote something like `this.count = "hello"` the compiler would give us an error.
 
@@ -45,19 +25,7 @@ So far so good, but of course most components aren’t quite this simple! Instea
 
 Glimmer components can receive both *arguments* and *attributes* when they are invoked. When you are working with a component’s backing class, you have access to the arguments but *not* to the attributes. The arguments are passed to the constructor, and then available as `this.args` on the component instance afterward. Let’s imagine a component which just logs the names of its arguments when it is first constructed:
 
-<DocsSnippet @name='args-display.ts' @title='my-app/components/args-display.ts' @showCopy={{true}} @language='ts'>
-  import Component from '@glimmer/component';
-
-  export default class ArgsDisplay extends Component {
-    constructor(owner: unknown, args: {}) {
-      super(owner, args);
-
-      Object.keys(args).forEach(argName => {
-        console.log(argName);
-      });
-    }
-  }
-</DocsSnippet>
+<DocsSnippet @name='args-display.ts' @title='my-app/components/args-display.ts' @showCopy={{true}} />
 
 <aside>
 
@@ -78,13 +46,13 @@ This might change in the future! If TypeScript eventually adds [support for “v
 
 The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly *don’t* need to know about. The `args` are `{}` because a Glimmer component *always* receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
 
-<aside>
-
 `{}` is an empty object type – all objects extend from it, but there will be no properties on it. This is distinct from the `object` type, which the TypeScript docs describe as:
 
 > any thing that is not `number`, `string`, `boolean`, `symbol`, `null`, or `undefined`.
 
 If we used `object`, we could end up with TypeScript thinking `args` were an array, or a `Set`, or anything else that isn’t a primitive. Since we have `{}`, we *know* that it's an object.
+
+<aside>
 
 For some further details, check out [this blog post](https://mariusschulz.com/blog/the-object-type-in-typescript).
 
@@ -92,37 +60,20 @@ For some further details, check out [this blog post](https://mariusschulz.com/bl
 
 The `args` passed to a Glimmer Component [are available on `this`](https://github.com/glimmerjs/glimmer.js/blob/2f840309f013898289af605abffe7aee7acc6ed5/packages/%40glimmer/component/src/component.ts#L12), so we could change our definition to return the names of the arguments from a getter:
 
-<DocsSnippet @name='args-getter.ts' @title='my-app/components/args-getter.ts' @showCopy={{true}} @language='ts'>
-  import Component from '@glimmer/component';
+<DocsDemo as |demo|>
+  <demo.example>
+    <ArgsGetter @firstArg='hi' @secondArg='bye' />
+  </demo.example>
 
-  export default class ArgsDisplay extends Component {
-    get argNames(): string[] {
-      return Object.keys(this.args);
-    }
-  }
-</DocsSnippet>
-
-<DocsSnippet @name='args-getter.hbs' @title='my-app/components/args-getter.hbs' @showCopy={{true}} @language='hbs'>
-  <ul>
-    {{#each this.argNames as |argName|}}
-      <li>{{argName}}</li>
-    {{/each}}
-  </ul>
-</DocsSnippet>
+  <demo.snippet @name='args-getter.ts' @label='args-getter.ts' />
+  <demo.snippet @name='args-getter.hbs' @label='args-getter.hbs' />
+</DocsDemo>
 
 ## Understanding `args`
 
 Now, looking at that bit of code, you might be wondering how it knows what the type of `this.args` is. In the `constructor` version, we explicitly *named* the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
 
-```ts
-class Component<Args extends {} = {}> {
-  args: Args;
-
-  constructor(owner: unknown, args: Args);
-}
-```
-
-<!-- </Args TODO: remove this when upstream is fixed> -->
+<DocsSnippet @name='simplified-glimmer-component.d.ts' @title='simplified @glimmer/component' />
 
 <aside>
 

@@ -6,6 +6,7 @@
     "noEmitOnError": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
     "paths": {
       "dummy/tests/*": [
