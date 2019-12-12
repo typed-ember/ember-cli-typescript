@@ -1,7 +1,12 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
+import {
+  hasPlugin,
+  addPlugin,
+  AddPluginOptions,
+  BabelPluginConfig,
+} from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
@@ -84,11 +89,21 @@ export default addon({
     this._addBabelPluginIfNotPresent('@babel/plugin-proposal-optional-chaining');
     this._addBabelPluginIfNotPresent('@babel/plugin-proposal-nullish-coalescing-operator');
 
-    // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
-    // "property initialization occurs in the right order")
-    this._addBabelPluginIfNotPresent('@babel/plugin-transform-typescript', {
-      after: ['@babel/plugin-proposal-class-properties'],
-    });
+    // Babel requires that the TS transform comes before other transforms that
+    // deal with class fields
+    this._addBabelPluginIfNotPresent(
+      '@babel/plugin-transform-typescript',
+      {
+        allowDeclareFields: true,
+      },
+      {
+        before: [
+          '@babel/plugin-proposal-class-properties',
+          '@babel/plugin-proposal-private-methods',
+          '@babel/plugin-proposal-decorators',
+        ],
+      }
+    );
   },
 
   shouldIncludeChildAddon(addon) {
@@ -182,10 +197,16 @@ export default addon({
     }
   },
 
-  _addBabelPluginIfNotPresent(pluginName: string, pluginOptions?: AddPluginOptions) {
+  _addBabelPluginIfNotPresent(
+    pluginName: string,
+    pluginConfig?: unknown,
+    addPluginOptions?: AddPluginOptions
+  ) {
     let target = this._getConfigurationTarget();
     if (!hasPlugin(target, pluginName)) {
-      addPlugin(target, require.resolve(pluginName), pluginOptions);
+      let pluginPath = require.resolve(pluginName);
+      let plugin: BabelPluginConfig = pluginConfig ? [pluginPath, pluginConfig] : pluginPath;
+      addPlugin(target, plugin, addPluginOptions);
     }
   },
 

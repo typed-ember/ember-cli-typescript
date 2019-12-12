@@ -28,24 +28,31 @@ module('Unit | Build', function() {
     assert.equal(fromTs, 'From test-support');
   });
 
-  test('property initialization occurs in the right order', function(assert) {
-    class TestClass {
-      // we shouldn't encourage folks to write code like this, but tsc ensures
-      // that constructor param fields are set before field initializers run
-      field = this.constructorParam;
-      constructor(private constructorParam: string) {}
-    }
+  // test('property initialization occurs in the right order', function(assert) {
+  //   class TestClass {
+  //     // we shouldn't encourage folks to write code like this, but tsc ensures
+  //     // that constructor param fields are set before field initializers run
+  //     field = this.constructorParam;
+  //     constructor(private constructorParam: string) {}
+  //   }
 
-    let instance = new TestClass('hello');
-    assert.equal(instance.field, 'hello');
+  //   let instance = new TestClass('hello');
+  //   assert.equal(instance.field, 'hello');
+  // });
+
+  test('optional chaining and nullish coalescing are transpiled correctly', function(assert) {
+    let value = { a: 'hello' } as { a?: string; b?: string };
+    assert.equal(value?.a, 'hello');
+    assert.equal(value?.b, undefined);
+    assert.equal(value?.a ?? 'ok', 'hello');
+    assert.equal(value?.b ?? 'ok', 'ok');
   });
 
-  // TODO: enable once a release of Prettier comes out that supports this syntax
-  // test('optional chaining and nullish coalescing are transpiled correctly', function(assert) {
-  //   let value = { a: 'hello' } as { a?: string; b?: string };
-  //   assert.equal(value?.a, 'hello');
-  //   assert.equal(value?.b, undefined);
-  //   assert.equal(value?.a ?? 'ok', 'hello');
-  //   assert.equal(value?.b ?? 'ok', 'ok');
-  // });
+  test('class field declarations work', function(assert) {
+    class MyClass {
+      declare foo: string;
+    }
+
+    assert.notOk('foo' in new MyClass());
+  });
 });
