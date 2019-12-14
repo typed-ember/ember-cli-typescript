@@ -10,9 +10,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Fixed 🔧
 
+- Remove trailing space in the `global.d.ts` blueprint ([#866])
 - Ensure we register Babel plugins with their full path ([#946])
 - Ensure errors are emitted when `ts:precompile` fails ([#984])
 
+[#866]: https://github.com/typed-ember/ember-cli-typescript/pull/866
 [#946]: https://github.com/typed-ember/ember-cli-typescript/pull/946
 [#984]: https://github.com/typed-ember/ember-cli-typescript/pull/984
 
