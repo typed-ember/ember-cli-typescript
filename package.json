@@ -112,7 +112,7 @@
     "eslint": "6.7.2",
     "eslint-plugin-ember": "7.7.2",
     "eslint-plugin-node": "10.0.0",
-    "eslint-plugin-prettier": "3.1.1",
+    "eslint-plugin-prettier": "3.1.2",
     "esprima": "4.0.1",
     "fixturify": "1.2.0",
     "got": "8.3.2",
