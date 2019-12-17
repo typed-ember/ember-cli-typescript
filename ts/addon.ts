@@ -1,7 +1,6 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
@@ -69,28 +68,6 @@ export default addon({
     }
   },
 
-  setupPreprocessorRegistry(type) {
-    if (type !== 'parent') return;
-
-    // Normally this is the sort of logic that would live in `included()`, but
-    // ember-cli-babel reads the configured extensions when setting up the
-    // preprocessor registry, so we need to beat it to the punch.
-    this._registerBabelExtension();
-
-    // As of 3.7, TS supports the optional chaining and nullish coalescing proposals.
-    // https://devblogs.microsoft.com/typescript/announcing-typescript-3-7-beta/
-    // Since we can't necessarily know what version of TS an addon was developed with,
-    // we unconditionally add the Babel plugins for both proposals.
-    this._addBabelPluginIfNotPresent('@babel/plugin-proposal-optional-chaining');
-    this._addBabelPluginIfNotPresent('@babel/plugin-proposal-nullish-coalescing-operator');
-
-    // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
-    // "property initialization occurs in the right order")
-    this._addBabelPluginIfNotPresent('@babel/plugin-transform-typescript', {
-      after: ['@babel/plugin-proposal-class-properties'],
-    });
-  },
-
   shouldIncludeChildAddon(addon) {
     // For testing, we have dummy in-repo addons set up, but e-c-ts doesn't depend on them;
     // its dummy app does. Otherwise we'd have a circular dependency.
@@ -100,6 +77,8 @@ export default addon({
   _checkBabelVersion() {
     let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
+
+    // TODO update this check and warning message once we have a Babel version to target
     if (!babel || !(semver.gte(version!, '7.7.3') && semver.lt(version!, '8.0.0'))) {
       let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
@@ -161,31 +140,6 @@ export default addon({
       this.ui.writeWarnLine(
         '`ember-cli-typescript` should be included in your `dependencies`, not `devDependencies`'
       );
-    }
-  },
-
-  _getConfigurationTarget() {
-    // If `this.app` isn't present, we know `this.parent` is an addon
-    return this.app || (this.parent as Addon);
-  },
-
-  _registerBabelExtension() {
-    let target = this._getConfigurationTarget();
-    let options: Record<string, any> = target.options || (target.options = {});
-    let babelAddonOptions: Record<string, any> =
-      options['ember-cli-babel'] || (options['ember-cli-babel'] = {});
-    let extensions: string[] =
-      babelAddonOptions.extensions || (babelAddonOptions.extensions = ['js']);
-
-    if (!extensions.includes('ts')) {
-      extensions.push('ts');
-    }
-  },
-
-  _addBabelPluginIfNotPresent(pluginName: string, pluginOptions?: AddPluginOptions) {
-    let target = this._getConfigurationTarget();
-    if (!hasPlugin(target, pluginName)) {
-      addPlugin(target, require.resolve(pluginName), pluginOptions);
     }
   },
 
