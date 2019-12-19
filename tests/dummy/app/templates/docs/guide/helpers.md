@@ -116,8 +116,9 @@ Note that even if the user passes *no* arguments, both `positional` and `named` 
 
     export default helper(logAll);
   </demo.snippet>
-    {{log-all 'hello' 12 (hash neat=true) cool='beans' answer=42}}
+
   <demo.snippet>
+    {{log-all 'hello' 12 (hash neat=true) cool='beans' answer=42}}
   </demo.snippet>
 </DocsDemo>
 
