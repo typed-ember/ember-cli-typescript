@@ -81,7 +81,7 @@ Not sure what’s up with `<Args>` *at all*? We highly recommend the [TypeScript
 
 </aside>
 
-The type signature for Component, with `<Args extends {} = {}>`, means that the component *always* has a property named `args` —
+The type signature for Component, with `Args extends {} = {}`, means that the component *always* has a property named `args` —
 
 * with the type `Args`
 * which can be anything that extends the type `{}` – an object

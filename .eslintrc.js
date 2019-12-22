@@ -5,13 +5,13 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
-  plugins: ['ember', '@typescript-eslint', 'prettier'],
-  extends: ['eslint:recommended', 'plugin:ember/recommended'],
+  plugins: ['ember', '@typescript-eslint'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'prettier/@typescript-eslint'],
   env: {
     browser: true,
   },
   rules: {
-    "prettier/prettier": "error"
+    'prettier/prettier': 'error',
   },
   settings: {
     node: {
@@ -43,14 +43,10 @@ module.exports = {
         node: true,
       },
       plugins: ['node'],
-      rules: Object.assign(
-        {},
-        require('eslint-plugin-node').configs.recommended.rules,
-        {
-          // add your custom rules and overrides for node files here
-          'ember/avoid-leaking-state-in-ember-objects': 'off',
-        }
-      ),
+      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+        // add your custom rules and overrides for node files here
+        'ember/avoid-leaking-state-in-ember-objects': 'off',
+      }),
     },
 
     // test files

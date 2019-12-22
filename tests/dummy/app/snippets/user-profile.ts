@@ -1,5 +1,6 @@
 // BEGIN-SNIPPET user-profile.ts
 import Component from '@glimmer/component';
+import { generateUrl } from '../lib/generate-avatar';
 
 function isURL(input?: string): boolean {
   // imagine a smarter implementation here!
@@ -17,8 +18,8 @@ export default class UserProfile extends Component<User> {
     return this.args.bio ? `${this.args.name} ${this.args.bio}` : this.args.name;
   }
 
-  get avatar(): string | undefined {
-    return isURL(this.args.avatar) ? this.args.avatar : undefined;
+  get avatar(): string {
+    return this.args.avatar ?? generateUrl();
   }
 }
 // END-SNIPPET
