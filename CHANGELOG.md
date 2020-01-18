@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [4.0.0-alpha.1] - 2020-01-18
+
+### Breaking 💥
+
+- Drop support for Node 8 ([#1017])
+- Don't configure Babel for TS transpilation ([#1018])
+
+### Under the hood 🚗
+
+- Upgrade [✨ Prettier ✨](https://prettier.io) to a version that supports optional chaining and nullish coalescing ([#1018])
+- Add test for optional chaining and nullish coalescing ([#1018])
+- Add test for class field declaration ([#1018])
+
+[#1017]: https://github.com/typed-ember/ember-cli-typescript/pull/1017
+[#1018]: https://github.com/typed-ember/ember-cli-typescript/pull/1018
+
 ## [3.1.2] - 2019-12-14
 
 ### Fixed 🔧
@@ -604,7 +620,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0-alpha.1...HEAD
+[4.0.0-alpha.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...v4.0.0-alpha.1
 [3.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...v3.1.2
 <!--
   Note that 3.1.1 *intentionally* includes all the changes between 3.0.0 and
