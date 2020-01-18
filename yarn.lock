@@ -6308,10 +6308,9 @@ ember-cli-addon-docs-esdoc@0.2.3:
     tmp "^0.0.33"
     walk-sync "^0.3.2"
 
-ember-cli-addon-docs@0.6.16:
+ember-cli-addon-docs@ember-learn/ember-cli-addon-docs#b180220:
   version "0.6.16"
-  resolved "https://registry.yarnpkg.com/ember-cli-addon-docs/-/ember-cli-addon-docs-0.6.16.tgz#846a86d75d205890b2977816423899f4ed5e511e"
-  integrity sha512-I3ZJC+eQA+epiU+TbKFGOXY3O0JyicwLEv9TT0vxY7XO60TW6Lt79mXRx8aJz5RNp5Qzvp/q4zhW83cL+bmRvg==
+  resolved "https://codeload.github.com/ember-learn/ember-cli-addon-docs/tar.gz/b180220a61b332e4996ea0b134e9141467638d0f"
   dependencies:
     "@glimmer/syntax" "^0.42.2"
     broccoli-bridge "^1.0.0"
