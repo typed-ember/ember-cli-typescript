@@ -16,7 +16,7 @@ The basic type of a helper function in Ember is:
 
 ```ts
 interface FunctionBasedHelper {
-  (positional: unknown[], named: Dict<unknown>): string | void;
+  (positional: unknown[], named: Dict): string | void;
 }
 ```
 
@@ -31,12 +31,12 @@ Not familiar with this syntax for defining the shape of a function as an interfa
 There are three important points about this definition:
 
 1. `positional` is an array of `unknown`, of unspecified length.
-2. `named` is a `Dict<unknown>`.
+2. `named` is a `Dict` (automatically of type `unknown`).
 3. Both arguments are always set, but may be empty.
 
 Let’s walk through both of these.
 
-### 1. Handling `positional`
+### Handling `positional` arguments
 
 TODO
 
@@ -57,105 +57,35 @@ function totalLength(positional: unknown[]) {
 }
 ```
 
-### 2. Handling `named`
+### Handling `named` arguments
 
-We specified the type of `named` as `Dict<unknown>`. Here, `Dict<T>` is this type:
+We specified the type of `named` as a `Dict` with a type parameter of `unknown`. `Dict` is defined like this:
 
-```ts
-interface Dict<T> {
-  [key: string]: T | undefined;
-}
-```
+<DocsSnippet @name='dict.ts' @showCopy={{false}} />
 
 This describes a fairly standard type in JavaScript: an object being used as a simple map of string keys to values. The type is `T | undefined` because any given string may or may not have a value associated with it:
 
-```ts
-let ages: Dict<number> = {
-  chris: 32,
-};
-
-let johnAge = ages['john']; // undefined
-let chrisAge = ages['chris']; // 32
-```
+<DocsSnippet @name='dict-usage.ts' @showCopy={{false}} />
 
 As with `positional`, we specify the type here as `unknown` to account for the fact that the template layer isn’t aware of types yet.
 
-### 3. `positional` and `named` are always present
+### `positional` and `named` presence
 
 Note that even if the user passes *no* arguments, both `positional` and `named` are always present. They will just be *empty* in that case. For example:
 
 <DocsDemo as |demo|>
-  <demo.example>
-    {{log-all 'hello' 12 (hash neat=true) cool='beans' answer=42}}
+  <demo.example @name='show-all.hbs' @label='usage.hbs' language='hbs'>
+    {{show-all 'hello' 12 (hash neat=true) cool='beans' answer=42}}
   </demo.example>
 
- <demo.snippet @name='log-all.ts' @label='app/helpers/log-all.ts'>
-    import { helper } from '@ember/component/helper';
-
-    export function logAll(positional: unknown[], named: Dict<unknown>) {
-      // pretty print each item with its index, like `0: { neat: true }` or
-      // `1: undefined`.
-      const positionalDescription ='positional: ' + positional
-        .reduce((items, arg, index) => {
-          const description = arg ? arg.toString() : arg;
-          return items.concat(`${index}: ${arg}`);
-        })
-        .join(', ');
-
-      // pretty print each item with its name, like `cool: beans` or
-      // `answer: 42`.
-      const namedDescription = 'named: '  + Object.keys(named)
-        .reduce((items, key) => {
-          const description  = named[key] ? named[key].toString() : named[key];
-          return items.concat(`${key}: ${description}`);
-        })
-        .join(', ');
-
-      return `${positionalDescription}\n${namedDescription}`;
-   }
-
-    export default helper(logAll);
-  </demo.snippet>
-
-  <demo.snippet>
-    {{log-all 'hello' 12 (hash neat=true) cool='beans' answer=42}}
-  </demo.snippet>
+  <demo.snippet @name='show-all.ts' @label='app/helpers/show-all.ts' />
 </DocsDemo>
 
 ### Putting it all together
 
 Given those constraints, let’s see what a (very contrived) actual helper might look like in practice.  Let’s imagine we want to take a pair of strings and join them with a required separator and optional prefix and postfixes:
 
-<DocsSnippet @name='function-based-helper.ts' @title='my-app/helpers/join.ts' @showCopy={{true}}>
-  import { helper } from '@ember/component/helper';
-  import { assert } from '@ember/debug';
-
-  export function join(positional: [unknown, unknown], named: Dict<unknown>) {
-    assert(
-      `'join' requires two positional parameters, but received ${positional.length}`,
-      positional.length === 2
-    );
-    assert(
-      `'join' positional parameters must be strings`,
-      positional.every(param => typeof param === 'string'
-    );
-    assert(
-      `'join' requires argument 'separator'`,
-      typeof named.separator === 'string'
-    );
-
-    // safety: `positional as string[]` and `named.separator as string` are safe
-    // because we asserted their types above.
-    const joined = (positional as string[]).join(named.separator as string);
-
-    const prefix = typeof named.prefix === 'string' ? named.prefix : '';
-    const postfix = typeof named.postfix  === 'string' ? named.postfix  : '';
-
-    return `${prefix}${joined}${postfix}`;
-  }
-
-  export default helper(join);
-</DocsSnippet>
+<DocsSnippet @name='function-based-helper.ts' @title='my-app/helpers/join.ts' @showCopy={{true}} />
 
 ## Class-based helpers
 
