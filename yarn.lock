@@ -5320,12 +5320,12 @@ comment-regex@^1.0.0:
   resolved "https://registry.yarnpkg.com/comment-regex/-/comment-regex-1.0.1.tgz#e070d2c4db33231955d0979d27c918fcb6f93565"
   integrity sha512-IWlN//Yfby92tOIje7J18HkNmWRR7JESA/BK8W7wqY/akITpU5B0JQWnbTjCfdChSrDNb0DrdA9jfAxiiBXyiQ==
 
-commitlint-azure-pipelines-cli@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/commitlint-azure-pipelines-cli/-/commitlint-azure-pipelines-cli-1.0.2.tgz#75ae58420173095180e4fe73dc943fc08746aec7"
-  integrity sha512-Uj5QatjR1HAifoJI7ZjNx3O8iuH0lUnTmja9jGIA4KjEPLfbyctob4i1JgOZ7tGQK918n1uoolyZBjbQ7h/WSw==
+commitlint-azure-pipelines-cli@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/commitlint-azure-pipelines-cli/-/commitlint-azure-pipelines-cli-1.0.3.tgz#5c7123a01f13442cb20845ec4a7e753a21311a66"
+  integrity sha512-ZS0Ansmu1c6MGncWdGIhQ0L3R3kJyX0ZVkMLG4GXeKx9aoVJudBJlfYztnsXwjpRFenFr8+Pd2xh3jM4Z4Etdg==
   dependencies:
-    execa "^1.0.0"
+    execa "^4.0.0"
 
 common-tags@^1.4.0, common-tags@^1.8.0:
   version "1.8.0"
@@ -8207,6 +8207,21 @@ execa@^3.2.0, execa@^3.4.0:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
+execa@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/execa/-/execa-4.0.0.tgz#7f37d6ec17f09e6b8fc53288611695b6d12b9daf"
+  integrity sha512-JbDUxwV3BoT5ZVXQrSVbAiaXhXUkIwvbhPIwZ0N13kX+5yCzOhUNdocxB/UQRuYOHRYYwAxKYwJYc0T4D12pDA==
+  dependencies:
+    cross-spawn "^7.0.0"
+    get-stream "^5.0.0"
+    human-signals "^1.1.1"
+    is-stream "^2.0.0"
+    merge-stream "^2.0.0"
+    npm-run-path "^4.0.0"
+    onetime "^5.1.0"
+    signal-exit "^3.0.2"
+    strip-final-newline "^2.0.0"
+
 exists-sync@0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/exists-sync/-/exists-sync-0.0.3.tgz#b910000bedbb113b378b82f5f5a7638107622dcf"
@@ -9880,12 +9895,10 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 include-path-searcher@^0.1.0:
   version "0.1.0"
