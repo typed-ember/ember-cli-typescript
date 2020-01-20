@@ -24,10 +24,41 @@ So, for example, you might write a class like this:
 
 ```ts
 import Model, { attr } from '@ember-data/object';
+import CustomType from '../transforms/custom-transform';
 
 export default class User extends Model {
   @attr()
-  name!:  string;
+  name?:  string;
+
+  @attr('number')
+  age!: number;
+
+  @attr('boolean')
+  isAdmin!: boolean;
+
+  @attr('custom-transform')
+  myCustomThing!: CustomType;
+}
+```
+
+**Very important:** Even more than with decorators in general, you should be careful when deciding whether to mark a property as optional `?` or definitely present `!`: Ember Data will default to leaving a property empty if it is not supplied by the API or by a developer when creating it.
+
+The *safest* type you can write for an Ember Data model, therefore, leaves every property optional: this is how models *actually* behave. If you choose to mark properties as definitely present, you should take care to guarantee that this is a guarantee your API upholds, and that ever time you create a record from within the app, *you* uphold those guarantees.
+
+One way to make this safer is to supply a default value using the `defaultValue` on the options hash for the attribute:
+
+```ts
+import Model, { attr } from '@ember-data/object';
+
+export default class User extends Model {
+  @attr()
+  name?:  string;
+
+  @attr('number', { defaultValue: 13 })
+  age!: number;
+
+  @attr('boolean', { defaultValue: false })
+  isAdmin!: boolean;
 }
 ```
 
