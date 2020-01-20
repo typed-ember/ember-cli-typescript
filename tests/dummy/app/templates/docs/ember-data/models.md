@@ -72,8 +72,25 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 So, for example, you might define a class like this:
 
 ```ts
+import Model, { belongsTo } from '@ember-data/model';
+import User from './user';
+import Site from './site';
 
+export default Post extends Model {
+  @belongsTo('user')
+  user!: DS.PromiseObject<User>;
+
+  @belongsTo('site', { async: false })
+  site!: Site;
+}
 ```
+
+These are *type*-safe to define as definitely initialized `!`:
+
+- accessing an async relationship will always return a `PromiseObject`, which itself may or may not ultimately resolve to a value—depending on the API response—but will always be present itself.
+- accessing a non-async relationship which is known to be associated but has not been loaded will trigger an error, so all access to the property will be safe *if* it resolves at all.
+
+Note, however, that this type-safety is not a guarantee of there being no runtime error: you still need to uphold the contract for non-async relationships (that is: loading the data first, or side-loading it with the request) to avoid throwing an error!
 
 ## `@hasMany`
 
