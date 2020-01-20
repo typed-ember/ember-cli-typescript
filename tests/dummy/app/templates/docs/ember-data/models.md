@@ -1,12 +1,10 @@
 # Models
 
-## Decorators
-
-When working with Ember Data, you'll very commonly be using one of the decorators the library supplies to define the shape of the relationships between your resources. These "just work" with TypeScript at runtime, but require type annotations to be useful with TypeScript.
+Ember Data models are normal TypeScript classes, but with properties decorated to define how the model represents an API resource and relationships to other resources. The decorators the library supplies "just work" with TypeScript at runtime, but require type annotations to be useful with TypeScript.
 
 For an overview of using Ember's decorators with TypeScript, see <LinkTo @route='docs.ts.decorators'>our overview</LinkTo>.
 
-### `@attr`
+## `@attr`
 
 The type returned by the `@attr` decorator is whatever [Transform](https://api.emberjs.com/ember-data/release/classes/Transform) is applied via the invocation.
 
@@ -62,7 +60,7 @@ export default class User extends Model {
 }
 ```
 
-### `@belongsTo`
+## `@belongsTo`
 
 
 The type returned by the `@hasMany` decorator depends on whether the relationship is `{ async: true }` (which it is by default).
@@ -77,7 +75,7 @@ So, for example, you might define a class like this:
 
 ```
 
-### `@hasMany`
+## `@hasMany`
 
 The type returned by the `@hasMany` decorator depends on whether the relationship is `{ async: true }` (which it is by default).
 
