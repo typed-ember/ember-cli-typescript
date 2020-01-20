@@ -3569,18 +3569,18 @@ body@^5.1.0:
     raw-body "~1.1.0"
     safe-json-parse "~1.0.1"
 
-boilerplate-update@0.29.7:
-  version "0.29.7"
-  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.29.7.tgz#da3a798aa1ea4e129ff454c81e8c478b1d8d0cf5"
-  integrity sha512-Eju5EvqqaXshKC2/4h/G32JcsSMOs6ruTdCdj2pA1m6HemcgYXaXsKrzz7b2EQ7bXq4TC3QImx/DP1m84W2lQA==
+boilerplate-update@0.31.3:
+  version "0.31.3"
+  resolved "https://registry.yarnpkg.com/boilerplate-update/-/boilerplate-update-0.31.3.tgz#28a348c82380a82501cec98eea59e0af26d8e285"
+  integrity sha512-tA+taj/ftltNHhiT7cHR8t+EzGpO0h5pgh5e7lXb7e61BOzpWTbuB7q1w3+FyEVLk/c9tmnsFoWJizI6CbG1QQ==
   dependencies:
     cpr "^3.0.1"
     debug "^4.1.1"
     execa "^3.0.0"
-    git-diff-apply "0.19.7"
+    git-diff-apply "0.20.1"
     https-proxy-agent "^3.0.0"
     inquirer "^7.0.0"
-    merge-package.json "^3.1.2"
+    merge-package.json "^3.1.4"
     npx "^10.2.0"
     open "^7.0.0"
     p-reduce "^2.0.0"
@@ -7090,12 +7090,12 @@ ember-cli-uglify@3.0.0:
     broccoli-uglify-sourcemap "^3.1.0"
     lodash.defaultsdeep "^4.6.0"
 
-ember-cli-update@0.47.2:
-  version "0.47.2"
-  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.47.2.tgz#d07a3de6a715343c91896c1caf55b5a228b150e6"
-  integrity sha512-2hs15J+KEWA898ldty66geQw8jo1HlKXZWgUBc72DY29rz3D37lDXYFAI+hFMbJ5RqOii5gFv9TuAwB+Y0n1Uw==
+ember-cli-update@0.47.19:
+  version "0.47.19"
+  resolved "https://registry.yarnpkg.com/ember-cli-update/-/ember-cli-update-0.47.19.tgz#8e8b4f4371693f040093cc2c23a2efe0c8d4ae8d"
+  integrity sha512-paVHGv60xlJkLx5XA3ITVrweSJC5cHixNjY4fvgb5YHUkRvBXAx9fvvgmkhnijlmGPbmUFOcsISjYF78ybePlg==
   dependencies:
-    boilerplate-update "0.29.7"
+    boilerplate-update "0.31.3"
     debug "^4.1.1"
     execa "^3.4.0"
     fs-extra "^8.0.0"
@@ -9028,10 +9028,10 @@ git-config-path@^2.0.0:
   resolved "https://registry.yarnpkg.com/git-config-path/-/git-config-path-2.0.0.tgz#62633d61af63af4405a5024efd325762f58a181b"
   integrity sha512-qc8h1KIQbJpp+241id3GuAtkdyJ+IK+LIVtkiFTRKRrmddDzs3SI9CvP1QYmWBFvm1I/PWRwj//of8bgAc0ltA==
 
-git-diff-apply@0.19.7:
-  version "0.19.7"
-  resolved "https://registry.yarnpkg.com/git-diff-apply/-/git-diff-apply-0.19.7.tgz#e5a3b7a38b4327f3a559e1ab101e179dd7c46581"
-  integrity sha512-UFM4a7l5TnPp2FYxBmlH6p7UEpbogBm5/dQG8Vaz8wsM/JP7uM8aRoBN5FBbV05ktOHBk3uisPS+P6pK9BnF8Q==
+git-diff-apply@0.20.1:
+  version "0.20.1"
+  resolved "https://registry.yarnpkg.com/git-diff-apply/-/git-diff-apply-0.20.1.tgz#551f4874f5b6377049ec5664eb49f8b64e858888"
+  integrity sha512-57cw8yROJdJAM9NfFHa/t64Q+pxU0KZ83rLb6+i3VoN8g3ITuyo8zGH4J2/UQaa/p8O41IlxMsw6RkKZkQoAUw==
   dependencies:
     debug "^4.0.0"
     fixturify "^1.0.0"
@@ -11857,12 +11857,12 @@ merge-descriptors@1.0.1:
   resolved "https://registry.yarnpkg.com/merge-descriptors/-/merge-descriptors-1.0.1.tgz#b00aaa556dd8b44568150ec9d1b953f3f90cbb61"
   integrity sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E=
 
-merge-package.json@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/merge-package.json/-/merge-package.json-3.1.2.tgz#fb4aae08deace41ec902ba8a8a3059da08a00ab1"
-  integrity sha512-QAPKllnwFfsz8L/OAoDW6PPyzn/0K1/cDk6GvKGV2bpFyCAlkBDbdE6+9Yv6/sfiNJa4PuliQNvQ6jNZcfg4zw==
+merge-package.json@^3.1.4:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/merge-package.json/-/merge-package.json-3.1.5.tgz#6804eb830f82a102b2ff6be391515c86377723a4"
+  integrity sha512-8P8MlJl4EKqDLhDnCighuMXbFc6mpcGaFuvkRzhKOBxtrhFsmDmCkBF6+YZtmYcfL77dyyb+pHnyZJ4V3ULxAw==
   dependencies:
-    rfc6902-ordered "^4.0.0"
+    rfc6902-ordered "^4.0.5"
     three-way-merger "0.6.0"
 
 merge-stream@^2.0.0:
@@ -14546,10 +14546,10 @@ retry@^0.10.0, retry@~0.10.1:
   resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
   integrity sha1-52OI0heZLCUnUCQdPTlW/tmNj/Q=
 
-rfc6902-ordered@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/rfc6902-ordered/-/rfc6902-ordered-4.0.0.tgz#a3d07e8c402edbeacfe9afa6d639aedfc3f19048"
-  integrity sha512-uGpjTewv2UxexoQPtYDpAZKt3WX/ujxkw3TqJAZOUu3WkwCNsu67Dlk+KPn/RY851+U3PvSTNOKs58d9YBubeQ==
+rfc6902-ordered@^4.0.5:
+  version "4.0.5"
+  resolved "https://registry.yarnpkg.com/rfc6902-ordered/-/rfc6902-ordered-4.0.5.tgz#054a23984401ad276aa668def89e010038e4dd95"
+  integrity sha512-OsdXZ7FP8DPXd+p+qRxAYi2yFsgAzTp4+ZuvhJri6lLyZYsm3zvGGq5qrmN/jmmv06IV/KVDT062owHUc2Ec+A==
   dependencies:
     debug "^4.0.0"
     rfc6902 "^3.0.1"
