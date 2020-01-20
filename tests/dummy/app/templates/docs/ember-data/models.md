@@ -71,20 +71,7 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 
 So, for example, you might define a class like this:
 
-```ts
-import Model, { belongsTo } from '@ember-data/model';
-import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
-import User from './user';
-import Site from './site';
-
-export default Post extends Model {
-  @belongsTo('user')
-  user!: DS.PromiseObject<User>;
-
-  @belongsTo('site', { async: false })
-  site!: Site;
-}
-```
+<DocsSnippet @name='belongs-to.ts' @title='my-app/models/belongs-to.ts' @showCopy={{false}} />
 
 These are *type*-safe to define as definitely initialized `!`:
 
@@ -103,21 +90,7 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 
 So, for example, you might define a class like this:
 
-```ts
-import Model, { hasMany } from '@ember-data/model';
-import EmberArray from '@ember/array';
-import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
-import Comment from './comment';
-import User from './user';
-
-export default class Thread extends Model {
-  @hasMany('comment')
-  comment!: DS.PromiseManyArray<Comment>;
-
-  @hasMany('user', { async: false })
-  participants!: EmberArray<User>;
-}
-```
+<DocsSnippet @name='has-many.ts' @title='my-app/models/has-many.ts' @showCopy={{false}} />
 
 The same basic rules about the safety of these lookups as with `@belongsTo` apply to these types. The difference is just that in `@hasMany` the resulting types are *arrays* rather than single objects.
 
