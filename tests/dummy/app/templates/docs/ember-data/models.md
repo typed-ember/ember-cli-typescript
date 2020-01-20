@@ -104,8 +104,22 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 So, for example, you might define a class like this:
 
 ```ts
+import Model, { hasMany } from '@ember-data/model';
+import EmberArray from '@ember/array';
+import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
+import Comment from './comment';
+import User from './user';
 
+export default class Thread extends Model {
+  @hasMany('comment')
+  comment!: DS.PromiseManyArray<Comment>;
+
+  @hasMany('user', { async: false })
+  participants!: EmberArray<User>;
+}
 ```
+
+The same basic rules about the safety of these lookups as with `@belongsTo` apply to these types. The difference is just that in `@hasMany` the resulting types are *arrays* rather than single objects.
 
 ## Importing `PromiseObject` and `PromiseManyArray`
 
