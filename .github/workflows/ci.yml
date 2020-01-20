@@ -40,7 +40,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: '^8.12'
+          node-version: '^10'
       # https://github.com/expo/expo-github-action/issues/20#issuecomment-541676895
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
@@ -64,7 +64,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: '^8.12'
+          node-version: '^10'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Prepare CI Environment
@@ -84,7 +84,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: '^8.12'
+          node-version: '^10'
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
@@ -113,7 +113,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: '^8.12'
+          node-version: '^10'
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
