@@ -13,6 +13,14 @@ Router.map(function() {
       this.route('configuration');
     });
 
+    this.route('ts', function() {
+      this.route('overview');
+      this.route('decorators');
+      this.route('with-addons');
+      this.route('using-ts-effectively');
+      this.route('current-limitations');
+    });
+
     this.route('ember', function() {
       this.route('overview');
       this.route('components');
@@ -38,11 +46,7 @@ Router.map(function() {
     });
 
     this.route('upgrade-notes');
-    this.route('ts-guide', function() {
-      this.route('with-addons');
-      this.route('using-ts-effectively');
-      this.route('current-limitations');
-    });
+
     this.route('troubleshooting', function() {
       this.route('conflicting-types');
     });
