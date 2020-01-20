@@ -15,18 +15,11 @@ As always, you should start by reading and understanding the [Ember Guide on Hel
 The basic type of a helper function in Ember is:
 
 ```ts
-interface FunctionBasedHelper {
-  (positional: unknown[], named: Dict): string | void;
-}
+type FunctionBasedHelper =
+  (positional: unknown[], named: Dict) => string | void;
 ```
 
 This represents a function which *may* have an arbitrarily-long list of positional arguments, which *may* be followed by a single dictionary-style object containing any named arguments.
-
-<aside>
-
-Not familiar with this syntax for defining the shape of a function as an interface? See TODO.
-
-</aside>
 
 There are three important points about this definition:
 
