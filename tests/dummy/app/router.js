@@ -13,7 +13,7 @@ Router.map(function() {
       this.route('configuration');
     });
 
-    this.route('guide', function() {
+    this.route('ember', function() {
       this.route('overview');
       this.route('components');
       this.route('services');
@@ -22,6 +22,12 @@ Router.map(function() {
       this.route('controllers');
       this.route('helpers');
       this.route('apps-and-addons');
+    });
+
+    this.route('ember-data', function() {
+      this.route('overview');
+      this.route('models');
+      this.route('decorators');
     });
 
     this.route('legacy', function() {
