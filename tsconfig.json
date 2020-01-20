@@ -35,5 +35,8 @@
   },
   "include": [
     "tests"
+  ],
+  "exclude": [
+    "tests/dummy/app/snippets"
   ]
 }
