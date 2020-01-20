@@ -73,6 +73,7 @@ So, for example, you might define a class like this:
 
 ```ts
 import Model, { belongsTo } from '@ember-data/model';
+import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
 import User from './user';
 import Site from './site';
 
@@ -105,3 +106,9 @@ So, for example, you might define a class like this:
 ```ts
 
 ```
+
+## Importing `PromiseObject` and `PromiseManyArray`
+
+There is no public import path in the [Ember Data Packages](https://emberjs.github.io/rfcs/0395-ember-data-packages.html) API for the `PromiseObject` and `PromiseManyArray` types. These types are slowly being disentangled from Ember Data and will eventually be removed. However, until they are, we need a way to refer to them. For *now*, the best option is to refer to them via the legacy `DS` import.
+
+In the future, they will become unnecesary, as the types will simply be `Promise<Model>` and `Promise<Array<Model>>`.
