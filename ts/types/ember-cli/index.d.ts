@@ -13,6 +13,7 @@ declare module 'ember-cli/lib/models/addon' {
   import Project from 'ember-cli/lib/models/project';
   import Command from 'ember-cli/lib/models/command';
   import EmberApp from 'ember-cli/lib/broccoli/ember-app';
+  import PreprocessRegistry from 'ember-cli-preprocess-registry';
 
   export default class Addon extends CoreObject {
     name: string;
@@ -37,7 +38,7 @@ declare module 'ember-cli/lib/models/addon' {
     isDevelopingAddon(): boolean;
     serverMiddleware(options: { app: Application }): void | Promise<void>;
     testemMiddleware(app: Application): void;
-    setupPreprocessorRegistry(type: 'self' | 'parent', registry: unknown): void;
+    setupPreprocessorRegistry(type: 'self' | 'parent', registry: PreprocessRegistry): void;
   }
 }
 
