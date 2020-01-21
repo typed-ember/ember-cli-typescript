@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.4.4",
     "@babel/plugin-proposal-optional-chaining": "^7.6.0",
-    "@babel/plugin-transform-typescript": "~7.7.0",
+    "@babel/plugin-transform-typescript": "~7.8.0",
     "ansi-to-html": "^0.6.6",
     "debug": "^4.0.0",
     "ember-cli-babel-plugin-helpers": "^1.0.0",
