@@ -160,7 +160,7 @@
     "proseWrap": "never"
   },
   "volta": {
-    "node": "10.17.0",
+    "node": "10.18.1",
     "yarn": "1.21.1"
   }
 }
