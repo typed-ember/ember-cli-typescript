@@ -54,8 +54,8 @@
     "walk-sync": "^2.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "8.2.0",
-    "@commitlint/config-conventional": "8.2.0",
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
     "@ember/optional-features": "1.2.0",
     "@typed-ember/renovate-config": "1.2.1",
     "@types/capture-console": "1.0.0",
