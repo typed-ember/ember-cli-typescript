@@ -10,4 +10,6 @@ This guide is designed to help you get up and running with TypeScript in an Embe
 
 To get started, check out the instructions in <LinkTo @route='docs.getting-started.installation'>Getting Started: Installation</LinkTo>.
 
-If you're totally new to using TypeScript with Ember, start with <LinkTo @route='docs.ts.overview'>TypeScript and Ember</LinkTo>. Once you have a good handle on the basics, you can dive into the guides to working with the APIs specific to <LinkTo @route='docs.ember.overview'>Ember</LinkTo> and <LinkTo @route='docs.ember-data.overview'>Ember Data</LinkTo>.
+- If you're totally new to using TypeScript with Ember, start with <LinkTo @route='docs.ts.overview'>TypeScript and Ember</LinkTo>.
+- Once you have a good handle on the basics, you can dive into the guides to working with the APIs specific to <LinkTo @route='docs.ember.overview'>Ember</LinkTo> and <LinkTo @route='docs.ember-data.overview'>Ember Data</LinkTo>.
+- If you're working with legacy (pre-Octane) Ember and TypeScript together, you should read <LinkTo @route='docs.legacy.overview'>the Legacy Guide</LinkTo>.
