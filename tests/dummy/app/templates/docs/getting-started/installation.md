@@ -18,6 +18,7 @@ Installing ember-cli-typescript modifies your project in two ways:
 We install the following packages—all at their current "latest" value—or generated:
 
 - [**`typescript`**](https://github.com/Microsoft/TypeScript)
+- [**ember-cli-typescript-blueprints**](https://github.com/typed-ember/ember-cli-typescript-blueprints)
 - **`@types/ember`** ([npm](https://www.npmjs.com/package/@types/ember) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember)) - Types for [Ember.js](https://github.com/emberjs/ember.js) which includes
     - **`@types/ember__string`** ([npm](https://www.npmjs.com/package/@types/ember__string) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__string)) - types for the [`@ember/string` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fstring)
     - **`@types/ember__object`** ([npm](https://www.npmjs.com/package/@types/ember__object) | [source](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ember__object)) - types for the [`@ember/object` package](https://www.emberjs.com/api/ember/3.4/modules/@ember%2Fobject)
