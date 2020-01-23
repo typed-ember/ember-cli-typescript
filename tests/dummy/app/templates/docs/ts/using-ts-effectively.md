@@ -74,7 +74,7 @@ We install this file because the actual `config/environment.js` is (a) not actua
 
 Ember makes heavy use of string-based APIs to allow for a high degree of dynamicism. With some limitations, you can nonetheless use TypeScript very effectively to get auto-complete/IntelliSense as well as to accurately type-check your applications.
 
-The "Update" sequence in the Typing Your Ember has detailed explanations and guides for getting good type-safety for Ember's string-based APIs, e.g. the use of `get` and `set`, service and controller injection, Ember Data models and lookups
+The "Update" sequence in Chris Krycho’s [Typing Your Ember blog post series][typing-your-ember] has detailed explanations and guides for getting good type-safety for Ember's string-based APIs, e.g. the use of `get` and `set`, service and controller injection, Ember Data models and lookups
 
 - [Part 1][pt1]: A look at normal Ember objects, "arguments" to components (and controllers), and service (or controller) injections.
 - [Part 2][pt2]: Class properties — some notes on how things differ from the `Ember.Object` world.
@@ -87,23 +87,6 @@ The "Update" sequence in the Typing Your Ember has detailed explanations and gui
 [pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
 
 A few of the most common speed-bumps are listed here to help make this easier:
-
-### `this` type workaround
-
-One important note for using `class` types effectively with today's Ember typings: you will (at least for now) need to explicitly write out a `this` type for methods, computed property callbacks, and actions if you are going to use `get` or `set`
-
-```ts
-import Component from '@ember/component';
-
-export default class UserProfile extends Component {
-  changeUsername(this: UserProfile, userName: string) {
-    //           ^---------------^
-    // `this` tells TS to use `UserProfile` for `get` and `set` lookups
-  }
-}
-```
-
-This is a workaround for how incredibly dynamic `Ember.Object` instances are and hopefully will improve over time as we continue to iterate on the type definitions. Again, see [the relevant blog post for details][pt2].
 
 ### Nested keys in `get` or `set`
 

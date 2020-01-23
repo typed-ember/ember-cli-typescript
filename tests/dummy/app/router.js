@@ -43,6 +43,7 @@ Router.map(function() {
     this.route('legacy', function() {
       this.route('overview');
       this.route('ember-object');
+      this.route('computed-properties');
       this.route('mixins');
       this.route('ember-component');
     });
