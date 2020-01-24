@@ -48,6 +48,11 @@ Router.map(function() {
       this.route('ember-component');
     });
 
+    this.route('cookbook', function() {
+      this.route('overview');
+      this.route('working-with-route-models');
+    });
+
     this.route('upgrade-notes');
 
     this.route('troubleshooting', function() {
