@@ -6,7 +6,7 @@ import { action } from '@ember/object';
 import ShoppingCartService from 'my-app/services/shopping-cart';
 
 export default class CartContentsComponent extends Component {
-  @service shoppingCart: ShoppingCartService;
+  @service shoppingCart!: ShoppingCartService;
 
   @action
   remove(item) {
