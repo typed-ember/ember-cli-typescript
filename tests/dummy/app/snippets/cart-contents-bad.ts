@@ -10,7 +10,8 @@ export default class CartContentsComponent extends Component {
 
   @action
   remove(item) {
-    // Error: Property 'saveForLater' does not exist on type 'ShoppingCartService'.
+    // Error: Property 'saveForLater' does not
+    // exist on type 'ShoppingCartService'.
     this.shoppingCart.saveForLater(item);
   }
 };
