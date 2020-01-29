@@ -20,7 +20,9 @@ Just making this a TypeScript file gives us some type safety without having to a
 
 ## Using services
 
-You can use a service in any container-resolved object such as a component or another service. Services are injected into these objects by decorating a property with the `inject` decorator. Because decorators can't affect the type of the property they decorate, we must manually type the property. Consider this component:
+You can use a service in any container-resolved object such as a component or another service. Services are injected into these objects by decorating a property with the `inject` decorator. Because decorators can't affect the type of the property they decorate, we must manually type the property. Also, we must use the non-null assertion operator `!` to tell the TypeScript compiler to trust that this property will be initialized (TypeScript is not aware of service injection).
+
+Here's an example of using the `ShoppingCartService` we defined above in a component:
 
 <DocsSnippet @name='cart-contents.ts' @title='app/components/cart-contents.ts' @showCopy={{true}} />
 
