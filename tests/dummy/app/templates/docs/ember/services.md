@@ -34,4 +34,10 @@ Services can also be loaded from the dependency injection container manually:
 
 <DocsSnippet @name='cart-contents-lookup.ts' @title='app/components/cart-contents.ts' @showCopy={{true}} />
 
-Here we need to cast the lookup result to `ShoppingCartService` in order to get type-safety.
+Here we need to cast the lookup result to `ShoppingCartService` in order to get any type-safety because the lookup return type is `any` (see caution below).
+
+<aside>
+
+Caution: This type-cast provides no guarantees that what is returned by the lookup is actually the service you are expecting. Because TypeScript cannot resolve the lookup micro-syntax (`service:<name>`) to the service class, a typo would result in returning something other than the specified type. It only gurantees that *if* the expected serbice is returned that you are using it correctly.
+
+</aside>
