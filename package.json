@@ -120,7 +120,7 @@
     "esprima": "4.0.1",
     "fixturify": "1.2.0",
     "got": "10.4.0",
-    "handlebars": "4.7.2",
+    "handlebars": "4.7.3",
     "husky": "4.2.1",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
