@@ -68,10 +68,11 @@ module.exports = {
     }
 
     return {
-      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(
-        /\n/g,
-        '\n  '
-      ),
+      includes: JSON.stringify(
+        includes.map(include => `${include}/**/*`),
+        null,
+        2
+      ).replace(/\n/g, '\n  '),
       pathsFor: dasherizedName => {
         // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
         let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
