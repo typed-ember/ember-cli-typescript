@@ -70,7 +70,6 @@ export default addon({
     }
   },
 
-
   setupPreprocessorRegistry(type, registry) {
     if (type !== 'parent') return;
 
