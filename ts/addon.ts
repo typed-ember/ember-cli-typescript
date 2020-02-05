@@ -78,11 +78,10 @@ export default addon({
     let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
 
-    // TODO update this check and warning message once we have a Babel version to target
-    if (!babel || !(semver.gte(version!, '7.7.3') && semver.lt(version!, '8.0.0'))) {
+    if (!babel || !(semver.gte(version!, '7.17.0') && semver.lt(version!, '8.0.0'))) {
       let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
-        `ember-cli-typescript requires ember-cli-babel ^7.7.3, but you have ${versionString} installed; ` +
+        `ember-cli-typescript requires ember-cli-babel ^7.17.0, but you have ${versionString} installed; ` +
           'your TypeScript files may not be transpiled correctly.'
       );
     }
