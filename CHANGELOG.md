@@ -22,6 +22,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 [#1017]: https://github.com/typed-ember/ember-cli-typescript/pull/1017
 [#1018]: https://github.com/typed-ember/ember-cli-typescript/pull/1018
 
+## [3.1.3] - 2020-01-22
+
+### Fixed 🔧
+
+- Issue a warning if we detect a .js/.ts file collision ([#1046])
+
+[#1046]: https://github.com/typed-ember/ember-cli-typescript/pull/1046
+
+### Under the hood 🚗
+
+- Add prettier eslint deps ([#1045])
+- Use Node 10 for CI (but don't "officially" stop supporting node 8 yet) ([#1047])
+- Bumped [31 dependency versions][3.1.3-deps-bumps]
+
+[#1045]: https://github.com/typed-ember/ember-cli-typescript/pull/1045
+[#1047]: https://github.com/typed-ember/ember-cli-typescript/pull/1047
+[3.1.3-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Amerged+merged%3A2019-12-14T10%3A52%3A00%2B0600..2020-01-22T13%3A00%3A00%2B0600+chore%28deps%29+in%3Atitle+
+
 ## [3.1.2] - 2019-12-14
 
 ### Fixed 🔧
@@ -621,7 +639,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
 [unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0-alpha.1...HEAD
-[4.0.0-alpha.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...v4.0.0-alpha.1
+[4.0.0-alpha.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...v4.0.0-alpha.1
+[3.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...v3.1.2
 <!--
   Note that 3.1.1 *intentionally* includes all the changes between 3.0.0 and

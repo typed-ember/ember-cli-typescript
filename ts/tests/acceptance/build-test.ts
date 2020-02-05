@@ -101,6 +101,33 @@ describe('Acceptance: build', function() {
 
     await server.waitForBuild();
   });
+
+  it('emits a warning when .js and .ts files conflict in the app/ tree', async () => {
+    // Set up an in-repo addon
+    app.updatePackageJSON(pkg => {
+      pkg['ember-addon'].paths.push('lib/in-repo-addon');
+    });
+
+    app.writeFile('lib/in-repo-addon/index.js', 'module.exports = { name: "in-repo-addon" };');
+    app.writeFile(
+      'lib/in-repo-addon/package.json',
+      JSON.stringify({
+        name: 'in-repo-addon',
+        keywords: ['ember-addon'],
+      })
+    );
+
+    // Have it export a .js app file and attempt to overwrite it in the host with a .ts file
+    app.writeFile('lib/in-repo-addon/app/foo.js', '// addon');
+    app.writeFile('app/foo.ts', '// app');
+
+    let output = await app.build();
+
+    expect(output.all).to.include('skeleton-app/foo.{js,ts}');
+    expect(output.all).to.include(
+      'WARNING: Detected collisions between .js and .ts files of the same name.'
+    );
+  });
 });
 
 function isExpressionStatement(stmt: Statement | ModuleDeclaration): stmt is ExpressionStatement {
