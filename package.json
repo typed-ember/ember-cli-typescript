@@ -121,7 +121,7 @@
     "fixturify": "1.2.0",
     "got": "10.5.5",
     "handlebars": "4.7.3",
-    "husky": "4.2.1",
+    "husky": "4.2.3",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "loader.js": "4.7.0",
