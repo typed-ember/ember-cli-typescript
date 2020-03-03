@@ -71,7 +71,7 @@
     "@types/express": "4.17.3",
     "@types/fs-extra": "8.1.0",
     "@types/got": "8.3.5",
-    "@types/mocha": "7.0.1",
+    "@types/mocha": "7.0.2",
     "@types/node": "9.6.55",
     "@types/qunit": "2.9.0",
     "@types/resolve": "1.14.0",
