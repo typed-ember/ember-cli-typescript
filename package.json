@@ -114,7 +114,7 @@
     "ember-try": "1.4.0",
     "eslint": "6.8.0",
     "eslint-config-prettier": "6.10.0",
-    "eslint-plugin-ember": "7.9.0",
+    "eslint-plugin-ember": "7.10.0",
     "eslint-plugin-node": "11.0.0",
     "eslint-plugin-prettier": "3.1.2",
     "esprima": "4.0.1",
