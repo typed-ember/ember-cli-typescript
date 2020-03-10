@@ -2552,10 +2552,12 @@
   dependencies:
     "@types/ember__object" "*"
 
-"@types/ember__string@*", "@types/ember__string@3.0.6":
-  version "3.0.6"
-  resolved "https://registry.yarnpkg.com/@types/ember__string/-/ember__string-3.0.6.tgz#79b10b0fc0136a9c86536bc55cbd18cae9a9bd3b"
-  integrity sha512-VBKH8nR/uK2tlr9eob8Nl+0cKP62GNtFWqq4PVGusnBMPFktGley1gsUhqNYJ9G3y2mvVfikicxM2/bE5AMYLA==
+"@types/ember__string@*", "@types/ember__string@3.0.7":
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/@types/ember__string/-/ember__string-3.0.7.tgz#0a2319e4540f5964f62ad2fab63ba472dd3f4950"
+  integrity sha512-qs5tfiJtEECVDCisJq25T3Amxk/th0NcFvX8VNeigNeiTStgVXkJYrfOO3tJQRdaeE9zoskJTbgy0GoQYf3edw==
+  dependencies:
+    "@types/ember__template" "*"
 
 "@types/ember__template@*":
   version "3.0.0"
