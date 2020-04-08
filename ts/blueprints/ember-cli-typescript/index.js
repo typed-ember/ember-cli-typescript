@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const VersionChecker = require('ember-cli-version-checker');
 
 const APP_DECLARATIONS = `import Ember from 'ember';
 
@@ -152,6 +153,19 @@ module.exports = {
 
     if (this._has('ember-data')) {
       packages.push({ name: '@types/ember-data', target: 'latest' });
+
+      const checker = new VersionChecker(this.project);
+      const dep = checker.for('ember-data');
+
+      if (dep.gte('3.11.0')) {
+        // 3.11 added support for @ember-data packages, see https://github.com/emberjs/rfc-tracking/issues/11#issuecomment-491989464
+        packages = packages.concat([
+          { name: '@types/ember-data__adapter', target: 'latest' },
+          { name: '@types/ember-data__model', target: 'latest' },
+          { name: '@types/ember-data__serializer', target: 'latest' },
+          { name: '@types/ember-data__store', target: 'latest' },
+        ]);
+      }
     }
 
     if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {

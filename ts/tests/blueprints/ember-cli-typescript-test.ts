@@ -46,6 +46,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
     const args = ['ember-cli-typescript'];
 
     await helpers.emberNew();
+    await helpers.modifyPackages([{ name: 'ember-data', version: '3.11.0', dev: true }]);
     await helpers.emberGenerate(args);
 
     const pkg = file('package.json');
@@ -56,7 +57,13 @@ describe('Acceptance: ember-cli-typescript generator', function() {
     expect(pkgJson.scripts.postpublish).to.be.undefined;
     expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-typescript-blueprints');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
-    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+    expect(pkgJson.devDependencies).to.include.all.keys(
+      '@types/ember-data',
+      '@types/ember-data__adapter',
+      '@types/ember-data__model',
+      '@types/ember-data__serializer',
+      '@types/ember-data__store'
+    );
     expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
@@ -85,6 +92,24 @@ describe('Acceptance: ember-cli-typescript generator', function() {
 
     const emberDataCatchallTypes = file('types/ember-data/types/registries/model.d.ts');
     expect(emberDataCatchallTypes).to.exist;
+  });
+
+  it('basic app with old ember-data', async () => {
+    const args = ['ember-cli-typescript'];
+
+    await helpers.emberNew();
+    await helpers.modifyPackages([{ name: 'ember-data', version: '3.10.0', dev: true }]);
+    await helpers.emberGenerate(args);
+
+    const pkg = file('package.json');
+    const pkgJson = JSON.parse(pkg.content);
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+    expect(pkgJson.devDependencies).to.not.have.any.keys(
+      '@types/ember-data__adapter',
+      '@types/ember-data__model',
+      '@types/ember-data__serializer',
+      '@types/ember-data__store'
+    );
   });
 
   it('basic addon', async () => {
