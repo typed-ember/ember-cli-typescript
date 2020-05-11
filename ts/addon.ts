@@ -46,12 +46,16 @@ export default addon({
     return `${__dirname}/blueprints`;
   },
 
-  serverMiddleware({ app }) {
-    this._addTypecheckMiddleware(app);
+  serverMiddleware({ app, options }) {
+    if (!options || !options.path) {
+      this._addTypecheckMiddleware(app);
+    }
   },
 
-  testemMiddleware(app) {
-    this._addTypecheckMiddleware(app);
+  testemMiddleware(app, options) {
+    if (!options || !options.path) {
+      this._addTypecheckMiddleware(app);
+    }
   },
 
   async postBuild() {

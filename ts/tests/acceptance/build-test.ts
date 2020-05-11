@@ -69,6 +69,52 @@ describe('Acceptance: build', function() {
     );
   });
 
+  it("doesn't launch type checking when --path used", async () => {
+    await app.build();
+    let server = app.serve({
+      args: ['--path', 'dist'],
+      env: { DEBUG: 'ember-cli-typescript|express:*' },
+    });
+    let result = await server.raceForOutputs([
+      'ember-cli-typescript:typecheck-worker',
+      'Serving on',
+    ]);
+    expect(result).to.include('Serving on');
+  });
+
+  it('does launch type checking when --path not used', async () => {
+    await app.build();
+    let server = app.serve({ env: { DEBUG: 'ember-cli-typescript|express:*' } });
+    let result = await server.raceForOutputs([
+      'ember-cli-typescript:typecheck-worker',
+      'Serving on',
+    ]);
+    expect(result).to.include('ember-cli-typescript:typecheck-worker');
+  });
+
+  it("doesn't launch type checking when --path used for tests", async () => {
+    await app.build();
+    let test = app.test({
+      args: ['--path', 'dist'],
+      env: { DEBUG: 'ember-cli-typescript|express:*' },
+    });
+    let result = await test.raceForOutputs([
+      'ember-cli-typescript:typecheck-worker',
+      'express:application',
+    ]);
+    expect(result).to.include('express:application');
+  });
+
+  it('does launch type checking when --path not used for tests', async () => {
+    await app.build();
+    let test = app.test({ env: { DEBUG: 'ember-cli-typescript|express:*' } });
+    let result = await test.raceForOutputs([
+      'ember-cli-typescript:typecheck-worker',
+      'express:application',
+    ]);
+    expect(result).to.include('ember-cli-typescript:typecheck-worker');
+  });
+
   it('fails the build when noEmitOnError is set and an error is emitted', async () => {
     app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 

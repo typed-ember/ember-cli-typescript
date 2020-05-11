@@ -15,9 +15,15 @@ const getEmberPort = (() => {
   return () => lastPort++;
 })();
 
+interface EmberCliOptions {
+  args?: string[];
+  env?: any;
+}
+
 export default class SkeletonApp {
   port = getEmberPort();
-  watched: WatchedBuild | null = null;
+  watched: WatchedEmberProcess | null = null;
+  watchedTest: WatchedEmberProcess | null = null;
   tmpDir = tmp.dirSync({
     tries: 10,
     unsafeCleanup: true,
@@ -31,17 +37,25 @@ export default class SkeletonApp {
   }
 
   build() {
-    return this._ember(['build']);
+    return this._ember({ args: ['build'] });
   }
 
-  serve() {
+  serve(options: EmberCliOptions = { args: [], env: {} }) {
     if (this.watched) {
       throw new Error('Already serving');
     }
-    return (this.watched = new WatchedBuild(
-      this._ember(['serve', '--port', `${this.port}`]),
-      this.port
-    ));
+    options.args = options.args || [];
+    options.args = ['serve', '--port', `${this.port}`, ...options.args];
+    return (this.watched = new WatchedEmberProcess(this._ember(options), this.port));
+  }
+
+  test(options: EmberCliOptions = { args: [], env: {} }) {
+    if (this.watchedTest) {
+      throw new Error('Already testing');
+    }
+    options.args = options.args || [];
+    options.args = ['test', ...options.args];
+    return (this.watchedTest = new WatchedEmberProcess(this._ember(options)));
   }
 
   updatePackageJSON(callback: (arg: any) => any) {
@@ -68,17 +82,20 @@ export default class SkeletonApp {
     if (this.watched) {
       this.watched.kill();
     }
+    if (this.watchedTest) {
+      this.watchedTest.kill();
+    }
     this.tmpDir.removeCallback();
   }
 
-  _ember(args: string[]) {
+  _ember(options: EmberCliOptions) {
     let ember = require.resolve('ember-cli/bin/ember');
-    return execa.node(ember, args, { cwd: this.root, all: true });
+    return execa.node(ember, options.args, { cwd: this.root, all: true, env: options.env });
   }
 }
 
-class WatchedBuild extends EventEmitter {
-  constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
+class WatchedEmberProcess extends EventEmitter {
+  constructor(protected ember: execa.ExecaChildProcess, protected port?: number) {
     super();
     this.ember.stdout.on('data', data => {
       let output = data.toString();
@@ -100,6 +117,10 @@ class WatchedBuild extends EventEmitter {
 
   request(path: string) {
     return got(`http://localhost:${this.port}${path}`);
+  }
+
+  raceForOutputs(targets: string[]) {
+    return Promise.race(targets.map(target => this.waitForOutput(target)));
   }
 
   waitForOutput(target: string) {
