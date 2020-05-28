@@ -1,4 +1,3 @@
-import os from 'os';
 import execa from 'execa';
 import fs from 'fs-extra';
 import path from 'path';
@@ -16,7 +15,7 @@ export default command({
   availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
 
   async run(options: { manifestPath: string }) {
-    let outDir = `${os.tmpdir()}/e-c-ts-precompile-${process.pid}`;
+    let outDir = `${process.cwd()}/e-c-ts-precompile-${process.pid}`;
     let { paths, rootDir, pathRoots } = this._loadConfig(outDir);
     if (!paths) {
       this.ui.writeLine(
