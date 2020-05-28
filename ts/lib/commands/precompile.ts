@@ -42,6 +42,7 @@ export default command({
         all: true,
       });
     } catch (e) {
+      fs.removeSync(outDir);
       console.error(`\n${e.all}\n`);
       throw e;
     }
