@@ -61,7 +61,7 @@ export default command({
 
     fs.mkdirsSync(path.dirname(manifestPath));
     fs.writeFileSync(manifestPath, JSON.stringify(createdFiles.reverse()));
-    fs.remove(outDir);
+    fs.removeSync(outDir);
   },
 
   _loadConfig(outDir: string) {
