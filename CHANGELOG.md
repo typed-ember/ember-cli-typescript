@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [3.1.4] - 2020-05-29
+
+### Fixed 🔧
+
+- Use temp dir in project for precompile ([#1153])
+
+### Under the hood 🚗
+
+- Bumped [52 dependency versions][3.1.4-deps-bumps]
+
+[#1153]: https://github.com/typed-ember/ember-cli-typescript/pull/1153
+[3.1.4-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-01-22T13%3A00%3A00-0600..2020-05-29T11%3A00%3A00-0500+chore%28deps%29+in%3Atitle+
+
+
 ## [3.1.3] - 2020-01-22
 
 ### Fixed 🔧
@@ -623,6 +637,7 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
 [unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...HEAD
+[3.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...v3.1.4
 [3.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...v3.1.2
 <!--
