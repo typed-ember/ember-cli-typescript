@@ -26,12 +26,12 @@ function buildTemplateDeclarations(projectName, layout) {
   switch (layout) {
     case 'classic':
       return `${comment}
-declare module '${projectName}/templates/*' { ${moduleBody}}`;
+declare module '${projectName}/templates/*' {${moduleBody}}`;
     case 'pods':
       return `${comment}
-declare module '${projectName}/*/template' { ${moduleBody}}`;
+declare module '${projectName}/*/template' {${moduleBody}}`;
     default:
-      throw new Error(`Unexpecte project layout type: "${layout}"`);
+      throw new Error(`Unexpected project layout type: "${layout}"`);
   }
 }
 

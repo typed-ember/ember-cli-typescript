@@ -166,7 +166,7 @@ export default class UserProfile extends Component {
   @service mySession!: MySession;
 
   login(email: string, password: string) {
-    this.session.login(email, password);
+    this.mySession.login(email, password);
   }
 }
 ```

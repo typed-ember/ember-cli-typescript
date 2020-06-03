@@ -1,5 +1,5 @@
 import * as fs from 'fs-extra';
-
+import { hook } from 'capture-console';
 import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
 import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
 const setupTestHooks = blueprintHelpers.setupTestHooks;
@@ -36,6 +36,24 @@ describe('Acceptance: ts:precompile command', function() {
 
     let declaration = file('test-file.d.ts');
     expect(declaration).not.to.exist;
+  });
+
+  it('emits errors to the console when precompilation fails', async () => {
+    fs.ensureDirSync('app');
+    fs.writeFileSync('app/test-file.ts', `export const testString: string = 123;`);
+
+    let output = '';
+    let unhookStdout = hook(process.stdout, { quiet: true }, chunk => (output += chunk));
+    let unhookStderr = hook(process.stderr, { quiet: true }, chunk => (output += chunk));
+    try {
+      await ember(['ts:precompile']);
+      expect.fail('Precompilation should have failed');
+    } catch {
+      expect(output).to.include(`Type '123' is not assignable to type 'string'.`);
+    } finally {
+      unhookStdout();
+      unhookStderr();
+    }
   });
 
   describe('custom project layout', function() {

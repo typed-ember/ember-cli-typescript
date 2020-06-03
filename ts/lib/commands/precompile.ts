@@ -1,4 +1,3 @@
-import os from 'os';
 import execa from 'execa';
 import fs from 'fs-extra';
 import path from 'path';
@@ -16,7 +15,7 @@ export default command({
   availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
 
   async run(options: { manifestPath: string }) {
-    let outDir = `${os.tmpdir()}/e-c-ts-precompile-${process.pid}`;
+    let outDir = `${process.cwd()}/e-c-ts-precompile-${process.pid}`;
     let { paths, rootDir, pathRoots } = this._loadConfig(outDir);
     if (!paths) {
       this.ui.writeLine(
@@ -25,18 +24,28 @@ export default command({
       return;
     }
 
-    // prettier-ignore
-    await execa('tsc', [
-      '--allowJs', 'false',
-      '--noEmit', 'false',
-      '--rootDir', rootDir || this.project.root,
-      '--isolatedModules', 'false',
-      '--declaration',
-      '--declarationDir', outDir,
-      '--emitDeclarationOnly',
-    ], {
-      preferLocal: true
-    });
+    try {
+      // prettier-ignore
+      await execa('tsc', [
+        '--allowJs', 'false',
+        '--noEmit', 'false',
+        '--rootDir', rootDir || this.project.root,
+        '--isolatedModules', 'false',
+        '--declaration',
+        '--declarationDir', outDir,
+        '--emitDeclarationOnly',
+        '--pretty', 'true',
+      ], {
+        preferLocal: true,
+
+        // Capture a string with stdout and stderr interleaved for error reporting
+        all: true,
+      });
+    } catch (e) {
+      fs.removeSync(outDir);
+      console.error(`\n${e.all}\n`);
+      throw e;
+    }
 
     let manifestPath = options.manifestPath;
     let packageName = this.project.pkg.name;
@@ -53,7 +62,7 @@ export default command({
 
     fs.mkdirsSync(path.dirname(manifestPath));
     fs.writeFileSync(manifestPath, JSON.stringify(createdFiles.reverse()));
-    fs.remove(outDir);
+    fs.removeSync(outDir);
   },
 
   _loadConfig(outDir: string) {

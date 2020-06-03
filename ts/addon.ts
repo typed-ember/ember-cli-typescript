@@ -3,6 +3,7 @@ import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
 import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
+import PreprocessRegistry from 'ember-cli-preprocess-registry';
 import { addon } from './lib/utilities/ember-cli-entities';
 import fork from './lib/utilities/fork';
 import TypecheckWorker from './lib/typechecking/worker';
@@ -18,6 +19,7 @@ export default addon({
 
   included() {
     this._super.included.apply(this, arguments);
+
     this._checkDevelopment();
     this._checkAddonAppFiles();
     this._checkBabelVersion();
@@ -69,8 +71,15 @@ export default addon({
     }
   },
 
-  setupPreprocessorRegistry(type) {
+  setupPreprocessorRegistry(type, registry) {
     if (type !== 'parent') return;
+
+    // If we're acting on behalf of the root app, issue a warning if we detect
+    // a situation where a .js file from an addon has the same name as a .ts
+    // file in the app, as which file wins is nondeterministic.
+    if (this.parent === this.project) {
+      this._registerCollisionDetectionPreprocessor(registry);
+    }
 
     // Normally this is the sort of logic that would live in `included()`, but
     // ember-cli-babel reads the configured extensions when setting up the
@@ -95,6 +104,47 @@ export default addon({
     // For testing, we have dummy in-repo addons set up, but e-c-ts doesn't depend on them;
     // its dummy app does. Otherwise we'd have a circular dependency.
     return !['in-repo-a', 'in-repo-b'].includes(addon.name);
+  },
+
+  _registerCollisionDetectionPreprocessor(registry: PreprocessRegistry) {
+    registry.add('js', {
+      name: 'ember-cli-typescript-collision-check',
+      toTree: (input, path) => {
+        if (path !== '/') return input;
+
+        let addon = this;
+        let checked = false;
+        let stew = require('broccoli-stew') as typeof import('broccoli-stew');
+
+        return stew.afterBuild(input, function() {
+          if (!checked) {
+            checked = true;
+            addon._checkForFileCollisions(this.inputPaths[0]);
+          }
+        });
+      },
+    });
+  },
+
+  _checkForFileCollisions(directory: string) {
+    let walkSync = require('walk-sync') as typeof import('walk-sync');
+    let files = new Set(walkSync(directory, ['**/*.{js,ts}']));
+
+    let collisions = [];
+    for (let file of files) {
+      if (file.endsWith('.js') && files.has(file.replace(/\.js$/, '.ts'))) {
+        collisions.push(file.replace(/\.js$/, '.{js,ts}'));
+      }
+    }
+
+    if (collisions.length) {
+      this.ui.writeWarnLine(
+        'Detected collisions between .js and .ts files of the same name. ' +
+          'This can result in nondeterministic build output; ' +
+          'see https://git.io/JvIwo for more information.\n  - ' +
+          collisions.join('\n  - ')
+      );
+    }
   },
 
   _checkBabelVersion() {

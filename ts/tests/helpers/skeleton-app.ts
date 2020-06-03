@@ -44,7 +44,7 @@ export default class SkeletonApp {
     ));
   }
 
-  updatePackageJSON(callback: (arg: any) => string) {
+  updatePackageJSON(callback: (arg: any) => any) {
     let pkgPath = `${this.root}/package.json`;
     let pkg = fs.readJSONSync(pkgPath);
     fs.writeJSONSync(pkgPath, callback(pkg) || pkg, { spaces: 2 });
