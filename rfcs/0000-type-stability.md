@@ -458,7 +458,9 @@ As noted above in [<b>“Downleveling” types</b>](#downleveling-types), `downl
 
 -   Is the recommended version support policy appropriate? There are other options available, like Typed Ember’s current commitment to support the latest two (<i>N−1</i>) versions in the types. (In practice, we did not bump most of the Ember types’ minimum version from TypeScript 2.8 until the release of TypeScript 3.9, at which time we bumped minimum supported TypeScript version to 3.7.)
 
--   How should we make downleveling and CI runs against supported TypeScript versions interact? Should we tell users to generate test-specific `tsconfig.json` files to use with downleveled types in their tests? Can this be automated in some way?
+-   How should we make downleveling and CI runs against supported TypeScript versions interact? Should we tell users to generate test-specific `tsconfig.json` files to use with downleveled types in their tests? Can this be automated in some way? Does use of `typesVersions` plus the CI runs handle it?
+
+-   What is the right strategy and naming for validating types: "lint," "test," or a new-to-the-ecosystem concept like "check"? (See [this discussion](https://github.com/ember-modifier/ember-modifier/pull/41#discussion_r435628423) for background.)
 
 -   How should transitive dependencies be expected to be handled? Should addon authors be expected to absorb any upstream differences in SemVer handling?
 
