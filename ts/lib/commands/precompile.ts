@@ -9,8 +9,7 @@ export const PRECOMPILE_MANIFEST = 'dist/.ts-precompile-manifest';
 export default command({
   name: 'ts:precompile',
   works: 'insideProject',
-  description:
-    'Generates JS and declaration files from TypeScript sources in preparation for publishing.',
+  description: 'Generates declaration files from TypeScript sources in preparation for publishing.',
 
   availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
 
