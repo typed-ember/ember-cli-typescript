@@ -127,7 +127,7 @@
     "loader.js": "4.7.0",
     "mocha": "7.1.2",
     "prettier": "1.18.2",
-    "prettier-eslint": "9.0.1",
+    "prettier-eslint": "9.0.2",
     "qunit-dom": "1.1.0",
     "testdouble": "3.13.0",
     "tmp": "0.1.0",
