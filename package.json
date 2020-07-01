@@ -85,7 +85,7 @@
     "capture-console": "1.0.1",
     "co": "4.6.0",
     "commitlint-azure-pipelines-cli": "1.0.3",
-    "conventional-changelog-cli": "2.0.31",
+    "conventional-changelog-cli": "2.0.34",
     "ember-cli": "3.16.0",
     "ember-cli-addon-docs": "ember-learn/ember-cli-addon-docs#4f5bfd11",
     "ember-cli-addon-docs-esdoc": "0.2.3",
