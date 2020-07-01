@@ -4292,7 +4292,7 @@ broccoli-writer@^0.1.1:
     quick-temp "^0.1.0"
     rsvp "^3.0.6"
 
-broccoli@^3.2.0:
+broccoli@^3.3.3:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/broccoli/-/broccoli-3.4.2.tgz#a0c2605bea285c50cac304f482b86670630f4701"
   integrity sha512-OZ0QEyL2i08xJWwhg9Fe0x5IScjBur986QRWrj5mAyHRZqF1nShEz01BPFoLt6L2tqJT0gyZsf8nfUvm8CcJgA==
@@ -7122,10 +7122,10 @@ ember-cli-version-checker@^4.1.0:
     semver "^6.3.0"
     silent-error "^1.1.1"
 
-ember-cli@3.16.0:
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.16.0.tgz#5e96795c80166ab35d094584c216475a081a0123"
-  integrity sha512-he5uLPapZT3kZpItseUlAoe05qurFx46e3AcS1jLqzsZW0a5tQosX3yhsEAWQaNZaJr1izMpmdPx4kF5/UN6pw==
+ember-cli@3.16.2:
+  version "3.16.2"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.16.2.tgz#97fcf7f5109a0cc5e9f8ee8e971d3420d670eedb"
+  integrity sha512-x8czGIdRnS7bPRYY7PEhhVGakHTDGF1arKlgw8yBSch29hCuxmbMrxjQxEkvkTtQ8cb7a840N4eVyEujeYPQIw==
   dependencies:
     "@babel/core" "^7.7.7"
     "@babel/plugin-transform-modules-amd" "^7.7.5"
@@ -7133,7 +7133,7 @@ ember-cli@3.16.0:
     babel-plugin-module-resolver "^4.0.0"
     bower-config "^1.4.1"
     bower-endpoint-parser "0.2.2"
-    broccoli "^3.2.0"
+    broccoli "^3.3.3"
     broccoli-amd-funnel "^2.0.1"
     broccoli-babel-transpiler "^7.3.0"
     broccoli-builder "^0.18.14"
