@@ -40,7 +40,7 @@ describe('Acceptance: ts:precompile command', function() {
 
   it('emits errors to the console when precompilation fails', async () => {
     fs.ensureDirSync('app');
-    fs.writeFileSync('app/test-file.ts', `export const testString: string = 123;`);
+    fs.writeFileSync('app/test-file.ts', `export const testString: string = {};`);
 
     let output = '';
     let unhookStdout = hook(process.stdout, { quiet: true }, chunk => (output += chunk));
@@ -49,7 +49,7 @@ describe('Acceptance: ts:precompile command', function() {
       await ember(['ts:precompile']);
       expect.fail('Precompilation should have failed');
     } catch {
-      expect(output).to.include(`Type '123' is not assignable to type 'string'.`);
+      expect(output).to.include(`Type '{}' is not assignable to type 'string'.`);
     } finally {
       unhookStdout();
       unhookStderr();
