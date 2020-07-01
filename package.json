@@ -81,7 +81,7 @@
     "@typescript-eslint/parser": "2.22.0",
     "broccoli-asset-rev": "3.0.0",
     "broccoli-node-api": "1.7.0",
-    "broccoli-plugin": "4.0.1",
+    "broccoli-plugin": "4.0.3",
     "capture-console": "1.0.1",
     "co": "4.6.0",
     "commitlint-azure-pipelines-cli": "1.0.3",
