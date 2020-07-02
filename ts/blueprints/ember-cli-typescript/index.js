@@ -69,11 +69,11 @@ module.exports = {
 
     return {
       includes: JSON.stringify(
-        includes.map(include => `${include}/**/*`),
+        includes.map((include) => `${include}/**/*`),
         null,
         2
       ).replace(/\n/g, '\n  '),
-      pathsFor: dasherizedName => {
+      pathsFor: (dasherizedName) => {
         // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
         let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
         let appName = isAddon ? 'dummy' : dasherizedName;
@@ -106,12 +106,12 @@ module.exports = {
 
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
       },
-      indexDeclarations: dasherizedName => {
+      indexDeclarations: (dasherizedName) => {
         const isDummyApp = dasherizedName === 'dummy';
         const useAppDeclarations = !(isAddon || isDummyApp);
         return useAppDeclarations ? APP_DECLARATIONS : '';
       },
-      globalDeclarations: dasherizedName => {
+      globalDeclarations: (dasherizedName) => {
         /** @type {'classic' | 'pods'} */
         let projectLayout;
         if (isPods) projectLayout = 'pods';
@@ -180,7 +180,7 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (!this._has('ember-data')) {
-      files = files.filter(file => file !== 'types/ember-data/types/registries/model.d.ts');
+      files = files.filter((file) => file !== 'types/ember-data/types/registries/model.d.ts');
     }
 
     return files;
@@ -191,9 +191,9 @@ module.exports = {
 
     let pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
-    // Really `prepack` and `postpack` would be ideal, but yarn doesn't execute those when publishing
-    this._addScript(pkg.scripts, 'prepublishOnly', 'ember ts:precompile');
-    this._addScript(pkg.scripts, 'postpublish', 'ember ts:clean');
+    // As of https://github.com/yarnpkg/yarn/pull/5712 yarn runs `prepack` and `postpack` when publishing
+    this._addScript(pkg.scripts, 'prepack', 'ember ts:precompile');
+    this._addScript(pkg.scripts, 'postpack', 'ember ts:clean');
 
     // avoid being placed in devDependencies
     if (pkg.devDependencies[ADDON_NAME]) {

@@ -1,4 +1,3 @@
-import os from 'os';
 import execa from 'execa';
 import fs from 'fs-extra';
 import path from 'path';
@@ -10,13 +9,12 @@ export const PRECOMPILE_MANIFEST = 'dist/.ts-precompile-manifest';
 export default command({
   name: 'ts:precompile',
   works: 'insideProject',
-  description:
-    'Generates JS and declaration files from TypeScript sources in preparation for publishing.',
+  description: 'Generates declaration files from TypeScript sources in preparation for publishing.',
 
   availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
 
   async run(options: { manifestPath: string }) {
-    let outDir = `${os.tmpdir()}/e-c-ts-precompile-${process.pid}`;
+    let outDir = `${process.cwd()}/e-c-ts-precompile-${process.pid}`;
     let { paths, rootDir, pathRoots } = this._loadConfig(outDir);
     if (!paths) {
       this.ui.writeLine(
@@ -43,6 +41,7 @@ export default command({
         all: true,
       });
     } catch (e) {
+      fs.removeSync(outDir);
       console.error(`\n${e.all}\n`);
       throw e;
     }
@@ -53,7 +52,7 @@ export default command({
     // Ensure that if we are dealing with an addon that is using a different
     // addon name from its package name, we use the addon name, since that is
     // how it will be written for imports.
-    let addon = this.project.addons.find(addon => addon.root === this.project.root);
+    let addon = this.project.addons.find((addon) => addon.root === this.project.root);
     if (addon && addon.name !== packageName) {
       packageName = addon.name;
     }
@@ -62,7 +61,7 @@ export default command({
 
     fs.mkdirsSync(path.dirname(manifestPath));
     fs.writeFileSync(manifestPath, JSON.stringify(createdFiles.reverse()));
-    fs.remove(outDir);
+    fs.removeSync(outDir);
   },
 
   _loadConfig(outDir: string) {
