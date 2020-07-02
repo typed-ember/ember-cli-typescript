@@ -147,8 +147,8 @@ module.exports = {
       { name: 'ember-cli-typescript-blueprints', target: 'latest' },
       { name: 'typescript', target: 'latest' },
       { name: '@types/ember', target: 'latest' },
-      { name: '@types/rsvp', target: 'latest' },
       { name: '@types/ember__test-helpers', target: 'latest' },
+      { name: '@types/ember-resolver', target: 'latest' },
     ];
 
     if (this._has('ember-data')) {
