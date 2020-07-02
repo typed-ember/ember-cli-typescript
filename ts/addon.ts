@@ -1,7 +1,6 @@
 import semver from 'semver';
 import { Remote } from 'stagehand';
 import { connect } from 'stagehand/lib/adapters/child-process';
-import { hasPlugin, addPlugin, AddPluginOptions } from 'ember-cli-babel-plugin-helpers';
 import Addon from 'ember-cli/lib/models/addon';
 import PreprocessRegistry from 'ember-cli-preprocess-registry';
 import { addon } from './lib/utilities/ember-cli-entities';
@@ -80,24 +79,6 @@ export default addon({
     if (this.parent === this.project) {
       this._registerCollisionDetectionPreprocessor(registry);
     }
-
-    // Normally this is the sort of logic that would live in `included()`, but
-    // ember-cli-babel reads the configured extensions when setting up the
-    // preprocessor registry, so we need to beat it to the punch.
-    this._registerBabelExtension();
-
-    // As of 3.7, TS supports the optional chaining and nullish coalescing proposals.
-    // https://devblogs.microsoft.com/typescript/announcing-typescript-3-7-beta/
-    // Since we can't necessarily know what version of TS an addon was developed with,
-    // we unconditionally add the Babel plugins for both proposals.
-    this._addBabelPluginIfNotPresent('@babel/plugin-proposal-optional-chaining');
-    this._addBabelPluginIfNotPresent('@babel/plugin-proposal-nullish-coalescing-operator');
-
-    // Needs to come after the class properties plugin (see tests/unit/build-test.ts -
-    // "property initialization occurs in the right order")
-    this._addBabelPluginIfNotPresent('@babel/plugin-transform-typescript', {
-      after: ['@babel/plugin-proposal-class-properties'],
-    });
   },
 
   shouldIncludeChildAddon(addon) {
@@ -116,7 +97,7 @@ export default addon({
         let checked = false;
         let stew = require('broccoli-stew') as typeof import('broccoli-stew');
 
-        return stew.afterBuild(input, function() {
+        return stew.afterBuild(input, function () {
           if (!checked) {
             checked = true;
             addon._checkForFileCollisions(this.inputPaths[0]);
@@ -148,12 +129,13 @@ export default addon({
   },
 
   _checkBabelVersion() {
-    let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
+    let babel = this.parent.addons.find((addon) => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
-    if (!babel || !(semver.gte(version!, '7.7.3') && semver.lt(version!, '8.0.0'))) {
+
+    if (!babel || !(semver.gte(version!, '7.17.0') && semver.lt(version!, '8.0.0'))) {
       let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
       this.ui.writeWarnLine(
-        `ember-cli-typescript requires ember-cli-babel ^7.7.3, but you have ${versionString} installed; ` +
+        `ember-cli-typescript requires ember-cli-babel ^7.17.0, but you have ${versionString} installed; ` +
           'your TypeScript files may not be transpiled correctly.'
       );
     }
@@ -214,31 +196,6 @@ export default addon({
     }
   },
 
-  _getConfigurationTarget() {
-    // If `this.app` isn't present, we know `this.parent` is an addon
-    return this.app || (this.parent as Addon);
-  },
-
-  _registerBabelExtension() {
-    let target = this._getConfigurationTarget();
-    let options: Record<string, any> = target.options || (target.options = {});
-    let babelAddonOptions: Record<string, any> =
-      options['ember-cli-babel'] || (options['ember-cli-babel'] = {});
-    let extensions: string[] =
-      babelAddonOptions.extensions || (babelAddonOptions.extensions = ['js']);
-
-    if (!extensions.includes('ts')) {
-      extensions.push('ts');
-    }
-  },
-
-  _addBabelPluginIfNotPresent(pluginName: string, pluginOptions?: AddPluginOptions) {
-    let target = this._getConfigurationTarget();
-    if (!hasPlugin(target, pluginName)) {
-      addPlugin(target, require.resolve(pluginName), pluginOptions);
-    }
-  },
-
   _addTypecheckMiddleware(app: Application) {
     let workerPromise = this._getTypecheckWorker();
     let middleware = new TypecheckMiddleware(this.project, workerPromise);
@@ -259,7 +216,7 @@ export default addon({
     let childProcess = fork(`${__dirname}/lib/typechecking/worker/launch`);
     let worker = await connect<TypecheckWorker>(childProcess);
 
-    await worker.onTypecheck(status => {
+    await worker.onTypecheck((status) => {
       for (let error of status.errors) {
         this.ui.writeLine(error);
       }
