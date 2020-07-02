@@ -116,7 +116,7 @@ export default addon({
         let checked = false;
         let stew = require('broccoli-stew') as typeof import('broccoli-stew');
 
-        return stew.afterBuild(input, function() {
+        return stew.afterBuild(input, function () {
           if (!checked) {
             checked = true;
             addon._checkForFileCollisions(this.inputPaths[0]);
@@ -148,7 +148,7 @@ export default addon({
   },
 
   _checkBabelVersion() {
-    let babel = this.parent.addons.find(addon => addon.name === 'ember-cli-babel');
+    let babel = this.parent.addons.find((addon) => addon.name === 'ember-cli-babel');
     let version = babel && babel.pkg.version;
     if (!babel || !(semver.gte(version!, '7.7.3') && semver.lt(version!, '8.0.0'))) {
       let versionString = babel ? `version ${babel.pkg.version}` : `no instance of ember-cli-babel`;
@@ -259,7 +259,7 @@ export default addon({
     let childProcess = fork(`${__dirname}/lib/typechecking/worker/launch`);
     let worker = await connect<TypecheckWorker>(childProcess);
 
-    await worker.onTypecheck(status => {
+    await worker.onTypecheck((status) => {
       for (let error of status.errors) {
         this.ui.writeLine(error);
       }
