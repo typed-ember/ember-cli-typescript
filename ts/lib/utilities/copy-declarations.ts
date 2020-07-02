@@ -15,10 +15,7 @@ export default function copyDeclarations(
       logicalPath.startsWith(`${packageName}/`) &&
       logicalPath.indexOf('/*') === logicalPath.length - 2
     ) {
-      let subdirectory = logicalPath
-        .replace(packageName, '')
-        .replace('/*', '')
-        .replace(/^\//, '');
+      let subdirectory = logicalPath.replace(packageName, '').replace('/*', '').replace(/^\//, '');
 
       copySubpathDeclarations(output, pathRoots, path.join(destDir, subdirectory), physicalPaths);
     }
