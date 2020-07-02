@@ -9,7 +9,7 @@ const emberNew = blueprintHelpers.emberNew;
 const chai = require('ember-cli-blueprint-test-helpers/chai');
 const expect = chai.expect;
 
-describe('Acceptance: ts:clean command', function() {
+describe('Acceptance: ts:clean command', function () {
   setupTestHooks(this);
 
   beforeEach(async () => {

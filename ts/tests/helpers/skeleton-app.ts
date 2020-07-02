@@ -16,12 +16,7 @@ export default class SkeletonApp {
   port = getEmberPort();
   watched: WatchedBuild | null = null;
   cleanupTempDir = () => fs.removeSync(this.root);
-  root = path.join(
-    process.cwd(),
-    `test-skeleton-app-${Math.random()
-      .toString(36)
-      .slice(2)}`
-  );
+  root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
     fs.mkdirpSync(this.root);
@@ -81,7 +76,7 @@ export default class SkeletonApp {
 class WatchedBuild extends EventEmitter {
   constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
-    this.ember.stdout?.on('data', data => {
+    this.ember.stdout?.on('data', (data) => {
       let output = data.toString();
       if (output.includes('Build successful')) {
         this.emit('did-rebuild');
@@ -90,11 +85,11 @@ class WatchedBuild extends EventEmitter {
       debug(output);
     });
 
-    this.ember.stderr?.on('data', data => {
+    this.ember.stderr?.on('data', (data) => {
       debug(data.toString());
     });
 
-    this.ember.catch(error => {
+    this.ember.catch((error) => {
       this.emit('did-error', error);
       console.error(error);
     });
@@ -105,7 +100,7 @@ class WatchedBuild extends EventEmitter {
   }
 
   waitForOutput(target: string) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let output = '';
       let listener = (data: string | Buffer) => {
         output += data.toString();

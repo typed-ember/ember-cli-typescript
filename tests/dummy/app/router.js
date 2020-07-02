@@ -6,19 +6,19 @@ const Router = AddonDocsRouter.extend({
   rootURL: config.rootURL,
 });
 
-Router.map(function() {
-  docsRoute(this, function() {
+Router.map(function () {
+  docsRoute(this, function () {
     this.route('upgrade-notes');
     this.route('configuration');
-    this.route('ts-guide', function() {
+    this.route('ts-guide', function () {
       this.route('with-addons');
       this.route('using-ts-effectively');
       this.route('current-limitations');
     });
-    this.route('troubleshooting', function() {
+    this.route('troubleshooting', function () {
       this.route('conflicting-types');
     });
-    this.route('type-defs', function() {
+    this.route('type-defs', function () {
       this.route('package-names');
     });
   });
