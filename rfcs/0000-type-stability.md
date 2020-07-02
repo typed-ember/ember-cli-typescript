@@ -55,7 +55,7 @@ For TypeScript to be a first-class citizen of the Ember ecosystem, we need:
 -   tooling to detect breaking changes in types—whether from refactors, or from new TypeScript releases—and to minimize the amount of churn from breaking changes in TypeScript
 -   a general and widely-adopted policy for supported TypeScript versions
 
-Once all three of those elements are adopted, addon will be able to have equally high confidence in the stability of addons’ published types as they do in their runtime code.
+Once all three of those elements are adopted, end users will be able to have equally high confidence in the stability of addons’ published types as they do in their runtime code.
 
 This RFC ***should not*** be understood to propose *anything* about the core Ember addons (Ember and Ember Data) or Ember CLI: that would need to flow through the normal Ember RFC process. However, these same tools and patterns are necessary for core tools and libraries to begin publishing types, and this same strategy could be applied successfully there with minor modification. See [<b>Appendix: Core Addons and CLI</b>](#appendix-core-addons-and-ember-cli) for an overview of some possible future directions.
 
@@ -85,7 +85,7 @@ By example:
 
 ### Defining breaking changes
 
-When making a change to the types of the public interface, it is subject to the same constraints as runtime code: *breaking the published types entails a breaking change.* Not all changes to published types are *breaking*, however: some changes will continue to allow user code to continue working without any issue. Thus, a *breaking* change to types is a change where previously-legal code will cause previously-working code to stop type-checking.
+When making a change to the types of the public interface, it is subject to the same constraints as runtime code: *breaking the published types entails a breaking change.* Not all changes to published types are *breaking*, however: some changes will continue to allow user code to continue working without any issue. Thus, a *breaking* change to types is a change where previously-allowed code will stop type-checking.
 
 #### Breaking changes to type definitions
 
@@ -164,9 +164,7 @@ As with runtime code, types may have bugs. Addon authors may find cases where pr
 
 #### Dropping support for previously-supported versions
 
-Additionally, once a TypeScript version has been added to an addon’s list of supported versions, dropping it constitutes a breaking change. This is because it has the same kind of impact on users of the addon as dropping support for a version of Ember, Ember CLI, or Node: if the
-
-In terms of impact on addon consumers, TypeScript support is similar to support for Ember, Ember CLI, or Node versions: dropping support for a previously-supported version is a *breaking change*. Whatever the reason for dropping a previously-supported TypeScript release, addons should publish a new major version.
+Additionally, once a TypeScript version has been added to an addon’s list of supported versions, dropping it constitutes a breaking change, because it has the same kind of impact on users of the addon as dropping support for a version of Ember, Ember CLI, or Node. Whatever the reason for dropping a previously-supported TypeScript release, addons should publish a new major version.
 
 ### Tooling
 
