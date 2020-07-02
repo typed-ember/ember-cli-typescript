@@ -92,7 +92,6 @@ class WatchedBuild extends EventEmitter {
 
     this.ember.catch((error) => {
       this.emit('did-error', error);
-      console.error(error);
     });
   }
 
