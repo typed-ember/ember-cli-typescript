@@ -1,12 +1,9 @@
 import fs from 'fs-extra';
 import path from 'path';
-import tmp from 'tmp';
 import execa from 'execa';
 import { EventEmitter } from 'events';
 import got from 'got';
 import debugLib from 'debug';
-
-tmp.setGracefulCleanup();
 
 const debug = debugLib('skeleton-app');
 
@@ -18,16 +15,18 @@ const getEmberPort = (() => {
 export default class SkeletonApp {
   port = getEmberPort();
   watched: WatchedBuild | null = null;
-  tmpDir = tmp.dirSync({
-    tries: 10,
-    unsafeCleanup: true,
-    dir: process.cwd(),
-    template: 'test-skeleton-app-XXXXXX',
-  });
-  root = this.tmpDir.name;
+  cleanupTempDir = () => fs.removeSync(this.root);
+  root = path.join(
+    process.cwd(),
+    `test-skeleton-app-${Math.random()
+      .toString(36)
+      .slice(2)}`
+  );
 
   constructor() {
+    fs.mkdirpSync(this.root);
     fs.copySync(`${__dirname}/../../../test-fixtures/skeleton-app`, this.root);
+    process.on('beforeExit', this.cleanupTempDir);
   }
 
   build() {
@@ -68,7 +67,9 @@ export default class SkeletonApp {
     if (this.watched) {
       this.watched.kill();
     }
-    this.tmpDir.removeCallback();
+
+    this.cleanupTempDir();
+    process.off('beforeExit', this.cleanupTempDir);
   }
 
   _ember(args: string[]) {
@@ -95,6 +96,7 @@ class WatchedBuild extends EventEmitter {
 
     this.ember.catch(error => {
       this.emit('did-error', error);
+      console.error(error);
     });
   }
 
