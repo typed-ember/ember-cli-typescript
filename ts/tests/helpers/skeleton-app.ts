@@ -80,7 +80,7 @@ export default class SkeletonApp {
 class WatchedBuild extends EventEmitter {
   constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
-    this.ember.stdout.on('data', data => {
+    this.ember.stdout?.on('data', data => {
       let output = data.toString();
       if (output.includes('Build successful')) {
         this.emit('did-rebuild');
@@ -89,7 +89,7 @@ class WatchedBuild extends EventEmitter {
       debug(output);
     });
 
-    this.ember.stderr.on('data', data => {
+    this.ember.stderr?.on('data', data => {
       debug(data.toString());
     });
 
@@ -108,14 +108,14 @@ class WatchedBuild extends EventEmitter {
       let listener = (data: string | Buffer) => {
         output += data.toString();
         if (output.includes(target)) {
-          this.ember.stdout.removeListener('data', listener);
-          this.ember.stderr.removeListener('data', listener);
+          this.ember.stdout?.removeListener('data', listener);
+          this.ember.stderr?.removeListener('data', listener);
           resolve(output);
         }
       };
 
-      this.ember.stdout.on('data', listener);
-      this.ember.stderr.on('data', listener);
+      this.ember.stdout?.on('data', listener);
+      this.ember.stderr?.on('data', listener);
     });
   }
 
