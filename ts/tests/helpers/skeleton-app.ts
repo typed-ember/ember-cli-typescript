@@ -1,12 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
-import tmp from 'tmp';
 import execa from 'execa';
 import { EventEmitter } from 'events';
 import got from 'got';
 import debugLib from 'debug';
-
-tmp.setGracefulCleanup();
+import rimraf from 'rimraf';
 
 const debug = debugLib('skeleton-app');
 
@@ -24,16 +22,13 @@ export default class SkeletonApp {
   port = getEmberPort();
   watched: WatchedEmberProcess | null = null;
   watchedTest: WatchedEmberProcess | null = null;
-  tmpDir = tmp.dirSync({
-    tries: 10,
-    unsafeCleanup: true,
-    dir: process.cwd(),
-    template: 'test-skeleton-app-XXXXXX',
-  });
-  root = this.tmpDir.name;
+  cleanupTempDir = () => rimraf(this.root, (error) => console.error(error));
+  root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
+    fs.mkdirpSync(this.root);
     fs.copySync(`${__dirname}/../../../test-fixtures/skeleton-app`, this.root);
+    process.on('beforeExit', this.cleanupTempDir);
   }
 
   build() {
@@ -85,7 +80,8 @@ export default class SkeletonApp {
     if (this.watchedTest) {
       this.watchedTest.kill();
     }
-    this.tmpDir.removeCallback();
+    this.cleanupTempDir();
+    process.off('beforeExit', this.cleanupTempDir);
   }
 
   _ember(options: EmberCliOptions) {
@@ -97,7 +93,7 @@ export default class SkeletonApp {
 class WatchedEmberProcess extends EventEmitter {
   constructor(protected ember: execa.ExecaChildProcess, protected port?: number) {
     super();
-    this.ember.stdout.on('data', data => {
+    this.ember.stdout?.on('data', (data) => {
       let output = data.toString();
       if (output.includes('Build successful')) {
         this.emit('did-rebuild');
@@ -106,11 +102,11 @@ class WatchedEmberProcess extends EventEmitter {
       debug(output);
     });
 
-    this.ember.stderr.on('data', data => {
+    this.ember.stderr?.on('data', (data) => {
       debug(data.toString());
     });
 
-    this.ember.catch(error => {
+    this.ember.catch((error) => {
       this.emit('did-error', error);
     });
   }
@@ -124,19 +120,19 @@ class WatchedEmberProcess extends EventEmitter {
   }
 
   waitForOutput(target: string) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let output = '';
       let listener = (data: string | Buffer) => {
         output += data.toString();
         if (output.includes(target)) {
-          this.ember.stdout.removeListener('data', listener);
-          this.ember.stderr.removeListener('data', listener);
+          this.ember.stdout?.removeListener('data', listener);
+          this.ember.stderr?.removeListener('data', listener);
           resolve(output);
         }
       };
 
-      this.ember.stdout.on('data', listener);
-      this.ember.stderr.on('data', listener);
+      this.ember.stdout?.on('data', listener);
+      this.ember.stderr?.on('data', listener);
     });
   }
 

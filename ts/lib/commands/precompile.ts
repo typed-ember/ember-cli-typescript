@@ -9,8 +9,7 @@ export const PRECOMPILE_MANIFEST = 'dist/.ts-precompile-manifest';
 export default command({
   name: 'ts:precompile',
   works: 'insideProject',
-  description:
-    'Generates JS and declaration files from TypeScript sources in preparation for publishing.',
+  description: 'Generates declaration files from TypeScript sources in preparation for publishing.',
 
   availableOptions: [{ name: 'manifest-path', type: String, default: PRECOMPILE_MANIFEST }],
 
@@ -53,7 +52,7 @@ export default command({
     // Ensure that if we are dealing with an addon that is using a different
     // addon name from its package name, we use the addon name, since that is
     // how it will be written for imports.
-    let addon = this.project.addons.find(addon => addon.root === this.project.root);
+    let addon = this.project.addons.find((addon) => addon.root === this.project.root);
     if (addon && addon.name !== packageName) {
       packageName = addon.name;
     }
