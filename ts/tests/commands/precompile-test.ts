@@ -9,7 +9,7 @@ import * as chai from 'ember-cli-blueprint-test-helpers/chai';
 const expect = chai.expect;
 const file = chai.file;
 
-describe('Acceptance: ts:precompile command', function() {
+describe('Acceptance: ts:precompile command', function () {
   setupTestHooks(this);
 
   beforeEach(async () => {
@@ -43,8 +43,8 @@ describe('Acceptance: ts:precompile command', function() {
     fs.writeFileSync('app/test-file.ts', `export const testString: string = {};`);
 
     let output = '';
-    let unhookStdout = hook(process.stdout, { quiet: true }, chunk => (output += chunk));
-    let unhookStderr = hook(process.stderr, { quiet: true }, chunk => (output += chunk));
+    let unhookStdout = hook(process.stdout, { quiet: true }, (chunk) => (output += chunk));
+    let unhookStderr = hook(process.stderr, { quiet: true }, (chunk) => (output += chunk));
     try {
       await ember(['ts:precompile']);
       expect.fail('Precompilation should have failed');
@@ -56,7 +56,7 @@ describe('Acceptance: ts:precompile command', function() {
     }
   });
 
-  describe('custom project layout', function() {
+  describe('custom project layout', function () {
     it('generates .d.ts files from the specified source tree', async () => {
       fs.ensureDirSync('src');
       fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
@@ -75,7 +75,7 @@ describe('Acceptance: ts:precompile command', function() {
     });
   });
 
-  describe('remapped addon-test-support', function() {
+  describe('remapped addon-test-support', function () {
     it('generates .d.ts files in the mapped location', async () => {
       fs.ensureDirSync('addon-test-support');
       fs.writeFileSync(
@@ -97,7 +97,7 @@ describe('Acceptance: ts:precompile command', function() {
     });
   });
 
-  it('generates .d.ts files when addon and package names do not match', function() {
+  it('generates .d.ts files when addon and package names do not match', function () {
     fs.ensureDirSync('addon-test-support');
     fs.writeFileSync(
       'addon-test-support/test-file.ts',
