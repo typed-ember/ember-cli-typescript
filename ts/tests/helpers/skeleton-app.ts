@@ -4,6 +4,7 @@ import execa from 'execa';
 import { EventEmitter } from 'events';
 import got from 'got';
 import debugLib from 'debug';
+import rimraf from 'rimraf';
 
 const debug = debugLib('skeleton-app');
 
@@ -15,7 +16,7 @@ const getEmberPort = (() => {
 export default class SkeletonApp {
   port = getEmberPort();
   watched: WatchedBuild | null = null;
-  cleanupTempDir = () => fs.removeSync(this.root);
+  cleanupTempDir = () => rimraf(this.root, (error) => console.error(error));
   root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
