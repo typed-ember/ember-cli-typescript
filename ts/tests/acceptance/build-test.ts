@@ -13,14 +13,14 @@ import {
 
 const { expect } = chai;
 
-describe('Acceptance: build', function() {
+describe('Acceptance: build', function () {
   this.timeout(60 * 1000);
   let app: SkeletonApp;
-  beforeEach(function() {
+  beforeEach(function () {
     app = new SkeletonApp();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     app.teardown();
   });
 
@@ -104,7 +104,7 @@ describe('Acceptance: build', function() {
 
   it('emits a warning when .js and .ts files conflict in the app/ tree', async () => {
     // Set up an in-repo addon
-    app.updatePackageJSON(pkg => {
+    app.updatePackageJSON((pkg) => {
       pkg['ember-addon'].paths.push('lib/in-repo-addon');
     });
 
@@ -153,9 +153,9 @@ function extractModuleBody(script: string, moduleName: string) {
   let parsed = esprima.parseScript(script);
   let [definition] = parsed.body
     .filter(isExpressionStatement)
-    .map(stmt => stmt.expression)
+    .map((stmt) => stmt.expression)
     .filter(isSpecialCallExpression)
-    .filter(expr => expr.arguments[0].value === moduleName);
+    .filter((expr) => expr.arguments[0].value === moduleName);
   if (!definition) throw new Error('Definition for call expression not found');
   let moduleDef = definition.arguments[2].body;
 
