@@ -11,21 +11,21 @@ import ects from '../../blueprints/ember-cli-typescript/index';
 const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
 
-describe('Acceptance: ember-cli-typescript generator', function() {
+describe('Acceptance: ember-cli-typescript generator', function () {
   helpers.setupTestHooks(this, {
     disabledTasks: ['addon-install', 'bower-install'],
   });
 
   const originalTaskForFn = Blueprint.prototype.taskFor;
 
-  beforeEach(function() {
-    Blueprint.prototype.taskFor = function(taskName) {
+  beforeEach(function () {
+    Blueprint.prototype.taskFor = function (taskName) {
       if (taskName === 'npm-install') {
         // Mock npm-install that only modifies package.json
         return {
-          run: function(options: { packages: string[] }) {
+          run: function (options: { packages: string[] }) {
             let pkgJson = fs.readJsonSync('package.json');
-            options.packages.forEach(function(pkg) {
+            options.packages.forEach(function (pkg) {
               let pkgName = pkg.match(/^(.*)@[^@]*$/);
               if (!pkgName) throw new Error(`Improperly-formatted package name: ${pkgName}`);
               pkgJson['devDependencies'][pkgName[1]] = '*';
@@ -38,7 +38,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
     };
   });
 
-  afterEach(function() {
+  afterEach(function () {
     Blueprint.prototype.taskFor = originalTaskForFn;
   });
 
@@ -149,7 +149,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
     expect(emberDataCatchallTypes).not.to.exist;
   });
 
-  it('moves from devDependencies to dependencies for addons', async function() {
+  it('moves from devDependencies to dependencies for addons', async function () {
     const args = ['ember-cli-typescript'];
 
     await helpers.emberNew({ target: 'addon' });
@@ -280,7 +280,7 @@ describe('Acceptance: ember-cli-typescript generator', function() {
     ]);
   });
 
-  describe('ember-mocha', function() {
+  describe('ember-mocha', function () {
     it('app with ember-cli-mocha', async () => {
       const args = ['ember-cli-typescript'];
 

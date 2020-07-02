@@ -1,3 +1,4 @@
+/* eslint-env node */
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -11,7 +12,7 @@ module.exports = {
     browser: true,
   },
   rules: {
-    "prettier/prettier": "error"
+    'prettier/prettier': 'error',
   },
   settings: {
     node: {
@@ -43,14 +44,10 @@ module.exports = {
         node: true,
       },
       plugins: ['node'],
-      rules: Object.assign(
-        {},
-        require('eslint-plugin-node').configs.recommended.rules,
-        {
-          // add your custom rules and overrides for node files here
-          'ember/avoid-leaking-state-in-ember-objects': 'off',
-        }
-      ),
+      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
+        // add your custom rules and overrides for node files here
+        'ember/avoid-leaking-state-in-ember-objects': 'off',
+      }),
     },
 
     // test files

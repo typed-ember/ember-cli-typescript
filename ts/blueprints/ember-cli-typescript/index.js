@@ -68,11 +68,12 @@ module.exports = {
     }
 
     return {
-      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(
-        /\n/g,
-        '\n  '
-      ),
-      pathsFor: dasherizedName => {
+      includes: JSON.stringify(
+        includes.map((include) => `${include}/**/*`),
+        null,
+        2
+      ).replace(/\n/g, '\n  '),
+      pathsFor: (dasherizedName) => {
         // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
         let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
         let appName = isAddon ? 'dummy' : dasherizedName;
@@ -105,12 +106,12 @@ module.exports = {
 
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
       },
-      indexDeclarations: dasherizedName => {
+      indexDeclarations: (dasherizedName) => {
         const isDummyApp = dasherizedName === 'dummy';
         const useAppDeclarations = !(isAddon || isDummyApp);
         return useAppDeclarations ? APP_DECLARATIONS : '';
       },
-      globalDeclarations: dasherizedName => {
+      globalDeclarations: (dasherizedName) => {
         /** @type {'classic' | 'pods'} */
         let projectLayout;
         if (isPods) projectLayout = 'pods';
@@ -179,7 +180,7 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (!this._has('ember-data')) {
-      files = files.filter(file => file !== 'types/ember-data/types/registries/model.d.ts');
+      files = files.filter((file) => file !== 'types/ember-data/types/registries/model.d.ts');
     }
 
     return files;
