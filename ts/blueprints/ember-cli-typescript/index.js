@@ -190,9 +190,9 @@ module.exports = {
 
     let pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
-    // Really `prepack` and `postpack` would be ideal, but yarn doesn't execute those when publishing
-    this._addScript(pkg.scripts, 'prepublishOnly', 'ember ts:precompile');
-    this._addScript(pkg.scripts, 'postpublish', 'ember ts:clean');
+    // As of https://github.com/yarnpkg/yarn/pull/5712 yarn runs `prepack` and `postpack` when publishing
+    this._addScript(pkg.scripts, 'prepack', 'ember ts:precompile');
+    this._addScript(pkg.scripts, 'postpack', 'ember ts:clean');
 
     // avoid being placed in devDependencies
     if (pkg.devDependencies[ADDON_NAME]) {
