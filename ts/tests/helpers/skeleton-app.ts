@@ -116,7 +116,7 @@ class WatchedEmberProcess extends EventEmitter {
   }
 
   raceForOutputs(targets: string[]) {
-    return Promise.race(targets.map(target => this.waitForOutput(target)));
+    return Promise.race(targets.map((target) => this.waitForOutput(target)));
   }
 
   waitForOutput(target: string) {
