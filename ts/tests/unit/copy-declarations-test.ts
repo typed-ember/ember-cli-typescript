@@ -6,8 +6,8 @@ import path from 'path';
 import copyDeclarations from '../../lib/utilities/copy-declarations';
 import * as fixturify from 'fixturify';
 
-describe('Unit: copyDeclarations', function() {
-  it('copies generated declarations for the correct package', function() {
+describe('Unit: copyDeclarations', function () {
+  it('copies generated declarations for the correct package', function () {
     let { createdNodes, outputTree } = runCopy({
       packageName: 'my-package',
       paths: {
@@ -30,7 +30,7 @@ describe('Unit: copyDeclarations', function() {
     });
   });
 
-  it('copies and merges generated declarations from subdirectories', function() {
+  it('copies and merges generated declarations from subdirectories', function () {
     let { createdNodes, outputTree } = runCopy({
       packageName: 'my-package',
       paths: {
@@ -57,7 +57,7 @@ describe('Unit: copyDeclarations', function() {
     });
   });
 
-  it('merges declarations from source with generated ones', function() {
+  it('merges declarations from source with generated ones', function () {
     let { createdNodes, outputTree } = runCopy({
       packageName: 'my-package',
       pathRoots: ['addon-files', 'generated-declarations'],
@@ -90,7 +90,7 @@ describe('Unit: copyDeclarations', function() {
     });
   });
 
-  it('ignores non-declaration files', function() {
+  it('ignores non-declaration files', function () {
     let { createdNodes, outputTree } = runCopy({
       packageName: 'my-package',
       paths: {
@@ -110,7 +110,7 @@ describe('Unit: copyDeclarations', function() {
     });
   });
 
-  it('rejects invalid path mappings', function() {
+  it('rejects invalid path mappings', function () {
     expect(() =>
       runCopy({
         packageName: 'my-package',
@@ -132,7 +132,7 @@ function runCopy(options: {
   let tmpdir = `${os.tmpdir()}/e-c-tests`;
   let inputBaseDir = `${tmpdir}/compiled`;
   let outputBaseDir = `${tmpdir}/output`;
-  let pathRoots = (options.pathRoots || ['.']).map(dir => path.resolve(inputBaseDir, dir));
+  let pathRoots = (options.pathRoots || ['.']).map((dir) => path.resolve(inputBaseDir, dir));
 
   fs.ensureDirSync(inputBaseDir);
   fs.ensureDirSync(outputBaseDir);
@@ -145,7 +145,7 @@ function runCopy(options: {
     options.packageName,
     outputBaseDir
   );
-  let createdNodes = absoluteCopiedFiles.map(copiedFile =>
+  let createdNodes = absoluteCopiedFiles.map((copiedFile) =>
     path.relative(outputBaseDir, copiedFile).replace(/\\/g, '/')
   );
   let outputTree = fixturify.readSync(outputBaseDir);
