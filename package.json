@@ -127,7 +127,7 @@
     "prettier": "2.0.5",
     "prettier-eslint": "11.0.0",
     "qunit-dom": "1.2.0",
-    "rimraf": "^3.0.2",
+    "rimraf": "3.0.2",
     "testdouble": "3.16.0",
     "ts-node": "8.10.2",
     "typescript": "3.7.5"
