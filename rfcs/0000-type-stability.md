@@ -198,21 +198,46 @@ There are two tools and two techniques by which we can minimize churn in the eco
 
 ##### Updating types to maintain compatibility
 
-Sometimes, it is possible when TypeScript makes a breaking change to update the types so they are backwards compatible, without impacting consumers at all. For example, [TypeScript 3.5][3.5-breakage] changed the meaning of this definition:
+Sometimes, it is possible when TypeScript makes a breaking change to update the types so they are backwards compatible, without impacting consumers at all. For example, [TypeScript 3.5][3.5-breakage] changed the default resolution of an otherwise-unspecified generic type from the empty object `{}` to `unknown`. This change was an improvement in the robustness of the type system, but it meant that any code which happened to rely on the previous behavior broke.
+
+This example from [Google’s writeup on the TS 3.5 changes][3.5-breakage] illustrates the point. Given this function:
 
 ```ts
-declare function returnsGeneric<T>(): T;
+function dontCarePromise() {
+  return new Promise((resolve) => {
+    resolve();
+  });
+}
 ```
 
-In earlier versions, `T` here would resolve to the empty object type (`{}`) if it was not otherwise constrained. From 3.5 on, it returns `unknown` in that circumstance instead. This change could be mitigated by supplying a default type argument equal to the original value:
+In TypeScript versions before 3.5, the return type of this function was inferred to be `Promise<{}>`. From 3.5 forward, it became `Promise<unknown>`. If a user ever wrote down this type somewhere, like so:
 
 ```ts
-declare function returnsGeneric<T = {}>(): T;
+const myPromise: Promise<{}> = dontCarePromise();
+```
+
+…then it broke on TS 3.5, with the compiler reporting an error ([playground][3.5-breakage-plaground]):
+
+> Type 'Promise<unknown>' is not assignable to type 'Promise<{}>'.
+>   Type 'unknown' is not assignable to type '{}'.
+
+This change could be mitigated by supplying a default type argument equal to the original value ([playground][3.5-mitigation-playground]):
+
+```ts
+function dontCarePromise(): Promise<{}> {
+  return new Promise((resolve) => {
+    resolve();
+  });
+}
 ```
 
 This is a totally-backwards compatible bugfix-style change, and should be released in a bugfix/point release. Users can then just upgrade to the bugfix release *before* upgrading their own TypeScript version—and will experience *zero* impact from the breaking TypeScript change.
 
-Later, the default type argument `T = {}` could be dropped and defaulted to the new value for a major release of the library when desired (per the policy [outlined below](#policy-for-supported-type-script-versions), giving it the new semantics. (Also see [<b>Opt-in future types</b>](#opt-in-future-types) below for a means to allow users to *opt in* to these changes before the major version.)
+Later, the default type argument `Promise<{}>` could be dropped and defaulted to the new value for a major release of the library when desired (per the policy [outlined below](#policy-for-supported-type-script-versions), giving it the new semantics. (Also see [<b>Opt-in future types</b>](#opt-in-future-types) below for a means to allow users to *opt in* to these changes before the major version.)
+
+[3.3-pre-breakage-playground]: https://www.typescriptlang.org/play/?ts=3.3.3&ssl=1&ssc=27&pln=1&pc=40#code/GYVwdgxgLglg9mABAEwVAwgQwE4FMAK2cAtjAM64AUAlIgN4CwAUIonlCNkmLgO6KES5KpTxk4AGwBuuWgF4AfPWatWYyTJoBuFYgC+1HUz3NmEBGSiJiAT0GkKALgFEHuADx09SuSjRY8e2FtIA
+[3.5-breakage-plaground]: https://www.typescriptlang.org/play/?ts=3.5.1&ssl=1&ssc=27&pln=1&pc=40#code/GYVwdgxgLglg9mABAEwVAwgQwE4FMAK2cAtjAM64AUAlIgN4CwAUIonlCNkmLgO6KES5KpTxk4AGwBuuWgF4AfPWatWYyTJoBuFYgC+1HUz3NmEBGSiJiAT0GkKALgFEHuADx09SuSjRY8e2FtIA
+[3.5-mitigation-playground]: https://www.typescriptlang.org/play/?ts=3.5.1#code/GYVwdgxgLglg9mABAEwVAwgQwE4FMAK2cAtjAM64AUAlAFyKEnm4A8A3gL4B8ibAsAChEiPFBDYkYXAHcGRUhUqU8ZOABsAbrmqIAvD35DhI3Ks1VqAbkHCOVwR0GCICMlETEAnowW56P5nZuPRQ0LDwAxSsgA
 
 ##### “Downleveling” types
 
@@ -281,50 +306,13 @@ In the case of significant breaking changes to *only* the types—whether becaus
 
 In this case, addon authors will need to *hand-author* the types for the future version of the types, and supply them at a specific location which users can then import directly in their `types/my-app.d.ts` file—which will override the normal types location, while not requiring the user to modify the `paths` key in their `tsconfig.json`.
 
-###### Example: TypeScript 3.5 mitigation
+This approach is a variant on [**Updating types to maintain compatibility**](#updating-types-to-maintain-compatibility). Using that same example, an addon author who wanted to provide opt-in future types instead (or in addition) would follow this procedure:
 
-Assume an addon with the following type as its only export (which is quite weird as code goes, but captures the behavior for the example):
-
-```ts
-export default class FancyAddon {
-  fancy = true;
-}
-
-function lookup<T>(someValue: T) {
-  if (someValue == null) {
-    return new Promise((resolve) => {
-      resolve(someValue);
-    });
-  }
-  return Promise.resolve(new FancyAddon());
-}
-
-// THIS VALUE CHANGES BETWEEN 3.4 AND 3.5
-const foo = lookup("foo");
-```
-
-In TypeScript before 3.5, the result of `lookup("foo")` would be `Promise<{}>` ([playground][3.3-playground]). In TypeScript 3.5, the result would be `Promise<unknown>` ([playground][3.5-playground]). A user who had defined a type locally expecting `Promise<{}>` would now be forced to change her code:
-
-```ts
-interface ResultOfAddon {
-  foo: Promise<{}>;
-}
-
-let result: ResultOfAddon = {
-  foo: lookup("foo"), // TYPE ERROR IN 3.5
-};
-```
-
-[3.3-playground]: https://www.typescriptlang.org/play/?ts=3.3.3&ssl=1&ssc=1&pln=14&pc=27#code/KYDwDg9gTgLgBAE2AMwIYFcA28DGnUDOBcAYqgHY4CeAggghOXAN4CwAUHHGpVXALxwYUdMADcHAL4cOydJRgBLRnEwQIAa3RgAPABUAfAAoCEALbAAaqkyiAXHD0BKFhy6LkcE+as3RAwXIsTBc2Ti44KGAYdCgmcmAAdzgABShzRQJgIyMo00wAN2AXfgNXcIjI4Hyi7wtrW2KJCrhJJ2auaXComLjU9LNM4AA6PIhC7ITksl46BnIjJ3apGXYAejXHAAkASQBlOEsaABkAVQBROABhLZoAOQBxc4OAIXO9AHVz87u4AGZhgAWOD3AAi-2GAFYODhGAR4Mh1AJVOotGAjAAiREQDHtIA
-[3.5-playground]: https://www.typescriptlang.org/play/?ts=3.5.1&ssl=1&ssc=1&pln=14&pc=27#code/KYDwDg9gTgLgBAE2AMwIYFcA28DGnUDOBcAYqgHY4CeAggghOXAN4CwAUHHGpVXALxwYUdMADcHAL4cOydJRgBLRnEwQIAa3RgAPABUAfAAoCEALbAAaqkyiAXHD0BKFhy6LkcE+as3RAwXIsTBc2Ti44KGAYdCgmcmAAdzgABShzRQJgIyMo00wAN2AXfgNXcIjI4Hyi7wtrW2KJCrhJJ2auaXComLjU9LNM4AA6PIhC7ITksl46BnIjJ3apGXYAejXHAAkASQBlOEsaABkAVQBROABhLZoAOQBxc4OAIXO9AHVz87u4AGZhgAWOD3AAi-2GAFYODhGAR4Mh1AJVOotGAjAAiREQDHtIA
-
-If an addon author wanted to migitate this change, she would follow this procedure:
-
-1.  Backwards-compatibly *fix* the types by explicitly setting the return type on `lookup`:
+1.  Backwards-compatibly *fix* the types by explicitly setting the return type on `dontCarePromise`, just as discussed above:
 
     ```diff
-    - function lookup<T>(someValue: T) {
-    + function lookup<T>(someValue: T): Promise<{}> {
+    - function dontCarePromise() {
+    + function dontCarePromise(): Promise<{}> {
     ```
 
 2.  Create a new directory, named something like `ts3.5`.
@@ -336,19 +324,38 @@ If an addon author wanted to migitate this change, she would follow this procedu
 5.  In the `ts3.5` directory, either *remove* or *change* the explicit return type, so that the default from TypeScript 3.5 is restored:
 
     ```diff
-    - function lookup<T>(someValue: T): Promise<{}> {
-    + function lookup<T>(someValue: T): Promise<unknown> {
+    - function dontCarePromise(): Promise<{}> {
+    + function dontCarePromise(): Promise<unknown> {
     ```
 
-6.  Commit the `ts3.5` directory, since it now needs to be maintained manually until a breaking change of the library is released which opts into the new behavior.
+6.  Wrap each module file in the generated definition with a `declare module` specifying the *canonical* module name. For example, if our `dontCarePromise` definition were from a module at `my-library/sub-package`, we would have the following structure:
 
-7.  Cut a release which includes the new fixes. With that release:
+    ```
+    my-library/
+      ts3.5/
+        index.d.ts
+        sub-package.d.ts
+    ```
+
+    —and the contents of `sub-package.d.ts` would be:
+    
+    ```ts
+    declare module 'my-library/sub-package' {
+      export function dontCarePromise(): Promise<unknown>;
+    }
+    ```
+
+7.  Explicitly include each such sub-module in the import graph available from `ts3.5/index.d.ts`—either via direct import in that file or via imports in the other modules. (Note that these imports can simply be of the form `import 'some-module';`, rather than importing specific types or values from the modules.)
+
+7.  Commit the `ts3.5` directory, since it now needs to be maintained manually until a breaking change of the library is released which opts into the new behavior.
+
+8.  Cut a release which includes the new fixes. With that release:
 
     -   Inform users about the incoming breaking change.
 
     -   Tell users to add `import 'fancy-addon/ts3.5';` to the top of their app's `types/my-app.d.ts` or `types/my-addon.d.ts` file (which is generated by `ember-cli-typescript`’s post-install blueprint).
 
-8.  At a later point, cut a breaking change which opts into the TypeScript 3.5 behavior.
+9.  At a later point, cut a breaking change which opts into the TypeScript 3.5 behavior.
 
     -   Remove the `ts3.5` directory from the repository.
 
