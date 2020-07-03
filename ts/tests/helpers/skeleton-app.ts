@@ -16,7 +16,7 @@ const getEmberPort = (() => {
 export default class SkeletonApp {
   port = getEmberPort();
   watched: WatchedBuild | null = null;
-  cleanupTempDir = () => rimraf(this.root, (error) => console.error(error));
+  cleanupTempDir = () => rimraf(this.root, (error) => error && console.error(error));
   root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
