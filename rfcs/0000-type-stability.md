@@ -390,11 +390,11 @@ As discussed above in [Changes to types: Dropping support for previously-support
 
 #### Documenting supported versions
 
-Addons should document their currently supported TypeScript versions in their README. Typed Ember shall publish a repository with a README listing the specified versions, which will be home to a package `@typed-ember/supported-versions`, whose `index.js` is an array of version numbers, which can be used programmatically:
+Addons should document their currently supported TypeScript versions in their README. Typed Ember shall maintain a standard badge for addon authors to use with the currently-recommended versions listed in the ember-cli-typescript repo (likely in the README):
 
-```js
-module.exports = ['3.6', '3.7', '3.9'];
-```
+An example badge might look like this:
+
+[![supported TS versions: 3.6, 3.7 and 3.9](https://img.shields.io/badge/TypeScript-3.6%20%7C%203.7%20%7C%203.9-blue)](https://github.com/typed-ember/ember-cli-typescript)
 
 ### Summary
 
@@ -417,11 +417,9 @@ These should be explained in a new section of the ember-cli-typescript docs dedi
 -   configuring `ember-try` to verify the type tests
 -   making the addon’s semantic versioning commitments clear by linking to a tagged version of Typed Ember’s `SEMVER.md`, and how to describe any modifications from that policy
 -   publicizing the addon’s supported versions of TypeScript
+-   the currently-recommended versions of TypeScript, along with a standard badge
 
-Finally, Typed Ember will publish two new documents in their own repos:
-
--   `SEMVER.md`, living in its own repo, and tagged so it can be referenced by direct stable link from addon repositories—with the same set of rules as documented in this document
--   `supported-versions`, with supported versions listed in the README for the package and available in a the package `@typed-ember/supported-versions` for programmatic consumption by addon authors
+Finally, Typed Ember will publish a new document in its own repo: `SEMVER.md`, tagged so it can be referenced by direct stable link from addon repositories—with the same set of rules as documented in this document.
 
 ## Drawbacks
 
@@ -470,10 +468,6 @@ As noted above in [<b>“Downleveling” types</b>](#downleveling-types), `downl
 -   How should transitive dependencies be expected to be handled? Should addon authors be expected to absorb any upstream differences in SemVer handling?
 
 -   Given the prevalence of QUnit in the Ember community, the Jest/Mocha-like `expectType` assertions may seem out of place in some addons. Should we write an `assert-type` library akin to `expect-type`, with assertions like `assertType<SomeType>().equal<{ count: number }>()`?
-
--   Is a JS file in a repository/package the appropriate home for supported TypeScript versions? Should it also be publicized
-
--   Should we design a “badge” for addon authors to specify their supported versions of TypeScript?
 
 ## Appendix: Core Addons and Ember CLI
 
