@@ -184,7 +184,7 @@ This has no impact on runtime code: the `types` directory is not used for genera
 
 In addition to *writing* these tests, addon authors should include `tsc --noEmit` in their continuous integration configuration, so that any changes made to the library are validated to make sure the API has not been changed accidentally.
 
-Further, just as addons are encouraged to test against all a matrix of Ember versions which includes the current stable release, all supported Ember LTS releases, and the canary and beta releases, addons should test the types against all versions of TypeScript supported by the addon (see the [suggested policy for version support](#policy-for-supported-typescript-versions) below) as well as the upcoming version (the `next` tag for the `typescript` package on npm).
+Further, just as addons are encouraged to test against all a matrix of Ember versions which includes the current stable release, the currently active Ember LTS release, and the canary and beta releases, addons should test the types against all versions of TypeScript supported by the addon (see the [suggested policy for version support](#policy-for-supported-typescript-versions) below) as well as the upcoming version (the `next` tag for the `typescript` package on npm).
 
 Type tests can run as normal [ember-try] variations. Typed Ember will document a conventional setup for ember-try configurations, so that correct integration into CI setups will be straightforward for addon authors.
 
