@@ -4,6 +4,7 @@
 module.exports = function(environment) {
   return {
     environment,
-    modulePrefix: 'skeleton-app'
+    modulePrefix: 'skeleton-app',
+    rootURL: '/'
   };
 };

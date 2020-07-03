@@ -69,50 +69,30 @@ describe('Acceptance: build', function () {
     );
   });
 
-  it("doesn't launch type checking when --path used", async () => {
+  it("doesn't launch type checking for `ember serve` when --path is used", async () => {
     await app.build();
+
     let server = app.serve({
       args: ['--path', 'dist'],
-      env: { DEBUG: 'ember-cli-typescript|express:*' },
+      env: { DEBUG: 'ember-cli-typescript:addon' },
     });
-    let result = await server.raceForOutputs([
-      'ember-cli-typescript:typecheck-worker',
-      'Serving on',
-    ]);
-    expect(result).to.include('Serving on');
+
+    let result = await server.waitForOutput('Serving on');
+
+    expect(result).to.include('ember-cli-typescript:addon Skipping typecheck server middleware');
   });
 
-  it('does launch type checking when --path not used', async () => {
-    await app.build();
-    let server = app.serve({ env: { DEBUG: 'ember-cli-typescript|express:*' } });
-    let result = await server.raceForOutputs([
-      'ember-cli-typescript:typecheck-worker',
-      'Serving on',
-    ]);
-    expect(result).to.include('ember-cli-typescript:typecheck-worker');
-  });
+  it("doesn't launch type checking for `ember test` when --path is used", async () => {
+    await app.build({ args: ['--environment', 'test'] });
 
-  it("doesn't launch type checking when --path used for tests", async () => {
-    await app.build();
-    let test = app.test({
+    let result = await app.test({
       args: ['--path', 'dist'],
-      env: { DEBUG: 'ember-cli-typescript|express:*' },
+      env: { DEBUG: 'ember-cli-typescript:addon' },
     });
-    let result = await test.raceForOutputs([
-      'ember-cli-typescript:typecheck-worker',
-      'express:application',
-    ]);
-    expect(result).to.include('express:application');
-  });
 
-  it('does launch type checking when --path not used for tests', async () => {
-    await app.build();
-    let test = app.test({ env: { DEBUG: 'ember-cli-typescript|express:*' } });
-    let result = await test.raceForOutputs([
-      'ember-cli-typescript:typecheck-worker',
-      'express:application',
-    ]);
-    expect(result).to.include('ember-cli-typescript:typecheck-worker');
+    expect(result.all).to.include(
+      'ember-cli-typescript:addon Skipping typecheck testem middleware'
+    );
   });
 
   it('fails the build when noEmitOnError is set and an error is emitted', async () => {
