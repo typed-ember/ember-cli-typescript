@@ -298,7 +298,7 @@ The recommended flow will be as follows:[[see note 2](#notes)]
 
 Now consumers using older versions of TypeScript will be buffered from the breaking changes in type definition emit.
 
-These changes to `package.json` may be able to be automated to some degree; Typed Ember should explore a blueprint for updating the supported TypeScript version.
+(Noting the complexity of this work, the community may want to invest in tooling to automate support for managing dependencies, downleveling, and type tests. However, the core constraints of this RFC do not depend on such tooling existing, and the exact requirements of those tools will emerge organically as the community begins implementing this RFC's recommendations.)
 
 ##### Opt-in future types
 
