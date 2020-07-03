@@ -386,7 +386,7 @@ Adding a new supported version does *not* require an addon to create a new relea
 
 #### Dropping TypeScript versions
 
-As discussed above in [Changes to types: Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions), dropping support for previously-supported versions of TypeScript is always a breaking change. As such, it should always occur in a major version. As such, and given the constraints of Ember CLI’s version resolution today (where only one major version will be resolved successfully), addon authors should prefer to drop older supported TypeScript versions relatively infrequently. Optimally, addon authors should drop TypeScript versions at the same time as they are already making *other* breaking changes of a similar sort, like dropping support for Node or Ember versions when their LTS period ends.
+As discussed above in [Changes to types: Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions), dropping support for previously-supported versions of TypeScript is always a breaking change and therefore requires releasing a major version. Given the constraints of Ember CLI’s version resolution today (where only one major version will be resolved successfully), addon authors should prefer to drop older supported TypeScript versions relatively infrequently. Optimally, addon authors should drop TypeScript versions at the same time as they are already making *other* breaking changes of a similar sort, like dropping support for Node or Ember versions when their LTS period ends.
 
 #### Documenting supported versions
 
