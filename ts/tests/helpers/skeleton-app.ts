@@ -15,14 +15,13 @@ const getEmberPort = (() => {
 
 interface EmberCliOptions {
   args?: string[];
-  env?: any;
+  env?: Record<string, string>;
 }
 
 export default class SkeletonApp {
   port = getEmberPort();
   watched: WatchedEmberProcess | null = null;
-  watchedTest: WatchedEmberProcess | null = null;
-  cleanupTempDir = () => rimraf(this.root, (error) => console.error(error));
+  cleanupTempDir = () => rimraf(this.root, (error) => error && console.error(error));
   root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
@@ -31,26 +30,22 @@ export default class SkeletonApp {
     process.on('beforeExit', this.cleanupTempDir);
   }
 
-  build() {
-    return this._ember({ args: ['build'] });
+  build({ args = [], env }: EmberCliOptions = {}) {
+    return this._ember({ args: ['build', ...args], env });
   }
 
-  serve(options: EmberCliOptions = { args: [], env: {} }) {
+  test({ args = [], env }: EmberCliOptions = {}) {
+    return this._ember({ args: ['test', '--test-port', `${this.port}`, ...args], env });
+  }
+
+  serve({ args = [], env }: EmberCliOptions = {}) {
     if (this.watched) {
       throw new Error('Already serving');
     }
-    options.args = options.args || [];
-    options.args = ['serve', '--port', `${this.port}`, ...options.args];
-    return (this.watched = new WatchedEmberProcess(this._ember(options), this.port));
-  }
 
-  test(options: EmberCliOptions = { args: [], env: {} }) {
-    if (this.watchedTest) {
-      throw new Error('Already testing');
-    }
-    options.args = options.args || [];
-    options.args = ['test', ...options.args];
-    return (this.watchedTest = new WatchedEmberProcess(this._ember(options)));
+    let childProcess = this._ember({ args: ['serve', '--port', `${this.port}`, ...args], env });
+
+    return (this.watched = new WatchedEmberProcess(childProcess, this.port));
   }
 
   updatePackageJSON(callback: (arg: any) => any) {
@@ -77,21 +72,19 @@ export default class SkeletonApp {
     if (this.watched) {
       this.watched.kill();
     }
-    if (this.watchedTest) {
-      this.watchedTest.kill();
-    }
+
     this.cleanupTempDir();
     process.off('beforeExit', this.cleanupTempDir);
   }
 
-  _ember(options: EmberCliOptions) {
+  _ember({ args, env }: EmberCliOptions) {
     let ember = require.resolve('ember-cli/bin/ember');
-    return execa.node(ember, options.args, { cwd: this.root, all: true, env: options.env });
+    return execa.node(ember, args, { cwd: this.root, all: true, env });
   }
 }
 
 class WatchedEmberProcess extends EventEmitter {
-  constructor(protected ember: execa.ExecaChildProcess, protected port?: number) {
+  constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
     this.ember.stdout?.on('data', (data) => {
       let output = data.toString();
@@ -113,10 +106,6 @@ class WatchedEmberProcess extends EventEmitter {
 
   request(path: string) {
     return got(`http://localhost:${this.port}${path}`);
-  }
-
-  raceForOutputs(targets: string[]) {
-    return Promise.race(targets.map((target) => this.waitForOutput(target)));
   }
 
   waitForOutput(target: string) {
