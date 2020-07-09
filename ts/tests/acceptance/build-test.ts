@@ -69,6 +69,32 @@ describe('Acceptance: build', function () {
     );
   });
 
+  it("doesn't launch type checking for `ember serve` when --path is used", async () => {
+    await app.build();
+
+    let server = app.serve({
+      args: ['--path', 'dist'],
+      env: { DEBUG: 'ember-cli-typescript:addon' },
+    });
+
+    let result = await server.waitForOutput('Serving on');
+
+    expect(result).to.include('ember-cli-typescript:addon Skipping typecheck server middleware');
+  });
+
+  it("doesn't launch type checking for `ember test` when --path is used", async () => {
+    await app.build({ args: ['--environment', 'test'] });
+
+    let result = await app.test({
+      args: ['--path', 'dist'],
+      env: { DEBUG: 'ember-cli-typescript:addon' },
+    });
+
+    expect(result.all).to.include(
+      'ember-cli-typescript:addon Skipping typecheck testem middleware'
+    );
+  });
+
   it('fails the build when noEmitOnError is set and an error is emitted', async () => {
     app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 

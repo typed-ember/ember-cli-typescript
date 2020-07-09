@@ -13,9 +13,14 @@ const getEmberPort = (() => {
   return () => lastPort++;
 })();
 
+interface EmberCliOptions {
+  args?: string[];
+  env?: Record<string, string>;
+}
+
 export default class SkeletonApp {
   port = getEmberPort();
-  watched: WatchedBuild | null = null;
+  watched: WatchedEmberProcess | null = null;
   cleanupTempDir = () => rimraf(this.root, (error) => error && console.error(error));
   root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
@@ -25,18 +30,22 @@ export default class SkeletonApp {
     process.on('beforeExit', this.cleanupTempDir);
   }
 
-  build() {
-    return this._ember(['build']);
+  build({ args = [], env }: EmberCliOptions = {}) {
+    return this._ember({ args: ['build', ...args], env });
   }
 
-  serve() {
+  test({ args = [], env }: EmberCliOptions = {}) {
+    return this._ember({ args: ['test', '--test-port', `${this.port}`, ...args], env });
+  }
+
+  serve({ args = [], env }: EmberCliOptions = {}) {
     if (this.watched) {
       throw new Error('Already serving');
     }
-    return (this.watched = new WatchedBuild(
-      this._ember(['serve', '--port', `${this.port}`]),
-      this.port
-    ));
+
+    let childProcess = this._ember({ args: ['serve', '--port', `${this.port}`, ...args], env });
+
+    return (this.watched = new WatchedEmberProcess(childProcess, this.port));
   }
 
   updatePackageJSON(callback: (arg: any) => any) {
@@ -68,13 +77,13 @@ export default class SkeletonApp {
     process.off('beforeExit', this.cleanupTempDir);
   }
 
-  _ember(args: string[]) {
+  _ember({ args, env }: EmberCliOptions) {
     let ember = require.resolve('ember-cli/bin/ember');
-    return execa.node(ember, args, { cwd: this.root, all: true });
+    return execa.node(ember, args, { cwd: this.root, all: true, env });
   }
 }
 
-class WatchedBuild extends EventEmitter {
+class WatchedEmberProcess extends EventEmitter {
   constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
     this.ember.stdout?.on('data', (data) => {
