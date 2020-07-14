@@ -6,6 +6,42 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [4.0.0-rc.1] - 2020-07-14
+
+### Added ⭐️
+
+- Don't run type-checking middleware when an existing build is used via `--path` ([#1148])
+
+### Changed 💥
+
+- Update `tsconfig.json` blueprint `target` value to `2020` ([#1108])
+- Use `prepack` and `postpack` instead of `prepublishOnly` and `postpublish` ([#1196])
+
+### Fixed 🔧
+
+- Bring apps closer to type-checking out of the box ([#1169])
+
+### Under the hood 🚗
+
+- Add RFCs to repo ([#1157])
+- Fix description of ts:precompile ([#1162])
+- Fix dead link to "packages this addon installs" ([#1164])
+- Get CI passing ([#1167])
+- Avoid false-positive `willTypecheck`s on Linux ([#1198])
+- Dependency updates ([4.0.0-rc.1-deps-bumps], [#1191])
+
+[#1108]: https://github.com/typed-ember/ember-cli-typescript/pull/1108
+[#1148]: https://github.com/typed-ember/ember-cli-typescript/pull/1148
+[#1157]: https://github.com/typed-ember/ember-cli-typescript/pull/1157
+[#1162]: https://github.com/typed-ember/ember-cli-typescript/pull/1162
+[#1164]: https://github.com/typed-ember/ember-cli-typescript/pull/1164
+[#1167]: https://github.com/typed-ember/ember-cli-typescript/pull/1167
+[#1169]: https://github.com/typed-ember/ember-cli-typescript/pull/1169
+[#1191]: https://github.com/typed-ember/ember-cli-typescript/pull/1191
+[#1196]: https://github.com/typed-ember/ember-cli-typescript/pull/1196
+[#1198]: https://github.com/typed-ember/ember-cli-typescript/pull/1198
+[4.0.0-rc.1-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-05-29T11%3A00%3A00-0500..2020-07-14T17%3A15%3A00-0600+chore%28deps%29+in%3Atitle+
+
 ## [4.0.0-alpha.1] - 2020-01-18
 
 ### Breaking 💥

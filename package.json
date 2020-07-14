@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-typescript",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-rc.1",
   "description": "Allow ember apps to use typescript files.",
   "keywords": [
     "ember-addon",
