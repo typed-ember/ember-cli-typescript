@@ -30,6 +30,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 - Avoid false-positive `willTypecheck`s on Linux ([#1198])
 - Dependency updates ([4.0.0-rc.1-deps-bumps], [#1191])
 
+### Upgrading ⚙️
+
+- Make sure you are using at least [ember-cli-babel@^7.17.0](https://github.com/babel/ember-cli-babel/releases/tag/v7.17.0) or your `.ts` files will be ignored completely!
+- If you are using `ember-auto-import`, make sure you are using at least [ember-auto-import@^1.6.0](https://github.com/ef4/ember-auto-import/blob/master/CHANGELOG.md#160).
+- Run `ember install ember-cli-typescript@next` or use your package manager to upgrade to `ember-cli-typescript@next` directly and skip the blueprint.
+
 [#1108]: https://github.com/typed-ember/ember-cli-typescript/pull/1108
 [#1148]: https://github.com/typed-ember/ember-cli-typescript/pull/1148
 [#1157]: https://github.com/typed-ember/ember-cli-typescript/pull/1157
