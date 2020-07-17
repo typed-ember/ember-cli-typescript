@@ -2,9 +2,16 @@
 - RFC PR: (after opening the RFC PR, update this with a link to it and update the file name)
 - Tracking: (leave this empty)
 
-# RFC: Type Stability for Addons
+# RFC: Defining Semantic Versioning for Published Addon Types
 
 This RFC proposes a set of guidelines and tooling recommendations for managing changes as addons adopt TypeScript throughout the Ember ecosystem, as part of the path to making TypeScript a first-class citizen in Ember as a whole.
+
+This RFC does *not* attempt to solve—
+
+- the problem of stability for ambient types (e.g. from `@types`/DefinitelyTyped)
+- performance regression analysis
+
+These concerns will be addressed in future RFCs.
 
 While the detailed recommendations here are specific to the Ember ecosystem, we believe these recommendations will also be useful for the TypeScript ecosystem more broadly, with tweaks as appropriate to other ecosystems!
 
