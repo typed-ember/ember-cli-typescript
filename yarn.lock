@@ -23,7 +23,7 @@
     invariant "^2.2.4"
     semver "^5.5.0"
 
-"@babel/core@^7.0.0", "@babel/core@^7.1.6", "@babel/core@^7.10.2", "@babel/core@^7.2.2", "@babel/core@^7.3.4", "@babel/core@^7.9.6":
+"@babel/core@^7.0.0", "@babel/core@^7.1.6", "@babel/core@^7.10.2", "@babel/core@^7.2.2", "@babel/core@^7.3.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.10.4.tgz#780e8b83e496152f8dd7df63892b2e052bf1d51d"
   integrity sha512-3A0tS0HWpy4XujGc7QtOIHTeNwUgWaZc/WuS5YQrfhU67jnVmsD6OGPc1AKHH0LJHQICGncy3+YUjIhVlfDdcA==
@@ -556,7 +556,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.10.4"
 
-"@babel/plugin-transform-modules-amd@^7.10.1", "@babel/plugin-transform-modules-amd@^7.10.4", "@babel/plugin-transform-modules-amd@^7.9.6":
+"@babel/plugin-transform-modules-amd@^7.10.1", "@babel/plugin-transform-modules-amd@^7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-modules-amd/-/plugin-transform-modules-amd-7.10.4.tgz#cb407c68b862e4c1d13a2fc738c7ec5ed75fc520"
   integrity sha512-3Fw+H3WLUrTlzi3zMiZWp3AR4xadAEMv6XRCYnd5jAlLM61Rn+CRJaZMaNvIpcJpQ3vs1kyifYvEVPFfoSkKOA==
@@ -3731,7 +3731,7 @@ broccoli-babel-transpiler@^6.5.0:
     rsvp "^4.8.2"
     workerpool "^2.3.0"
 
-broccoli-babel-transpiler@^7.4.0, broccoli-babel-transpiler@^7.5.0:
+broccoli-babel-transpiler@^7.5.0, broccoli-babel-transpiler@^7.6.0:
   version "7.6.0"
   resolved "https://registry.yarnpkg.com/broccoli-babel-transpiler/-/broccoli-babel-transpiler-7.6.0.tgz#819e6d228b8aa3b4f3b6dfc4b546c13dd304b462"
   integrity sha512-VjqIl4qe3zEkGjsPA2jgw/jakjfLjw2IpQ62d4f1kArZyMW/cQ6o54VD0Cd6cai4J08nb4WPLu4cr4Z62vr5uw==
@@ -4434,7 +4434,7 @@ broccoli-writer@^0.1.1:
     quick-temp "^0.1.0"
     rsvp "^3.0.6"
 
-broccoli@^3.4.1:
+broccoli@^3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/broccoli/-/broccoli-3.4.2.tgz#a0c2605bea285c50cac304f482b86670630f4701"
   integrity sha512-OZ0QEyL2i08xJWwhg9Fe0x5IScjBur986QRWrj5mAyHRZqF1nShEz01BPFoLt6L2tqJT0gyZsf8nfUvm8CcJgA==
@@ -7221,20 +7221,20 @@ ember-cli-version-checker@^5.0.2, ember-cli-version-checker@^5.1.1:
     semver "^7.3.2"
     silent-error "^1.1.1"
 
-ember-cli@3.19.0:
-  version "3.19.0"
-  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.19.0.tgz#8c46d1f7c028867c6816da6a60f7a1080be58e4d"
-  integrity sha512-MVBfC8rSdoQIITXCWX/1eAD/uoXZlH0YSO6NOxshsUaQxpo/SP1bSotwvZo4Hvd8novODNm/zQfVzDwAyJrJHw==
+ember-cli@3.20.0:
+  version "3.20.0"
+  resolved "https://registry.yarnpkg.com/ember-cli/-/ember-cli-3.20.0.tgz#729c62ce0cb2804237155886619acc54c77255dc"
+  integrity sha512-I5mybMo1vmsKRnC7uWuuxldla+45CsJ0TIHIm+qovaKyGBx+TSW8zMoBvnogMSyu8+hDMEqsxLblH9ZSF4hKpg==
   dependencies:
-    "@babel/core" "^7.9.6"
-    "@babel/plugin-transform-modules-amd" "^7.9.6"
+    "@babel/core" "^7.10.2"
+    "@babel/plugin-transform-modules-amd" "^7.10.4"
     amd-name-resolver "^1.3.1"
     babel-plugin-module-resolver "^4.0.0"
     bower-config "^1.4.3"
     bower-endpoint-parser "0.2.2"
-    broccoli "^3.4.1"
+    broccoli "^3.4.2"
     broccoli-amd-funnel "^2.0.1"
-    broccoli-babel-transpiler "^7.4.0"
+    broccoli-babel-transpiler "^7.6.0"
     broccoli-builder "^0.18.14"
     broccoli-concat "^4.2.4"
     broccoli-config-loader "^1.0.1"
@@ -7249,7 +7249,7 @@ ember-cli@3.19.0:
     broccoli-stew "^3.0.0"
     calculate-cache-key-for-tree "^2.0.0"
     capture-exit "^2.0.0"
-    chalk "^3.0.0"
+    chalk "^4.0.0"
     ci-info "^2.0.0"
     clean-base-url "^1.0.0"
     compression "^1.7.4"
@@ -7281,7 +7281,7 @@ ember-cli@3.19.0:
     heimdalljs-fs-monitor "^0.2.3"
     heimdalljs-graph "^1.0.0"
     heimdalljs-logger "^0.1.10"
-    http-proxy "^1.18.0"
+    http-proxy "^1.18.1"
     inflection "^1.12.0"
     is-git-url "^1.0.0"
     isbinaryfile "^4.0.6"
@@ -7289,8 +7289,8 @@ ember-cli@3.19.0:
     json-stable-stringify "^1.0.1"
     leek "0.0.24"
     lodash.template "^4.5.0"
-    markdown-it "^10.0.0"
-    markdown-it-terminal "0.1.1"
+    markdown-it "^11.0.0"
+    markdown-it-terminal "0.2.1"
     minimatch "^3.0.4"
     morgan "^1.10.0"
     nopt "^3.0.6"
@@ -7305,14 +7305,14 @@ ember-cli@3.19.0:
     sane "^4.1.0"
     semver "^7.3.2"
     silent-error "^1.1.1"
-    sort-package-json "^1.42.2"
+    sort-package-json "^1.44.0"
     symlink-or-copy "^1.3.1"
     temp "0.9.1"
     testem "^3.1.0"
     tiny-lr "^1.1.1"
-    tree-sync "^2.0.0"
-    uuid "^7.0.3"
-    walk-sync "^2.1.0"
+    tree-sync "^2.1.0"
+    uuid "^8.1.0"
+    walk-sync "^2.2.0"
     watch-detector "^1.0.0"
     yam "^1.0.0"
 
@@ -9896,7 +9896,7 @@ http-proxy-agent@^2.0.0, http-proxy-agent@^2.1.0:
     agent-base "4"
     debug "3.1.0"
 
-http-proxy@^1.13.1, http-proxy@^1.18.0:
+http-proxy@^1.13.1, http-proxy@^1.18.1:
   version "1.18.1"
   resolved "https://registry.yarnpkg.com/http-proxy/-/http-proxy-1.18.1.tgz#401541f0534884bbf95260334e72f88ee3976549"
   integrity sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==
@@ -11135,6 +11135,13 @@ linkify-it@^2.0.0:
   dependencies:
     uc.micro "^1.0.1"
 
+linkify-it@^3.0.1:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-3.0.2.tgz#f55eeb8bc1d3ae754049e124ab3bb56d97797fb8"
+  integrity sha512-gDBO4aHNZS6coiZCKVhSNh43F9ioIL4JwRjLZPkoLIY4yZFwg264Y5lu2x6rb1Js42Gh6Yqm2f6L2AJcnkzinQ==
+  dependencies:
+    uc.micro "^1.0.1"
+
 linkify-it@~1.2.0:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-1.2.4.tgz#0773526c317c8fd13bd534ee1d180ff88abf881a"
@@ -11723,10 +11730,10 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
-markdown-it-terminal@0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/markdown-it-terminal/-/markdown-it-terminal-0.1.1.tgz#7665d28a97f6f7f61f8738304d409a8505620192"
-  integrity sha512-8v4pHGEh7eiw+UbD28PRyrpu+WrnRR/HefC6NRs+Ttbk1ZQoOY6ViMrkZcdO9Y+PoBsfxNsmiJZtG9BRHEGZ2A==
+markdown-it-terminal@0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/markdown-it-terminal/-/markdown-it-terminal-0.2.1.tgz#670fd5ea824a7dcaa1591dcbeef28bf70aff1705"
+  integrity sha512-e8hbK9L+IyFac2qY05R7paP+Fqw1T4pSQW3miK3VeG9QmpqBjg5Qzjv/v6C7YNxSNRS2Kp8hUFtm5lWU9eK4lw==
   dependencies:
     ansi-styles "^3.0.0"
     cardinal "^1.0.0"
@@ -11734,14 +11741,14 @@ markdown-it-terminal@0.1.1:
     lodash.merge "^4.6.2"
     markdown-it "^8.3.1"
 
-markdown-it@^10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-10.0.0.tgz#abfc64f141b1722d663402044e43927f1f50a8dc"
-  integrity sha512-YWOP1j7UbDNz+TumYP1kpwnP0aEa711cJjrAQrzd0UXlbJfc5aAq0F/PZHjiioqDC1NKgvIMX+o+9Bk7yuM2dg==
+markdown-it@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-11.0.0.tgz#dbfc30363e43d756ebc52c38586b91b90046b876"
+  integrity sha512-+CvOnmbSubmQFSA9dKz1BRiaSMV7rhexl3sngKqFyXSagoA3fBdJQ8oZWtRy2knXdpDXaBw44euz37DeJQ9asg==
   dependencies:
     argparse "^1.0.7"
     entities "~2.0.0"
-    linkify-it "^2.0.0"
+    linkify-it "^3.0.1"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
 
@@ -12253,7 +12260,7 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
-"mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.0, mkdirp@~0.5.1:
+"mkdirp@>=0.5 0", mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.0, mkdirp@~0.5.1:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
   integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
@@ -15381,7 +15388,7 @@ sort-object-keys@^1.1.3:
   resolved "https://registry.yarnpkg.com/sort-object-keys/-/sort-object-keys-1.1.3.tgz#bff833fe85cab147b34742e45863453c1e190b45"
   integrity sha512-855pvK+VkU7PaKYPc+Jjnmt4EzejQHyhhF33q31qG8x7maDzkeFhAAThdCYay11CISO+qAMwjOBP+fPZe0IPyg==
 
-sort-package-json@^1.42.2:
+sort-package-json@^1.44.0:
   version "1.44.0"
   resolved "https://registry.yarnpkg.com/sort-package-json/-/sort-package-json-1.44.0.tgz#470330be868f8a524a4607b26f2a0233e93d8b6d"
   integrity sha512-u9GUZvpavUCXV5SbEqXu9FRbsJrYU6WM10r3zA0gymGPufK5X82MblCLh9GW9l46pXKEZvK+FA3eVTqC4oMp4A==
@@ -16459,6 +16466,17 @@ tree-sync@^2.0.0:
     quick-temp "^0.1.5"
     walk-sync "^0.3.3"
 
+tree-sync@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tree-sync/-/tree-sync-2.1.0.tgz#31cbbd41f2936f5390b61e8c9d7cb27e75a212fe"
+  integrity sha512-OLWW+Nd99NOM53aZ8ilT/YpEiOo6mXD3F4/wLbARqybSZ3Jb8IxHK5UGVbZaae0wtXAyQshVV+SeqVBik+Fbmw==
+  dependencies:
+    debug "^4.1.1"
+    fs-tree-diff "^2.0.1"
+    mkdirp "^0.5.5"
+    quick-temp "^0.1.5"
+    walk-sync "^0.3.3"
+
 trim-newlines@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
@@ -16911,10 +16929,10 @@ uuid@^3.0.0, uuid@^3.1.0, uuid@^3.3.2:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^7.0.3:
-  version "7.0.3"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-7.0.3.tgz#c5c9f2c8cf25dc0a372c4df1441c41f5bd0c680b"
-  integrity sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==
+uuid@^8.1.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.0.tgz#ab738085ca22dc9a8c92725e459b1d507df5d6ea"
+  integrity sha512-fX6Z5o4m6XsXBdli9g7DtWgAx+osMsRRZFKma1mIUsLCz6vRvv+pz5VNbyu9UEDzpMWulZfvpgb/cmDXVulYFQ==
 
 uuid@~3.1.0:
   version "3.1.0"
