@@ -129,7 +129,7 @@
     "typescript": "3.9.7"
   },
   "resolutions": {
-    "@types/ember": "3.1.2",
+    "@types/ember": "3.16.0",
     "@types/ember__string": "3.0.8",
     "hawk": "7"
   },
