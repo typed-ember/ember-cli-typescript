@@ -81,7 +81,7 @@
     "co": "4.6.0",
     "commitlint-azure-pipelines-cli": "1.0.3",
     "conventional-changelog-cli": "2.1.0",
-    "ember-cli": "3.21.0",
+    "ember-cli": "3.21.1",
     "ember-cli-addon-docs": "ember-learn/ember-cli-addon-docs#4f5bfd11",
     "ember-cli-addon-docs-esdoc": "0.2.3",
     "ember-cli-app-version": "3.2.0",
