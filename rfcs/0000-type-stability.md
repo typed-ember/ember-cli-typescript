@@ -82,13 +82,29 @@ Accordingly, we must define breaking changes precisely and carefully.
 
 TypeScript ***does not*** adhere to Semantic Versioning, but since it participates in the npm ecosystem, it uses the same format for its version numbers: `<major>.<minor>.<patch>`. In Semantic Versioning, `<major>` would be a breaking change release, `<minor>` would be a backwards-compatible feature-addition release, and `<patch>` would be a “bug fix” release.
 
-TypeScript maintains this final distinction: the `<patch>` position corresponds to bug fix changes released between the time of one `<minor>` release and the next. For example, `3.9.3` is the third patch/bug fix release for TypeScript version 3.9. However, both `<major>` and `<minor>` releases *may* introduce breaking changes of the sort that the npm ecosystem normally reserves for the `<major>` slot in the version number. (Not all `<minor>` *or* `<major>` releases *do* introduce breaking changes in the normal Semantic Versioning sense, but either *may*.) Accordingly, and for simplicity, the Ember ecosystem should treat *all* TypeScript `<major>.<minor>` releases as *potentially* representing breaking changes.
+Both `<major>` and `<minor>` releases *may* introduce breaking changes of the sort that the npm ecosystem normally reserves for the `<major>` slot in the version number. Not all `<minor>` *or* `<major>` releases *do* introduce breaking changes in the normal Semantic Versioning sense, but either *may*. Accordingly, and for simplicity, the Ember ecosystem should treat *all* TypeScript `<major>.<minor>` releases as a major release.
+
+TypeScript's use of patch releases is more in line with the rest of the ecosystem's use of patch versions. The TypeScript Wiki [currently summarizes patch releases][ts-patch-releases] as follows:
+
+> ## What gets done for patch releases?
+> 
+> Patch releases are periodically pushed out for any of the following:
+>
+> - High-priority regression fixes
+> - Performance regression fixes
+> - Safe fixes to the language service/editing experience
+>
+> These fixes are typically weighed against the cost (how hard it would be for the team to retroactively apply/release a change), the risk (how much code is changed, how understandable is the fix), as well as how feasible it would be to wait for the next version.
+
+These three categories of fixes are well within the normally-understood range of fixes that belong in a "bug fix" release in the npm ecosystem. In these cases, a user's code may stop type-checking, but *only* if they were depending on buggy behavior. This matches users' expectations around runtime code: a SemVer patch release to a library which fixes a bug may cause apps or libraries which were depending on that bug to stop working.
 
 By example:
 
 -   `3.9.2` to `3.9.3`: always considered a bug fix
 -   `3.9.3` to `4.0.0`: *may or may not* introduce breaking changes
 -   `3.8.3` to `3.9.0`: *may or may not* introduce breaking changes
+
+[ts-patch-releases]: https://github.com/microsoft/TypeScript/wiki/TypeScript's-Release-Process/e669ab1ad96edc1a7bcef5f6d9e35e24397891e5
 
 ### Defining breaking changes
 
