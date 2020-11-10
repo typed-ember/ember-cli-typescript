@@ -118,7 +118,24 @@ A breaking change to a type definition occurs when—
 
 -   a function (including a class constructor or methods) argument *requires a more specific (“narrower”) type*, for example if it previously accepted `string | number` but now requires `string`—since the user will have to change some calls to the function ([playground][narrower-argument])
 
--   a function (including a class constructor or method) *returns a less specific (“wider”) type*, for example if it previously returned `string` but now returns `string | null`—since the user’s existing handling of the return value will be wrong in some cases ([playground][wider-return])
+-   a function (including a class constructor or method) *returns a less specific (“wider”) type*, for example if it previously returned `string` but now returns `string | null`—since the user’s existing handling of the return value will be wrong in some cases ([playground][wider-return]).
+
+    This includes widening from a *type guard* to a more general check. For example:
+
+    ```diff
+    -function isChris(x: string): x is 'chris' {
+    +function isChris(x: string): boolean {
+      return x === 'chris';
+    }
+    ```
+
+    This change would cause user-land code that expects narrowing to break:
+
+    ```ts
+    if (isChris(name)) {
+      //...
+    }
+    ```
 
 -   a function (including a class constructor or method) adds any new *required* arguments—since all user invocations of the function will now be broken ([playground][new-required-argument])
 
