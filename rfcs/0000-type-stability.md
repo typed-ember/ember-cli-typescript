@@ -147,9 +147,12 @@ A breaking change to a type definition occurs when—
 
 -   a `readonly` object property type becomes a *less specific (“wider”) type*, for example if it was previously `string` but now is `string | string[]`—since the user’s existing handling of the property will be wrong in some cases ([playground][wider-property]—note that the playground uses a class but an interface or type alias would have the same behavior)
 
--   a non-`readonly` object type changes in any way, for example if it was previously `string` but now is `string | number` *or* if it was previously `string | number` but now is `string`—since some of the user’s existing *writes* to the property will now be wrong.
+-   a non-`readonly` object property’s type changes in any way:
 
-    Note that at present, TypeScript cannot actually catch this error. [This playground][writable-property] demonstrates that there is a runtime error but no *type* error. TypeScript’s type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!
+    -   if it was previously `string` but now is `string | number`, some of the user’s existing *reads* of the property will now be wrong ([playground][reads-of-property])
+    -   if it was previously `string | number` but now is `string`, some of the user’s existing *writes* to the property will now be wrong ([playground][writes-to-property])
+
+    Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript’s type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!
 
 [changed-type]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0NigkBqBbJyoAPKY8AjknGZyoMUubIj0OPChLPSMNNK2nPYAFIEE0HqIbJAARlgAlHoAbhrwgeFyDtGx8Ymo5JS0DKgAwviIloGFJaXlldUMdQ12yK3teub0GmW6oF29WKAOg6AjYxNTctm5SFwAdIdkPUqI0WgBGABMAGZ+hM1tANshAgDakDjk1TpCYeEgA
 
@@ -165,7 +168,9 @@ A breaking change to a type definition occurs when—
 
 [wider-property]: https://www.typescriptlang.org/play/#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHnjimAHt8IBPeABxlpZBgBdGAueMm7Z8OANxkAvmTKgkcRNFTwA6llD4QwUhSoga9Jq3ace-QcII54AHwsicAbQC6UmQDMArvjDcs9eAALKHxgCBBkTFwCIgA5WHYAdwAKADciTxABKLxCCABKAXxPAFsAIy4dSjhuTxh8eHSITIA6Ng4uXhbw0W5AiWlZcGgFcO54KGzsXKIJORGEMfgygTUNLQlg0PDI6ZiIeJgk5Kh8zZCwiJz9w+Oys7IgA
 
-[writable-property]: https://www.typescriptlang.org/play/#code/PTAEFpNB3BLATApgO1sg5qARgJ0QQwGsBnCKEAWACg0AXRHAM3wGNFQB1WAG266WSgA3tVBjQ+AFyhitHGnQBuagF9q1Og2ZtQAEQT8Uw0eKky5C0AB9QyAK4BbLA2VU1VaozvIWtWAHtBAAt8ZHhuRGIuXkNkAAoAN3xuO0RpaL4EFABKaXsnBmMqcVA8WjscQSSUxAA6fFqIjFog13dqJBZufDxQCNoYHkyBdKHY1xCwiKixrPi4GLns1w7ELp72ftB4AznpfXhx6knwyIzYuJ3DpZWqEDJwWx6cfzgMCW5if2w8IlJIR6UDw0ZD0JisdgZAByz1eRRKZlk8neNnyzhwbXUILB2nYBxhOBe0HhpjyjnRmOBXh8fkCMHk9GIABV-NDYdBEslUqNeASidkSWJqql6qAALygADkQUQvH8kspq3WvS2C24fNePPV7Nc0AZkRZbMJrziao10GWWM63RViAGV3N+wQ5t1+uZrKG5suzvZlqoQA
+[reads-of-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYfQEwiZAbwFgAoZC5OALmQGcwpQBzAbjIF8yzRJZEUAEWA5c+ImUpVaDJiGbIAPshABXALYAjaO1JdSZGKpAIwwAPYEAFnBA4MEOuixiQACgBucDKoi1n2CL4AJS0alrQEuSUUBBgqlAEXj4QAHRwqQ7yYFa6+mR4CBhwscgOYMgA7piBeCD+Na66NnYOTo1B7tUuncG6BRBFJSjlyDgirrTCop3NtvaOAa5u4zN1fWRAA
+
+[writes-to-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYYHJylAewHdkBvAWAChkbk4AuZAZzClAHNkAfZEAVwC2AI2gBuKgF8qVUJFiIUAEWAATXPmJkqtOo37Cxk6ZRh8QCMMAIhkRNpCYAVAuizrCRABQA3OBj4QjK44eB4AlFrUtL7+EAB0cMgAvMgA5AAWEFgEqeKUUpRUKhAIGHgoGBBgtpghGkRBte7EeXbADs7BzV5ETaHEYXlFJWVQFVXIKqrdjMpq-USt9hBOLn31nlPz9YNUQA
 
 Each of these will trigger a compiler error for consumers, surfacing the error. As such, they should be easily detectable by testing infrastructure (see below under [Tooling: Detect breaking changes in types](#detect-breaking-changes-in-types)).
 
