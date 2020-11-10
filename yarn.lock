@@ -6753,7 +6753,7 @@ ember-cli-babel-plugin-helpers@^1.0.0, ember-cli-babel-plugin-helpers@^1.1.0, em
   resolved "https://registry.yarnpkg.com/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.1.tgz#5016b80cdef37036c4282eef2d863e1d73576879"
   integrity sha512-sKvOiPNHr5F/60NLd7SFzMpYPte/nnGkq/tMIfXejfKHIhaiIkYFqX8Z9UFTKWLLn+V7NOaby6niNPZUdvKCRw==
 
-ember-cli-babel@7.23.0, ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.1.3, ember-cli-babel@^7.1.4, ember-cli-babel@^7.11.0, ember-cli-babel@^7.12.0, ember-cli-babel@^7.18.0, ember-cli-babel@^7.19.0, ember-cli-babel@^7.22.1, ember-cli-babel@^7.7.3:
+ember-cli-babel@7.23.0, ember-cli-babel@^7.0.0, ember-cli-babel@^7.1.0, ember-cli-babel@^7.1.2, ember-cli-babel@^7.1.3, ember-cli-babel@^7.1.4, ember-cli-babel@^7.11.0, ember-cli-babel@^7.12.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.18.0, ember-cli-babel@^7.19.0, ember-cli-babel@^7.22.1, ember-cli-babel@^7.7.3:
   version "7.23.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.23.0.tgz#ec580aa2c115d0810e454dd5c2fffce238284b92"
   integrity sha512-ix58DlRDAbGITtdJoRUPcAoQwKLYr/x/kIXjU9u1ATyhmuUjqb+0FDXghOWbkNihGiNOqBBR49+LBgK9AeBcNw==
@@ -7494,12 +7494,12 @@ ember-keyboard@^4.0.0:
     babel-plugin-transform-object-rest-spread "^6.26.0"
     ember-cli-babel "^6.6.0"
 
-ember-load-initializers@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-2.1.1.tgz#d1a8bead00bc44222b0ab181840869992beb30f5"
-  integrity sha512-Ho5sBeaZPN3HmZkYkcLrjSBF3DTNmzC5h0DizzDj8cjpnCvaqeofphJDnH41k6kLv/QHMk4pMRISPcwc+bOceQ==
+ember-load-initializers@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-2.1.2.tgz#8a47a656c1f64f9b10cecdb4e22a9d52ad9c7efa"
+  integrity sha512-CYR+U/wRxLbrfYN3dh+0Tb6mFaxJKfdyz+wNql6cqTrA0BBi9k6J3AaKXj273TqvEpyyXegQFFkZEiuZdYtgJw==
   dependencies:
-    ember-cli-babel "^7.11.0"
+    ember-cli-babel "^7.13.0"
     ember-cli-typescript "^2.0.2"
 
 ember-maybe-import-regenerator@0.1.6, ember-maybe-import-regenerator@^0.1.6:
@@ -7607,10 +7607,10 @@ ember-source-channel-url@^2.0.1:
   dependencies:
     got "^8.0.1"
 
-ember-source@3.22.0:
-  version "3.22.0"
-  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.22.0.tgz#aa09db2cc8e4f78de4bf9a12ce9ff499d416adc2"
-  integrity sha512-6F/fWA5et4AMFXm+siCIhpM2XrO8Emwqln71qK67JyUhvD3MJJtvwtBoKq7bzK9I/86LLw13JYm4o6T3d2gXBw==
+ember-source@3.22.1:
+  version "3.22.1"
+  resolved "https://registry.yarnpkg.com/ember-source/-/ember-source-3.22.1.tgz#41ab15534f3936454321698d176fc28221f27b90"
+  integrity sha512-wcevt5CIOQFOv69Cd/EfoyK7+w2PirBJt5ZoTLnVqYliJWktTbF6T2awz6IABNT/Lm+WrDOCEWGtykbQ2k0Kdg==
   dependencies:
     "@babel/helper-module-imports" "^7.8.3"
     "@babel/plugin-transform-block-scoping" "^7.8.3"
