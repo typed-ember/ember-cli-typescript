@@ -10,6 +10,9 @@ import TypecheckMiddleware from './lib/typechecking/middleware';
 import { Application } from 'express';
 import walkSync from 'walk-sync';
 import fs from 'fs-extra';
+import logger from 'debug';
+
+const debug = logger('ember-cli-typescript:addon');
 
 export const ADDON_NAME = 'ember-cli-typescript';
 
@@ -45,12 +48,22 @@ export default addon({
     return `${__dirname}/blueprints`;
   },
 
-  serverMiddleware({ app }) {
-    this._addTypecheckMiddleware(app);
+  serverMiddleware({ app, options }) {
+    if (!options || !options.path) {
+      debug('Installing typecheck server middleware');
+      this._addTypecheckMiddleware(app);
+    } else {
+      debug('Skipping typecheck server middleware');
+    }
   },
 
-  testemMiddleware(app) {
-    this._addTypecheckMiddleware(app);
+  testemMiddleware(app, options) {
+    if (!options || !options.path) {
+      debug('Installing typecheck testem middleware');
+      this._addTypecheckMiddleware(app);
+    } else {
+      debug('Skipping typecheck testem middleware');
+    }
   },
 
   async postBuild() {

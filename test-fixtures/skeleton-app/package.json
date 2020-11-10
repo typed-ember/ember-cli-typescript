@@ -5,6 +5,7 @@
     "ember-cli-htmlbars": "*",
     "ember-cli-babel": "*",
     "ember-source": "*",
+    "ember-qunit": "*",
     "loader.js": "*",
     "typescript": "*"
   },
