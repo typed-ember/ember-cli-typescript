@@ -108,7 +108,11 @@ By example:
 
 ### Defining breaking changes
 
-When making a change to the types of the public interface, it is subject to the same constraints as runtime code: *breaking the published types entails a breaking change.* Not all changes to published types are *breaking*, however: some changes will continue to allow user code to continue working without any issue. Thus, a *breaking* change to types is a change where previously-allowed code will stop type-checking.
+When making a change to the types of the public interface, it is subject to the same constraints as runtime code: *breaking the published types entails a breaking change.* Not all changes to published types are *breaking*, however: some changes will continue to allow user code to continue working without any issue. However, it is impossible to define the difference between breaking and non-breaking changes purely in the abstract.
+
+Instead, we must define exactly what changes are “backwards-compatible” and which are “breaking,” and we must further define what constitutes a legitimate “bug fix” for type definitions designed to represent runtime behavior.
+
+We propose the following specific definitions of breaking, non-breaking, and bug-fix changes for types in the Ember community. Because types are designed to represent runtime behavior, we assume throughout that these changes *do* in fact correctly represent changes to runtime behavior, and that changes which *incorrectly* represent runtime behavior are *bugs*.
 
 #### Breaking changes to type definitions
 
