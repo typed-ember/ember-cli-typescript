@@ -8,7 +8,7 @@ This RFC proposes a set of guidelines and tooling recommendations for managing c
 
 This RFC does *not* attempt to solve—
 
-- the problem of stability for ambient types (e.g. from `@types`/DefinitelyTyped)
+- the problem of stability for ambient types distributed separately from the package they represent (e.g. from DefinitelyTyped in the `@types` namespace)
 - performance regression analysis
 
 These concerns will be addressed in future RFCs.
