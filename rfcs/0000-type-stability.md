@@ -86,8 +86,6 @@ Both `<major>` and `<minor>` releases *may* introduce breaking changes of the so
 
 TypeScript's use of patch releases is more in line with the rest of the ecosystem's use of patch versions. The TypeScript Wiki [currently summarizes patch releases][ts-patch-releases] as follows:
 
-> ## What gets done for patch releases?
-> 
 > Patch releases are periodically pushed out for any of the following:
 >
 > - High-priority regression fixes
