@@ -1,5 +1,5 @@
 - Start Date: 2020-06-03
-- RFC PR: (after opening the RFC PR, update this with a link to it and update the file name)
+- RFC PR: [#1158](https://github.com/typed-ember/ember-cli-typescript/pull/1158)
 - Tracking: (leave this empty)
 
 # RFC: Defining Semantic Versioning for Published Addon Types
