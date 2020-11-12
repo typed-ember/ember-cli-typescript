@@ -157,6 +157,34 @@ A breaking change to a type definition occurs when—
 
         (Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript’s type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!)
 
+-   changing the name of an exported type (`interface`, `type` alias, or `class`) changes, since users’ existing imports will need to be updated
+
+-   removing an exported symbol, since users’ existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing `interface` or `type` alias type exports, or removing TypeScript’s `namespace` value declaration, are breaking as well.
+
+    This includes changing a previously type-and-value export such as `export class` to either—
+    
+    -   a type-only export, since the export in the value namespace has been removed:
+
+        ```diff
+        -export class Foo {
+        +class Foo {
+          neato: string;
+        }
+        +
+        +export type { Foo };
+        ```
+    
+    -   a value-only export, since the export in the type namespace has been removed:
+
+        ```diff
+        -export class Foo {
+        +class _Foo {
+          neato: string;
+        }
+        +
+        +export let Foo: typeof _Foo;
+        ```
+
 [changed-type]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0NigkBqBbJyoAPKY8AjknGZyoMUubIj0OPChLPSMNNK2nPYAFIEE0HqIbJAARlgAlHoAbhrwgeFyDtGx8Ymo5JS0DKgAwviIloGFJaXlldUMdQ12yK3teub0GmW6oF29WKAOg6AjYxNTctm5SFwAdIdkPUqI0WgBGABMAGZ+hM1tANshAgDakDjk1TpCYeEgA
 
 [narrower-argument]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0Nig5JS0DKgA8pjwCOScZnKgRS5siPQ48KEs9Iw00rac9gAUgQTQesLZiLCgAD7JbJAARlgAlHoAbhrwgeFyDtGx8YmoKdR0jKAA6jOSyIEFxSVlFVUMtfV2yC1tHThdsOOgUzNzCwpgQlig9BqxclkckguAA6c7IOpUBrNACMACYAMyjOaA3Kg8GQ6HXTwYbgaTzIuQ7WIoQJgmoQy6Na7wpFzYl7MkYqnNHHIPEE8JAA
