@@ -159,7 +159,7 @@ A breaking change to a type definition occurs when—
 
 -   changing the name of an exported type (`interface`, `type` alias, or `class`) changes, since users' existing imports will need to be updated
 
--   removing an exported symbol, since users' existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing `interface` or `type` alias type exports, or removing TypeScript's `namespace` value declaration, are breaking as well
+-   removing an exported symbol, since users' existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing `interface` or `type` alias type exports, or removing TypeScript's `namespace` value declaration, are breaking as well.
 
     This includes changing a previously type-and-value export such as `export class` to either—
     
