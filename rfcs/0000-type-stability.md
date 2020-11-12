@@ -179,9 +179,9 @@ Each of these will trigger a compiler error for consumers, surfacing the error. 
 
 There are several reasons why breaking changes may occur:
 
--   The author of the addon may choose to change the API for whatever reason. This is no different than the situation today for addons which do not support TypeScript.
+-   The author of the addon may choose to change the API for whatever reason. This is no different than the situation today for addons which do not support TypeScript. This would be a major version independent of types.
 
--   The author of the addon may need to make changes to adapt to changes in Ember, for example to support Octane idioms. This is likewise identical with the situation for addons which do not support TypeScript.
+-   The author of the addon may need to make changes to adapt to changes in Ember, for example to support Octane idioms. This is likewise identical with the situation for addons which do not support TypeScript: it would require a major version regardless.
 
 -   Adopting a new version of TypeScript may change the meaning of existing types. For example, in TypeScript 3.5, generic types without a specified default type changed their default value from `{}` to `unknown`. This improved type safety, but [broke many existing types][3.5-breakage], including the internal types for Glimmer and Ember.
 
