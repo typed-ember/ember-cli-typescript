@@ -214,7 +214,25 @@ In each of these cases, some user code becomes *superfluous*, but it neither fai
 
 #### Bug fixes to type definitions
 
-As with runtime code, types may have bugs. Addon authors may find cases where previously-allowed code was allowed *incorrectly*. For example, a type may have been `any` accidentally, allowing users to instantiate classes or call functions or methods incorrectly. In these cases, the incorrect types will correspond to incorrect runtime behavior! Just as with bug fixes for runtime code, addon authors may publish fixes to *types* in patch releases.
+As with runtime code, types may have bugs. We define a ‘bug’ here as a mismatch between types and runtime code. That is: if the types allow code which will cause a runtime type error, or if they forbid code which is allowed at runtime, the types are buggy. Types may be buggy by being inappropriately *wider* or *narrower* than runtime. For example:
+
+-   If a function is typed as accepting `any` but actually requires a `string`, this will cause an error at runtime, and is a bug.
+
+-   If a function is typed as returning `string | number` but always returns `string`, this is a bug. It will not cause an error at runtime, since consumers must “narrow” the type to use it, and narrowing the type would not even be a breaking change. However, the type is incorrect, and it *will* require end users to do unnecessary work.
+
+-   If an interface is defined as having a property which is *not* part of the public API of the runtime object, or if an interface is defined as *missing* a a property which the public API of the runtime object does have, this is a bug.
+
+(This list is illustrative, not exhaustive.)
+
+As with runtime bugs, authors are free to fix type bugs in a patch release. As with runtime code, this may break consumers who were relying on the buggy behavior. However, as with runtime bugs, this is well-understood to be part of the sociotechnical contract of semantic versioning.
+
+In practice, this suggests two key considerations around type bugs:
+
+1.  It is essential that types be well-tested! See discussion below under [**Tooling**](#tooling).
+
+2.  If a given types bug has existed for long enough, an author may choose to treat it as [“intimate API”][intimate] and change the *runtime* behavior to match the types rather than vice versa.
+
+[intimate]: https://twitter.com/wycats/status/918644693759488005
 
 #### Dropping support for previously-supported versions
 
