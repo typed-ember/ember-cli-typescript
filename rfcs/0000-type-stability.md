@@ -18,7 +18,7 @@ While the detailed recommendations here are specific to the Ember ecosystem, we 
 <!-- omit in toc -->
 ## Summary
 
-Introduce an addon-focused policy for supported versions of TypeScript which is well-aligned with Ember’s SemVer and LTS commitments and design workflows to support that policy, so that consumers of Ember addons which publish types are insulated from breaking changes in TypeScript to the degree possible, and able to manage them appropriately otherwise.
+Introduce an addon-focused policy for supported versions of TypeScript which is well-aligned with Ember's SemVer and LTS commitments and design workflows to support that policy, so that consumers of Ember addons which publish types are insulated from breaking changes in TypeScript to the degree possible, and able to manage them appropriately otherwise.
 
 - [Motivation](#motivation)
 - [Detailed design](#detailed-design)
@@ -32,7 +32,7 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
         - [Detect breaking changes in types](#detect-breaking-changes-in-types)
         - [Mitigate breaking changes](#mitigate-breaking-changes)
             - [Updating types to maintain compatibility](#updating-types-to-maintain-compatibility)
-            - [“Downleveling” types](#downleveling-types)
+            - ["Downleveling" types](#downleveling-types)
             - [Opt-in future types](#opt-in-future-types)
                 - [Example: TypeScript 3.5 mitigation](#example-typescript-35-mitigation)
     - [Policy for supported TypeScript versions](#policy-for-supported-typescript-versions)
@@ -44,7 +44,7 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
 - [Drawbacks](#drawbacks)
 - [Alternatives](#alternatives)
     - [No policy](#no-policy)
-    - [Decouple TypeScript support from Ember’s LTS cycle](#decouple-typescript-support-from-embers-lts-cycle)
+    - [Decouple TypeScript support from Ember's LTS cycle](#decouple-typescript-support-from-embers-lts-cycle)
     - [Use an alternative to `downlevel-dts`](#use-an-alternative-to-downlevel-dts)
 - [Unresolved questions](#unresolved-questions)
 - [Appendix: Core Addons and Ember CLI](#appendix-core-addons-and-ember-cli)
@@ -54,7 +54,7 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
 
 ## Motivation
 
-Ember and TypeScript have fundamentally different views on Semantic Versioning (SemVer). Ember has a deep commitment to minimizing breaking changes in general, and to strictly following SemVer when breaking changes *are* made. TypeScript explicitly *does not* follow SemVer [[see note 1](#notes)]. Every point release may be a breaking change, and “major” numbers for releases signify nothing beyond having reached `x.9` in the previous cycle. (At the time of drafting, the current latest TypeScript is 3.9; the next version will be 4.0.)
+Ember and TypeScript have fundamentally different views on Semantic Versioning (SemVer). Ember has a deep commitment to minimizing breaking changes in general, and to strictly following SemVer when breaking changes *are* made. TypeScript explicitly *does not* follow SemVer [[see note 1](#notes)]. Every point release may be a breaking change, and "major" numbers for releases signify nothing beyond having reached `x.9` in the previous cycle. (At the time of drafting, the current latest TypeScript is 3.9; the next version will be 4.0.)
 
 For TypeScript to be a first-class citizen of the Ember ecosystem, we need:
 
@@ -62,7 +62,7 @@ For TypeScript to be a first-class citizen of the Ember ecosystem, we need:
 -   tooling to detect breaking changes in types—whether from refactors, or from new TypeScript releases—and to minimize the amount of churn from breaking changes in TypeScript
 -   a general and widely-adopted policy for supported TypeScript versions
 
-Once all three of those elements are adopted, end users will be able to have equally high confidence in the stability of addons’ published types as they do in their runtime code.
+Once all three of those elements are adopted, end users will be able to have equally high confidence in the stability of addons' published types as they do in their runtime code.
 
 This RFC ***should not*** be understood to propose *anything* about the core Ember addons (Ember and Ember Data) or Ember CLI: that would need to flow through the normal Ember RFC process. However, these same tools and patterns are necessary for core tools and libraries to begin publishing types, and this same strategy could be applied successfully there with minor modification. See [<b>Appendix: Core Addons and CLI</b>](#appendix-core-addons-and-ember-cli) for an overview of some possible future directions.
 
@@ -80,7 +80,7 @@ Accordingly, we must define breaking changes precisely and carefully.
 
 ### Background: TypeScript and Semantic Versioning
 
-TypeScript ***does not*** adhere to Semantic Versioning, but since it participates in the npm ecosystem, it uses the same format for its version numbers: `<major>.<minor>.<patch>`. In Semantic Versioning, `<major>` would be a breaking change release, `<minor>` would be a backwards-compatible feature-addition release, and `<patch>` would be a “bug fix” release.
+TypeScript ***does not*** adhere to Semantic Versioning, but since it participates in the npm ecosystem, it uses the same format for its version numbers: `<major>.<minor>.<patch>`. In Semantic Versioning, `<major>` would be a breaking change release, `<minor>` would be a backwards-compatible feature-addition release, and `<patch>` would be a "bug fix" release.
 
 Both `<major>` and `<minor>` releases *may* introduce breaking changes of the sort that the npm ecosystem normally reserves for the `<major>` slot in the version number. Not all `<minor>` *or* `<major>` releases *do* introduce breaking changes in the normal Semantic Versioning sense, but either *may*. Accordingly, and for simplicity, the Ember ecosystem should treat *all* TypeScript `<major>.<minor>` releases as a major release.
 
@@ -108,7 +108,7 @@ By example:
 
 When making a change to the types of the public interface, it is subject to the same constraints as runtime code: *breaking the published types entails a breaking change.* Not all changes to published types are *breaking*, however: some changes will continue to allow user code to continue working without any issue. However, it is impossible to define the difference between breaking and non-breaking changes purely in the abstract.
 
-Instead, we must define exactly what changes are “backwards-compatible” and which are “breaking,” and we must further define what constitutes a legitimate “bug fix” for type definitions designed to represent runtime behavior.
+Instead, we must define exactly what changes are "backwards-compatible" and which are "breaking," and we must further define what constitutes a legitimate "bug fix" for type definitions designed to represent runtime behavior.
 
 We propose the following specific definitions of breaking, non-breaking, and bug-fix changes for types in the Ember community. Because types are designed to represent runtime behavior, we assume throughout that these changes *do* in fact correctly represent changes to runtime behavior, and that changes which *incorrectly* represent runtime behavior are *bugs*.
 
@@ -118,9 +118,9 @@ A breaking change to a type definition occurs when—
 
 -   the type changes entirely, for example if a function previously accepted `number` and now accepts `{ count: number }`—since the user will have to change all calls to the function ([playground][changed-type])
 
--   a function (including a class constructor or methods) argument *requires a more specific (“narrower”) type*, for example if it previously accepted `string | number` but now requires `string`—since the user will have to change some calls to the function ([playground][narrower-argument])
+-   a function (including a class constructor or methods) argument *requires a more specific ("narrower") type*, for example if it previously accepted `string | number` but now requires `string`—since the user will have to change some calls to the function ([playground][narrower-argument])
 
--   a function (including a class constructor or method) *returns a less specific (“wider”) type*, for example if it previously returned `string` but now returns `string | null`—since the user’s existing handling of the return value will be wrong in some cases ([playground][wider-return]).
+-   a function (including a class constructor or method) *returns a less specific ("wider") type*, for example if it previously returned `string` but now returns `string | null`—since the user's existing handling of the return value will be wrong in some cases ([playground][wider-return]).
 
     This includes widening from a *type guard* to a more general check. For example:
 
@@ -147,19 +147,19 @@ A breaking change to a type definition occurs when—
 
     -   if the argument was optional, any invocations which used it will fail to type-check ([playground][remove-optional-argument])
 
--   a `readonly` object property type becomes a *less specific (“wider”) type*, for example if it was previously `string` but now is `string | string[]`—since the user’s existing handling of the property will be wrong in some cases ([playground][wider-property]—note that the playground uses a class but an interface or type alias would have the same behavior)
+-   a `readonly` object property type becomes a *less specific ("wider") type*, for example if it was previously `string` but now is `string | string[]`—since the user's existing handling of the property will be wrong in some cases ([playground][wider-property]—note that the playground uses a class but an interface or type alias would have the same behavior)
 
--   a non-`readonly` object property’s type changes in any way:
+-   a non-`readonly` object property's type changes in any way:
 
-    -   if it was previously `string` but now is `string | number`, some of the user’s existing *reads* of the property will now be wrong ([playground][reads-of-property])
+    -   if it was previously `string` but now is `string | number`, some of the user's existing *reads* of the property will now be wrong ([playground][reads-of-property])
 
-    -   if it was previously `string | number` but now is `string`, some of the user’s existing *writes* to the property will now be wrong ([playground][writes-to-property])
+    -   if it was previously `string | number` but now is `string`, some of the user's existing *writes* to the property will now be wrong ([playground][writes-to-property])
 
-        (Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript’s type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!)
+        (Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!)
 
--   changing the name of an exported type (`interface`, `type` alias, or `class`) changes, since users’ existing imports will need to be updated
+-   changing the name of an exported type (`interface`, `type` alias, or `class`) changes, since users' existing imports will need to be updated
 
--   removing an exported symbol, since users’ existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing `interface` or `type` alias type exports, or removing TypeScript’s `namespace` value declaration, are breaking as well.
+-   removing an exported symbol, since users' existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing `interface` or `type` alias type exports, or removing TypeScript's `namespace` value declaration, are breaking as well.
 
     This includes changing a previously type-and-value export such as `export class` to either—
     
@@ -222,13 +222,13 @@ There are several reasons why breaking changes may occur:
 
 The following are *not* breaking changes:
 
--   a function (including a class method or constructor) *accepts a less specific (“wider”) type*, for example if it previously accepted only a `boolean` but now accepts `boolean | undefined`—since all existing user code will continue working and type-checking ([playground][wider-argument])
+-   a function (including a class method or constructor) *accepts a less specific ("wider") type*, for example if it previously accepted only a `boolean` but now accepts `boolean | undefined`—since all existing user code will continue working and type-checking ([playground][wider-argument])
 
--   a function (including a class method) which *returns a more specific (“narrower”) type*, for example if it previously returned `number | undefined` and now always returns `number`—since all user code will continue working and type-checking ([playground][narrower-return])
+-   a function (including a class method) which *returns a more specific ("narrower") type*, for example if it previously returned `number | undefined` and now always returns `number`—since all user code will continue working and type-checking ([playground][narrower-return])
 
 -   a function (including a class constructor or method) makes a previously-required argument optional—since all existing user code will continue to work with it ([playground][optional-argument])
 
--   a `readonly` object property becomes a *more specific (“narrower”) type*, for example if it was previously `string | string[]` and now is always `string[]`—since all user code will continue working and type-checking ([playground][narrower-property])
+-   a `readonly` object property becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]`—since all user code will continue working and type-checking ([playground][narrower-property])
 
 In each of these cases, some user code becomes *superfluous*, but it neither fails to type-check nor causes any runtime errors.
 
@@ -242,11 +242,11 @@ In each of these cases, some user code becomes *superfluous*, but it neither fai
 
 #### Bug fixes to type definitions
 
-As with runtime code, types may have bugs. We define a ‘bug’ here as a mismatch between types and runtime code. That is: if the types allow code which will cause a runtime type error, or if they forbid code which is allowed at runtime, the types are buggy. Types may be buggy by being inappropriately *wider* or *narrower* than runtime. For example:
+As with runtime code, types may have bugs. We define a ‘bug' here as a mismatch between types and runtime code. That is: if the types allow code which will cause a runtime type error, or if they forbid code which is allowed at runtime, the types are buggy. Types may be buggy by being inappropriately *wider* or *narrower* than runtime. For example:
 
 -   If a function is typed as accepting `any` but actually requires a `string`, this will cause an error at runtime, and is a bug.
 
--   If a function is typed as returning `string | number` but always returns `string`, this is a bug. It will not cause an error at runtime, since consumers must “narrow” the type to use it, and narrowing the type would not even be a breaking change. However, the type is incorrect, and it *will* require end users to do unnecessary work.
+-   If a function is typed as returning `string | number` but always returns `string`, this is a bug. It will not cause an error at runtime, since consumers must "narrow" the type to use it, and narrowing the type would not even be a breaking change. However, the type is incorrect, and it *will* require end users to do unnecessary work.
 
 -   If an interface is defined as having a property which is *not* part of the public API of the runtime object, or if an interface is defined as *missing* a a property which the public API of the runtime object does have, this is a bug.
 
@@ -258,13 +258,13 @@ In practice, this suggests two key considerations around type bugs:
 
 1.  It is essential that types be well-tested! See discussion below under [**Tooling**](#tooling).
 
-2.  If a given types bug has existed for long enough, an author may choose to treat it as [“intimate API”][intimate] and change the *runtime* behavior to match the types rather than vice versa.
+2.  If a given types bug has existed for long enough, an author may choose to treat it as ["intimate API"][intimate] and change the *runtime* behavior to match the types rather than vice versa.
 
 [intimate]: https://twitter.com/wycats/status/918644693759488005
 
 #### Dropping support for previously-supported versions
 
-Additionally, once a TypeScript version has been added to an addon’s list of supported versions, dropping it constitutes a breaking change, because it has the same kind of impact on users of the addon as dropping support for a version of Ember, Ember CLI, or Node. Whatever the reason for dropping a previously-supported TypeScript release, addons should publish a new major version.
+Additionally, once a TypeScript version has been added to an addon's list of supported versions, dropping it constitutes a breaking change, because it has the same kind of impact on users of the addon as dropping support for a version of Ember, Ember CLI, or Node. Whatever the reason for dropping a previously-supported TypeScript release, addons should publish a new major version.
 
 ### Tooling
 
@@ -274,9 +274,9 @@ To successfully use TypeScript, we need to be able to *detect* breaking changes 
 
 As with runtime code, it is essential to prevent unintentional changes to the API of types supplied by an addon. We can accomplish this using *type tests*: tests which assert that the types exposed by the public API of the addon are stable.
 
-Addon authors publishing types should add [the `expect-type` library][expect-type] library and generate a set of tests corresponding to their public API. These tests should be put in the `types` folder configured by `ember-cli-typescript`’s default generator. If the API surface is small, a single file may be sufficient. For example, `ember-modifier` has `types/ember-modifier-test.ts`. In more complicated packages, addon authors may choose to break the tests down to mirror the structure of the addon’s API—for example, by dedicated test files for each helper, modifier, service, component, or utility class or function exported from the addon.
+Addon authors publishing types should add [the `expect-type` library][expect-type] library and generate a set of tests corresponding to their public API. These tests should be put in the `types` folder configured by `ember-cli-typescript`'s default generator. If the API surface is small, a single file may be sufficient. For example, `ember-modifier` has `types/ember-modifier-test.ts`. In more complicated packages, addon authors may choose to break the tests down to mirror the structure of the addon's API—for example, by dedicated test files for each helper, modifier, service, component, or utility class or function exported from the addon.
 
-These type tests should be specific and precise. It is important, for example, to guarantee that an API element never *accidentally* becomes `any`, thereby making many things allowable which should not be in the case of function arguments, and “infecting” the caller’s code by eliminating type safety on the result in the case of function return values. The `expect-type` library’s `.toEqualTypeOf` assertion is robust against precisely this scenario; addon authors are also encouraged to use its `.not` modifier and `.toBeAny()` method where appropriate to prevent this failure mode.
+These type tests should be specific and precise. It is important, for example, to guarantee that an API element never *accidentally* becomes `any`, thereby making many things allowable which should not be in the case of function arguments, and "infecting" the caller's code by eliminating type safety on the result in the case of function return values. The `expect-type` library's `.toEqualTypeOf` assertion is robust against precisely this scenario; addon authors are also encouraged to use its `.not` modifier and `.toBeAny()` method where appropriate to prevent this failure mode.
 
 This has no impact on runtime code: the `types` directory is not used for generating builds. However, to be safe, these tests should *never* export any code. They should import the public API they are testing and `expectTypeOf` and any test helpers, and nothing else. Actually executing the test then consists of running `tsc --noEmit`.
 
@@ -300,7 +300,7 @@ There are two tools and two techniques by which we can minimize churn in the eco
 
 Sometimes, it is possible when TypeScript makes a breaking change to update the types so they are backwards compatible, without impacting consumers at all. For example, [TypeScript 3.5][3.5-breakage] changed the default resolution of an otherwise-unspecified generic type from the empty object `{}` to `unknown`. This change was an improvement in the robustness of the type system, but it meant that any code which happened to rely on the previous behavior broke.
 
-This example from [Google’s writeup on the TS 3.5 changes][3.5-breakage] illustrates the point. Given this function:
+This example from [Google's writeup on the TS 3.5 changes][3.5-breakage] illustrates the point. Given this function:
 
 ```ts
 function dontCarePromise() {
@@ -339,7 +339,7 @@ Later, the default type argument `Promise<{}>` could be dropped and defaulted to
 [3.5-breakage-plaground]: https://www.typescriptlang.org/play/?ts=3.5.1&ssl=1&ssc=27&pln=1&pc=40#code/GYVwdgxgLglg9mABAEwVAwgQwE4FMAK2cAtjAM64AUAlIgN4CwAUIonlCNkmLgO6KES5KpTxk4AGwBuuWgF4AfPWatWYyTJoBuFYgC+1HUz3NmEBGSiJiAT0GkKALgFEHuADx09SuSjRY8e2FtIA
 [3.5-mitigation-playground]: https://www.typescriptlang.org/play/?ts=3.5.1#code/GYVwdgxgLglg9mABAEwVAwgQwE4FMAK2cAtjAM64AUAlAFyKEnm4A8A3gL4B8ibAsAChEiPFBDYkYXAHcGRUhUqU8ZOABsAbrmqIAvD35DhI3Ks1VqAbkHCOVwR0GCICMlETEAnowW56P5nZuPRQ0LDwAxSsgA
 
-##### “Downleveling” types
+##### "Downleveling" types
 
 When a new version of TypeScript results in backwards-incompatible *emit* to to the type definitions, as they did in [3.7][3.7-emit-change], the strategy of changing the types directly will not work. However, it is still possible to provide backwards-compatible types, using the combination of [downlevel-dts] and [typesVersions]. (In some cases, this may also require some manual tweaking of types, but this should be rare for most addons.)
 
@@ -363,7 +363,7 @@ The recommended flow will be as follows:[[see note 2](#notes)]
     yarn add --dev downlevel-dts npm-run-all rimraf
     ```
 
-2.  Update the `scripts` key in `package.json`  to generate downleveled types generated by running `downlevel-dts` on the output of `ember-cli-typescript`’s  `ts:precompile` command, and to clean up the results after publication:
+2.  Update the `scripts` key in `package.json`  to generate downleveled types generated by running `downlevel-dts` on the output of `ember-cli-typescript`'s  `ts:precompile` command, and to clean up the results after publication:
 
     ```diff
     {
@@ -453,7 +453,7 @@ This approach is a variant on [**Updating types to maintain compatibility**](#up
 
     -   Inform users about the incoming breaking change.
 
-    -   Tell users to add `import 'fancy-addon/ts3.5';` to the top of their app's `types/my-app.d.ts` or `types/my-addon.d.ts` file (which is generated by `ember-cli-typescript`’s post-install blueprint).
+    -   Tell users to add `import 'fancy-addon/ts3.5';` to the top of their app's `types/my-app.d.ts` or `types/my-addon.d.ts` file (which is generated by `ember-cli-typescript`'s post-install blueprint).
 
 9.  At a later point, cut a breaking change which opts into the TypeScript 3.5 behavior.
 
@@ -482,11 +482,11 @@ Some TypeScript releases have bugs which last throughout the life of the release
 
 Addon authors should *prefer* to follow guidance from the Typed Ember team about supported TypeScript versions. Addon authors *may* opt into supporting non-recommended versions, but the Typed Ember team will not commit to helping support TypeScript issues and bugs for addons which do so. (See [<b>Documenting supported versions</b>](#documenting-supported-versions) below.)
 
-Adding a new supported version does *not* require an addon to create a new release, though it should be added to addons’ test suites and their  documentation about supported versions.
+Adding a new supported version does *not* require an addon to create a new release, though it should be added to addons' test suites and their  documentation about supported versions.
 
 #### Dropping TypeScript versions
 
-As discussed above in [Changes to types: Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions), dropping support for previously-supported versions of TypeScript is always a breaking change and therefore requires releasing a major version. Given the constraints of Ember CLI’s version resolution today (where only one major version will be resolved successfully), addon authors should prefer to drop older supported TypeScript versions relatively infrequently. Optimally, addon authors should drop TypeScript versions at the same time as they are already making *other* breaking changes of a similar sort, like dropping support for Node or Ember versions when their LTS period ends.
+As discussed above in [Changes to types: Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions), dropping support for previously-supported versions of TypeScript is always a breaking change and therefore requires releasing a major version. Given the constraints of Ember CLI's version resolution today (where only one major version will be resolved successfully), addon authors should prefer to drop older supported TypeScript versions relatively infrequently. Optimally, addon authors should drop TypeScript versions at the same time as they are already making *other* breaking changes of a similar sort, like dropping support for Node or Ember versions when their LTS period ends.
 
 #### Documenting supported versions
 
@@ -515,8 +515,8 @@ These should be explained in a new section of the ember-cli-typescript docs dedi
 
 -   writing type tests
 -   configuring `ember-try` to verify the type tests
--   making the addon’s semantic versioning commitments clear by linking to a tagged version of Typed Ember’s `SEMVER.md`, and how to describe any modifications from that policy
--   publicizing the addon’s supported versions of TypeScript
+-   making the addon's semantic versioning commitments clear by linking to a tagged version of Typed Ember's `SEMVER.md`, and how to describe any modifications from that policy
+-   publicizing the addon's supported versions of TypeScript
 -   the currently-recommended versions of TypeScript, along with a standard badge
 
 Finally, Typed Ember will publish a new document in its own repo: `SEMVER.md`, tagged so it can be referenced by direct stable link from addon repositories—with the same set of rules as documented in this document.
@@ -545,21 +545,21 @@ However, there are three major problems with this approach.
 
 [ember-modifier]: https://github.com/ember-modifier/ember-modifier
 
-### Decouple TypeScript support from Ember’s LTS cycle
+### Decouple TypeScript support from Ember's LTS cycle
 
-This is a perfectly reasonable decision, and in fact some addons may choose to take it. However, it comes with the previously mentioned challenges when multiple major versions of an addon exist in the Ember ecosystem. While a strategy for resolving those challenges at the ecosystem level would be nice, it is far beyond the scope of *this* RFC and indeed is beyond Typed Ember’s purview.
+This is a perfectly reasonable decision, and in fact some addons may choose to take it. However, it comes with the previously mentioned challenges when multiple major versions of an addon exist in the Ember ecosystem. While a strategy for resolving those challenges at the ecosystem level would be nice, it is far beyond the scope of *this* RFC and indeed is beyond Typed Ember's purview.
 
 ### Use an alternative to `downlevel-dts`
 
-As noted above in [<b>“Downleveling” types</b>](#downleveling-types), `downlevel-dts` currently only generates types for TypeScript 3.4, with no ability to generate targeted types. As such, there are two other approaches we might take to 
+As noted above in [<b>"Downleveling" types</b>](#downleveling-types), `downlevel-dts` currently only generates types for TypeScript 3.4, with no ability to generate targeted types. As such, there are two other approaches we might take to 
 
-1.  **Build our own tool.** While this is probably doable—`downlevel-dts` is not especially large or complicated—it is additional maintenance burden, and is not aligned with the TypeScript team’s own efforts. It is, as such, not *preferable*. However, if the TypeScript team is unwilling to maintain a more granular tool, this may be appropriate, and it would likely see wide uptake across the broader TypeScript ecosystem, as its utility is obvious.
+1.  **Build our own tool.** While this is probably doable—`downlevel-dts` is not especially large or complicated—it is additional maintenance burden, and is not aligned with the TypeScript team's own efforts. It is, as such, not *preferable*. However, if the TypeScript team is unwilling to maintain a more granular tool, this may be appropriate, and it would likely see wide uptake across the broader TypeScript ecosystem, as its utility is obvious.
 
 2.  **Manually generate downleveled types.** This is possible, but very difficult: it requires addon authors to deeply understand the semantics of changes between TypeScript versions, rather than simply allowing a tool to manage it automatically. In practice, we expect that addon authors would choose *not* to downlevel their types because of the complexity involved, and instead either to just wait to adopt *new* TypeScript versions for a longer period of time or to drop support for *older* versions much more rapidly than this RFC proposes, with all the attendant downsides of either.
 
 ## Unresolved questions
 
--   Is the recommended version support policy appropriate? There are other options available, like Typed Ember’s current commitment to support the latest two (<i>N−1</i>) versions in the types. (In practice, we did not bump most of the Ember types’ minimum version from TypeScript 2.8 until the release of TypeScript 3.9, at which time we bumped minimum supported TypeScript version to 3.7.)
+-   Is the recommended version support policy appropriate? There are other options available, like Typed Ember's current commitment to support the latest two (<i>N−1</i>) versions in the types. (In practice, we did not bump most of the Ember types' minimum version from TypeScript 2.8 until the release of TypeScript 3.9, at which time we bumped minimum supported TypeScript version to 3.7.)
 
 -   How should we make downleveling and CI runs against supported TypeScript versions interact? Should we tell users to generate test-specific `tsconfig.json` files to use with downleveled types in their tests? Can this be automated in some way? Does use of `typesVersions` plus the CI runs handle it?
 
@@ -575,17 +575,17 @@ This RFC is intended to be the first step toward formally supporting TypeScript 
 
 ### Core addons
 
-1.  Their release cadence (especially LTS releases) are foundational for this RFC’s recommendations for when the *rest* of the ecosystem should move.
+1.  Their release cadence (especially LTS releases) are foundational for this RFC's recommendations for when the *rest* of the ecosystem should move.
 
 2.  Their types are foundational to the types in the rest of the ecosystem, so even with mitigations, any breaking changes to them will have a ripple effect—just as with runtime code.
 
 3.  They generally operate on longer time scales between major releases than other addons in the ecosystem, in part because of cultural norms, but in part also because of the ripple effect mentioned above.
 
-The combination of these factors means that a slightly different strategy is likely necessary for Ember’s core types. If the *same* strategy recommended above for addons were in use for Ember during the 3.x lifecycle, it would mean that the types would need to have supported *at least* TypeScript versions 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9 (possibly with some exceptions because of instability in some specific releases), all without a breaking change. This may be *possible*, but would have involved significant work, and there may be alternative approaches worth considering in line with Ember’s general LTS strategy. These will be addressed in a future RFC for Ember itself.
+The combination of these factors means that a slightly different strategy is likely necessary for Ember's core types. If the *same* strategy recommended above for addons were in use for Ember during the 3.x lifecycle, it would mean that the types would need to have supported *at least* TypeScript versions 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9 (possibly with some exceptions because of instability in some specific releases), all without a breaking change. This may be *possible*, but would have involved significant work, and there may be alternative approaches worth considering in line with Ember's general LTS strategy. These will be addressed in a future RFC for Ember itself.
 
 ### Ember CLI
 
-Ember CLI has many of the same constraints that ember-source and ember-data do: it is foundational to the ecosystem, and if it were to publish types, breakage to those types would be similarly disruptive as a result. Additionally, though, it has the challenge that is versioning system *today* does not technically follow SemVer, because Ember CLI versions are kept in lockstep with Ember and Ember Data’s versions. So, for example, when Ember CLI drops support for a Node version, it does *not* publish a breaking change even though by the norms of the Node ecosystem (and indeed the rest of the Ember ecosystem), it should.
+Ember CLI has many of the same constraints that ember-source and ember-data do: it is foundational to the ecosystem, and if it were to publish types, breakage to those types would be similarly disruptive as a result. Additionally, though, it has the challenge that is versioning system *today* does not technically follow SemVer, because Ember CLI versions are kept in lockstep with Ember and Ember Data's versions. So, for example, when Ember CLI drops support for a Node version, it does *not* publish a breaking change even though by the norms of the Node ecosystem (and indeed the rest of the Ember ecosystem), it should.
 
 Any publication of types for Ember CLI would therefore require *either* that it exactly match the policy of Ember and Ember Data, *or* that Ember CLI drop lockstep versioning with Ember and Ember Data—or possibly other options not considered here.
 
@@ -593,7 +593,7 @@ As with the core addons, making either of these changes is substantially beyond 
 
 ## Notes
 
-1.  TypeScript’s core team argues that *every* change to the compiler is a breaking change, and that SemVer is therefore meaningless. We do not agree with this characterization, but are not interested in litigating it.
+1.  TypeScript's core team argues that *every* change to the compiler is a breaking change, and that SemVer is therefore meaningless. We do not agree with this characterization, but are not interested in litigating it.
 
 2.  This is *not* optimal: we would prefer to be able to supply types specific to each supported version, rather than downleveling everything to a lowest-common denominator of 3.4. If [the upstream issue][downlevel-dts-36] which prevents us from being more granular is resolved, this RFC will be amended and docs and any blueprints updated to support that more granular resolution.
 
