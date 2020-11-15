@@ -27,7 +27,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       steps:
         - name: Checkout Code
-          uses: actions/checkout@v1
+          uses: actions/checkout@v2
         - name: Commitlint
           uses: wagoid/commitlint-github-action@v1.8.0
 
@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Install Node
         uses: actions/setup-node@v1
         with:
@@ -60,7 +60,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Install Node
         uses: actions/setup-node@v1
         with:
@@ -80,7 +80,7 @@ jobs:
     needs: [test-locked-deps]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Install Node
         uses: actions/setup-node@v1
         with:
@@ -109,7 +109,7 @@ jobs:
           - typescript@next
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Install Node
         uses: actions/setup-node@v1
         with:
