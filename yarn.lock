@@ -1571,10 +1571,10 @@
   dependencies:
     "@types/ember__object" "*"
 
-"@types/ember__string@*", "@types/ember__string@3.0.8":
-  version "3.0.8"
-  resolved "https://registry.yarnpkg.com/@types/ember__string/-/ember__string-3.0.8.tgz#7a3f76ce3a3060a8a5e0ff14266b6d8efb9f3ec5"
-  integrity sha512-xOGHilXWx/talkpGhgRL+FEQJAImwe97JXcFTFD2rELbh0slL/HI7rSvBeWCPKp75cflNHUCr1N943iTGt5J0g==
+"@types/ember__string@*", "@types/ember__string@3.16.1":
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/@types/ember__string/-/ember__string-3.16.1.tgz#5fa893b3ca7061206a37aed64fe064e822be12f5"
+  integrity sha512-iJVNo0KSKllfE3puyMNAqLHCD3z1v1MyLdWAhfOihzOa+SyqV8nTGXoKIhoySgBydGh5Kh/d9YouxXj+zGG/Gg==
   dependencies:
     "@types/ember__template" "*"
 
