@@ -84,7 +84,7 @@
     "ember-cli": "3.22.0",
     "ember-cli-addon-docs": "ember-learn/ember-cli-addon-docs#4f5bfd11",
     "ember-cli-addon-docs-esdoc": "0.2.3",
-    "ember-cli-app-version": "3.2.0",
+    "ember-cli-app-version": "4.0.0",
     "ember-cli-babel": "7.23.0",
     "ember-cli-blueprint-test-helpers": "0.19.2",
     "ember-cli-dependency-checker": "3.2.0",
