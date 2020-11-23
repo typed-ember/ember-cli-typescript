@@ -45,7 +45,7 @@ Router.map(function() {
       this.route('ember-object');
       this.route('computed-properties');
       this.route('mixins');
-      this.route('ember-component');
+      // this.route('ember-component');
     });
 
     this.route('cookbook', function() {
