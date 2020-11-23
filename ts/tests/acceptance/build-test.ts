@@ -13,14 +13,14 @@ import {
 
 const { expect } = chai;
 
-describe('Acceptance: build', function() {
+describe('Acceptance: build', function () {
   this.timeout(60 * 1000);
   let app: SkeletonApp;
-  beforeEach(function() {
+  beforeEach(function () {
     app = new SkeletonApp();
   });
 
-  afterEach(function() {
+  afterEach(function () {
     app.teardown();
   });
 
@@ -69,6 +69,32 @@ describe('Acceptance: build', function() {
     );
   });
 
+  it("doesn't launch type checking for `ember serve` when --path is used", async () => {
+    await app.build();
+
+    let server = app.serve({
+      args: ['--path', 'dist'],
+      env: { DEBUG: 'ember-cli-typescript:addon' },
+    });
+
+    let result = await server.waitForOutput('Serving on');
+
+    expect(result).to.include('ember-cli-typescript:addon Skipping typecheck server middleware');
+  });
+
+  it("doesn't launch type checking for `ember test` when --path is used", async () => {
+    await app.build({ args: ['--environment', 'test'] });
+
+    let result = await app.test({
+      args: ['--path', 'dist'],
+      env: { DEBUG: 'ember-cli-typescript:addon' },
+    });
+
+    expect(result.all).to.include(
+      'ember-cli-typescript:addon Skipping typecheck testem middleware'
+    );
+  });
+
   it('fails the build when noEmitOnError is set and an error is emitted', async () => {
     app.writeFile('app/app.ts', `import { foo } from 'nonexistent';`);
 
@@ -101,6 +127,33 @@ describe('Acceptance: build', function() {
 
     await server.waitForBuild();
   });
+
+  it('emits a warning when .js and .ts files conflict in the app/ tree', async () => {
+    // Set up an in-repo addon
+    app.updatePackageJSON((pkg) => {
+      pkg['ember-addon'].paths.push('lib/in-repo-addon');
+    });
+
+    app.writeFile('lib/in-repo-addon/index.js', 'module.exports = { name: "in-repo-addon" };');
+    app.writeFile(
+      'lib/in-repo-addon/package.json',
+      JSON.stringify({
+        name: 'in-repo-addon',
+        keywords: ['ember-addon'],
+      })
+    );
+
+    // Have it export a .js app file and attempt to overwrite it in the host with a .ts file
+    app.writeFile('lib/in-repo-addon/app/foo.js', '// addon');
+    app.writeFile('app/foo.ts', '// app');
+
+    let output = await app.build();
+
+    expect(output.all).to.include('skeleton-app/foo.{js,ts}');
+    expect(output.all).to.include(
+      'WARNING: Detected collisions between .js and .ts files of the same name.'
+    );
+  });
 });
 
 function isExpressionStatement(stmt: Statement | ModuleDeclaration): stmt is ExpressionStatement {
@@ -126,9 +179,9 @@ function extractModuleBody(script: string, moduleName: string) {
   let parsed = esprima.parseScript(script);
   let [definition] = parsed.body
     .filter(isExpressionStatement)
-    .map(stmt => stmt.expression)
+    .map((stmt) => stmt.expression)
     .filter(isSpecialCallExpression)
-    .filter(expr => expr.arguments[0].value === moduleName);
+    .filter((expr) => expr.arguments[0].value === moduleName);
   if (!definition) throw new Error('Definition for call expression not found');
   let moduleDef = definition.arguments[2].body;
 

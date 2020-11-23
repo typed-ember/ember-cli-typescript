@@ -1,12 +1,10 @@
 import fs from 'fs-extra';
 import path from 'path';
-import tmp from 'tmp';
 import execa from 'execa';
 import { EventEmitter } from 'events';
 import got from 'got';
 import debugLib from 'debug';
-
-tmp.setGracefulCleanup();
+import rimraf from 'rimraf';
 
 const debug = debugLib('skeleton-app');
 
@@ -15,36 +13,42 @@ const getEmberPort = (() => {
   return () => lastPort++;
 })();
 
+interface EmberCliOptions {
+  args?: string[];
+  env?: Record<string, string>;
+}
+
 export default class SkeletonApp {
   port = getEmberPort();
-  watched: WatchedBuild | null = null;
-  tmpDir = tmp.dirSync({
-    tries: 10,
-    unsafeCleanup: true,
-    dir: process.cwd(),
-    template: 'test-skeleton-app-XXXXXX',
-  });
-  root = this.tmpDir.name;
+  watched: WatchedEmberProcess | null = null;
+  cleanupTempDir = () => rimraf(this.root, (error) => error && console.error(error));
+  root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
+    fs.mkdirpSync(this.root);
     fs.copySync(`${__dirname}/../../../test-fixtures/skeleton-app`, this.root);
+    process.on('beforeExit', this.cleanupTempDir);
   }
 
-  build() {
-    return this._ember(['build']);
+  build({ args = [], env }: EmberCliOptions = {}) {
+    return this._ember({ args: ['build', ...args], env });
   }
 
-  serve() {
+  test({ args = [], env }: EmberCliOptions = {}) {
+    return this._ember({ args: ['test', '--test-port', `${this.port}`, ...args], env });
+  }
+
+  serve({ args = [], env }: EmberCliOptions = {}) {
     if (this.watched) {
       throw new Error('Already serving');
     }
-    return (this.watched = new WatchedBuild(
-      this._ember(['serve', '--port', `${this.port}`]),
-      this.port
-    ));
+
+    let childProcess = this._ember({ args: ['serve', '--port', `${this.port}`, ...args], env });
+
+    return (this.watched = new WatchedEmberProcess(childProcess, this.port));
   }
 
-  updatePackageJSON(callback: (arg: any) => string) {
+  updatePackageJSON(callback: (arg: any) => any) {
     let pkgPath = `${this.root}/package.json`;
     let pkg = fs.readJSONSync(pkgPath);
     fs.writeJSONSync(pkgPath, callback(pkg) || pkg, { spaces: 2 });
@@ -68,19 +72,21 @@ export default class SkeletonApp {
     if (this.watched) {
       this.watched.kill();
     }
-    this.tmpDir.removeCallback();
+
+    this.cleanupTempDir();
+    process.off('beforeExit', this.cleanupTempDir);
   }
 
-  _ember(args: string[]) {
+  _ember({ args, env }: EmberCliOptions) {
     let ember = require.resolve('ember-cli/bin/ember');
-    return execa.node(ember, args, { cwd: this.root, all: true });
+    return execa.node(ember, args, { cwd: this.root, all: true, env });
   }
 }
 
-class WatchedBuild extends EventEmitter {
+class WatchedEmberProcess extends EventEmitter {
   constructor(protected ember: execa.ExecaChildProcess, protected port: number) {
     super();
-    this.ember.stdout.on('data', data => {
+    this.ember.stdout?.on('data', (data) => {
       let output = data.toString();
       if (output.includes('Build successful')) {
         this.emit('did-rebuild');
@@ -89,11 +95,11 @@ class WatchedBuild extends EventEmitter {
       debug(output);
     });
 
-    this.ember.stderr.on('data', data => {
+    this.ember.stderr?.on('data', (data) => {
       debug(data.toString());
     });
 
-    this.ember.catch(error => {
+    this.ember.catch((error) => {
       this.emit('did-error', error);
     });
   }
@@ -103,19 +109,19 @@ class WatchedBuild extends EventEmitter {
   }
 
   waitForOutput(target: string) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let output = '';
       let listener = (data: string | Buffer) => {
         output += data.toString();
         if (output.includes(target)) {
-          this.ember.stdout.removeListener('data', listener);
-          this.ember.stderr.removeListener('data', listener);
+          this.ember.stdout?.removeListener('data', listener);
+          this.ember.stderr?.removeListener('data', listener);
           resolve(output);
         }
       };
 
-      this.ember.stdout.on('data', listener);
-      this.ember.stderr.on('data', listener);
+      this.ember.stdout?.on('data', listener);
+      this.ember.stderr?.on('data', listener);
     });
   }
 

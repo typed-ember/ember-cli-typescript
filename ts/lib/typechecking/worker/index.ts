@@ -112,7 +112,7 @@ export default class TypecheckWorker {
 
   private formatDiagnostic(diagnostic: Diagnostic) {
     return this.ts.formatDiagnosticsWithColorAndContext([diagnostic], {
-      getCanonicalFileName: path => path,
+      getCanonicalFileName: (path) => path,
       getCurrentDirectory: this.ts.sys.getCurrentDirectory,
       getNewLine: () => this.ts.sys.newLine,
     });
@@ -138,7 +138,7 @@ export default class TypecheckWorker {
   private patchCompilerHostMethods(
     host: WatchCompilerHostOfConfigFile<SemanticDiagnosticsBuilderProgram>
   ) {
-    let { watchFile, watchDirectory, createProgram, afterProgramCreate = () => {} } = host;
+    let { watchFile, watchDirectory, afterProgramCreate = () => {} } = host;
 
     // Intercept tsc's `watchFile` to also invoke `mayTypecheck()` when a watched file changes
     host.watchFile = (path, callback, pollingInterval?) => {
@@ -167,14 +167,11 @@ export default class TypecheckWorker {
       );
     };
 
-    // Intercept `createProgram` to invoke `willTypecheck` beforehand, as we know at this
-    // point that a new check is definitively happening.
-    host.createProgram = (...params) => {
+    // Intercept `afterProgramCreate` to confirm when a suspected typecheck is happening
+    // and schedule the new diagnostics to be emitted.
+    host.afterProgramCreate = (program) => {
       this.willTypecheck();
-      return createProgram.apply(host, params);
-    };
 
-    host.afterProgramCreate = program => {
       // The `afterProgramCreate` callback will be invoked synchronously when we first call
       // `createWatchProgram`, meaning we can enter `didTypecheck` before we're fully set up
       // (e.g. before `compilerOptions` has been set). We use `nextTick` to ensure that
@@ -188,7 +185,7 @@ export default class TypecheckWorker {
   }
 
   private makeStatus(diagnostics: ReadonlyArray<Diagnostic>): TypecheckStatus {
-    let errors = diagnostics.map(d => this.formatDiagnostic(d));
+    let errors = diagnostics.map((d) => this.formatDiagnostic(d));
     let failed = !!(this.compilerOptions.noEmitOnError && errors.length);
     return { errors, failed };
   }

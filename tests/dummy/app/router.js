@@ -58,7 +58,7 @@ Router.map(function() {
     this.route('troubleshooting', function() {
       this.route('conflicting-types');
     });
-    this.route('type-defs', function() {
+    this.route('type-defs', function () {
       this.route('package-names');
     });
   });

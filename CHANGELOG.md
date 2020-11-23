@@ -6,6 +6,137 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [4.0.0] - 2020-09-02
+
+### Breaking 💥
+
+- Drop support for Node 8 ([#1017])
+- Don't configure Babel for TS transpilation ([#1018])
+
+### Added ⭐️
+
+- Don't run type-checking middleware when an existing build is used via `--path` ([#1148])
+
+### Changed 💥
+
+- Update `tsconfig.json` blueprint `target` value to `2020` ([#1108])
+- Use `prepack` and `postpack` instead of `prepublishOnly` and `postpublish` ([#1196])
+
+### Fixed 🔧
+
+- Bring apps closer to type-checking out of the box ([#1169])
+
+### Under the hood 🚗
+
+- Upgrade [✨ Prettier ✨](https://prettier.io) to a version that supports optional chaining and nullish coalescing ([#1018])
+- Add test for optional chaining and nullish coalescing ([#1018])
+- Add test for class field declaration ([#1018])
+- Add RFCs to repo ([#1157])
+- Fix description of ts:precompile ([#1162])
+- Fix dead link to "packages this addon installs" ([#1164])
+- Get CI passing ([#1167])
+- Avoid false-positive `willTypecheck`s on Linux ([#1198])
+- Dependency updates ([4.0.0-deps-bumps], [#1191])
+
+[#1017]: https://github.com/typed-ember/ember-cli-typescript/pull/1017
+[#1018]: https://github.com/typed-ember/ember-cli-typescript/pull/1018
+[4.0.0-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-05-29T11%3A00%3A00-0500..2020-09-02T18%3A00%3A00-0400+chore%28deps%29+in%3Atitle+
+
+### Upgrading ⚙️
+
+- Make sure you are using at least [ember-cli-babel@^7.17.0](https://github.com/babel/ember-cli-babel/releases/tag/v7.17.0) or your `.ts` files will be ignored completely!
+- If you are using `ember-auto-import`, make sure you are using at least [ember-auto-import@^1.6.0](https://github.com/ef4/ember-auto-import/blob/master/CHANGELOG.md#160).
+- Run `ember install ember-cli-typescript@^4.0.0` or use your package manager to upgrade to `ember-cli-typescript@^4.0.0` directly and skip the blueprint.
+
+## [4.0.0-rc.1] - 2020-07-14
+
+### Added ⭐️
+
+- Don't run type-checking middleware when an existing build is used via `--path` ([#1148])
+
+### Changed 💥
+
+- Update `tsconfig.json` blueprint `target` value to `2020` ([#1108])
+- Use `prepack` and `postpack` instead of `prepublishOnly` and `postpublish` ([#1196])
+
+### Fixed 🔧
+
+- Bring apps closer to type-checking out of the box ([#1169])
+
+### Under the hood 🚗
+
+- Add RFCs to repo ([#1157])
+- Fix description of ts:precompile ([#1162])
+- Fix dead link to "packages this addon installs" ([#1164])
+- Get CI passing ([#1167])
+- Avoid false-positive `willTypecheck`s on Linux ([#1198])
+- Dependency updates ([4.0.0-rc.1-deps-bumps], [#1191])
+
+### Upgrading ⚙️
+
+- Make sure you are using at least [ember-cli-babel@^7.17.0](https://github.com/babel/ember-cli-babel/releases/tag/v7.17.0) or your `.ts` files will be ignored completely!
+- If you are using `ember-auto-import`, make sure you are using at least [ember-auto-import@^1.6.0](https://github.com/ef4/ember-auto-import/blob/master/CHANGELOG.md#160).
+- Run `ember install ember-cli-typescript@next` or use your package manager to upgrade to `ember-cli-typescript@next` directly and skip the blueprint.
+
+[#1108]: https://github.com/typed-ember/ember-cli-typescript/pull/1108
+[#1148]: https://github.com/typed-ember/ember-cli-typescript/pull/1148
+[#1157]: https://github.com/typed-ember/ember-cli-typescript/pull/1157
+[#1162]: https://github.com/typed-ember/ember-cli-typescript/pull/1162
+[#1164]: https://github.com/typed-ember/ember-cli-typescript/pull/1164
+[#1167]: https://github.com/typed-ember/ember-cli-typescript/pull/1167
+[#1169]: https://github.com/typed-ember/ember-cli-typescript/pull/1169
+[#1191]: https://github.com/typed-ember/ember-cli-typescript/pull/1191
+[#1196]: https://github.com/typed-ember/ember-cli-typescript/pull/1196
+[#1198]: https://github.com/typed-ember/ember-cli-typescript/pull/1198
+[4.0.0-rc.1-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-05-29T11%3A00%3A00-0500..2020-07-14T17%3A15%3A00-0600+chore%28deps%29+in%3Atitle+
+
+## [4.0.0-alpha.1] - 2020-01-18
+
+### Breaking 💥
+
+- Drop support for Node 8 ([#1017])
+- Don't configure Babel for TS transpilation ([#1018])
+
+### Under the hood 🚗
+
+- Upgrade [✨ Prettier ✨](https://prettier.io) to a version that supports optional chaining and nullish coalescing ([#1018])
+- Add test for optional chaining and nullish coalescing ([#1018])
+- Add test for class field declaration ([#1018])
+
+[#1017]: https://github.com/typed-ember/ember-cli-typescript/pull/1017
+[#1018]: https://github.com/typed-ember/ember-cli-typescript/pull/1018
+
+## [3.1.4] - 2020-05-29
+
+### Fixed 🔧
+
+- Use temp dir in project for precompile ([#1153])
+
+### Under the hood 🚗
+
+- Bumped [52 dependency versions][3.1.4-deps-bumps]
+
+[#1153]: https://github.com/typed-ember/ember-cli-typescript/pull/1153
+[3.1.4-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-01-22T13%3A00%3A00-0600..2020-05-29T11%3A00%3A00-0500+chore%28deps%29+in%3Atitle+
+
+## [3.1.3] - 2020-01-22
+
+### Fixed 🔧
+
+- Issue a warning if we detect a .js/.ts file collision ([#1046])
+
+[#1046]: https://github.com/typed-ember/ember-cli-typescript/pull/1046
+
+### Under the hood 🚗
+
+- Add prettier eslint deps ([#1045])
+- Use Node 10 for CI (but don't "officially" stop supporting node 8 yet) ([#1047])
+- Bumped [31 dependency versions][3.1.3-deps-bumps]
+
+[#1045]: https://github.com/typed-ember/ember-cli-typescript/pull/1045
+[#1047]: https://github.com/typed-ember/ember-cli-typescript/pull/1047
+[3.1.3-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Amerged+merged%3A2019-12-14T10%3A52%3A00%2B0600..2020-01-22T13%3A00%3A00%2B0600+chore%28deps%29+in%3Atitle+
+
 ## [3.1.2] - 2019-12-14
 
 ### Fixed 🔧
@@ -604,7 +735,16 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.4...v4.0.0
+[4.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0-alpha.1...v4.0.0-rc.1
+<!--
+  This is correctly compared against v3.1.3 because it was released on a branch
+  before v3.1.4 was released.
+-->
+[4.0.0-alpha.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...v4.0.0-alpha.1
+[3.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...v3.1.4
+[3.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...v3.1.2
 <!--
   Note that 3.1.1 *intentionally* includes all the changes between 3.0.0 and

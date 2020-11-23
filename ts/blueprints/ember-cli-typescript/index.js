@@ -68,11 +68,12 @@ module.exports = {
     }
 
     return {
-      includes: JSON.stringify(includes.map(include => `${include}/**/*`), null, 2).replace(
-        /\n/g,
-        '\n  '
-      ),
-      pathsFor: dasherizedName => {
+      includes: JSON.stringify(
+        includes.map((include) => `${include}/**/*`),
+        null,
+        2
+      ).replace(/\n/g, '\n  '),
+      pathsFor: (dasherizedName) => {
         // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
         let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
         let appName = isAddon ? 'dummy' : dasherizedName;
@@ -105,12 +106,12 @@ module.exports = {
 
         return JSON.stringify(paths, null, 2).replace(/\n/g, '\n    ');
       },
-      indexDeclarations: dasherizedName => {
+      indexDeclarations: (dasherizedName) => {
         const isDummyApp = dasherizedName === 'dummy';
         const useAppDeclarations = !(isAddon || isDummyApp);
         return useAppDeclarations ? APP_DECLARATIONS : '';
       },
-      globalDeclarations: dasherizedName => {
+      globalDeclarations: (dasherizedName) => {
         /** @type {'classic' | 'pods'} */
         let projectLayout;
         if (isPods) projectLayout = 'pods';
@@ -143,32 +144,53 @@ module.exports = {
     }
 
     let packages = [
-      { name: 'ember-cli-typescript-blueprints', target: 'latest' },
-      { name: 'typescript', target: 'latest' },
-      { name: '@types/ember', target: 'latest' },
-      { name: '@types/rsvp', target: 'latest' },
-      { name: '@types/ember__test-helpers', target: 'latest' },
+      'typescript',
+      'ember-cli-typescript-blueprints',
+      '@types/ember-resolver',
+      '@types/ember__test-helpers',
+      '@types/ember__object',
+      '@types/ember__service',
+      '@types/ember__controller',
+      '@types/ember__string',
+      '@types/ember__template',
+      '@types/ember__polyfills',
+      '@types/ember__utils',
+      '@types/ember__runloop',
+      '@types/ember__debug',
+      '@types/ember__engine',
+      '@types/ember__application',
+      '@types/ember__test',
+      '@types/ember__array',
+      '@types/ember__error',
+      '@types/ember__component',
+      '@types/ember__routing',
+      '@types/rsvp',
+      '@types/htmlbars-inline-precompile',
     ];
 
+    if (this._has('@ember/jquery')) {
+      packages.push('@types/jquery');
+    }
+
     if (this._has('ember-data')) {
-      packages.push({ name: '@types/ember-data', target: 'latest' });
+      packages.push('@types/ember-data');
     }
 
     if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {
-      packages = packages.concat([
-        { name: '@types/ember-qunit', target: 'latest' },
-        { name: '@types/qunit', target: 'latest' },
-      ]);
+      packages.push('@types/ember-qunit');
+      packages.push('@types/qunit');
     }
 
     if (this._has('ember-cli-mocha') || this._has('ember-mocha')) {
-      packages = packages.concat([
-        { name: '@types/ember-mocha', target: 'latest' },
-        { name: '@types/mocha', target: 'latest' },
-      ]);
+      packages.push('@types/ember-mocha');
+      packages.push('@types/mocha');
     }
 
-    return this.addPackagesToProject(packages);
+    return this.addPackagesToProject(
+      packages.map((name) => {
+        return { name, target: 'latest' };
+      })
+    );
   },
 
   filesPath() {
@@ -179,7 +201,7 @@ module.exports = {
     let files = this._super.files.apply(this, arguments);
 
     if (!this._has('ember-data')) {
-      files = files.filter(file => file !== 'types/ember-data/types/registries/model.d.ts');
+      files = files.filter((file) => file !== 'types/ember-data/types/registries/model.d.ts');
     }
 
     return files;
@@ -190,9 +212,9 @@ module.exports = {
 
     let pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
 
-    // Really `prepack` and `postpack` would be ideal, but yarn doesn't execute those when publishing
-    this._addScript(pkg.scripts, 'prepublishOnly', 'ember ts:precompile');
-    this._addScript(pkg.scripts, 'postpublish', 'ember ts:clean');
+    // As of https://github.com/yarnpkg/yarn/pull/5712 yarn runs `prepack` and `postpack` when publishing
+    this._addScript(pkg.scripts, 'prepack', 'ember ts:precompile');
+    this._addScript(pkg.scripts, 'postpack', 'ember ts:clean');
 
     // avoid being placed in devDependencies
     if (pkg.devDependencies[ADDON_NAME]) {

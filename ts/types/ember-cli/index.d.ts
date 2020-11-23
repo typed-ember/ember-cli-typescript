@@ -11,8 +11,10 @@ declare module 'ember-cli/lib/models/addon' {
   import UI from 'console-ui';
   import { Application } from 'express';
   import Project from 'ember-cli/lib/models/project';
+  import { TaskOptions } from 'ember-cli/lib/models/task';
   import Command from 'ember-cli/lib/models/command';
   import EmberApp from 'ember-cli/lib/broccoli/ember-app';
+  import PreprocessRegistry from 'ember-cli-preprocess-registry';
 
   export default class Addon extends CoreObject {
     name: string;
@@ -35,9 +37,9 @@ declare module 'ember-cli/lib/models/addon' {
     includedCommands(): Record<string, typeof Command | ExtendOptions<Command>> | void;
     shouldIncludeChildAddon(addon: Addon): boolean;
     isDevelopingAddon(): boolean;
-    serverMiddleware(options: { app: Application }): void | Promise<void>;
-    testemMiddleware(app: Application): void;
-    setupPreprocessorRegistry(type: 'self' | 'parent', registry: unknown): void;
+    serverMiddleware(options: { app: Application; options?: TaskOptions }): void | Promise<void>;
+    testemMiddleware(app: Application, options?: TaskOptions): void;
+    setupPreprocessorRegistry(type: 'self' | 'parent', registry: PreprocessRegistry): void;
   }
 }
 
@@ -46,6 +48,12 @@ declare module 'ember-cli/lib/models/blueprint' {
     taskFor(taskName: string): void;
   }
   export = Blueprint;
+}
+
+declare module 'ember-cli/lib/models/task' {
+  export interface TaskOptions {
+    path?: string;
+  }
 }
 
 declare module 'ember-cli/lib/models/command' {
