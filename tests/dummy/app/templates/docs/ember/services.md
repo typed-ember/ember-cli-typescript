@@ -18,6 +18,12 @@ Let's take this example from the [Ember Guide][guide]:
 
 Just making this a TypeScript file gives us some type safety without having to add any additional type information. We'll see this when we use the service elsewhere in the application.
 
+<aside>
+
+When working in Octane, you're better off using a `TrackedArray` from [tracked-built-ins](https://github.com/pzuraq/tracked-built-ins) instead of the classic EmberArray.
+
+</aside>
+
 ## Using services
 
 You can use a service in any container-resolved object such as a component or another service. Services are injected into these objects by decorating a property with the `inject` decorator. Because decorators can't affect the type of the property they decorate, we must manually type the property. Also, we must use the non-null assertion operator `!` to tell the TypeScript compiler to trust that this property will be initialized (TypeScript is not aware of service injection).
