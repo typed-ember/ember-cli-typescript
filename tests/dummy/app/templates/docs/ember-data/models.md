@@ -39,9 +39,9 @@ export default class User extends Model {
 }
 ```
 
-**Very important:** Even more than with decorators in general, you should be careful when deciding whether to mark a property as optional `?` or definitely present `!`: Ember Data will default to leaving a property empty if it is not supplied by the API or by a developer when creating it.
+**Very important:** Even more than with decorators in general, you should be careful when deciding whether to mark a property as optional `?` or definitely present (no annotation): Ember Data will default to leaving a property empty if it is not supplied by the API or by a developer when creating it. That is: the *default* for Ember corresponds to an optional field on the model.
 
-The *safest* type you can write for an Ember Data model, therefore, leaves every property optional: this is how models *actually* behave. If you choose to mark properties as definitely present, you should take care to guarantee that this is a guarantee your API upholds, and that ever time you create a record from within the app, *you* uphold those guarantees.
+The *safest* type you can write for an Ember Data model, therefore, leaves every property optional: this is how models *actually* behave. If you choose to mark properties as definitely present by leaving off the `?`, you should take care to guarantee that this is a guarantee your API upholds, and that ever time you create a record from within the app, *you* uphold those guarantees.
 
 One way to make this safer is to supply a default value using the `defaultValue` on the options hash for the attribute:
 
@@ -50,18 +50,17 @@ import Model, { attr } from '@ember-data/object';
 
 export default class User extends Model {
   @attr()
-  name?:  string;
+  declare name?:  string;
 
   @attr('number', { defaultValue: 13 })
-  age!: number;
+  declare age: number;
 
   @attr('boolean', { defaultValue: false })
-  isAdmin!: boolean;
+  declare isAdmin: boolean;
 }
 ```
 
 ## `@belongsTo`
-
 
 The type returned by the `@hasMany` decorator depends on whether the relationship is `{ async: true }` (which it is by default).
 
@@ -73,7 +72,7 @@ So, for example, you might define a class like this:
 
 <DocsSnippet @name='belongs-to.ts' @title='my-app/models/belongs-to.ts' @showCopy={{false}} />
 
-These are *type*-safe to define as definitely initialized `!`:
+These are *type*-safe to define as always present, that is to leave off the `?` optional marker:
 
 - accessing an async relationship will always return a `PromiseObject`, which itself may or may not ultimately resolve to a value—depending on the API response—but will always be present itself.
 - accessing a non-async relationship which is known to be associated but has not been loaded will trigger an error, so all access to the property will be safe *if* it resolves at all.

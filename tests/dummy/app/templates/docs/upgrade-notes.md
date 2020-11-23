@@ -112,7 +112,7 @@ Any place where a type annotation overrides a *getter*
     }
     ```
 
-    This breaks because `element` is a getter on `Component`. This declaration then shadows the getter declaration on the base class and stomps it to `undefined` (effectively `Object.defineProperty(this, 'element', void 0)`.
+    This breaks because `element` is a getter on `Component`. This declaration then shadows the getter declaration on the base class and stomps it to `undefined` (effectively `Object.defineProperty(this, 'element', void 0)`. (It would be nice to use `declare` here, but that doesn't work: you cannot use `declare` with a getter in a concrete subclass.)
 
     Two solutions:
 

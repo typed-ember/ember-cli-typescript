@@ -146,7 +146,7 @@ import { service } from '@ember-decorators/service';
 import MySession from 'my-app/services/my-session';
 
 export default class UserProfile extends Component {
-  @service mySession!: MySession;
+  @service declare mySession: MySession;
 
   login(email: string, password: string) {
     this.mySession.login(email, password);
@@ -156,9 +156,9 @@ export default class UserProfile extends Component {
 
 Note that we need the `MySession` type annotation this way, but we _don't_ need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
 
-Also notice the [`!` non-null assertion operator](https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator), which is required to prevent [`TS2564`](https://github.com/kaorun343/vue-property-decorator/issues/81), that is caused by enabling `strictPropertyInitialization` in `tsconfig.json`.
+Also notice [the `declare` property modifier](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier). This tells TypeScript that the property will be configured by something outside the class (in this case, the decorator), and guarantees it emits spec-compliant JavaScript.
 
-This also holds true for all other macros of the ember-decorators addon.
+(This also holds true for all other service injections, computed property macros, and Ember Data model attributes and relationships.)
 
 ### Earlier Ember versions
 
