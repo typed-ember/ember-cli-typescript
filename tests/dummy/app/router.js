@@ -35,9 +35,9 @@ Router.map(function() {
     this.route('ember-data', function() {
       this.route('overview');
       this.route('models');
-      this.route('adapters');
-      this.route('serializers');
-      this.route('transforms');
+      // this.route('adapters');
+      // this.route('serializers');
+      // this.route('transforms');
     });
 
     this.route('legacy', function() {
