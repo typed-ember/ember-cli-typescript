@@ -14,7 +14,9 @@ How that works:
 
 Putting those all together,  `ModelFrom<Route>` ends up giving you the resolved value returned from the `model` hook for a given route:
 
-TODO: usage example
+```ts
+type MyRouteModel = ModelFrom<MyRoute>;
+```
 
 ## `model` on the controller
 
@@ -24,4 +26,4 @@ We can use this functionality to guarantee that the `model` on a `Controller` is
 
 Now, our controller’s `model` property will *always* stay in sync with the corresponding route’s model hook.
 
-**Note:** this *only* works if you do not mutate the `model` in either the `afterModel` or `setupController` hooks on the route!
+**Note:** this *only* works if you do not mutate the `model` in either the `afterModel` or `setupController` hooks on the route! That's generally considered to be a bad practice anyway. If you do change the type there, you'll need to define the type in some other way and make sure your route's model is defined another way.
