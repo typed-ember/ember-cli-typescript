@@ -34,10 +34,6 @@ Some specific tips for success on the technical front:
 
   There is an inherent tradeoff between these two approaches; which works best will depend on your team and your app.
 
-You may find the blog series ["Typing Your Ember"][typing-your-ember] helpful as it walks you through not only how to install but how to most effectively use TypeScript in an Ember app today, and gives some important info on the background and roadmap for the project.
-
-[typing-your-ember]: http://www.chriskrycho.com/typing-your-ember.html
-
 ## Install other types!
 
 You'll want to use other type definitions as much as possible. The first thing you should do, for example, is install the types for your testing framework of choice: `@types/ember-mocha` or `@types/ember-qunit`. Beyond that, look for types from other addons: it will mean writing `any` a lot less and getting a lot more help both from your editor and from the compiler.
@@ -73,18 +69,6 @@ We install this file because the actual `config/environment.js` is (a) not actua
 ## String-keyed lookups
 
 Ember makes heavy use of string-based APIs to allow for a high degree of dynamicism. With some limitations, you can nonetheless use TypeScript very effectively to get auto-complete/IntelliSense as well as to accurately type-check your applications.
-
-The "Update" sequence in Chris Krycho’s [Typing Your Ember blog post series][typing-your-ember] has detailed explanations and guides for getting good type-safety for Ember's string-based APIs, e.g. the use of `get` and `set`, service and controller injection, Ember Data models and lookups
-
-- [Part 1][pt1]: A look at normal Ember objects, "arguments" to components (and controllers), and service (or controller) injections.
-- [Part 2][pt2]: Class properties — some notes on how things differ from the `Ember.Object` world.
-- [Part 3][pt3]: Computed properties, actions, mixins, and class methods.
-- [Part 4][pt4]: Using Ember Data, and service and controller injections improvements. (This includes a detailed guide to updating making the service and controller injections and Ember Data lookups behave as described below.)
-
-[pt1]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-1.html
-[pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
-[pt3]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-3.html
-[pt4]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-4.html
 
 A few of the most common speed-bumps are listed here to help make this easier:
 
@@ -189,11 +173,9 @@ The declarations and changes you need to add to your existing files are:
 - Models
 
   ```ts
-  import DS from 'ember-data';
+  import Model from '@ember-data/model';
 
-  export default class UserMeta extends DS.Model.extend({
-    // attribute declarations here, as usual
-  }) {}
+  export default class UserMeta extends Model {}
 
   declare module 'ember-data/types/registries/model' {
     export default interface ModelRegistry {
@@ -205,9 +187,9 @@ The declarations and changes you need to add to your existing files are:
 - Adapters
 
   ```ts
-  import DS from 'ember-data';
+  import Adapter from '@ember-data/adapter';
 
-  export default class UserMeta extends DS.Adapter {
+  export default class UserMeta extends Adapter {
     // properties and methods
   }
 
@@ -221,9 +203,9 @@ The declarations and changes you need to add to your existing files are:
 - Serializers
 
   ```ts
-  import DS from 'ember-data';
+  import Serializer from '@ember-data/serializer';
 
-  export default class UserMeta extends DS.Serializer {
+  export default class UserMeta extends Serializer {
     // properties and methods
   }
 
@@ -237,7 +219,7 @@ The declarations and changes you need to add to your existing files are:
 - Transforms
 
   ```ts
-  import DS from 'ember-data';
+  import Transform from '@ember-data/serializer/transform';
 
   export default class ColorTransform extends DS.Transform {
     // properties and methods
@@ -250,30 +232,28 @@ The declarations and changes you need to add to your existing files are:
   }
   ```
 
-In addition to the registry, note the oddly defined class for `DS.Model`s. This is because we need to set up the attribute bindings on the prototype (for a discussion of how and why this is different from class properties, see [Typing Your Ember, Update, Part 2][pt2]), but we cannot just use a `const` here because we need a named type—like a class!—to reference in the type registry and elsewhere in the app.
-
-[pt2]: http://www.chriskrycho.com/2018/typing-your-ember-update-part-2.html
-
 #### Opt-in unsafety
 
 Also notice that unlike with service and controller injections, there is no unsafe fallback method by default, because there isn't an argument-less variant of the functions to use as there is for `Service` and `Controller` injection. If for some reason you want to opt _out_ of the full type-safe lookup for the strings you pass into methods like `findRecord`, `adapterFor`, and `serializerFor`, you can add these declarations somewhere in your project:
 
 ```ts
-import DS from 'ember-data';
+import Model from '@ember-data/model';
+import Adapter from '@ember-data/adapter';
+import Serializer from '@ember-data/serializer';
 
 declare module 'ember-data/types/registries/model' {
   export default interface ModelRegistry {
-    [key: string]: DS.Model;
+    [key: string]: Model;
   }
 }
 declare module 'ember-data/types/registries/adapter' {
   export default interface AdapterRegistry {
-    [key: string]: DS.Adapter;
+    [key: string]: Adapter;
   }
 }
 declare module 'ember-data/types/registries/serializer' {
   export default interface SerializerRegistry {
-    [key: string]: DS.Serializer;
+    [key: string]: Serializer;
   }
 }
 ```
@@ -295,7 +275,7 @@ This happens because the types for Ember's _test_ tooling includes the types for
 ```ts
 declare module 'ember-data/types/registries/model' {
   export default interface ModelRegistry {
-    [key: string]: any;
+    [key: string]: unknown;
   }
 }
 ```
