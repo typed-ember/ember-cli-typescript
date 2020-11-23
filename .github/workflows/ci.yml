@@ -28,6 +28,11 @@ jobs:
       steps:
         - name: Checkout Code
           uses: actions/checkout@v2
+          # We need the `with` argument here so that force pushes (e.g. from
+          # Renovate rebasing) work correctly.
+          # https://github.com/wagoid/commitlint-github-action/tree/d6a383492a776126bbeba8c1d797ead4baedaaae#usage
+          with:
+            fetch-depth: 0
         - name: Commitlint
           uses: wagoid/commitlint-github-action@v2.1.1
 
