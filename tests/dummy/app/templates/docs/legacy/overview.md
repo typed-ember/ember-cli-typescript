@@ -78,6 +78,6 @@ export default class User extends Model {}
 
 #### `Service`
 
-Since Ember is largely, and increasingly, a [“component-service framework”], you will find that you regularly need to specify the types of services you inject in other 
+Since Ember is largely, and increasingly, a [“component-service framework”], you will find that you regularly need to specify the types of services you inject in other services, components, etc. For details, see [Services](./services/).
 
-[“component-service framework”]: TODO
+[“component-service framework”]: https://medium.com/@pzuraq/emberjs-2018-ember-as-a-component-service-framework-2e49492734f1
