@@ -36,13 +36,15 @@ error Command failed with exit code 1.
 
 </details>
 
-This occurs whenever your `yarn.lock` or `package-lock.json` files include more than a single copy of a given set of type definitions—here, types for `@ember/object`, named `@types/ember__object`. See below for details on the yarn behavior, and {{#link-to 'docs.type-defs.package-names'}}<b>Understanding the Package Names</b>{{/link-to}} for details on the package names.
+This occurs whenever your `yarn.lock` or `package-lock.json` files include more than a single copy of a given set of type definitions—here, types for `@ember/object`, named `@types/ember__object`. See below for details on the package manager behavior, and {{#link-to 'docs.type-defs.package-names'}}<b>Understanding the Package Names</b>{{/link-to}} for details on the package names.
 
 ## Workarounds
 
-There are currently two recommended workarounds for this:
+There are currently three recommended workarounds for this:
 
-- You can specify a specific version of the package to use in the `"resolutions"` key in `package.json`. For example, if you saw that you had `@types/ember__object@3.0.8` from the default package installs but `@types/ember__object@3.0.5` from `some-cool-ts-addon`, you could force yarn to use `3.0.8` like so:
+- If using `npm`, you can use `npm upgrade --depth=1 @types/ember__object` to upgrade just that specific dependency and anywhere it is used as a transitive dependency of your top-level dependencies. You can also use its `npm dedupe` command, which may resolve the issue.
+
+- If using `yarn`, you can specify a specific version of the package to use in the `"resolutions"` key in `package.json`. For example, if you saw that you had `@types/ember__object@3.0.8` from the default package installs but `@types/ember__object@3.0.5` from `some-cool-ts-addon`, you could force yarn to use `3.0.8` like so:
 
     ```json
     {
@@ -59,6 +61,8 @@ There are currently two recommended workarounds for this:
     yarn add -D @types/ember some-cool-ts-addon
     ```
 
+You may *also* be able to use [`yarn-deduplicate`](https://github.com/atlassian/yarn-deduplicate), but this does not work 100% of the time, so if you try it and are still seeing the issues, try one of the solutions above.
+
 [default packages]: ../../docs#other-packages-this-addon-installs
 
 ## Understanding the Problem
@@ -67,11 +71,9 @@ When you are using TypeScript in your Ember application, you consume Ember's typ
 
 [DefinitelyTyped]: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-However, later installs may introduce conflicting versions of the types, simply by way of yarn's normal update rules. TypeScript requires that there be one and only one type definition a given item can resolve to. Yarn actively avoids changing a previously-installed version of a transitive dependency when a newly installed package depends on the same dependency transitively. Thus, if one of your dependencies *also* depends on the same package from `@types/*` that you do, and you upgrade your dependence on that type by editing your `package.json` file and running `yarn` again, TypeScript will suddenly start offering the error described in detail above:
+However, later installs may introduce conflicting versions of the types, simply by way of yarn's normal update rules. TypeScript requires that there be one and only one type definition a given item can resolve to. Yarn actively avoids changing a previously-installed version of a transitive dependency when a newly installed package depends on the same dependency transitively. Thus, if one of your dependencies *also* depends on the same package from `@types/*` that you do, and you upgrade your dependence on that type by editing your `package.json` file and running `yarn` or `npm install` again, TypeScript will suddenly start offering the error described in detail above:
 
 > Duplicate identifier 'EmberObject'.ts(2300)
-
-Normally, running `yarn upgrade @types/ember__object` instead of updating your `package.json` file will resolve this for you, because yarn will deduplicate the packages once again. ::TODO: confirm this is accurate!::
 
 Let's imagine three packages, `A`, `B`, and `C`, where `A` is *your* app or library, and `B` and `C` have the following versions and dependencies:
 
@@ -109,15 +111,17 @@ Now, let's say that `C` publishes a new version, `1.2.4`, and `A` (your app or l
 }
 ```
 
-When yarn runs, it goes out of its way to leave the *existing* installation of `C` in place, while adding a *new* version for you as a top-level consumer. So now you have two versions of `C` installed in your `node_modules` directory: `1.2.3` (for `B`) and `1.2.4` (for `A`, your app or library).
+When your package manager runs (especially in the case of `yarn`), it goes out of its way to leave the *existing* installation of `C` in place, while adding a *new* version for you as a top-level consumer. So now you have two versions of `C` installed in your `node_modules` directory: `1.2.3` (for `B`) and `1.2.4` (for `A`, your app or library).
 
 What's important to understand here is that this is *exactly* the behavior you want as the default in the Node ecosystem. Automatically updating a transitive dependency—even when the change is simply a bug fix release—*can* cause your entire app or library to stop working. If one of your dependencies accidentally depended on that buggy behavior, and adding a direct dependency on the fixed version caused the buggy version to be upgraded, you're just out of luck. Yarn accounts for this by resolving packages to the same version during initial installation, but leaving existing package resolutions as they are when adding new dependencies later.
 
-Unfortunately, this is also the *opposite* of what you want for TypeScript, which needs a single source of truth for the types in your app or library. When you install the type definitions, and then *later* install a package which transitively depends on those type definitions
+Unfortunately, this is also the *opposite* of what you want for TypeScript, which needs a single source of truth for the types in your app or library. When you install the type definitions, and then *later* install a package which transitively depends on those type definitions, you end up with multiple sources of truth for the types.
 
 ## Understanding the Workarounds
 
-The two solutions listed above both make sure Yarn only installs a single version of the package.
+The solutions listed above both make sure npm apd Yarn only install a single version of the package.
+
+- Explicitly upgrading the dependencies or using `dedupe` resolves to a single version in npm.
 
 - Specifying a version in the `"resolutions"` field in your `package.json` simply forces Yarn to resolve *every* reference to that package to a single version. This actually works extremely well for types, but it means that every time you either update the types package(s) yourself *or* update a package which transitively depends on them, you have to edit this value manually as well.
 
