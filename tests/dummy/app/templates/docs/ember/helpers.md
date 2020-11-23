@@ -99,7 +99,7 @@ export default class Greet extends Helper {
 }
 </DocsSnippet>
 
-For more details on using decorators, see our [guide to using Ember classes in TypeScript][classes]. For details on using services, see our [guide to services][services].
+For more details on using decorators, see our [guide to using decorators][decorators]. For details on using services, see our [guide to services][services].
 
-[classes]: TODO
-[services]: TODO
+[decorators]: (../ts/decorators/)
+[services]: (./services/)
