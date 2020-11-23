@@ -288,26 +288,7 @@ Some common stumbling blocks for people switching to ES6 classes from the tradit
 
 ## Type definitions outside `node_modules/@types`
 
-By default, the TypeScript compiler loads all type definitions found in `node_modules/@types`. If the type defs you need are not found there and are not supplied in the root of the package you're referencing, you can register a custom value in `paths` in the `tsconfig.json` file. For example, if you're using [ember-browserify], you're used to writing imports like this:
-
-[ember-browserify]: https://github.com/ef4/ember-browserify
-
-```js
-import MyModule from 'npm:my-module';
-```
-
-If `my-module` has types, you will not be able to resolve them this way by default. You can add a simple tweak to your `tsconfig.json` to resolve the types correctly, however, mapping `npm:*` to `node_modules/*`.
-
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "my-app-name/*": ["app/*"],
-      "npm:*": ["node_modules/*"]
-    }
-  }
-}
-```
+By default, the TypeScript compiler loads all type definitions found in `node_modules/@types`. If the type defs you need are not found there and are not supplied in the root of the package you're referencing, you can register a custom value in `paths` in the `tsconfig.json` file. See the [tsconfig.json docs](http://www.typescriptlang.org/docs/handbook/compiler-options.html#compiler-options) for details.
 
 ## ember-cli-mirage
 
