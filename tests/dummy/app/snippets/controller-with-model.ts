@@ -4,6 +4,6 @@ import MyRoute from '../routes/my-route';
 import { ModelFrom } from '../lib/type-utils';
 
 export default class ControllerWithModel extends Controller {
-  model!: ModelFrom<MyRoute>;
+  declare model: ModelFrom<MyRoute>;
 }
 // END-SNIPPET

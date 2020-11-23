@@ -6,9 +6,9 @@ import Site from './site';
 
 export default class Post extends Model {
   @belongsTo('user')
-  user!: DS.PromiseObject<User>;
+  declare user: DS.PromiseObject<User>;
 
   @belongsTo('site', { async: false })
-  site!: Site;
+  declare site: Site;
 }
 // END-SNIPPET

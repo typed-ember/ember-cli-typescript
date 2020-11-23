@@ -7,9 +7,9 @@ import User from './user';
 
 export default class Thread extends Model {
   @hasMany('comment')
-  comment!: DS.PromiseManyArray<Comment>;
+  declare comment: DS.PromiseManyArray<Comment>;
 
   @hasMany('user', { async: false })
-  participants!: EmberArray<User>;
+  declare participants: EmberArray<User>;
 }
 // END-SNIPPET

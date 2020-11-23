@@ -6,11 +6,11 @@ import { action } from '@ember/object';
 import ShoppingCartService from 'my-app/services/shopping-cart';
 
 export default class CartContentsComponent extends Component {
-  @service shoppingCart!: ShoppingCartService;
+  @service declare shoppingCart: ShoppingCartService;
 
   @action
   remove(item) {
     this.shoppingCart.remove(item);
   }
-};
+}
 // END-SNIPPET
