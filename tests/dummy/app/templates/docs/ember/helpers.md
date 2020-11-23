@@ -16,7 +16,7 @@ The basic type of a helper function in Ember is:
 
 ```ts
 type FunctionBasedHelper =
-  (positional: unknown[], named: Dict) => string | void;
+  (positional: unknown[], named: Record<string, unknown>) => string | void;
 ```
 
 This represents a function which *may* have an arbitrarily-long list of positional arguments, which *may* be followed by a single dictionary-style object containing any named arguments.
@@ -24,14 +24,12 @@ This represents a function which *may* have an arbitrarily-long list of position
 There are three important points about this definition:
 
 1. `positional` is an array of `unknown`, of unspecified length.
-2. `named` is a `Dict` (automatically of type `unknown`).
+2. `named` is a `Record`.
 3. Both arguments are always set, but may be empty.
 
-Let’s walk through both of these.
+Let’s walk through each of these.
 
 ### Handling `positional` arguments
-
-TODO
 
 The type is an array of `unknown` because we don’t (yet!) have any way to make templates aware of the information in this definition—so users could pass in *anything*. We can work around this using [type narrowing]—TypeScript’s way of using runtime checks to inform the types at runtime.
 
@@ -52,15 +50,9 @@ function totalLength(positional: unknown[]) {
 
 ### Handling `named` arguments
 
-We specified the type of `named` as a `Dict` with a type parameter of `unknown`. `Dict` is defined like this:
+We specified the type of `named` as a `Record<string, unknown>`. `Record` is a built-in TypeScript type representing a fairly standard type in JavaScript: an object being used as a simple map of keys to values. Here we set the values to `unknown` and the keys to `string`, since that accurately represents what callers may actually pass to a helper.
 
-<DocsSnippet @name='dict.ts' @showCopy={{false}} />
-
-This describes a fairly standard type in JavaScript: an object being used as a simple map of string keys to values. The type is `T | undefined` because any given string may or may not have a value associated with it:
-
-<DocsSnippet @name='dict-usage.ts' @showCopy={{false}} />
-
-As with `positional`, we specify the type here as `unknown` to account for the fact that the template layer isn’t aware of types yet.
+(As with `positional`, we specify the type here as `unknown` to account for the fact that the template layer isn’t aware of types yet.)
 
 ### `positional` and `named` presence
 
@@ -86,7 +78,7 @@ The basic type of a class-based helper function in Ember is:
 
 ```ts
 interface ClassBasedHelper {
-  compute(positional?: unknown[], named?: Dict<unknown>): string | void;
+  compute(positional?: unknown[], named?: Record<string, unknown>): string | void;
 }
 ```
 
