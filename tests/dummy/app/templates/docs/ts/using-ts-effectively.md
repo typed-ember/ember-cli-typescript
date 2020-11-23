@@ -26,6 +26,8 @@ Some specific tips for success on the technical front:
 
   ![type errors in your build!](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif 'example of a build error during live reload')
 
+  *Note that this will __fail your build__ if you have type errors.* This is generally preferable, but can sometimes be surprising.
+
 - There are two schools of thought on how to handle things you don't have types for as you go:
 
     - Liberally use `any` for them and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it."
