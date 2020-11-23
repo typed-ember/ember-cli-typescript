@@ -189,9 +189,7 @@ The declarations and changes you need to add to your existing files are:
   ```ts
   import Adapter from '@ember-data/adapter';
 
-  export default class UserMeta extends Adapter {
-    // properties and methods
-  }
+  export default class UserMeta extends Adapter {}
 
   declare module 'ember-data/types/registries/adapter' {
     export default interface AdapterRegistry {
@@ -205,9 +203,7 @@ The declarations and changes you need to add to your existing files are:
   ```ts
   import Serializer from '@ember-data/serializer';
 
-  export default class UserMeta extends Serializer {
-    // properties and methods
-  }
+  export default class UserMeta extends Serializer {}
 
   declare module 'ember-data/types/registries/serializer' {
     export default interface SerializerRegistry {
@@ -221,9 +217,7 @@ The declarations and changes you need to add to your existing files are:
   ```ts
   import Transform from '@ember-data/serializer/transform';
 
-  export default class ColorTransform extends DS.Transform {
-    // properties and methods
-  }
+  export default class ColorTransform extends Transform {}
 
   declare module 'ember-data/types/registries/transform' {
     export default interface TransformRegistry {
@@ -258,7 +252,7 @@ declare module 'ember-data/types/registries/serializer' {
 }
 ```
 
-However, we **_strongly_** recommend that you simply take the time to add the few lines of declarations to each of your `DS.Model`, `DS.Adapter`, and `DS.Serializer` instances instead. It will save you time in even the short run!
+However, we **_strongly_** recommend that you simply take the time to add the few lines of declarations to each of your `Model`, `Adapter`, and `Serializer` instances instead. It will save you time in even the short run!
 
 #### Fixing the Ember Data `error TS2344` problem
 
@@ -268,7 +262,7 @@ If you're developing an Ember app or addon and _not_ using Ember Data (and accor
 node_modules/@types/ember-data/index.d.ts(920,56): error TS2344: Type 'any' does not satisfy the constraint 'never'.
 ```
 
-This happens because the types for Ember's _test_ tooling includes the types for Ember Data because the `this` value in several of Ember's test types can include a reference to `DS.Store`.
+This happens because the types for Ember's _test_ tooling includes the types for Ember Data because the `this` value in several of Ember's test types can include a reference to the Ember Data `Store` class.
 
 **The fix:** add a declaration like this in a new file named `ember-data.d.ts` in your `types` directory:
 
