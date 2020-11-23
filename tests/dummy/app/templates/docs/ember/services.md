@@ -46,4 +46,8 @@ Here we need to cast the lookup result to `ShoppingCartService` in order to get 
 
 Caution: This type-cast provides no guarantees that what is returned by the lookup is actually the service you are expecting. Because TypeScript cannot resolve the lookup micro-syntax (`service:<name>`) to the service class, a typo would result in returning something other than the specified type. It only gurantees that *if* the expected serbice is returned that you are using it correctly.
 
+There is a merged, but not yet implemented, RFC which improves this design and makes it straightforward to type-check. Additionally, TypeScript 4.1's introduction of [template types](https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#template-literal-types) may allow us to supply types that work with the microsyntax.
+
+For now, however, remember that *the cast is unsafe*!
+
 </aside>
