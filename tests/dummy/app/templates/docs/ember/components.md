@@ -107,3 +107,27 @@ Then we could capture the types for the profile with an interface representing t
 <DocsSnippet @name='user-profile.ts' @title='my-app/components/user-profile.ts' @showCopy={{true}} />
 
 Assuming the default `tsconfig.json` settings (with `strictNullChecks: true`), this wouldn't type-check if we didn't *check* whether the `bio` argument were set, or if our `isURL` didn't account for the possibility of the string not being set.
+
+## Generic subclasses
+
+If you'd like to make your *own* component subclass-able, you need to make it generic as well.
+
+<aside>
+
+Are you sure you want to provide an inheritance-based API? Oftentimes, it's easier to maintain (and involves less TypeScript hoop-jumping) to use a compositional API instead. If you're sure, here's how!
+
+</aside>
+
+```ts
+import Component from '@glimmer/component';
+
+export interface FancyInputArgs {
+  // ...
+}
+
+export default class FancyInput<Args extends FancyInputArgs = FancyInputArgs> extends Component<Args> {
+  // ...
+}
+```
+
+Requiring that `Args extends FancyInputArgs` means that subclasses can have *more* than these args, but not *fewer*. Specifying that the `Args = FancyInputArgs` means that they *default* to just being `FancyInputArgs`, so users don't need to supply an explicit generic type parameter here unless they're adding more arguments to the class.
