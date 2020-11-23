@@ -15,7 +15,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: '^8.12'
+          node-version: '^10'
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Set Git Identity
