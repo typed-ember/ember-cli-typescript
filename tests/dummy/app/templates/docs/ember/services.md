@@ -26,7 +26,7 @@ When working in Octane, you're better off using a `TrackedArray` from [tracked-b
 
 ## Using services
 
-You can use a service in any container-resolved object such as a component or another service. Services are injected into these objects by decorating a property with the `inject` decorator. Because decorators can't affect the type of the property they decorate, we must manually type the property. Also, we must use the non-null assertion operator `!` to tell the TypeScript compiler to trust that this property will be initialized (TypeScript is not aware of service injection).
+You can use a service in any container-resolved object such as a component or another service. Services are injected into these objects by decorating a property with the `inject` decorator. Because decorators can't affect the type of the property they decorate, we must manually type the property. Also, we must use `declare` modifier to tell the TypeScript compiler to trust that this property will be set up by something outside this component—namely, the decorator.
 
 Here's an example of using the `ShoppingCartService` we defined above in a component:
 
