@@ -142,6 +142,7 @@ Any place where a type annotation overrides a *getter*
         }
         ```
 
+    Notably, this is not a problem for Glimmer components, so migrating to Octane will also help!
 
 - `const enum` is not supported at all. You will need to replace all uses of `const enum` with simply `enum` or constants.
 

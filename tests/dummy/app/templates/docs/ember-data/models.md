@@ -29,13 +29,13 @@ export default class User extends Model {
   name?:  string;
 
   @attr('number')
-  age!: number;
+  declare age: number;
 
   @attr('boolean')
-  isAdmin!: boolean;
+  declare isAdmin: boolean;
 
   @attr('custom-transform')
-  myCustomThing!: CustomType;
+  declare myCustomThing: CustomType;
 }
 ```
 
