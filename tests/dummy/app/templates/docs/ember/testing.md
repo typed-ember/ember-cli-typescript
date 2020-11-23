@@ -216,7 +216,7 @@ export default class Profile extends Component<User> {
 
 Not familiar with how we define a Glimmer `Component` and its arguments? Check out [our guide][glimmer-component]!
 
-[glimmer-component]: TODO
+[glimmer-component]: ./components/
 
 </aside>
 
