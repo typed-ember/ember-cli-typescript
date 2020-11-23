@@ -266,11 +266,7 @@ module('Integration | Component | Profile', function(hooks) {
 });
 ```
 
-This is a decent test, and TypeScript actually makes the experience of writing certain parts of it pretty nice. Unfortunately, though, it won’t type-check. TypeScript reports:
-
-> <!-- TODO: the actual error message about `TestContext` -->
-
-TypeScript *does* know that QUnit sets up a test context—helpfully named `TestContext`—so a lot of the things we can do in tests work out of the box—but we haven’t told TypeScript that `this` now has a `user` property on it.
+This is a decent test, and TypeScript actually makes the experience of writing certain parts of it pretty nice. Unfortunately, though, it won’t type-check. TypeScript reports that the `user` field doesn't exist on the `TestContext`. Now, TypeScript *does* know that QUnit sets up that helpfully-named `TestContext`—so a lot of the things we can do in tests work out of the box—but we haven’t told TypeScript that `this` now has a `user` property on it.
 
 To inform TypeScript about this, we need to tell it that the type of `this` in each test assertion includes the `user` property, of type `User`. We’ll start by importing the `TestContext` defined by Ember’s test helpers, and extending it:
 
@@ -292,7 +288,7 @@ test('...', function(this: Context, assert) {
 });
 ```
 
-[this-type]: TODO -- link to docs
+[this-type]: https://www.typescriptlang.org/docs/handbook/functions.html#this
 
 Putting it all together, this is what our updated test definition would look like:
 
