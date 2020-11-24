@@ -3,7 +3,7 @@
 This guide is designed to help you get up and running with TypeScript in an Ember app.
 
 {% hint style="warning" %}
-**This is** _**not**_ **an introduction to TypeScript** _**or**_ **Ember. Throughout this guide, we’ll link back to** [**The TypeScript Docs**](https://www.typescriptlang.org/docs/home.html) **and** [**the Ember Guides**](https://guides.emberjs.com/release/) **when there are specific concepts that we will not explain here but which are important for understanding what we’re covering!**
+**This is** _**not**_ **an introduction to TypeScript** _**or**_ **Ember. Throughout this guide, we’ll link back to** [**the TypeScript docs**](https://www.typescriptlang.org/docs/home.html) **and** [**the Ember Guides**](https://guides.emberjs.com/release/) **when there are specific concepts that we will not explain here but which are important for understanding what we’re covering!**
 {% endhint %}
 
 To get started, check out the instructions in [Getting Started: Installation](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/getting-started/installation/README.md)
