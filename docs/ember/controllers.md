@@ -1,10 +1,10 @@
 # Controllers
 
-Like [routes](./routes/), controllers are just normal classes with a few special Ember lifecycle hooks and properties available.
+Like [routes](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/ember/routes/README.md), controllers are just normal classes with a few special Ember lifecycle hooks and properties available.
 
-The main thing you need to be aware of is special handling around query params. In order to provide type safety for query param configuration, Ember's types specify that when defining a query param's `type` attribute, you must supply one of the allowed types: `'boolean'`, `'number'`, `'array'`, or `'string'` (the default). However, if you supply these types as you would in JS, like this:
+The main thing you need to be aware of is special handling around query params. In order to provide type safety for query param configuration, Ember's types specify that when defining a query param's `type` attribute, you must supply one of the allowed types: `'boolean'`, `'number'`, `'array'`, or `'string'` \(the default\). However, if you supply these types as you would in JS, like this:
 
-```ts
+```typescript
 import Controller from "@ember/controller";
 
 export default class HeyoController extends Controller {
@@ -18,7 +18,7 @@ export default class HeyoController extends Controller {
 
 Then you will see a type error like this:
 
-```
+```text
 Property 'queryParams' in type 'HeyoController' is not assignable to the same property in base type 'Controller'.
   Type '{ category: { type: string; }; }[]' is not assignable to type '(string | Record<string, string | QueryParamConfig | undefined>)[]'.
     Type '{ category: { type: string; }; }' is not assignable to type 'string | Record<string, string | QueryParamConfig | undefined>'.
@@ -46,3 +46,4 @@ export default class HeyoController extends Controller {
 ```
 
 Now it will type-check.
+

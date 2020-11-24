@@ -2,12 +2,12 @@
 
 There are two variants of Ember’s computed properties you may encounter:
 
-- the decorator form used with native (ES6) classes
-- the callback form used with classic classes (based on <LinkTo @route='docs.legacy.ember-object'>EmberObject</LinkTo>)
+* the decorator form used with native \(ES6\) classes
+* the callback form used with classic classes \(based on EmberObject\)
 
 ## Decorator form
 
-```ts
+```typescript
 import Component from '@ember/component';
 import { computed } from '@ember/object/computed';
 
@@ -28,7 +28,7 @@ Note that it is impossible for `@computed` to know whether the keys you pass to 
 
 Computed properties in the classic object model take a callback instead:
 
-```ts
+```typescript
 import Component from '@ember/component';
 import { computed } from '@ember/object/computed';
 
@@ -46,7 +46,7 @@ export default UserProfile;
 
 This definition will not type-check, however. You will need to explicitly write out a `this` type for computed property callbacks for `get` and `set` to type-check correctly:
 
-```ts
+```typescript
 import Component from '@ember/component';
 import { computed } from '@ember/object/computed';
 
@@ -66,6 +66,7 @@ const UserProfile = Component.extend({
 export default UserProfile;
 ```
 
-Note that this *does not always work*: you may get warnings from TypeScript about the item being defined in terms of itself.
+Note that this _does not always work_: you may get warnings from TypeScript about the item being defined in terms of itself.
 
-**Accordingly, we strongly recommend migrating classic classes to ES native classes *before* adding TypeScript!**
+**Accordingly, we strongly recommend migrating classic classes to ES native classes** _**before**_ **adding TypeScript!**
+
