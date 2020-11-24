@@ -2,13 +2,14 @@
 
 Helpers in Ember are just functions or classes with a well-defined interface, which means they largely Just Work™ with TypeScript. However, there are a couple things you’ll want to watch out for.
 
-<aside>
+{% hint style="info" %}
 
 As always, you should start by reading and understanding the [Ember Guide on Helpers][guide]!
 
-</aside>
-
 [guide]: https://guides.emberjs.com/release/templates/writing-helpers/
+
+{% endhint %}
+
 
 ## Function-based helpers
 

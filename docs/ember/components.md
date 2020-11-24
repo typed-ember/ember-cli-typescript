@@ -1,11 +1,10 @@
 # Components
 
-<aside>
+{% hint style="info" %}
 
 New to Ember or the Octane edition specifically? You may want to read [the Ember Guides’ material on `Component`s](https://guides.emberjs.com/release/components/) first!
 
-</aside>
-
+{% endhint %}
 
 Glimmer Components are defined in one of three ways: with templates only, with a template and a backing class, or with only a backing class (i.e. a `yield`-only component). When using a backing class, you get a first-class experience using TypeScript! Unfortunately, we don’t yet support type-checking for templates, but we hope to build that out eventually. Don’t let that stop you, though: types in your component classes make for a great experience, so let’s dig in and see how it works in practice.
 
@@ -84,11 +83,11 @@ The types for `owner` here and `args` line up with what the `constructor` for Gl
 
 If we used `object`, we could end up with TypeScript thinking `args` were an array, or a `Set`, or anything else that isn’t a primitive. Since we have `{}`, we *know* that it's an object.
 
-<aside>
+{% hint style="info" %}
 
 For some further details, check out [this blog post](https://mariusschulz.com/blog/the-object-type-in-typescript).
 
-</aside>
+{% endhint %}
 
 The `args` passed to a Glimmer Component [are available on `this`](https://github.com/glimmerjs/glimmer.js/blob/2f840309f013898289af605abffe7aee7acc6ed5/packages/%40glimmer/component/src/component.ts#L12), so we could change our definition to return the names of the arguments from a getter:
 

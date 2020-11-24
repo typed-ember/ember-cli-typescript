@@ -2,13 +2,13 @@
 
 Ember Services are global singleton classes that can be made available to different parts of an Ember application via dependency injection. Due to their global, shared nature, writing services in TypeScript gives you a build-time-enforcable API for some of the most central parts of your application.
 
-<aside>
+{% hint style="info" %}
 
 If you are not familiar with Services in Ember, first make sure you have read and understood the [Ember Guide on Services][guide]!
 
-</aside>
-
 [guide]: https://guides.emberjs.com/release/services/
+
+{% endhint %}
 
 ## A basic service
 

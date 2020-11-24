@@ -12,13 +12,13 @@ One major difference when working with TypeScript in *app* code is that once you
 
 First, the function we're testing might look like this.
 
-<aside>
+{% hint style="info" %}
 
 Here we’re using the `assert` from `@ember/debug`. If you’re not familiar with it, you might want to take a look at its [API docs][debug-assert]! It’s a development-and-test-only helper that gets stripped from production builds, and is very helpful for this kind of thing!
 
 [debug-assert]: https://api.emberjs.com/ember/3.14/functions/@ember%2Fdebug/assert
 
-</aside>
+{% endhint %}
 
 ```js
 // app/utils/math.js
@@ -212,13 +212,13 @@ export default class Profile extends Component<User> {
 }
 ```
 
-<aside>
+{% hint style="info" %}
 
 Not familiar with how we define a Glimmer `Component` and its arguments? Check out [our guide][glimmer-component]!
 
 [glimmer-component]: ./components/
 
-</aside>
+{% endhint %}
 
 Now, with that setup out of the way, let’s get back to talking about the text context! We need to set up a `User` to pass into the test. With TypeScript on our side, we can even make sure that it actually matches up to the type we want to use!
 
@@ -343,10 +343,10 @@ module('Integration | Component | Profile', function(hooks) {
 
 Now everything type-checks again, and we get the nice auto-completion we’re used to when dealing with `this.user` in the test body.
 
-<aside>
+{% hint style="info" %}
 
 If you’ve been around TypeScript a little, and you look up the type of the `TestContext` and realize its an interface, you might be tempted to reach for declaration merging here. Don’t! If you do that, *every single test in your entire application* will now have a `user: User` property on it!
 
-</aside>
+{% endhint %}
 
 There are still a couple things to be careful about here, however. First, we didn’t specify that the `this.user` property was *optional*. That means that TypeScript won’t complain if you do `this.user` *before* assigning to it. Second, every test in our module gets the same `Context`. Depending on what you’re doing, that may be fine, but you may end up needing to define multiple distinct test context extensions. If you *do* end up needing to define a bunch of different test context extension, that may be a sign that this particular set of tests is doing too much. That in turn is probably a sign that this particular *component* is doing too much!

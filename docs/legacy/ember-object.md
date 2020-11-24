@@ -12,11 +12,11 @@ When working with the legacy Ember object model, `EmberObject`, there are a numb
 
 Additionally, Ember’s mixin system is deeply linked to the semantics and implementation details of `EmberObject`, *and* it has the most caveats and limitations.
 
-<aside>
+{% hint style="info" %}
 
 In the future, some of these may be able to drop their `EmberObject` base class dependency, but that will not happen till at least the next major version of Ember, and these guides will be updated when that happens.
 
-</aside>
+{% endhint %}
 
 
 ## Mixins and classic class syntax
@@ -25,11 +25,11 @@ The Ember mixin system is the legacy Ember construct TypeScript supports *least*
 
 While we describe here how to use types with classic (mixin-based) classes insofar as they *do* work, there are many failure modes. As a result, we strongly recommend moving away from both classic classes and mixins, and as quickly as possible. This is the direction the Ember ecosystem as a whole is moving, but it is *especially* important for TypeScript users.
 
-<aside>
+{% hint style="info" %}
 
 The [Ember Atlas] includes guides for migrating [from classic classes to native classes][classic to native], along with [a variety of patterns][mixin patterns] for dealing with specific kinds of mixins in your codebase.
 
-</aside>
+{% endhint %}
 
 [Ember Atlas]: https://emberatlas.com
 [classic to native]: https://www.notion.so/Native-Classes-55bd67b580ca49f999660caf98aa1897
