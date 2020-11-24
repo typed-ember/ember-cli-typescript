@@ -19,7 +19,7 @@
 * [Working With Ember Data](ember-data/README.md)
   * [Overview: Ember Data](ember-data/overview.md)
   * [Models](ember-data/models.md)
-* [cookbook](cookbook/README.md)
+* [Cookbook](cookbook/README.md)
   * [Overview](cookbook/overview.md)
   * [Working with route models](cookbook/working-with-route-models.md)
 * [Working With Ember Classic](legacy/README.md)
