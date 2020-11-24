@@ -7,7 +7,7 @@
   * [Decorators](ts/decorators.md)
   * [Current limitations](ts/current-limitations.md)
   * [Building Addons in TypeScript](ts/with-addons.md)
-  * [Understanding the Package Names](type-defs/package-names.md)
+  * [Understanding the Package Names](ts/package-names.md)
 * [Working With Ember](ember/README.md)
   * [Controllers](ember/controllers.md)
   * [Services](ember/services.md)
