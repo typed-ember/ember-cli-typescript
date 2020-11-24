@@ -14,15 +14,34 @@ If you are not familiar with Services in Ember, first make sure you have read an
 
 Let's take this example from the [Ember Guide][guide]:
 
-<DocsSnippet @name='shopping-cart.ts' @title='app/services/shopping-cart.ts' @showCopy={{true}} />
+```ts
+import { A } from '@ember/array';
+import Service from '@ember/service';
+
+export default class ShoppingCartService extends Service {
+  items = A([]);
+
+  add(item) {
+    this.items.pushObject(item);
+  }
+
+  remove(item) {
+    this.items.removeObject(item);
+  }
+
+  empty() {
+    this.items.clear();
+  }
+}
+```
 
 Just making this a TypeScript file gives us some type safety without having to add any additional type information. We'll see this when we use the service elsewhere in the application.
 
-<aside>
+{% hint style="info" %}
 
 When working in Octane, you're better off using a `TrackedArray` from [tracked-built-ins](https://github.com/pzuraq/tracked-built-ins) instead of the classic EmberArray.
 
-</aside>
+{% endhint %}
 
 ## Using services
 
@@ -30,24 +49,72 @@ You can use a service in any container-resolved object such as a component or an
 
 Here's an example of using the `ShoppingCartService` we defined above in a component:
 
-<DocsSnippet @name='cart-contents.ts' @title='app/components/cart-contents.ts' @showCopy={{true}} />
+```ts
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+
+import ShoppingCartService from 'my-app/services/shopping-cart';
+
+export default class CartContentsComponent extends Component {
+  @service declare shoppingCart: ShoppingCartService;
+
+  @action
+  remove(item) {
+    this.shoppingCart.remove(item);
+  }
+}
+```
 
 Any attempt to access a property or method not defined on the service will fail type-checking:
 
-<DocsSnippet @name='cart-contents-bad.ts' @title='app/components/cart-contents.ts' @showCopy={{false}} />
+```ts
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+
+import ShoppingCartService from 'my-app/services/shopping-cart';
+
+export default class CartContentsComponent extends Component {
+  @service declare shoppingCart: ShoppingCartService;
+
+  @action
+  remove(item) {
+    // Error: Property 'saveForLater' does not exist on type 'ShoppingCartService'.
+    this.shoppingCart.saveForLater(item);
+  }
+}
+```
 
 Services can also be loaded from the dependency injection container manually:
 
-<DocsSnippet @name='cart-contents-lookup.ts' @title='app/components/cart-contents.ts' @showCopy={{true}} />
+```ts
+import Component from '@glimmer/component';
+import { getOwner } from '@ember/application';
+import { action } from '@ember/object';
+
+import ShoppingCartService from 'my-app/services/shopping-cart';
+
+export default class CartContentsComponent extends Component {
+  get cart() {
+    return getOwner(this).lookup('service:shopping-cart') as ShoppingCartService;
+  }
+
+  @action
+  remove(item) {
+    this.cart.remove(item);
+  }
+}
+```
 
 Here we need to cast the lookup result to `ShoppingCartService` in order to get any type-safety because the lookup return type is `any` (see caution below).
 
-<aside>
+{% hint style="danger" %}
 
-Caution: This type-cast provides no guarantees that what is returned by the lookup is actually the service you are expecting. Because TypeScript cannot resolve the lookup micro-syntax (`service:<name>`) to the service class, a typo would result in returning something other than the specified type. It only gurantees that *if* the expected serbice is returned that you are using it correctly.
+This type-cast provides no guarantees that what is returned by the lookup is actually the service you are expecting. Because TypeScript cannot resolve the lookup micro-syntax (`service:<name>`) to the service class, a typo would result in returning something other than the specified type. It only gurantees that *if* the expected serbice is returned that you are using it correctly.
 
-There is a merged, but not yet implemented, RFC which improves this design and makes it straightforward to type-check. Additionally, TypeScript 4.1's introduction of [template types](https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#template-literal-types) may allow us to supply types that work with the microsyntax.
+There is a merged (but not yet implemented) [RFC](https://emberjs.github.io/rfcs/0585-improved-ember-registry-apis.html) which improves this design and makes it straightforward to type-check. Additionally, TypeScript 4.1's introduction of [template types](https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#template-literal-types) may allow us to supply types that work with the microsyntax.
 
 For now, however, remember that *the cast is unsafe*!
 
-</aside>
+{% endhint %}
