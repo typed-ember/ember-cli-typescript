@@ -70,7 +70,20 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 
 So, for example, you might define a class like this:
 
-<DocsSnippet @name='belongs-to.ts' @title='my-app/models/belongs-to.ts' @showCopy={{false}} />
+```ts
+import Model, { belongsTo } from '@ember-data/model';
+import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
+import User from './user';
+import Site from './site';
+
+export default class Post extends Model {
+  @belongsTo('user')
+  declare user: DS.PromiseObject<User>;
+
+  @belongsTo('site', { async: false })
+  declare site: Site;
+}
+```
 
 These are *type*-safe to define as always present, that is to leave off the `?` optional marker:
 
@@ -89,7 +102,21 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 
 So, for example, you might define a class like this:
 
-<DocsSnippet @name='has-many.ts' @title='my-app/models/has-many.ts' @showCopy={{false}} />
+```ts
+import Model, { hasMany } from '@ember-data/model';
+import EmberArray from '@ember/array';
+import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
+import Comment from './comment';
+import User from './user';
+
+export default class Thread extends Model {
+  @hasMany('comment')
+  declare comment: DS.PromiseManyArray<Comment>;
+
+  @hasMany('user', { async: false })
+  declare participants: EmberArray<User>;
+}
+```
 
 The same basic rules about the safety of these lookups as with `@belongsTo` apply to these types. The difference is just that in `@hasMany` the resulting types are *arrays* rather than single objects.
 
