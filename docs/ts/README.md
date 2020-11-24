@@ -12,4 +12,4 @@ This guide covers the common details and "gotchas" of using TypeScript with Embe
 * [Decorators](decorators.md)
 * [Current limitations](current-limitations.md)
 * [Building Addons in TypeScript](with-addons.md)
-* [Understanding the Package Names](package-names.md)
+* [Understanding the `@types` Package Names](package-names.md)
