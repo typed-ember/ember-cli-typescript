@@ -27,7 +27,6 @@
   * [Mixins](legacy/mixins.md)
   * [Computed Properties](legacy/computed-properties.md)
   * [EmberObject](legacy/ember-object.md)
-  * [Legacy Ember Guide](legacy/overview.md)
 * [Upgrading from 1.x](upgrade-notes.md)
 * [Troubleshooting](troubleshooting/README.md)
   * [Conflicting Type Dependencies](troubleshooting/conflicting-types.md)
