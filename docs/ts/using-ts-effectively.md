@@ -2,39 +2,44 @@
 
 ## Incremental adoption
 
-If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your wins – even if they're small! – with your team, especially if some people are not convinced yet. We would also love to hear your stories!
+If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your wins—even if they're small!—with your team, especially if some people are not convinced yet. We would also love to hear your stories!
 
 Some specific tips for success on the technical front:
 
-* Use the _strictest_ strictness settings that our typings allow. While it may be tempting to start with the _loosest_ strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process – getting it type-checking with every new strictness setting you enable! – rather than something you do just once. The only strictness setting you should turn _off_ is `strictFunctionTypes`, which our current type definitions do not support. The recommended _strictness_ settings in your `"compilerOptions"` hash:
+First, use the _strictest_ strictness settings that our typings allow (currently all strictness settings except `strictFunctionTypes`). While it may be tempting to start with the _loosest_ strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process—getting it type-checking with every new strictness setting you enable—rather than something you do just once.
 
-    ```json
-    {
-      "noImplicitAny": true,
-      "noImplicitThis": true,
-      "alwaysStrict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "noFallthroughCasesInSwitch": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noImplicitReturns": true
-    }
-    ```
+The full recommended _strictness_ settings in your `"compilerOptions"` hash:
 
-* A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update _tons_ of other places in your app) when you type them later in the process.
-* Set `"noEmitOnError": true` in the `"compilerOptions"` hash in your `tsconfig.json` – it will help a lot if you can be sure that for the parts of your app you _have_ added types to are still correct. And you'll get nice feedback _immediately_ when you have type errors that way!
+```json
+{
+  "noImplicitAny": true,
+  "noImplicitThis": true,
+  "alwaysStrict": true,
+  "strictNullChecks": true,
+  "strictPropertyInitialization": true,
+  "noFallthroughCasesInSwitch": true,
+  "noUnusedLocals": true,
+  "noUnusedParameters": true,
+  "noImplicitReturns": true,
+  "noUncheckedIndexedAccess": true,
+}
+```
 
-    ![example of a build error during live reload](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif)
+A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update _tons_ of other places in your app) when you type them later in the process.
 
-    _Note that this will **fail your build** if you have type errors._ This is generally preferable, but can sometimes be surprising.
+Finally, leave `"noEmitOnError": true` (the default) in the `"compilerOptions"` hash in your `tsconfig.json`. This will fail your build if you have type errors, which gives you the fastest feedback as you add types.
 
-* There are two schools of thought on how to handle things you don't have types for as you go:
+![example of a build error during live reload](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif)
 
-    * Liberally use `any` for them and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it."
-    * Go more slowly, but write down at least minimally accurate types as you go. (This is easier if you follow the leaves-first strategy recommended above.) This is much harder, but allows you to have much higher confidence as you work through the app.
+## What about missing types?
 
-  There is an inherent tradeoff between these two approaches; which works best will depend on your team and your app.
+There are two schools of thought on how to handle things you don't have types for as you go:
+
+* Liberally use `any` for them and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it." This approach lets you move faster, but means you will still have lots of runtime type errors: `any` just turns the type-checker *off* for anything touching those modules. You’ll have to come back later and clean those up, and you’ll likely have more difficult refactorings to do at that time.
+
+* Go more slowly, but write down at least minimally accurate types as you go. (This is easier if you follow the leaves-first strategy recommended above.) This is much slower going, and can feel harder because you can’t just skip over things. Once you complete the work for any given module, though, you can be confident that everything is solid and you won’t have to revisit it in the future.
+
+There is an inherent tradeoff between these two approaches; which works best will depend on your team and your app.
 
 ## Install other types!
 
