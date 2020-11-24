@@ -60,14 +60,24 @@ For some further details, check out [this blog post](https://mariusschulz.com/bl
 
 The `args` passed to a Glimmer Component [are available on `this`](https://github.com/glimmerjs/glimmer.js/blob/2f840309f013898289af605abffe7aee7acc6ed5/packages/%40glimmer/component/src/component.ts#L12), so we could change our definition to return the names of the arguments from a getter:
 
-<DocsDemo as |demo|>
-  <demo.example>
-    <ArgsGetter @firstArg='hi' @secondArg='bye' />
-  </demo.example>
+```ts
+import Component from '@glimmer/component';
 
-  <demo.snippet @name='args-getter.ts' @label='args-getter.ts' />
-  <demo.snippet @name='args-getter.hbs' @label='args-getter.hbs' />
-</DocsDemo>
+export default class ArgsDisplay extends Component {
+  get argNames(): string[] {
+    return Object.keys(this.args);
+  }
+}
+```
+
+```hbs
+<p>The names of the <code>@args</code> are:</p>
+<ul>
+  {{#each this.argNames as |argName|}}
+    <li>{{argName}}</li>
+  {{/each}}
+</ul>
+```
 
 ### Understanding `args`
 
