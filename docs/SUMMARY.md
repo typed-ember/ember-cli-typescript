@@ -1,7 +1,7 @@
 # Table of contents
 
-* [Installation](getting-started/installation.md)
-* [Configuration](getting-started/configuration.md)
+* [Installation](installation.md)
+* [Configuration](configuration.md)
 * [TypeScript and Ember](ts/README.md)
   * [Using TypeScript with Ember effectively](ts/using-ts-effectively.md)
   * [Decorators](ts/decorators.md)
