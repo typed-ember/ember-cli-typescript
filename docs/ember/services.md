@@ -39,7 +39,30 @@ Just making this a TypeScript file gives us some type safety without having to a
 
 {% hint style="info" %}
 
-When working in Octane, you're better off using a `TrackedArray` from [tracked-built-ins](https://github.com/pzuraq/tracked-built-ins) instead of the classic EmberArray.
+When working in Octane, you're better off using a `TrackedArray` from [tracked-built-ins](https://github.com/pzuraq/tracked-built-ins) instead of the classic EmberArray:
+
+```ts
+import { TrackedArray } from 'tracked-built-ins';
+import Service from '@ember/service';
+
+export default class ShoppingCartService extends Service {
+  items = new TrackedArray();
+
+  add(item) {
+    this.items.push(item);
+  }
+
+  remove(item) {
+    this.items.splice(1, this.items.findIndex((i) => i === item));
+  }
+
+  empty() {
+    this.items.clear();
+  }
+}
+```
+
+Notice that here we are using only built-in array operations, not Ember's custom array methods.
 
 {% endhint %}
 
