@@ -4,3 +4,12 @@ In this section, we cover how to use TypeScript effectively with specific Ember 
 
 We do _not_ cover general usage of Ember; instead, we assume that as background knowledge. Please see the Ember [Guides](https://guides.emberjs.com/release/) and [API docs](https://api.emberjs.com/ember/release)!
 
+## Outline
+
+* [Controllers](ember/controllers.md)
+* [Services](ember/services.md)
+* [Overview: Ember](ember/overview.md)
+* [Testing](ember/testing.md)
+* [Components](ember/components.md)
+* [Helpers](ember/helpers.md)
+* [Routes](ember/routes.md)
