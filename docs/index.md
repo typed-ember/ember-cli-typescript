@@ -1,4 +1,4 @@
-# Overview
+# ember-cli-typescript
 
 This guide is designed to help you get up and running with TypeScript in an Ember app.
 

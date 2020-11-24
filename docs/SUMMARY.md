@@ -1,5 +1,6 @@
 # Table of contents
 
+* [ember-cli-typescript](index.md)
 * [Installation](installation.md)
 * [Configuration](configuration.md)
 * [TypeScript and Ember](ts/README.md)
