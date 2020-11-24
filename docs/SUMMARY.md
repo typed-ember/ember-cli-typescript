@@ -4,7 +4,7 @@
 * [Installation](installation.md)
 * [Configuration](configuration.md)
 * [TypeScript and Ember](ts/README.md)
-  * [Using TypeScript with Ember effectively](ts/using-ts-effectively.md)
+  * [Using TypeScript With Ember Effectively](ts/using-ts-effectively.md)
   * [Decorators](ts/decorators.md)
   * [Current limitations](ts/current-limitations.md)
   * [Building Addons in TypeScript](ts/with-addons.md)

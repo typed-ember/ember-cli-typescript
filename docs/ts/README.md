@@ -6,3 +6,10 @@ This guide covers the common details and "gotchas" of using TypeScript with Embe
 * [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)
 * [Ember docs](https://emberjs.com/learn/)
 
+## Outline
+
+* [Using TypeScript With Ember Effectively](using-ts-effectively.md)
+* [Decorators](decorators.md)
+* [Current limitations](current-limitations.md)
+* [Building Addons in TypeScript](with-addons.md)
+* [Understanding the Package Names](package-names.md)

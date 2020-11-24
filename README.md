@@ -89,7 +89,7 @@ ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
 
 #### Update ember-decorators
 
-Follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms dependency.
+If you're on a version of Ember before 3.10, follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above for ember-decorators. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms dependency.
 
 #### Update ember-cli-typescript
 
