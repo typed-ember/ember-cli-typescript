@@ -4,7 +4,20 @@ We often use routes’ models throughout our application, since they’re a core
 
 We can start by defining some type utilities to let us get the resolved value returned by a route’s model hook:
 
-<DocsSnippet @name='type-utils.ts' @title='my-app/lib/type-utils.ts' @showCopy={{true}} />
+```ts
+import Route from '@ember/routing/route';
+
+/**
+  Get the resolved type of an item.
+
+  - If the item is a promise, the result will be the resolved value type
+  - If the item is not a promise, the result will just be the type of the item
+ */
+export type Resolved<P> = P extends Promise<infer T> ? T : P;
+
+/** Get the resolved model value from a route. */
+export type ModelFrom<R extends Route> = Resolved<ReturnType<R['model']>>;
+```
 
 How that works:
 
@@ -22,7 +35,15 @@ type MyRouteModel = ModelFrom<MyRoute>;
 
 We can use this functionality to guarantee that the `model` on a `Controller` is always exactly the type returned by `Route::model` by writing something like this:
 
-<DocsSnippet @name='controller-with-model.ts' @title='my-app/controllers/controller-with-model.ts' @showCopy={{false}} />
+```ts
+import Controller from '@ember/controller';
+import MyRoute from '../routes/my-route';
+import { ModelFrom } from '../lib/type-utils';
+
+export default class ControllerWithModel extends Controller {
+  declare model: ModelFrom<MyRoute>;
+}
+```
 
 Now, our controller’s `model` property will *always* stay in sync with the corresponding route’s model hook.
 
