@@ -3,14 +3,16 @@
 This guide is designed to help you get up and running with TypeScript in an Ember app.
 
 {% hint style="warning" %}
-**This is** _**not**_ **an introduction to TypeScript** _**or**_ **Ember. Throughout this guide, we’ll link back to** [**the TypeScript docs**](https://www.typescriptlang.org/docs/home.html) **and** [**the Ember Guides**](https://guides.emberjs.com/release/) **when there are specific concepts that we will not explain here but which are important for understanding what we’re covering!**
+
+**This is _not_ an introduction to TypeScript _or_ Ember. Throughout this guide, we’ll link back to [the TypeScript docs](https://www.typescriptlang.org/docs/home.html) and [the Ember Guides](https://guides.emberjs.com/release/) when there are specific concepts that we will not explain here but which are important for understanding what we’re covering!**
+
 {% endhint %}
 
-To get started, check out the instructions in [Getting Started: Installation](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/getting-started/installation/README.md)
+To get started, check out the instructions in [Getting Started: Installation](./installation.md)
 
-* If you're totally new to using TypeScript with Ember, start with [TypeScript and Ember](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/ts/overview/README.md).
-* Once you have a good handle on the basics, you can dive into the guides to working with the APIs specific to [Ember](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/ember/overview/README.md) and [Ember Data](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/ember-data/overview/README.md).
-* If you're working with legacy \(pre-Octane\) Ember and TypeScript together, you should read [the Legacy Guide](https://github.com/typed-ember/ember-cli-typescript/tree/3a434def8b8c8214853cea0762940ccedb2256e8/docs/legacy/overview/README.md).
+* If you're totally new to using TypeScript with Ember, start with [TypeScript and Ember](./ts/README.md).
+* Once you have a good handle on the basics, you can dive into the guides to working with the APIs specific to [Ember](./ember/README.md) and [Ember Data](./ember-data/README.md).
+* If you're working with legacy (pre-Octane) Ember and TypeScript together, you should read [the Legacy Guide](./legacy/README.md).
 
 ## Why TypeScript?
 
