@@ -83,13 +83,19 @@ export default class ArgsDisplay extends Component {
 
 Now, looking at that bit of code, you might be wondering how it knows what the type of `this.args` is. In the `constructor` version, we explicitly *named* the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
 
-<DocsSnippet @name='simplified-glimmer-component.d.ts' @title='simplified @glimmer/component' />
+```ts
+export default class Component<Args extends {} = {}> {
+  readonly args: Args;
 
-<aside>
+  constructor(owner: unknown, args: Args);
+}
+```
+
+{% hint style="info" %}
 
 Not sure what’s up with `<Args>` *at all*? We highly recommend the [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
 
-</aside>
+{% endhint %}
 
 The type signature for Component, with `Args extends {} = {}`, means that the component *always* has a property named `args` —
 
@@ -122,11 +128,9 @@ Assuming the default `tsconfig.json` settings (with `strictNullChecks: true`), t
 
 If you'd like to make your *own* component subclass-able, you need to make it generic as well.
 
-<aside>
-
+{% hint style="warning" %}
 Are you sure you want to provide an inheritance-based API? Oftentimes, it's easier to maintain (and involves less TypeScript hoop-jumping) to use a compositional API instead. If you're sure, here's how!
-
-</aside>
+{% endhint %}
 
 ```ts
 import Component from '@glimmer/component';
