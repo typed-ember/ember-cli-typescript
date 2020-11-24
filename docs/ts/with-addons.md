@@ -4,7 +4,7 @@ Building addons in TypeScript offers many of the same benefits as building apps 
 
 ## Key Differences from Apps
 
-To process `.ts` files, `ember-cli-typescript` [registers a set of Babel plugins](https://devblogs.microsoft.com/typescript/typescript-and-babel-7/) so that Babel knows how to strip away TypeScript-specific syntax. This means that `ember-cli-typescript` operates according to the same set of rules as other preprocessors when used by other addons.
+To process `.ts` files, `ember-cli-typescript` tells Ember CLI to [register a set of Babel plugins](https://devblogs.microsoft.com/typescript/typescript-and-babel-7/) so that Babel knows how to strip away TypeScript-specific syntax. This means that `ember-cli-typescript` operates according to the same set of rules as other preprocessors when used by other addons.
 
 * Like other addons that preprocess source files, **`ember-cli-typescript` must be in your addon's `dependencies`, not `devDependencies`**.
 * Because addons have no control over how files in `app/` are transpiled, **you cannot have `.ts` files in your addon's `app/` folder**.
