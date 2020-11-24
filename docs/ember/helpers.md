@@ -58,19 +58,61 @@ We specified the type of `named` as a `Record<string, unknown>`. `Record` is a b
 
 Note that even if the user passes *no* arguments, both `positional` and `named` are always present. They will just be *empty* in that case. For example:
 
-<DocsDemo as |demo|>
-  <demo.example @name='show-all.hbs' @label='usage.hbs' language='hbs'>
-    {{show-all 'hello' 12 (hash neat=true) cool='beans' answer=42}}
-  </demo.example>
+```ts
+import { helper } from '@ember/component/helper';
 
-  <demo.snippet @name='show-all.ts' @label='app/helpers/show-all.ts' />
-</DocsDemo>
+const describe = (entries: string): string => (entries.length > 0 ? entries : '(none)');
+
+export function showAll(positional: unknown[], named: Record<string, unknown>) {
+  // pretty print each item with its index, like `0: { neat: true }` or
+  // `1: undefined`.
+  const positionalEntries = positional
+    .reduce<string[]>((items, arg, index) => items.concat(`${index}: ${JSON.stringify(arg)}`), [])
+    .join(', ');
+
+  // pretty print each item with its name, like `cool: beans` or
+  // `answer: 42`.
+  const namedEntries = Object.keys(named)
+    .reduce<string[]>(
+      (items, key) => items.concat(`${key}: ${JSON.stringify(named[key], undefined, 2)}`),
+      []
+    )
+    .join(', ');
+
+  return `positional: ${describe(positionalEntries)}\nnamed: ${describe(namedEntries)}`;
+}
+
+export default helper(showAll);
+```
 
 ### Putting it all together
 
 Given those constraints, let’s see what a (very contrived) actual helper might look like in practice.  Let’s imagine we want to take a pair of strings and join them with a required separator and optional prefix and postfixes:
 
-<DocsSnippet @name='function-based-helper.ts' @title='my-app/helpers/join.ts' @showCopy={{true}} />
+```ts
+import { helper } from '@ember/component/helper';
+import { assert } from '@ember/debug';
+import { is } from '../../type-utils'
+
+export function join(positional: [unknown, unknown], named: Dict<unknown>) {
+  assert(
+    `'join' requires two 'string' positional parameters`,
+    is<[string, string]>(
+      positional,
+      positional.length === 2 &&
+      positional.every(el => typeof el === 'string')
+    )
+  );
+  assert(`'join' requires argument 'separator'`, typeof named.separator === 'string');
+
+  const joined = positional.join(named.separator);
+  const prefix = typeof named.prefix === 'string' ? named.prefix : '';
+
+  return `${prefix}${joined}`;
+}
+
+export default helper(join);
+```
 
 ## Class-based helpers
 
@@ -84,7 +126,7 @@ interface ClassBasedHelper {
 
 Notice that the signature of `compute` is the same as the signature for the function-based helper! This means that everything we said above applies in exactly the same way here. The only differences are that we can have local state and, by extending from Ember’s `Helper` class, we can hook into the dependency injection system and use services.
 
-<DocsSnippet @name='class-based-helper.ts' @title='my-app/helpers/greet.ts' @showCopy={{true}}>
+```ts
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 import Authentication from 'my-app/services/authentication';
@@ -97,7 +139,7 @@ export default class Greet extends Helper {
       ? `Welcome back, ${authentication.userName}!`
       : 'Sign in?';
 }
-</DocsSnippet>
+```
 
 For more details on using decorators, see our [guide to using decorators][decorators]. For details on using services, see our [guide to services][services].
 
