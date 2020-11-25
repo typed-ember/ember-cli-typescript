@@ -9819,9 +9819,9 @@ heimdalljs@^0.3.0:
     rsvp "~3.2.1"
 
 highlight.js@^9.15.10:
-  version "9.18.1"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.1.tgz#ed21aa001fe6252bb10a3d76d47573c6539fe13c"
-  integrity sha512-OrVKYz70LHsnCgmbXctv/bfuvntIKDz177h0Co37DQ5jamGZLVmoCVMtjMtNZY3X9DrCcKfklHPNeA0uPZhSJg==
+  version "9.18.5"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.18.5.tgz#d18a359867f378c138d6819edfc2a8acd5f29825"
+  integrity sha512-a5bFyofd/BHCX52/8i8uJkjr9DYwXIPnM/plwI6W7ezItLGqzt7X2G2nXuYSfsIJdkwwj/g9DG1LkcGJI/dDoA==
 
 hmac-drbg@^1.0.0:
   version "1.0.1"
@@ -10135,10 +10135,10 @@ imurmurhash@^0.1.4:
   integrity sha1-khi5srkoojixPcT7a21XbyMUU+o=
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "1.0.0"
+  version "0.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "1.0.0"
+  version "0.0.0"
 
 include-path-searcher@^0.1.0:
   version "0.1.0"
