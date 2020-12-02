@@ -144,32 +144,53 @@ module.exports = {
     }
 
     let packages = [
-      { name: 'ember-cli-typescript-blueprints', target: 'latest' },
-      { name: 'typescript', target: 'latest' },
-      { name: '@types/ember', target: 'latest' },
-      { name: '@types/ember__test-helpers', target: 'latest' },
-      { name: '@types/ember-resolver', target: 'latest' },
+      'typescript',
+      'ember-cli-typescript-blueprints',
+      '@types/ember-resolver',
+      '@types/ember__test-helpers',
+      '@types/ember__object',
+      '@types/ember__service',
+      '@types/ember__controller',
+      '@types/ember__string',
+      '@types/ember__template',
+      '@types/ember__polyfills',
+      '@types/ember__utils',
+      '@types/ember__runloop',
+      '@types/ember__debug',
+      '@types/ember__engine',
+      '@types/ember__application',
+      '@types/ember__test',
+      '@types/ember__array',
+      '@types/ember__error',
+      '@types/ember__component',
+      '@types/ember__routing',
+      '@types/rsvp',
+      '@types/htmlbars-inline-precompile',
     ];
 
+    if (this._has('@ember/jquery')) {
+      packages.push('@types/jquery');
+    }
+
     if (this._has('ember-data')) {
-      packages.push({ name: '@types/ember-data', target: 'latest' });
+      packages.push('@types/ember-data');
     }
 
     if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {
-      packages = packages.concat([
-        { name: '@types/ember-qunit', target: 'latest' },
-        { name: '@types/qunit', target: 'latest' },
-      ]);
+      packages.push('@types/ember-qunit');
+      packages.push('@types/qunit');
     }
 
     if (this._has('ember-cli-mocha') || this._has('ember-mocha')) {
-      packages = packages.concat([
-        { name: '@types/ember-mocha', target: 'latest' },
-        { name: '@types/mocha', target: 'latest' },
-      ]);
+      packages.push('@types/ember-mocha');
+      packages.push('@types/mocha');
     }
 
-    return this.addPackagesToProject(packages);
+    return this.addPackagesToProject(
+      packages.map((name) => {
+        return { name, target: 'latest' };
+      })
+    );
   },
 
   filesPath() {
