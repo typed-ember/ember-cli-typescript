@@ -244,7 +244,9 @@ The following are *not* breaking changes:
 
 -   a function (including a class constructor or method) makes a previously-required argument optional—since all existing user code will continue to work with it ([playground][optional-argument])
 
--   a `readonly` object property becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]`—since all user code will continue working and type-checking ([playground][narrower-property])
+-   a `readonly` object property on a published interface becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]`—since all user code will continue working and type-checking ([playground][narrower-property])
+
+-   a wholly new symbol is exported which was not previously exported, and does not share a name with another symbol of a different kind (type vs. value) with a symbol which was previously exported
 
 In each of these cases, some user code becomes *superfluous*, but it neither fails to type-check nor causes any runtime errors.
 
