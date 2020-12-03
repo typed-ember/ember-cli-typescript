@@ -24,9 +24,9 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
 - [Detailed design](#detailed-design)
     - [Background: TypeScript and Semantic Versioning](#background-typescript-and-semantic-versioning)
     - [Defining breaking changes](#defining-breaking-changes)
-        - [Breaking changes to type definitions](#breaking-changes-to-type-definitions)
-        - [Non-breaking changes to type definitions](#non-breaking-changes-to-type-definitions)
-        - [Bug fixes to type definitions](#bug-fixes-to-type-definitions)
+        - [Breaking changes](#breaking-changes)
+        - [Non-breaking changes](#non-breaking-changes)
+        - [Bug fixes](#bug-fixes)
         - [Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions)
     - [Tooling](#tooling)
         - [Detect breaking changes in types](#detect-breaking-changes-in-types)
@@ -112,7 +112,13 @@ Instead, we must define exactly what changes are "backwards-compatible" and whic
 
 We propose the following specific definitions of breaking, non-breaking, and bug-fix changes for types in the Ember community. Because types are designed to represent runtime behavior, we assume throughout that these changes *do* in fact correctly represent changes to runtime behavior, and that changes which *incorrectly* represent runtime behavior are *bugs*.
 
-#### Breaking changes to type definitions
+#### Breaking changes
+
+##### Functions
+
+##### Interfaces and Type Aliases
+
+##### Classes
 
 A breaking change to a type definition occurs when—
 
@@ -236,7 +242,19 @@ There are several reasons why breaking changes may occur:
 [3.5-breakage]: https://github.com/microsoft/TypeScript/issues/33272
 [3.7-emit-change]: https://github.com/microsoft/TypeScript/pull/33470
 
-#### Non-breaking changes to type definitions
+#### Non-breaking changes
+
+No change to a type documented as private is a breaking change, whether or not the type is exported.
+
+"Documented as private" here is defined in terms of the documentation norm of the package in question. Some packages may choose to specify that the public API consists of *documented* exports, in which case no published type may be considered public API unless it is in the documentation. Other packages may choose to say the reverse: all exports are public unless explicitly defined as private (for example with the `@private` JSDoc annotation, a note in the docs, etc.).
+
+For best practices here, see also the discussion of [Matching exports to public API](#matching-exports-to-public-api).
+
+##### Functions
+
+##### Interfaces and Type Aliases
+
+##### Classes
 
 The following are *not* breaking changes:
 
@@ -260,17 +278,17 @@ In each of these cases, some user code becomes *superfluous*, but it neither fai
 
 [narrower-property]: https://www.typescriptlang.org/play?#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHngAcYB7KkGAFwE8AueZJ7fHeAH07cCOANoBdANxkAvmTKgkcRNFTwAcrDoB3EMFIVqdBs3ZCeOWfIBmAV3xgmWWvngALKPmAQQyTLgIiTRgdAAoANyJbEA5-PEIIAEoOfFsAWwAjRgNKOCZbGFdIiGiAOhp6RlZSn14mN2k5BXBoZR8meChY7HiiaUVWhHb4DI5gnT1pDy8fPx7AiHHabVCoRKnPb184haWVjPWyIA
 
-#### Bug fixes to type definitions
+#### Bug fixes
 
-As with runtime code, types may have bugs. We define a ‘bug' here as a mismatch between types and runtime code. That is: if the types allow code which will cause a runtime type error, or if they forbid code which is allowed at runtime, the types are buggy. Types may be buggy by being inappropriately *wider* or *narrower* than runtime. For example:
+As with runtime code, types may have bugs. We define a ‘bug' here as a mismatch between types and runtime code. That is: if the types allow code which will cause a runtime type error, or if they forbid code which is allowed at runtime, the types are buggy. Types may be buggy by being inappropriately *wider* or *narrower* than runtime.
+
+For example (noting that this list is illustrative, not exhaustive):
 
 -   If a function is typed as accepting `any` but actually requires a `string`, this will cause an error at runtime, and is a bug.
 
 -   If a function is typed as returning `string | number` but always returns `string`, this is a bug. It will not cause an error at runtime, since consumers must "narrow" the type to use it, and narrowing the type would not even be a breaking change. However, the type is incorrect, and it *will* require end users to do unnecessary work.
 
 -   If an interface is defined as having a property which is *not* part of the public API of the runtime object, or if an interface is defined as *missing* a a property which the public API of the runtime object does have, this is a bug.
-
-(This list is illustrative, not exhaustive.)
 
 As with runtime bugs, authors are free to fix type bugs in a patch release. As with runtime code, this may break consumers who were relying on the buggy behavior. However, as with runtime bugs, this is well-understood to be part of the sociotechnical contract of semantic versioning.
 
@@ -363,7 +381,7 @@ Later, the default type argument `Promise<{}>` could be dropped and defaulted to
 
 When a new version of TypeScript results in backwards-incompatible *emit* to to the type definitions, as they did in [3.7][3.7-emit-change], the strategy of changing the types directly will not work. However, it is still possible to provide backwards-compatible types, using the combination of [downlevel-dts] and [typesVersions]. (In some cases, this may also require some manual tweaking of types, but this should be rare for most addons.)
 
-- [downlevel-dts] allows you to take a `.d.ts` file which is not valid for an earlier version of TypeScript (e.g. the changes to class field emit mentioned in [<b>Breaking Changes to Type Definitions</b>](#breaking-changes-to-type-definitions)), and emit a version which *is* compatible with that version. Specifically: it currently generates types compatible with TypeScript 3.4.[[see note 2](#notes)]
+- [downlevel-dts] allows you to take a `.d.ts` file which is not valid for an earlier version of TypeScript (e.g. the changes to class field emit mentioned in [<b>Breaking Changes</b>](#breaking-changes)), and emit a version which *is* compatible with that version. Specifically: it currently generates types compatible with TypeScript 3.4.[[see note 2](#notes)]
 - [typesVersions] allow you to specify a specific set of type definitions (which may consist of one or more `.d.ts` files) which correspond to a specific TypeScript version
 
 [downlevel-dts]: https://github.com/sandersn/downlevel-dts
@@ -482,6 +500,10 @@ This approach is a variant on [**Updating types to maintain compatibility**](#up
     -   Note in the release notes that users who did not previously opt into the changes will need to do so now.
 
     -   Note in the release notes that users who *did* previously opt into the changes should remove the `import 'fancy-addon/ts3.5';` import from `types/my-app.d.ts` or `types/my-addon.d.ts`.
+
+#### Matching exports to public API
+
+<!-- TODO: write this and describe use of API extractor as possible but not _normative_ -->
 
 ### Policy for supported TypeScript versions
 
