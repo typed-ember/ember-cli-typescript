@@ -125,17 +125,19 @@ A breaking change to a type definition occurs when—
     This includes widening from a *type guard* to a more general check. For example:
 
     ```diff
-    -function isChris(x: string): x is 'chris' {
-    +function isChris(x: string): boolean {
-      return x === 'chris';
+    -function isString(x: string | number): x is string {
+    +function isString(x: string): boolean {
+      return typeof x === 'string';
     }
     ```
 
     This change would cause user-land code that expects narrowing to break:
 
     ```ts
-    if (isChris(name)) {
-      //...
+    if (isString(value)) {
+      return value.length;
+    } else {
+      return value;
     }
     ```
 
