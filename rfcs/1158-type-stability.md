@@ -130,7 +130,7 @@ Accordingly, we propose the following specific definitions of breaking, non-brea
 
 **Privacy:** No change to a type *documented as private* is a breaking change, whether or not the type is exported. *Documented as private* is defined in terms of the documentation norm of the package in question. Some packages may choose to specify that the public API consists of *documented* exports, in which case no published type may be considered public API unless it is in the documentation. Other packages may choose to say the reverse: all exports are public unless explicitly defined as private (for example with the `@private` JSDoc annotation, a note in the docs, etc.).
 
-**User constructability:** interfaces and type aliases may be defined by documentation to be user-constructable or *not*. For example, a library may choose to export an interface to allow users to name the type returned by a function, while specifying that the only legal way to construct such an interface is via the exported function: the type is *not* user-constructable. Alternatively, a library may export an interface or type alias explicitly for users to construct objects matching the type themselves: the type *is* user-constructable.
+**User constructability:** exported types (interfaces, type aliases, and the type side of classes) may be defined by documentation to be user-constructable or *not*. For example, a library may choose to export an interface to allow users to name the type returned by a function, while specifying that the only legal way to construct such an interface is via the exported function: the type is *not* user-constructable. Alternatively, a library may export an interface or type alias explicitly for users to construct objects matching the type themselves: the type *is* user-constructable.
 
 For best practices here, see also the discussion of [Matching exports to public API](#matching-exports-to-public-api).
 
@@ -201,27 +201,59 @@ Changing a symbol is a breaking change when:
 
 ##### Interfaces, Type Aliases, and Classes
 
-Object types may be defined with interfaces, type aliases, or classes. Interfaces and type aliases define symbols only in the type namespace. Classes define symbols in both the type and value namespaces. The additional constraints for classes in the value namespace are covered above under [Breaking Changes: Symbols](#symbols). A change to an object type is breaking when:
+Object types may be defined with interfaces, type aliases, or classes. Interfaces and type aliases define symbols only in the type namespace. Classes define symbols in both the type and value namespaces. The additional constraints for classes in the value namespace are covered above under [Breaking Changes: Symbols](#symbols).
 
--   a `readonly` object property type becomes a *less specific ("wider") type*, for example if it was previously `string` but now is `string | string[]` -- since the user's existing handling of the property will be wrong in some cases ([playground][wider-property] -- note that the playground uses a class but an interface or type alias would have the same behavior)
+A change to any object type (user constructable or not) is breaking when:
 
 -   a non-`readonly` object property's type changes in any way:
 
-    -   if it was previously `string` but now is `string | number`, some of the user's existing *reads* of the property will now be wrong ([playground][reads-of-property])
+    -   if it was previously `string` but now is `string | number`, some of the user's existing *reads* of the property will now be wrong ([playground][reads-of-property]). Note that this includes making a property optional.
 
-    -   if it was previously `string | number` but now is `string`, some of the user's existing *writes* to the property will now be wrong ([playground][writes-to-property])
+    -   if it was previously `string | number` but now is `string`, some of the user's existing *writes* to the property will now be wrong ([playground][writes-to-property]). Note that this includes making a previously-optional property required. 
 
-        (Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!)
+        Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!
 
-[wider-property]: https://www.typescriptlang.org/play/#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHnjimAHt8IBPeABxlpZBgBdGAueMm7Z8OANxkAvmTKgkcRNFTwA6llD4QwUhSoga9Jq3ace-QcII54AHwsicAbQC6UmQDMArvjDcs9eAALKHxgCBBkTFwCIgA5WHYAdwAKADciTxABKLxCCABKAXxPAFsAIy4dSjhuTxh8eHSITIA6Ng4uXhbw0W5AiWlZcGgFcO54KGzsXKIJORGEMfgygTUNLQlg0PDI6ZiIeJgk5Kh8zZCwiJz9w+Oys7IgA
+-   a property is removed from the type entirely, since some of the user's existing uses of the type will break, even if the property was optional ([optional][optional-removed], [required][required-removed])
+
+A change to a user-constructable type is breaking when:
+
+-   a required property is added to the type, since all of the user's existing constructions of the type will be incorrect ([new-required-property][required-added])
+
+A change to a non-user-constructable object type is breaking when:
+
+-   a `readonly` object property type becomes a *less specific ("wider") type*, for example if it was previously `string` but now is `string | string[]` -- since the user's existing handling of the property will be wrong in some cases ([playground][wider-property] -- the playground uses a class but an interface or type alias would have the same behavior).
+
+    Note that this includes making a property optional, since these are equivalent for the purposes of type-checking:
+
+    ```diff
+    interface A {
+    - a: string;
+    + a?: string;
+    }
+    ```
+
+    ```diff
+    interface A {
+    - a: string;
+    + a: string | undefined;
+    }
+    ```
 
 [reads-of-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYfQEwiZAbwFgAoZC5OALmQGcwpQBzAbjIF8yzRJZEUAEWA5c+ImUpVaDJiGbIAPshABXALYAjaO1JdSZGKpAIwwAPYEAFnBA4MEOuixiQACgBucDKoi1n2CL4AJS0alrQEuSUUBBgqlAEXj4QAHRwqQ7yYFa6+mR4CBhwscgOYMgA7piBeCD+Na66NnYOTo1B7tUuncG6BRBFJSjlyDgirrTCop3NtvaOAa5u4zN1fWRAA
 
 [writes-to-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYYHJylAewHdkBvAWAChkbk4AuZAZzClAHNkAfZEAVwC2AI2gBuKgF8qVUJFiIUAEWAATXPmJkqtOo37Cxk6ZRh8QCMMAIhkRNpCYAVAuizrCRABQA3OBj4QjK44eB4AlFrUtL7+EAB0cMgAvMgA5AAWEFgEqeKUUpRUKhAIGHgoGBBgtpghGkRBte7EeXbADs7BzV5ETaHEYXlFJWVQFVXIKqrdjMpq-USt9hBOLn31nlPz9YNUQA
 
+[optional-removed]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgEIHU4GcDyAHMYAexDgBtkBvAWAChkHk4AuZAIyKLIjhAG46jdgH5WHLj350AvnTqhIsRClQAlCAFsiANwgATKoMYt2nbrwG1ZtOtzDISZAJ4BBVBBhEoEVhmz5CEnJkAF4qJlYwKABXFGlLO2RQBDJovX1Ud09vX0xcAmJSCjDKCOQo2IAadlZ4Miw4y1sIe0dXFxhFX3UtXQMSsorG5vtk1PS9VA6utB6dfVDwkyHqtlryBuR4oA
+
+[required-removed]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgEIHU4GcBKECOArsFBACbIDeAsAFDIPJwBcyARgPYcA2EcIAbjqN2rTjz6C6AXzp1QkWIhSo8AWw4A3clWGMW7Lr35Das2nV5hkoBN0JlyqVBBgdSrDNjxESOgLxUTKxgUIQQADSiyPDcWCjSppYQ1rb2jmSoAIIwip7qWgFBBqHhUWyssfHIiUA
+
+[required-added]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgEIRgeyig3gWAChkTk4AuZAI00wBsI4QBuIgXyKNElkRQEEYPZAWKkK1WgyasxJKpRABXALZVosjoSIg4KiAGcADnzQZsEAKpGAJnEgiipZAzDIEmEAbBQlCMMCelOhYOMgAvCJklD5KKGyanIS6+samgjzWdg6izq7unt6+-oEglBnQEVESsfGJhEA
+
+[wider-property]: https://www.typescriptlang.org/play/#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHnjimAHt8IBPeABxlpZBgBdGAueMm7Z8OANxkAvmTKgkcRNFTwA6llD4QwUhSoga9Jq3ace-QcII54AHwsicAbQC6UmQDMArvjDcs9eAALKHxgCBBkTFwCIgA5WHYAdwAKADciTxABKLxCCABKAXxPAFsAIy4dSjhuTxh8eHSITIA6Ng4uXhbw0W5AiWlZcGgFcO54KGzsXKIJORGEMfgygTUNLQlg0PDI6ZiIeJgk5Kh8zZCwiJz9w+Oys7IgA
+
 ##### Functions
 
-A change to the type of a function is breaking when:
+For functions which return or accept user-constructable types, the rules specified for [Breaking Changes: Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes) hold. Otherwise, a change to the type of a function is breaking when:
 
 -   an argument or return type changes entirely, for example if a function previously accepted `number` and now accepts `{ count: number }`, or previously returned `string` and now returns `boolean` -- since the user will have to change all call sites for the function ([playground][changed-type])
 
