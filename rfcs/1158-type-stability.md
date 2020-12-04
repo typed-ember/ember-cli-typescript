@@ -120,6 +120,8 @@ Accordingly, we propose the following specific definitions of breaking, non-brea
 
 **Privacy:** No change to a type *documented as private* is a breaking change, whether or not the type is exported. *Documented as private* is defined in terms of the documentation norm of the package in question. Some packages may choose to specify that the public API consists of *documented* exports, in which case no published type may be considered public API unless it is in the documentation. Other packages may choose to say the reverse: all exports are public unless explicitly defined as private (for example with the `@private` JSDoc annotation, a note in the docs, etc.).
 
+**User constructability:** interfaces and type aliases may be defined by documentation to be user-constructable or *not*. For example, a library may choose to export an interface to allow users to name the type returned by a function, while specifying that the only legal way to construct such an interface is via the exported function: the type is *not* user-constructable. Alternatively, a library may export an interface or type alias explicitly for users to construct objects matching the type themselves: the type *is* user-constructable.
+
 For best practices here, see also the discussion of [Matching exports to public API](#matching-exports-to-public-api).
 
 #### Breaking changes
