@@ -443,6 +443,8 @@ The specific mechanics of mitigating churn are left to library authors. Accordin
 
 For types where it is useful to publish an interface for end users, but where users should not construct the interface themselves, authors have a number of options (noting that this list is not exhaustive):
 
+-   The type can simply be documented as non-user-constructable. This is the easiest, and allows an escape hatch for scenarios like testing, where users will recognize that if the public interface changes, they will necessarily need to update their test mocks to match. This can further be mitigated by providing a sanctioned test helper to construct test versions of the types.
+
 -   Export a nominal-like version of the type, using `export type` with a class with a private field:
 
     ```ts
@@ -472,7 +474,9 @@ For types where it is useful to publish an interface for end users, but where us
     // they do not have the ability to add the private field.
     export type { Person };
 
-    // This is the controlled way of building a person.
+    // This is the controlled way of building a person: users can only get a
+    // `Person` by calling this function, even though they can *name* the type
+    // by doing `import type { Person} from '...';`.
     export function buildPerson(name: string, age: number): Person {
       return new Person(name, age);
     }
@@ -480,7 +484,9 @@ For types where it is useful to publish an interface for end users, but where us
 
     This *cannot* be constructed outside the module. Note that it may be useful to provide corresponding test helpers for scenarios like this, since users cannot safely provide their own mocks.
 
-This leaves this module wholly in control of the construction of `Person`s, which allows more flexibility for evolving the API, since non-user-constructable
+-   Document that users can create their own local aliases for these types, while *not* exporting the types in a public way. This has one of the same upsides as the use of the classs with a private brand: the type is not constructable other than via the module. It also shares the upside of being able to create your own instance of it for test code. However, it has ergonomic downsides, requiring the use of the `ReturnType` utility class and requiring all consumers to generate that utility type for themselves.
+
+Each of these leaves this module in control of the construction of `Person`s, which allows more flexibility for evolving the API, since non-user-constructable types are subject to fewer breaking change constraints that user-constructable types. Whichever is chosen for a given type, authors should document it clearly.
 
 ##### Updating types to maintain compatibility
 
