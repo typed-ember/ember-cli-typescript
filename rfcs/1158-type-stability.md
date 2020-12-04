@@ -674,7 +674,9 @@ This approach is a variant on [**Updating types to maintain compatibility**](#up
 
 #### Matching exports to public API
 
-<!-- TODO: write this and describe use of API extractor as possible but not _normative_ -->
+Another optional tool for managing public API is [API Extractor][api-extractor]. Authors can mark their exports as `@public`, `@protected`, `@private`, `@alpha`, `@beta`, etc. and use the tool to generate type definitions accordingly. For example, for mitigating a future TypeScript version change, or experimenting on a new API, authors can use `@alpha` or `@beta` and use `typesVersions` to publish to a dedicated directory. Similarly, authors can make an export public for use through the package or even a set of related packages in a moinorepo, but mark it as `@private` and use API Extractor to generate types which exclude it when publishing to npm.
+
+[api-extractor]: https://api-extractor.com
 
 ### Policy for supported TypeScript versions
 
