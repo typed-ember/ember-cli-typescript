@@ -796,7 +796,7 @@ This RFC is intended to be the first step toward formally supporting TypeScript 
 
 3.  They generally operate on longer time scales between major releases than other addons in the ecosystem, in part because of cultural norms, but in part also because of the ripple effect mentioned above.
 
-The combination of these factors means that a slightly different strategy is likely necessary for Ember's core types. If the *same* strategy recommended above for addons were in use for Ember during the 3.x lifecycle, it would mean that the types would need to have supported *at least* TypeScript versions 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9 (possibly with some exceptions because of instability in some specific releases), all without a breaking change. This may be *possible*, but would have involved significant work, and there may be alternative approaches worth considering in line with Ember's general LTS strategy. These will be addressed in a future RFC for Ember itself.
+The combination of these factors means that a slightly different strategy may be necessary for Ember's core types. If the *same* strategy recommended above for addons were in use for Ember during the 3.x lifecycle, it would mean that the types would need to have supported *at least* TypeScript versions 2.7, 2.8, 2.9, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9 (possibly with some exceptions because of instability in some specific releases), all without a breaking change. This may be *possible*, but would have involved significant work, and there may be alternative approaches worth considering in line with Ember's general LTS strategy. These will be addressed in a future RFC for Ember itself.
 
 ### Ember CLI
 
