@@ -6,7 +6,7 @@
 
 This RFC proposes a set of guidelines and tooling recommendations for managing changes as addons adopt TypeScript throughout the Ember ecosystem, as part of the path to making TypeScript a first-class citizen in Ember as a whole.
 
-This RFC does *not* attempt to solve—
+This RFC does *not* attempt to solve -- 
 
 - the problem of stability for ambient types distributed separately from the package they represent (e.g. from DefinitelyTyped in the `@types` namespace)
 - performance regression analysis
@@ -59,7 +59,7 @@ Ember and TypeScript have fundamentally different views on Semantic Versioning (
 For TypeScript to be a first-class citizen of the Ember ecosystem, we need:
 
 -   a policy defining what constitutes a breaking change for consumers of a library which publishes types
--   tooling to detect breaking changes in types—whether from refactors, or from new TypeScript releases—and to minimize the amount of churn from breaking changes in TypeScript
+-   tooling to detect breaking changes in types -- whether from refactors, or from new TypeScript releases -- and to minimize the amount of churn from breaking changes in TypeScript
 -   a general and widely-adopted policy for supported TypeScript versions
 
 Once all three of those elements are adopted, end users will be able to have equally high confidence in the stability of addons' published types as they do in their runtime code.
@@ -112,64 +112,42 @@ It is impossible to define the difference between breaking and non-breaking chan
 
 Accordingly, we propose the following specific definitions of breaking, non-breaking, and bug-fix changes for types in the Ember community. Because types are designed to represent runtime behavior, we assume throughout that these changes *do* in fact correctly represent changes to runtime behavior, and that changes which *incorrectly* represent runtime behavior are *bugs*.
 
+#### Definitions
+
+**Symbols:** There are two kinds of *symbols* in TypeScript: value symbols and type symbols. Value symbols are the symbols present in JavaScript: `let`, `const`, and `var` bindings; and `function` and `class` declarations. Type symbols are represented by type literal declarations, `interface` declarations, `type` (type alias) declarations, and `class` declarations.
+
+**Functions:** "functions" always refers interchangeably to functions in standalone scope defined with either `function` or an arrow, class methods, and class constructors unless otherwise specified.
+
+**Privacy:** No change to a type *documented as private* is a breaking change, whether or not the type is exported. *Documented as private* is defined in terms of the documentation norm of the package in question. Some packages may choose to specify that the public API consists of *documented* exports, in which case no published type may be considered public API unless it is in the documentation. Other packages may choose to say the reverse: all exports are public unless explicitly defined as private (for example with the `@private` JSDoc annotation, a note in the docs, etc.).
+
+For best practices here, see also the discussion of [Matching exports to public API](#matching-exports-to-public-api).
+
 #### Breaking changes
 
-##### Functions
+Each of the kinds of breaking changes defined below will trigger a compiler error for consumers, surfacing the error. As such, they should be easily detectable by testing infrastructure (see below under [Tooling: Detect breaking changes in types](#detect-breaking-changes-in-types)).
 
-##### Interfaces and Type Aliases
+There are several reasons why breaking changes may occur:
 
-##### Classes
+-   The author of the addon may choose to change the API for whatever reason. This is no different than the situation today for addons which do not support TypeScript. This would be a major version independent of types.
 
-A breaking change to a type definition occurs when—
+-   The author of the addon may need to make changes to adapt to changes in Ember, for example to support Octane idioms. This is likewise identical with the situation for addons which do not support TypeScript: it would require a major version regardless.
 
--   the type changes entirely, for example if a function previously accepted `number` and now accepts `{ count: number }`—since the user will have to change all calls to the function ([playground][changed-type])
+-   Adopting a new version of TypeScript may change the meaning of existing types. For example, in TypeScript 3.5, generic types without a specified default type changed their default value from `{}` to `unknown`. This improved type safety, but [broke many existing types][3.5-breakage], including the internal types for Glimmer and Ember.
 
--   a function (including a class constructor or methods) argument *requires a more specific ("narrower") type*, for example if it previously accepted `string | number` but now requires `string`—since the user will have to change some calls to the function ([playground][narrower-argument])
+-   Adopting a new version of TypeScript may change the type definitions emitted in `.d.ts` files in backwards-incompatible ways. For example, changing to use the finalized ECMAScript spec for class fields meant that [types emitted by TypeScript 3.7 were incompatible with TypeScript 3.5 and earlier][3.7-emit-change].
 
--   a function (including a class constructor or method) *returns a less specific ("wider") type*, for example if it previously returned `string` but now returns `string | null`—since the user's existing handling of the return value will be wrong in some cases ([playground][wider-return]).
+[3.5-breakage]: https://github.com/microsoft/TypeScript/issues/33272
+[3.7-emit-change]: https://github.com/microsoft/TypeScript/pull/33470
 
-    This includes widening from a *type guard* to a more general check. For example:
+##### Symbols
 
-    ```diff
-    -function isString(x: string | number): x is string {
-    +function isString(x: string): boolean {
-      return typeof x === 'string';
-    }
-    ```
+Changing a symbol is a breaking change when:
 
-    This change would cause user-land code that expects narrowing to break:
+-   changing the name of an exported symbol (type or value), since users' existing imports will need to be updated. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but renaming exported `interface`, `type` alias, or `namespace` declarations is breaking as well.
 
-    ```ts
-    if (isString(value)) {
-      return value.length;
-    } else {
-      return value;
-    }
-    ```
+-   removing an exported symbol, since users' existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing exported `interface`, `type` alias, or `namespace` declarations is breaking as well.
 
--   a function (including a class constructor or method) adds any new *required* arguments—since all user invocations of the function will now be broken ([playground][new-required-argument])
-
--   a function (including a class constructor or method) removes an existing argument entirely—since user invocations of the function may now fail to type-check
-
-    -   if the argument was required, *all* invocations will fail to type-check ([playground][remove-required-argument])
-
-    -   if the argument was optional, any invocations which used it will fail to type-check ([playground][remove-optional-argument])
-
--   a `readonly` object property type becomes a *less specific ("wider") type*, for example if it was previously `string` but now is `string | string[]`—since the user's existing handling of the property will be wrong in some cases ([playground][wider-property]—note that the playground uses a class but an interface or type alias would have the same behavior)
-
--   a non-`readonly` object property's type changes in any way:
-
-    -   if it was previously `string` but now is `string | number`, some of the user's existing *reads* of the property will now be wrong ([playground][reads-of-property])
-
-    -   if it was previously `string | number` but now is `string`, some of the user's existing *writes* to the property will now be wrong ([playground][writes-to-property])
-
-        (Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!)
-
--   changing the name of an exported type (`interface`, `type` alias, or `class`) changes, since users' existing imports will need to be updated
-
--   removing an exported symbol, since users' existing imports will stop working. This is a breaking for value exports (`let`, `const`, `class`, `function`) independent of types, but removing `interface` or `type` alias type exports, or removing TypeScript's `namespace` value declaration, are breaking as well.
-
-    This includes changing a previously type-and-value export such as `export class` to either—
+    This includes changing a previously type-and-value export such as `export class` to either -- 
     
     -   a type-only export, since the export in the value namespace has been removed:
 
@@ -205,6 +183,69 @@ A breaking change to a type definition occurs when—
 
 -   changing a `class` export to a type-only export will break any code which extended the class or constructed an instance of the class ([playground][class-to-type-only]), and changing a `class` export to a value-only export will break any code which referred to the class as a type ([playground][class-to-value-only])
 
+[class-to-type-only]: https://www.typescriptlang.org/play?#code/PTAEEEDtQIgewE4EsDmTIEMA2NQBMBTAYywwQwBck5IAaUAdwAsCEDQKXGm4t2SMAZ0GMhoAgA8ADogoE8AOgBQhAW1ADhoAOpCAotNnzQAbwC+SpSFAAVJkhEOOXAgEcArkgBu2ApAqgcABmoBgcAJ5SBAC0NFjh4oYIAcGhGqTC9MxIREyMcO5YeKCQiAC22PFWYABG7AzIFHLQWEgA1uycDgBc1aB9AAZDfZoiuoIGMsnG5n2SUwEUkewmOvpJcsUW1kMDSqOgAPoAcnAUk0bFs0tRoKfnG8YAvEf3F9N4ANyWBwDK7jVRgAxRDvTaJZp4MbrBYzCx-AHAxBvR7FSSQkQo2FXCwqYikdRBdyQIhUGgcDAdQTjMHyAAUDBhl26awmqIAlCyvHAkF88Wp2ESSWToBRKQRBFjLgymR8WVKPpzQNzed99jRBAFGWzsaAXpACAxWbS8HT2d8iBqAqUHrr9Ya7mcTWbPkA
+
+[class-to-value-only]: https://www.typescriptlang.org/play?#code/PTAEEEDtQIgewE4EsDmTIEMA2NQBMBTAYywwQwBck5IAaUAdwAsCEDQKXGm4t2SMAZ0GMhoAgA8ADogoE8AOgBQhAW1ADhoAOpCAotNnzQAbwC+SpSFAAVJkhEOOXAgEcArkgBu2ApAqgcABmoBigPljuBAC0NFgAnuKGCAHBoRqkwgqgAHKIALbYCaDxcO6MZVh4VmAMyHLOTgxInKAABpIyKaB8FG2g5JyszhjQbaqk6r1typoiAPp5FAZdcnimFhNk7L25cMvJawBcHPFSBGmL+ytGeADclnOgAMruAEZzAGKINynGknJIHgRLpBL81hslE9Xh9MoJvggluD-hJAcC9gdVsZzJYtuogu5IEQqDQOBgANYEQSg5F4AAUDH0h3kJxpzLwAEoTl44Eh7ipiJN2ASiSToBQKVSkeyGUysXgTtL5Vzwrz+VCaIIAoywezQABeUCQAgMHRy250jkPIiagKQa56w3G01Ki1WoA
+
+##### Interfaces, Type Aliases, and Classes
+
+Object types may be defined with interfaces, type aliases, or classes. Interfaces and type aliases define symbols only in the type namespace. Classes define symbols in both the type and value namespaces. The additional constraints for classes in the value namespace are covered above under [Breaking Changes: Symbols](#symbols). A change to an object type is breaking when:
+
+-   a `readonly` object property type becomes a *less specific ("wider") type*, for example if it was previously `string` but now is `string | string[]` -- since the user's existing handling of the property will be wrong in some cases ([playground][wider-property] -- note that the playground uses a class but an interface or type alias would have the same behavior)
+
+-   a non-`readonly` object property's type changes in any way:
+
+    -   if it was previously `string` but now is `string | number`, some of the user's existing *reads* of the property will now be wrong ([playground][reads-of-property])
+
+    -   if it was previously `string | number` but now is `string`, some of the user's existing *writes* to the property will now be wrong ([playground][writes-to-property])
+
+        (Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!)
+
+[wider-property]: https://www.typescriptlang.org/play/#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHnjimAHt8IBPeABxlpZBgBdGAueMm7Z8OANxkAvmTKgkcRNFTwA6llD4QwUhSoga9Jq3ace-QcII54AHwsicAbQC6UmQDMArvjDcs9eAALKHxgCBBkTFwCIgA5WHYAdwAKADciTxABKLxCCABKAXxPAFsAIy4dSjhuTxh8eHSITIA6Ng4uXhbw0W5AiWlZcGgFcO54KGzsXKIJORGEMfgygTUNLQlg0PDI6ZiIeJgk5Kh8zZCwiJz9w+Oys7IgA
+
+[reads-of-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYfQEwiZAbwFgAoZC5OALmQGcwpQBzAbjIF8yzRJZEUAEWA5c+ImUpVaDJiGbIAPshABXALYAjaO1JdSZGKpAIwwAPYEAFnBA4MEOuixiQACgBucDKoi1n2CL4AJS0alrQEuSUUBBgqlAEXj4QAHRwqQ7yYFa6+mR4CBhwscgOYMgA7piBeCD+Na66NnYOTo1B7tUuncG6BRBFJSjlyDgirrTCop3NtvaOAa5u4zN1fWRAA
+
+[writes-to-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYYHJylAewHdkBvAWAChkbk4AuZAZzClAHNkAfZEAVwC2AI2gBuKgF8qVUJFiIUAEWAATXPmJkqtOo37Cxk6ZRh8QCMMAIhkRNpCYAVAuizrCRABQA3OBj4QjK44eB4AlFrUtL7+EAB0cMgAvMgA5AAWEFgEqeKUUpRUKhAIGHgoGBBgtpghGkRBte7EeXbADs7BzV5ETaHEYXlFJWVQFVXIKqrdjMpq-USt9hBOLn31nlPz9YNUQA
+
+##### Functions
+
+A change to the type of a function is breaking when:
+
+-   an argument or return type changes entirely, for example if a function previously accepted `number` and now accepts `{ count: number }`, or previously returned `string` and now returns `boolean` -- since the user will have to change all call sites for the function ([playground][changed-type])
+
+-   a function (including a class constructor or methods) argument *requires a more specific ("narrower") type*, for example if it previously accepted `string | number` but now requires `string` -- since the user will have to change some calls to the function ([playground][narrower-argument])
+
+-   a function (including a class constructor or method) *returns a less specific ("wider") type*, for example if it previously returned `string` but now returns `string | null` -- since the user's existing handling of the return value will be wrong in some cases ([playground][wider-return]).
+
+    This includes widening from a *type guard* to a more general check. For example:
+
+    ```diff
+    -function isString(x: string | number): x is string {
+    +function isString(x: string): boolean {
+      return typeof x === 'string';
+    }
+    ```
+
+    This change would cause user-land code that expects narrowing to break:
+
+    ```ts
+    if (isString(value)) {
+      return value.length;
+    } else {
+      return value;
+    }
+    ```
+
+-   a function (including a class constructor or method) adds any new *required* arguments -- since all user invocations of the function will now be broken ([playground][new-required-argument])
+
+-   a function (including a class constructor or method) removes an existing argument entirely -- since user invocations of the function may now fail to type-check
+
+    -   if the argument was required, *all* invocations will fail to type-check ([playground][remove-required-argument])
+
+    -   if the argument was optional, any invocations which used it will fail to type-check ([playground][remove-optional-argument])
+
+-   changing a function from a `function` declaration to a an arrow function declaration, since it changes the type of `this` and the effect of calling `bind` or `call` on the function
+
 [changed-type]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0NigkBqBbJyoAPKY8AjknGZyoMUubIj0OPChLPSMNNK2nPYAFIEE0HqIbJAARlgAlHoAbhrwgeFyDtGx8Ymo5JS0DKgAwviIloGFJaXlldUMdQ12yK3teub0GmW6oF29WKAOg6AjYxNTctm5SFwAdIdkPUqI0WgBGABMAGZ+hM1tANshAgDakDjk1TpCYeEgA
 
 [narrower-argument]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0Nig5JS0DKgA8pjwCOScZnKgRS5siPQ48KEs9Iw00rac9gAUgQTQesLZiLCgAD7JbJAARlgAlHoAbhrwgeFyDtGx8YmoKdR0jKAA6jOSyIEFxSVlFVUMtfV2yC1tHThdsOOgUzNzCwpgQlig9BqxclkckguAA6c7IOpUBrNACMACYAMyjOaA3Kg8GQ6HXTwYbgaTzIuQ7WIoQJgmoQy6Na7wpFzYl7MkYqnNHHIPEE8JAA
@@ -217,66 +258,39 @@ A breaking change to a type definition occurs when—
 
 [remove-optional-argument]: https://www.typescriptlang.org/play?#code/CYUwxgNghgTiAEAzArgOzAFwJYHtXwAc4A3XZAZwAooAuecjGLVAcwBp4AjAfjtWQC2nEDACUdYjizAA3AChQkWAhTpseeMgLAoGEMGp0GTVuPiTp8uRBAZ4UeAF5CJMlQDkBHBl053HAEYAJlF5GztOJ01tXX1KT29ff3hg0OtbeDAoohBSHAp4rx8MPzTw+GAorR09AwTi0vkgA
 
-[wider-property]: https://www.typescriptlang.org/play/#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHnjimAHt8IBPeABxlpZBgBdGAueMm7Z8OANxkAvmTKgkcRNFTwA6llD4QwUhSoga9Jq3ace-QcII54AHwsicAbQC6UmQDMArvjDcs9eAALKHxgCBBkTFwCIgA5WHYAdwAKADciTxABKLxCCABKAXxPAFsAIy4dSjhuTxh8eHSITIA6Ng4uXhbw0W5AiWlZcGgFcO54KGzsXKIJORGEMfgygTUNLQlg0PDI6ZiIeJgk5Kh8zZCwiJz9w+Oys7IgA
-
-[reads-of-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYfQEwiZAbwFgAoZC5OALmQGcwpQBzAbjIF8yzRJZEUAEWA5c+ImUpVaDJiGbIAPshABXALYAjaO1JdSZGKpAIwwAPYEAFnBA4MEOuixiQACgBucDKoi1n2CL4AJS0alrQEuSUUBBgqlAEXj4QAHRwqQ7yYFa6+mR4CBhwscgOYMgA7piBeCD+Na66NnYOTo1B7tUuncG6BRBFJSjlyDgirrTCop3NtvaOAa5u4zN1fWRAA
-
-[writes-to-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYYHJylAewHdkBvAWAChkbk4AuZAZzClAHNkAfZEAVwC2AI2gBuKgF8qVUJFiIUAEWAATXPmJkqtOo37Cxk6ZRh8QCMMAIhkRNpCYAVAuizrCRABQA3OBj4QjK44eB4AlFrUtL7+EAB0cMgAvMgA5AAWEFgEqeKUUpRUKhAIGHgoGBBgtpghGkRBte7EeXbADs7BzV5ETaHEYXlFJWVQFVXIKqrdjMpq-USt9hBOLn31nlPz9YNUQA
-
-[class-to-type-only]: https://www.typescriptlang.org/play?#code/PTAEEEDtQIgewE4EsDmTIEMA2NQBMBTAYywwQwBck5IAaUAdwAsCEDQKXGm4t2SMAZ0GMhoAgA8ADogoE8AOgBQhAW1ADhoAOpCAotNnzQAbwC+SpSFAAVJkhEOOXAgEcArkgBu2ApAqgcABmoBgcAJ5SBAC0NFjh4oYIAcGhGqTC9MxIREyMcO5YeKCQiAC22PFWYABG7AzIFHLQWEgA1uycDgBc1aB9AAZDfZoiuoIGMsnG5n2SUwEUkewmOvpJcsUW1kMDSqOgAPoAcnAUk0bFs0tRoKfnG8YAvEf3F9N4ANyWBwDK7jVRgAxRDvTaJZp4MbrBYzCx-AHAxBvR7FSSQkQo2FXCwqYikdRBdyQIhUGgcDAdQTjMHyAAUDBhl26awmqIAlCyvHAkF88Wp2ESSWToBRKQRBFjLgymR8WVKPpzQNzed99jRBAFGWzsaAXpACAxWbS8HT2d8iBqAqUHrr9Ya7mcTWbPkA
-
-[class-to-value-only]: https://www.typescriptlang.org/play?#code/PTAEEEDtQIgewE4EsDmTIEMA2NQBMBTAYywwQwBck5IAaUAdwAsCEDQKXGm4t2SMAZ0GMhoAgA8ADogoE8AOgBQhAW1ADhoAOpCAotNnzQAbwC+SpSFAAVJkhEOOXAgEcArkgBu2ApAqgcABmoBigPljuBAC0NFgAnuKGCAHBoRqkwgqgAHKIALbYCaDxcO6MZVh4VmAMyHLOTgxInKAABpIyKaB8FG2g5JyszhjQbaqk6r1typoiAPp5FAZdcnimFhNk7L25cMvJawBcHPFSBGmL+ytGeADclnOgAMruAEZzAGKINynGknJIHgRLpBL81hslE9Xh9MoJvggluD-hJAcC9gdVsZzJYtuogu5IEQqDQOBgANYEQSg5F4AAUDH0h3kJxpzLwAEoTl44Eh7ipiJN2ASiSToBQKVSkeyGUysXgTtL5Vzwrz+VCaIIAoywezQABeUCQAgMHRy250jkPIiagKQa56w3G01Ki1WoA
-
-Each of these will trigger a compiler error for consumers, surfacing the error. As such, they should be easily detectable by testing infrastructure (see below under [Tooling: Detect breaking changes in types](#detect-breaking-changes-in-types)).
-
-There are several reasons why breaking changes may occur:
-
--   The author of the addon may choose to change the API for whatever reason. This is no different than the situation today for addons which do not support TypeScript. This would be a major version independent of types.
-
--   The author of the addon may need to make changes to adapt to changes in Ember, for example to support Octane idioms. This is likewise identical with the situation for addons which do not support TypeScript: it would require a major version regardless.
-
--   Adopting a new version of TypeScript may change the meaning of existing types. For example, in TypeScript 3.5, generic types without a specified default type changed their default value from `{}` to `unknown`. This improved type safety, but [broke many existing types][3.5-breakage], including the internal types for Glimmer and Ember.
-
--   Adopting a new version of TypeScript may change the type definitions emitted in `.d.ts` files in backwards-incompatible ways. For example, changing to use the finalized ECMAScript spec for class fields meant that [types emitted by TypeScript 3.7 were incompatible with TypeScript 3.5 and earlier][3.7-emit-change].
-
-[3.5-breakage]: https://github.com/microsoft/TypeScript/issues/33272
-[3.7-emit-change]: https://github.com/microsoft/TypeScript/pull/33470
-
 #### Non-breaking changes
 
-No change to a type documented as private is a breaking change, whether or not the type is exported.
+In each of these cases, some user code becomes *superfluous*, but it neither fails to type-check nor causes any runtime errors.
 
-"Documented as private" here is defined in terms of the documentation norm of the package in question. Some packages may choose to specify that the public API consists of *documented* exports, in which case no published type may be considered public API unless it is in the documentation. Other packages may choose to say the reverse: all exports are public unless explicitly defined as private (for example with the `@private` JSDoc annotation, a note in the docs, etc.).
+##### Symbols
 
-For best practices here, see also the discussion of [Matching exports to public API](#matching-exports-to-public-api).
+A change to an exported symbol is *not* breaking when:
+
+-   a wholly new symbol is exported which was not previously exported and which does not share a name with another symbol of a different kind (type vs. value) with a symbol which was previously exported
+
+##### Interfaces, Type Aliases, and Classes
+
+A change to an exported type is not breaking when:
+
+-   a `readonly` object property on a published interface becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]` -- since all user code will continue working and type-checking ([playground][narrower-property])
+
+[narrower-property]: https://www.typescriptlang.org/play?#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHngAcYB7KkGAFwE8AueZJ7fHeAH07cCOANoBdANxkAvmTKgkcRNFTwAcrDoB3EMFIVqdBs3ZCeOWfIBmAV3xgmWWvngALKPmAQQyTLgIiTRgdAAoANyJbEA5-PEIIAEoOfFsAWwAjRgNKOCZbGFdIiGiAOhp6RlZSn14mN2k5BXBoZR8meChY7HiiaUVWhHb4DI5gnT1pDy8fPx7AiHHabVCoRKnPb184haWVjPWyIA
 
 ##### Functions
 
-##### Interfaces and Type Aliases
+-   a function (including a class method or constructor) *accepts a less specific ("wider") type*, for example if it previously accepted only a `boolean` but now accepts `boolean | undefined` -- since all existing user code will continue working and type-checking ([playground][wider-argument])
 
-##### Classes
+-   a function (including a class method) which *returns a more specific ("narrower") type*, for example if it previously returned `number | undefined` and now always returns `number` -- since all user code will continue working and type-checking ([playground][narrower-return])
 
-The following are *not* breaking changes:
+-   a function (including a class constructor or method) makes a previously-required argument optional -- since all existing user code will continue to work with it ([playground][optional-argument])
 
--   a function (including a class method or constructor) *accepts a less specific ("wider") type*, for example if it previously accepted only a `boolean` but now accepts `boolean | undefined`—since all existing user code will continue working and type-checking ([playground][wider-argument])
-
--   a function (including a class method) which *returns a more specific ("narrower") type*, for example if it previously returned `number | undefined` and now always returns `number`—since all user code will continue working and type-checking ([playground][narrower-return])
-
--   a function (including a class constructor or method) makes a previously-required argument optional—since all existing user code will continue to work with it ([playground][optional-argument])
-
--   a `readonly` object property on a published interface becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]`—since all user code will continue working and type-checking ([playground][narrower-property])
-
--   a wholly new symbol is exported which was not previously exported, and does not share a name with another symbol of a different kind (type vs. value) with a symbol which was previously exported
-
-In each of these cases, some user code becomes *superfluous*, but it neither fails to type-check nor causes any runtime errors.
+-   changing a function from an arrow function declaration to `function` declaration, since it allows the caller to use `bind` or `call` meaningfully where they could not before
 
 [wider-argument]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0Nig5JS0DKgA8pjwCOScZnKgRS5siPQ48KEs9Iw00rac9gAUgQTQegBGGhqcyNCIAJR6AG4a8IHhcg7RsfGJqCnUdIygAOrjksiBBcUlZRVVDLX1dsgtbZ3dvf2gAD6gpbHOSFtDoKPjk9MKYEJYoPQNLE5FkckguAA6I7IOpUBrNHCYewDSag3KQ6Gw+FnZxcCQouTrWIoQJQmowk6NM6I5GTImbUmYynNXGcfHhIA
 
 [narrower-return]: https://www.typescriptlang.org/play?#code/PTAEEkFsEMHMEsB2BTUALZAnVAXN0dQ9UAiRaSZAZwAdoBjZE0BnAV2gBtOBPUAKzZVC2GtirJEOKkQwAoEKCoVU8SDQD2mHAC5QAAzWbtoAN6hYyHADUubVAF9QAM0wbIoAORV3yALTQACaBGoieANz6cnKByPSc0Nig5JS0DKgA8pjwCOScZnKgRS5siPQ48KEWVrac9gAUAJR6wtmIsKAAPsls3OFyDtGx8YmoKdR0jKAAcoluAO7IgQXFJWUVVZY2dshNLThtsP2DCmBCWKD0GrFyzqXllYjo0IiBnMgAStS9OPUAbjt9ocuj1uM0epAAEYXUyFYrYdiYJ4AurIAD8ADp3u08KA0WjQAAGY7RfCvd5fKg-epZHJILgYra1BqNRr9MlvT7fTi-WaYBZLRk1HZNNlyIA
 
 [optional-argument]: https://www.typescriptlang.org/play/#code/CYUwxgNghgTiAEAzArgOzAFwJYHtXwAc4A3XZAZwAooAuecjGLVAcwBp4AjO1ZAW04gYASjrEcWYAG4AUKEiwEKdNjzxkBYFAwhg1OgyasOnAPw9+gkWInSZMiCAzwo8ALyESZKgHICODG0cHw4ARgAmYVlHZ053dU1tXUo-AKCQ+AiooA
-
-[narrower-property]: https://www.typescriptlang.org/play?#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHngAcYB7KkGAFwE8AueZJ7fHeAH07cCOANoBdANxkAvmTKgkcRNFTwAcrDoB3EMFIVqdBs3ZCeOWfIBmAV3xgmWWvngALKPmAQQyTLgIiTRgdAAoANyJbEA5-PEIIAEoOfFsAWwAjRgNKOCZbGFdIiGiAOhp6RlZSn14mN2k5BXBoZR8meChY7HiiaUVWhHb4DI5gnT1pDy8fPx7AiHHabVCoRKnPb184haWVjPWyIA
 
 #### Bug fixes
 
@@ -312,7 +326,7 @@ To successfully use TypeScript, we need to be able to *detect* breaking changes 
 
 As with runtime code, it is essential to prevent unintentional changes to the API of types supplied by an addon. We can accomplish this using *type tests*: tests which assert that the types exposed by the public API of the addon are stable.
 
-Addon authors publishing types should add [the `expect-type` library][expect-type] library and generate a set of tests corresponding to their public API. These tests should be put in the `types` folder configured by `ember-cli-typescript`'s default generator. If the API surface is small, a single file may be sufficient. For example, `ember-modifier` has `types/ember-modifier-test.ts`. In more complicated packages, addon authors may choose to break the tests down to mirror the structure of the addon's API—for example, by dedicated test files for each helper, modifier, service, component, or utility class or function exported from the addon.
+Addon authors publishing types should add [the `expect-type` library][expect-type] library and generate a set of tests corresponding to their public API. These tests should be put in the `types` folder configured by `ember-cli-typescript`'s default generator. If the API surface is small, a single file may be sufficient. For example, `ember-modifier` has `types/ember-modifier-test.ts`. In more complicated packages, addon authors may choose to break the tests down to mirror the structure of the addon's API -- for example, by dedicated test files for each helper, modifier, service, component, or utility class or function exported from the addon.
 
 These type tests should be specific and precise. It is important, for example, to guarantee that an API element never *accidentally* becomes `any`, thereby making many things allowable which should not be in the case of function arguments, and "infecting" the caller's code by eliminating type safety on the result in the case of function return values. The `expect-type` library's `.toEqualTypeOf` assertion is robust against precisely this scenario; addon authors are also encouraged to use its `.not` modifier and `.toBeAny()` method where appropriate to prevent this failure mode.
 
@@ -369,7 +383,7 @@ function dontCarePromise(): Promise<{}> {
 }
 ```
 
-This is a totally-backwards compatible bugfix-style change, and should be released in a bugfix/point release. Users can then just upgrade to the bugfix release *before* upgrading their own TypeScript version—and will experience *zero* impact from the breaking TypeScript change.
+This is a totally-backwards compatible bugfix-style change, and should be released in a bugfix/point release. Users can then just upgrade to the bugfix release *before* upgrading their own TypeScript version -- and will experience *zero* impact from the breaking TypeScript change.
 
 Later, the default type argument `Promise<{}>` could be dropped and defaulted to the new value for a major release of the library when desired (per the policy [outlined below](#policy-for-supported-type-script-versions), giving it the new semantics. (Also see [<b>Opt-in future types</b>](#opt-in-future-types) below for a means to allow users to *opt in* to these changes before the major version.)
 
@@ -440,9 +454,9 @@ Now consumers using older versions of TypeScript will be buffered from the break
 
 ##### Opt-in future types
 
-In the case of significant breaking changes to *only* the types—whether because the addon author wants to make a change, or because of TypeScript version changes—addons may supply *future* types, which users may opt into *before* the library ships a breaking change. (We expect this use case will be rare, but important.)
+In the case of significant breaking changes to *only* the types -- whether because the addon author wants to make a change, or because of TypeScript version changes -- addons may supply *future* types, which users may opt into *before* the library ships a breaking change. (We expect this use case will be rare, but important.)
 
-In this case, addon authors will need to *hand-author* the types for the future version of the types, and supply them at a specific location which users can then import directly in their `types/my-app.d.ts` file—which will override the normal types location, while not requiring the user to modify the `paths` key in their `tsconfig.json`.
+In this case, addon authors will need to *hand-author* the types for the future version of the types, and supply them at a specific location which users can then import directly in their `types/my-app.d.ts` file -- which will override the normal types location, while not requiring the user to modify the `paths` key in their `tsconfig.json`.
 
 This approach is a variant on [**Updating types to maintain compatibility**](#updating-types-to-maintain-compatibility). Using that same example, an addon author who wanted to provide opt-in future types instead (or in addition) would follow this procedure:
 
@@ -475,7 +489,7 @@ This approach is a variant on [**Updating types to maintain compatibility**](#up
         sub-package.d.ts
     ```
 
-    —and the contents of `sub-package.d.ts` would be:
+     -- and the contents of `sub-package.d.ts` would be:
     
     ```ts
     declare module 'my-library/sub-package' {
@@ -483,7 +497,7 @@ This approach is a variant on [**Updating types to maintain compatibility**](#up
     }
     ```
 
-7.  Explicitly include each such sub-module in the import graph available from `ts3.5/index.d.ts`—either via direct import in that file or via imports in the other modules. (Note that these imports can simply be of the form `import 'some-module';`, rather than importing specific types or values from the modules.)
+7.  Explicitly include each such sub-module in the import graph available from `ts3.5/index.d.ts` -- either via direct import in that file or via imports in the other modules. (Note that these imports can simply be of the form `import 'some-module';`, rather than importing specific types or values from the modules.)
 
 7.  Commit the `ts3.5` directory, since it now needs to be maintained manually until a breaking change of the library is released which opts into the new behavior.
 
@@ -520,7 +534,7 @@ Addons should generally support the TypeScript versions current during the lifet
 
 The Typed Ember team shall normally make a recommendation within a week of the release of a new TypeScript version whether it should be adopted as a supported version by the community.
 
-Some TypeScript releases have bugs which last throughout the life of the release and are fixed only in the following release. This is not uncommon; the same is true of ember-source and ember-data. Critically, however, the role played by TypeScript in the development pipeline means that users—including addon authors—can safely wait for later releases. This is not *common*, but has happened enough times in recent TypeScript history (including 2.9–3.1, 3.5, and 3.8) that a recommended support matrix will minimize churn and pain in the ecosystem.
+Some TypeScript releases have bugs which last throughout the life of the release and are fixed only in the following release. This is not uncommon; the same is true of ember-source and ember-data. Critically, however, the role played by TypeScript in the development pipeline means that users -- including addon authors -- can safely wait for later releases. This is not *common*, but has happened enough times in recent TypeScript history (including 2.9–3.1, 3.5, and 3.8) that a recommended support matrix will minimize churn and pain in the ecosystem.
 
 Addon authors should *prefer* to follow guidance from the Typed Ember team about supported TypeScript versions. Addon authors *may* opt into supporting non-recommended versions, but the Typed Ember team will not commit to helping support TypeScript issues and bugs for addons which do so. (See [<b>Documenting supported versions</b>](#documenting-supported-versions) below.)
 
@@ -561,13 +575,13 @@ These should be explained in a new section of the ember-cli-typescript docs dedi
 -   publicizing the addon's supported versions of TypeScript
 -   the currently-recommended versions of TypeScript, along with a standard badge
 
-Finally, Typed Ember will publish a new document in its own repo: `SEMVER.md`, tagged so it can be referenced by direct stable link from addon repositories—with the same set of rules as documented in this document.
+Finally, Typed Ember will publish a new document in its own repo: `SEMVER.md`, tagged so it can be referenced by direct stable link from addon repositories -- with the same set of rules as documented in this document.
 
 ## Drawbacks
 
--   Adding type tests and infrastructure may slow the development of any given feature. We believe that is more than made up for by the resulting stability of the code, just as with runtime tests—but there is a real cost in time spent nonetheless.
+-   Adding type tests and infrastructure may slow the development of any given feature. We believe that is more than made up for by the resulting stability of the code, just as with runtime tests -- but there is a real cost in time spent nonetheless.
 
--   The current version of `downlevel-dts` generates output in a way that could cause regressions in strictness for previously-published versions. This means that when we upgrade an addon to a new version of TypeScript, we will *sometimes* be shipping types to consumers which are *less* useful and catch *fewer* errors than they did previously. This is a real, if small, concern for the viability of the current proposal. See below for discussion on alternatives to the use of `downlevel-dts`. Notably, however, these regressions would *never* cause code that compiles to stop compiling—only allow some code to compile that *should not* and previously *did not*.
+-   The current version of `downlevel-dts` generates output in a way that could cause regressions in strictness for previously-published versions. This means that when we upgrade an addon to a new version of TypeScript, we will *sometimes* be shipping types to consumers which are *less* useful and catch *fewer* errors than they did previously. This is a real, if small, concern for the viability of the current proposal. See below for discussion on alternatives to the use of `downlevel-dts`. Notably, however, these regressions would *never* cause code that compiles to stop compiling -- only allow some code to compile that *should not* and previously *did not*.
 
 -   The policy proposed here *may* at times mean uptake of new TypeScript features is slower than it would otherwise be, in order to support versions for the lifetime of Ember LTS releases. While in most cases, the mitigations suggested here will make this less of a problem, it *may* be an issue at times given the current limitations of `downlevel-dts`.
 
@@ -581,9 +595,9 @@ However, there are three major problems with this approach.
 
 -   First, it does not scale well. While many apps and a few addons are using TypeScript today, as the community of TypeScript users grows and especially as it increasingly includes addons used extensively throughout the community (e.g. [ember-modifier]), the cost of breaking changes will be magnified greatly.
 
--   Second, and closely related, the more central an addon is to the ecosystem, the worse the impact is—especially when combined with the fact that Ember CLI will only resolve a single major version of an addon. Without a mitigation strategy, core addons like ember-modifier could easily end up fragmenting the ecosystem.
+-   Second, and closely related, the more central an addon is to the ecosystem, the worse the impact is -- especially when combined with the fact that Ember CLI will only resolve a single major version of an addon. Without a mitigation strategy, core addons like ember-modifier could easily end up fragmenting the ecosystem.
 
--   Third, in the absence of a specific policy, each addon would end up developing its own _ad hoc_ support policy (as has been the case today). The Ember community highly values shared solutions and stability—preferring to avoid churn and risk through policies such as the one outlined in this RFC. Accordingly, a policy which aligns TypeScript support with existing community norms around supported versions would make TypeScript adoption more palatable both at the community level in general and specifically to large/enterprise engineering organizations with a lower appetite for risk.
+-   Third, in the absence of a specific policy, each addon would end up developing its own _ad hoc_ support policy (as has been the case today). The Ember community highly values shared solutions and stability -- preferring to avoid churn and risk through policies such as the one outlined in this RFC. Accordingly, a policy which aligns TypeScript support with existing community norms around supported versions would make TypeScript adoption more palatable both at the community level in general and specifically to large/enterprise engineering organizations with a lower appetite for risk.
 
 [ember-modifier]: https://github.com/ember-modifier/ember-modifier
 
@@ -595,7 +609,7 @@ This is a perfectly reasonable decision, and in fact some addons may choose to t
 
 As noted above in [<b>"Downleveling" types</b>](#downleveling-types), `downlevel-dts` currently only generates types for TypeScript 3.4, with no ability to generate targeted types. As such, there are two other approaches we might take to 
 
-1.  **Build our own tool.** While this is probably doable—`downlevel-dts` is not especially large or complicated—it is additional maintenance burden, and is not aligned with the TypeScript team's own efforts. It is, as such, not *preferable*. However, if the TypeScript team is unwilling to maintain a more granular tool, this may be appropriate, and it would likely see wide uptake across the broader TypeScript ecosystem, as its utility is obvious.
+1.  **Build our own tool.** While this is probably doable -- `downlevel-dts` is not especially large or complicated -- it is additional maintenance burden, and is not aligned with the TypeScript team's own efforts. It is, as such, not *preferable*. However, if the TypeScript team is unwilling to maintain a more granular tool, this may be appropriate, and it would likely see wide uptake across the broader TypeScript ecosystem, as its utility is obvious.
 
 2.  **Manually generate downleveled types.** This is possible, but very difficult: it requires addon authors to deeply understand the semantics of changes between TypeScript versions, rather than simply allowing a tool to manage it automatically. In practice, we expect that addon authors would choose *not* to downlevel their types because of the complexity involved, and instead either to just wait to adopt *new* TypeScript versions for a longer period of time or to drop support for *older* versions much more rapidly than this RFC proposes, with all the attendant downsides of either.
 
@@ -619,7 +633,7 @@ This RFC is intended to be the first step toward formally supporting TypeScript 
 
 1.  Their release cadence (especially LTS releases) are foundational for this RFC's recommendations for when the *rest* of the ecosystem should move.
 
-2.  Their types are foundational to the types in the rest of the ecosystem, so even with mitigations, any breaking changes to them will have a ripple effect—just as with runtime code.
+2.  Their types are foundational to the types in the rest of the ecosystem, so even with mitigations, any breaking changes to them will have a ripple effect -- just as with runtime code.
 
 3.  They generally operate on longer time scales between major releases than other addons in the ecosystem, in part because of cultural norms, but in part also because of the ripple effect mentioned above.
 
@@ -629,7 +643,7 @@ The combination of these factors means that a slightly different strategy is lik
 
 Ember CLI has many of the same constraints that ember-source and ember-data do: it is foundational to the ecosystem, and if it were to publish types, breakage to those types would be similarly disruptive as a result. Additionally, though, it has the challenge that is versioning system *today* does not technically follow SemVer, because Ember CLI versions are kept in lockstep with Ember and Ember Data's versions. So, for example, when Ember CLI drops support for a Node version, it does *not* publish a breaking change even though by the norms of the Node ecosystem (and indeed the rest of the Ember ecosystem), it should.
 
-Any publication of types for Ember CLI would therefore require *either* that it exactly match the policy of Ember and Ember Data, *or* that Ember CLI drop lockstep versioning with Ember and Ember Data—or possibly other options not considered here.
+Any publication of types for Ember CLI would therefore require *either* that it exactly match the policy of Ember and Ember Data, *or* that Ember CLI drop lockstep versioning with Ember and Ember Data -- or possibly other options not considered here.
 
 As with the core addons, making either of these changes is substantially beyond the remit of this RFC.
 
