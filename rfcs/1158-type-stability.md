@@ -211,7 +211,7 @@ A change to any object type (user constructable or not) is breaking when:
 
     -   if it was previously `string | number` but now is `string`, some of the user's existing *writes* to the property will now be wrong ([playground][writes-to-property]). Note that this includes making a previously-optional property required. 
 
-        Note that at present, TypeScript cannot actually catch this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should treat the change as breaking whether TypeScript can currently identify it or not!
+        Note that at present, TypeScript cannot actually catch all variants of this error. [This playground][writes-to-property] demonstrates that there is a runtime error but no *type* error in one scenario. TypeScript's type system understands these types in terms of *assignability*, rather than local *mutability*. However, addon authors should test for the catchable variant of this condition.
 
 -   a property is removed from the type entirely, since some of the user's existing uses of the type will break, even if the property was optional ([optional][optional-removed], [required][required-removed])
 
@@ -241,7 +241,7 @@ A change to a non-user-constructable object type is breaking when:
 
 [reads-of-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYfQEwiZAbwFgAoZC5OALmQGcwpQBzAbjIF8yzRJZEUAEWA5c+ImUpVaDJiGbIAPshABXALYAjaO1JdSZGKpAIwwAPYEAFnBA4MEOuixiQACgBucDKoi1n2CL4AJS0alrQEuSUUBBgqlAEXj4QAHRwqQ7yYFa6+mR4CBhwscgOYMgA7piBeCD+Na66NnYOTo1B7tUuncG6BRBFJSjlyDgirrTCop3NtvaOAa5u4zN1fWRAA
 
-[writes-to-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYYHJylAewHdkBvAWAChkbk4AuZAZzClAHNkAfZEAVwC2AI2gBuKgF8qVUJFiIUAEWAATXPmJkqtOo37Cxk6ZRh8QCMMAIhkRNpCYAVAuizrCRABQA3OBj4QjK44eB4AlFrUtL7+EAB0cMgAvMgA5AAWEFgEqeKUUpRUKhAIGHgoGBBgtpghGkRBte7EeXbADs7BzV5ETaHEYXlFJWVQFVXIKqrdjMpq-USt9hBOLn31nlPz9YNUQA
+[writes-to-property]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgOrADYYHJylAewHdkBvAWAChkbk4AuZAZzClAHNkAfZEAVwC2AI2gBuKgF8qVUJFiIUAEWAATXPmJkqtOo37Cxk6ZRh8QCMMAIhkRNpCYAVAuizrCRABQA3OBj4QjK44eB4AlFrUtL7+EAB0cMgAvMgA5AAWEFgEqeKUUpRUKhAIGHgoGBBgtpghGkRBte7EeXbADs7BzV5ETaHEYXlFJWVQFVXIKqrdjMpq-UR5U-P1CcnIAEQADgRgcGAEG6LIAPQnyPCYTFRtHS599Z7L3YOn50x8CEgQKkzI0IQQBACHwmBgAJ5UIA
 
 [optional-removed]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgEIHU4GcDyAHMYAexDgBtkBvAWAChkHk4AuZAIyKLIjhAG46jdgH5WHLj350AvnTqhIsRClQAlCAFsiANwgATKoMYt2nbrwG1ZtOtzDISZAJ4BBVBBhEoEVhmz5CEnJkAF4qJlYwKABXFGlLO2RQBDJovX1Ud09vX0xcAmJSCjDKCOQo2IAadlZ4Miw4y1sIe0dXFxhFX3UtXQMSsorG5vtk1PS9VA6utB6dfVDwkyHqtlryBuR4oA
 
@@ -314,11 +314,21 @@ A change to an exported symbol is *not* breaking when:
 
 ##### Interfaces, Type Aliases, and Classes
 
-A change to an exported type is not breaking when:
+A change to any type (user-constructable or not) is *not* breaking when:
 
--   a `readonly` object property on a published interface becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]` -- since all user code will continue working and type-checking ([playground][narrower-property])
+-   a new optional property is added to the type, since all existing code will continue working ([playground][new-optional-prop])
+
+Any change to a non-user-constructable type is *not* breaking when:
+
+-   a `readonly` object property on the type becomes a *more specific ("narrower") type*, for example if it was previously `string | string[]` and now is always `string[]` -- since all user code will continue working and type-checking ([playground][narrower-property]). Note that this includes a previously-optional property becoming required.
+
+-   a new required property is added to the object -- since its presence does not require the consuming code to use the property at a type level ([playground][new-required-prop])
+
+[new-optional-prop]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgPJWAc1HANsgbwFgAoZc5OALmQGcwMRMBuUgX1NNElkRQFUADgBM4kYYVIVKNeoxZSKAIwD8NEAFcAtkuisSHEqWEQEuOFBQwNIBGGAB7EMktgNUELXRYcuABQAlDTe2CB4+iZmFlY2do7Oru6eQqLigTQpYhDC+sam5pbI1rb2TshgcADWEF4YoXh+AB7Bdb5ByABuDsA5eVGFxXFlFdW0mWnNyOPZ7V09uSRhWjWCfMgAQhAwDpbTkmQUAPSHyAhOchpDIIrkuBBgMmitYfgAvISPAEQAFhC4uA5Psg2AtpMcXPcktlkEoAJ7IXDAJRQCywm4I+4wlo+F7Id6JDy1HENAKgo4nBB4cxKYCIsBog7kEY1EK+PxwUno5lE+r+AhfX7-QHAgLsTiLODLWirJDIACCMB4e2IjOQ4LOngYl1K11Vdwe1CmIiyEne-MNPz+AKBIPFYJOBJA0LhCKRKKgDOk+qxT2JbwhbkJ02EgTJ5HVVLgNLpnoo3NZL3ZnNV3ODSf00njzwaSmTmaqNTTuYzcYLY2NaXNNEtQptooMpCAA
 
 [narrower-property]: https://www.typescriptlang.org/play?#code/CYUwxgNghgTiAEkoGdnwPIwJYHMsDsoJ4BvAKHngAcYB7KkGAFwE8AueZJ7fHeAH07cCOANoBdANxkAvmTKgkcRNFTwAcrDoB3EMFIVqdBs3ZCeOWfIBmAV3xgmWWvngALKPmAQQyTLgIiTRgdAAoANyJbEA5-PEIIAEoOfFsAWwAjRgNKOCZbGFdIiGiAOhp6RlZSn14mN2k5BXBoZR8meChY7HiiaUVWhHb4DI5gnT1pDy8fPx7AiHHabVCoRKnPb184haWVjPWyIA
+
+[new-required-prop]: https://www.typescriptlang.org/play?#code/JYOwLgpgTgZghgYwgAgPJWAc1HANsgbwFgAoZc5OALmQGcwMRMBuUgX1NNElkRQFUADgBM4kYYVIVKNeoxZSKAIxogArgFsl0ViQ4lSwiAlxwoKGGpAIwwAPYhk5sGqgha6LDlwAKAJQ0ntggeLpGJmYWVjb2js6u7kKi4v40SWIQwrqGxqbmyJbWtg7IYHAA1hAeGMF4PgAegTXeAcgAbnbAWTkR+YUxJWWVtOkpjcijma0dXdkkIRpVgnzIAEIQMHbmk5JkFAD0+04QLm6ZyEoAnsi4wEpQZpeK5LgnMmjNIfgAvMen7kFvP5dNJXmBkKAYNBzBJfvE3NUvF9gZw9uRDsgEHhTEpgLcwNcAO7AMAACz+CUyz1KFSqgORcD8IIoQzpnzqkOhU10+lICyWKwAgjAeDtiGjkBj4SBzlcbncHlAnhKMQBhUlwJigTClUkoYAaQRbcHAWiYrbmGwXYxwNS0fWOMkocx4drQWixZB2GC600AGmpGMudjUyEJIdwEm0yGEnSYyAABgajVBwQRkABlOyLACS4Gg8CQyDYBSg2eQAHJaNmIABaW73R4V5gJgMqo6aiRO5BqEQZCTcAsrcNqSPIDVtFDd2hwRbIfl+uh2XUoCD1QS3BAkwMd2gezAgRbgMMRiT0PH4ZZ75A+OBmteCYziPzIABUndfNwyUB79ohIB3c183qMAzUJUlgAQclzAARzUYB8m7QQy0fVMiVPShcGra1fzgJRXjDElSRDMBAI0OxhGAGBILEWJqTBd5JlhCkESY4FJSOc9cHwO99xCfCIHot5OSgGFkDhE4EhGPsUiZVFpAxLFuLwvESSJIiWJlYRqVZRFal8RlmXIXT6Q5EAoVE7kdNpaTkkyW85IlXS2JEmFHP0IA
 
 ##### Functions
 
