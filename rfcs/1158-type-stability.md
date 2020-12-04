@@ -38,6 +38,7 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
   - [Tooling](#tooling)
     - [Detect breaking changes in types](#detect-breaking-changes-in-types)
     - [Mitigate breaking changes](#mitigate-breaking-changes)
+      - [Avoiding user constructability](#avoiding-user-constructability)
       - [Updating types to maintain compatibility](#updating-types-to-maintain-compatibility)
       - ["Downleveling" types](#downleveling-types)
       - [Opt-in future types](#opt-in-future-types)
@@ -436,7 +437,50 @@ Type tests can run as normal [ember-try] variations. Typed Ember will document a
 
 It is insufficient merely to be *aware* of breaking changes. It is also important to *mitigate* them, to minimize churn and breakage for addon users.
 
-The specific mechanics of mitigating churn are left to library authors. Accordingly, the following three sections are non-normative.
+The specific mechanics of mitigating churn are left to library authors. Accordingly, the following four sections are non-normative.
+
+##### Avoiding user constructability
+
+For types where it is useful to publish an interface for end users, but where users should not construct the interface themselves, authors have a number of options (noting that this list is not exhaustive):
+
+-   Export a nominal-like version of the type, using `export type` with a class with a private field:
+
+    ```ts
+    class Person {
+      // 1.  The private brand means this cannot be constructed other than the
+      //     class's own constructor, because other approaches cannot add the
+      //     private field. Even if you write a class yourself with a matching
+      //     private field, TS will treat them as distinct.
+      // 2.  Using `declare` means this marker has no runtime over head: it will
+      //     not be emitted by TypeScript or Babel.
+      // 3.  Because the class itself is declared but not exported, the only way
+      //     to construct it is using the function exported lower in the module.
+      declare private __brand: '_Person';
+
+      name: string;
+      age: number;
+
+      constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+      }
+    }
+
+    // This exports only the *type* side of `Person`, not the *value* side, so
+    // users can neither call `new Person(...)` nor subclass it. Per the note
+    // above, they also cannot *implement* their own version of `Person`, since
+    // they do not have the ability to add the private field.
+    export type { Person };
+
+    // This is the controlled way of building a person.
+    export function buildPerson(name: string, age: number): Person {
+      return new Person(name, age);
+    }
+    ```
+
+    This *cannot* be constructed outside the module. Note that it may be useful to provide corresponding test helpers for scenarios like this, since users cannot safely provide their own mocks.
+
+This leaves this module wholly in control of the construction of `Person`s, which allows more flexibility for evolving the API, since non-user-constructable
 
 ##### Updating types to maintain compatibility
 
