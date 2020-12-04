@@ -687,7 +687,7 @@ As with the core addons, making either of these changes is substantially beyond 
 
 ## Notes
 
-1.  TypeScript's core team argues that *every* change to the compiler is a breaking change, and that SemVer is therefore meaningless. We do not agree with this characterization, but are not interested in litigating it.
+1.  TypeScript's core team argues that *every* change to the compiler is a breaking change, and that SemVer is therefore meaningless. We do not agree with this characterization, but are also uninterested in arguing it. This RFC takes the TypeScript team's position as a given.
 
 2.  This is *not* optimal: we would prefer to be able to supply types specific to each supported version, rather than downleveling everything to a lowest-common denominator of 3.4. If [the upstream issue][downlevel-dts-36] which prevents us from being more granular is resolved, this RFC will be amended and docs and any blueprints updated to support that more granular resolution.
 
