@@ -22,39 +22,49 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
 
 - [Motivation](#motivation)
 - [Detailed design](#detailed-design)
-    - [Background: TypeScript and Semantic Versioning](#background-typescript-and-semantic-versioning)
-    - [Defining breaking changes](#defining-breaking-changes)
-        - [Breaking changes](#breaking-changes)
-        - [Non-breaking changes](#non-breaking-changes)
-        - [Bug fixes](#bug-fixes)
-        - [Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions)
-    - [Tooling](#tooling)
-        - [Detect breaking changes in types](#detect-breaking-changes-in-types)
-        - [Mitigate breaking changes](#mitigate-breaking-changes)
-            - [Updating types to maintain compatibility](#updating-types-to-maintain-compatibility)
-            - ["Downleveling" types](#downleveling-types)
-            - [Opt-in future types](#opt-in-future-types)
-                - [Example: TypeScript 3.5 mitigation](#example-typescript-35-mitigation)
-    - [Policy for supported TypeScript versions](#policy-for-supported-typescript-versions)
-        - [Supporting new versions](#supporting-new-versions)
-        - [Dropping TypeScript versions](#dropping-typescript-versions)
-        - [Documenting supported versions](#documenting-supported-versions)
-    - [Summary](#summary)
+  - [Background: TypeScript and Semantic Versioning](#background-typescript-and-semantic-versioning)
+  - [Defining breaking changes](#defining-breaking-changes)
+    - [Definitions](#definitions)
+    - [Breaking changes](#breaking-changes)
+      - [Symbols](#symbols)
+      - [Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes)
+      - [Functions](#functions)
+    - [Non-breaking changes](#non-breaking-changes)
+      - [Symbols](#symbols-1)
+      - [Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes-1)
+      - [Functions](#functions-1)
+    - [Bug fixes](#bug-fixes)
+    - [Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions)
+  - [Tooling](#tooling)
+    - [Detect breaking changes in types](#detect-breaking-changes-in-types)
+    - [Mitigate breaking changes](#mitigate-breaking-changes)
+      - [Updating types to maintain compatibility](#updating-types-to-maintain-compatibility)
+      - ["Downleveling" types](#downleveling-types)
+      - [Opt-in future types](#opt-in-future-types)
+    - [Matching exports to public API](#matching-exports-to-public-api)
+  - [Policy for supported TypeScript versions](#policy-for-supported-typescript-versions)
+    - [Supporting new versions](#supporting-new-versions)
+    - [Dropping TypeScript versions](#dropping-typescript-versions)
+    - [Documenting supported versions](#documenting-supported-versions)
+  - [Summary](#summary)
 - [How we teach this](#how-we-teach-this)
 - [Drawbacks](#drawbacks)
 - [Alternatives](#alternatives)
-    - [No policy](#no-policy)
-    - [Decouple TypeScript support from Ember's LTS cycle](#decouple-typescript-support-from-embers-lts-cycle)
-    - [Use an alternative to `downlevel-dts`](#use-an-alternative-to-downlevel-dts)
+  - [No policy](#no-policy)
+  - [Decouple TypeScript support from Ember's LTS cycle](#decouple-typescript-support-from-embers-lts-cycle)
+  - [Use an alternative to `downlevel-dts`](#use-an-alternative-to-downlevel-dts)
 - [Unresolved questions](#unresolved-questions)
 - [Appendix: Core Addons and Ember CLI](#appendix-core-addons-and-ember-cli)
-    - [Core addons](#core-addons)
-    - [Ember CLI](#ember-cli)
-- [Notes](#notes)
+  - [Core addons](#core-addons)
+  - [Ember CLI](#ember-cli)
 
 ## Motivation
 
-Ember and TypeScript have fundamentally different views on Semantic Versioning (SemVer). Ember has a deep commitment to minimizing breaking changes in general, and to strictly following SemVer when breaking changes *are* made. TypeScript explicitly *does not* follow SemVer [[see note 1](#notes)]. Every point release may be a breaking change, and "major" numbers for releases signify nothing beyond having reached `x.9` in the previous cycle. (At the time of drafting this sentence, the current latest TypeScript was 3.9; the next version released was 4.0.)
+Ember and TypeScript have fundamentally different views on Semantic Versioning (SemVer).
+
+Ember has a deep commitment to minimizing breaking changes in general, and to strictly following SemVer when breaking changes *are* made. (The use of lockstep versioning for Ember Data and Ember CLI complicates this commitment to a substantial degree, but that complication is outside the scope of this RFC.)
+
+TypeScript explicitly *does not* follow SemVer. (TypeScript's core team argues that *every* change to the compiler is a breaking change, and that SemVer is therefore meaningless. We do not agree with this characterization, but are also uninterested in arguing it. This RFC takes the TypeScript team's position as a given.) Every TypeScript point release may be a breaking change, and "major" numbers for releases signify nothing beyond having reached `x.9` in the previous cycle. (At the time of drafting this sentence, the current latest TypeScript was 3.9; the next version released was 4.0.)
 
 For TypeScript to be a first-class citizen of the Ember ecosystem, we need:
 
@@ -384,7 +394,7 @@ Type tests can run as normal [ember-try] variations. Typed Ember will document a
 
 It is insufficient merely to be *aware* of breaking changes. It is also important to *mitigate* them, to minimize churn and breakage for addon users.
 
-There are two tools and two techniques by which we can minimize churn in the ecosystem, which when combined will allow us to insulate addon users even from most breaking changes to TypeScript.
+The specific mechanics of mitigating churn are left to library authors. Accordingly, the following three sections are non-normative.
 
 ##### Updating types to maintain compatibility
 
@@ -431,15 +441,16 @@ Later, the default type argument `Promise<{}>` could be dropped and defaulted to
 
 ##### "Downleveling" types
 
-When a new version of TypeScript results in backwards-incompatible *emit* to to the type definitions, as they did in [3.7][3.7-emit-change], the strategy of changing the types directly will not work. However, it is still possible to provide backwards-compatible types, using the combination of [downlevel-dts] and [typesVersions]. (In some cases, this may also require some manual tweaking of types, but this should be rare for most addons.)
+When a new version of TypeScript results in backwards-incompatible *emit* to to the type definitions, as they did in [3.7][3.7-emit-change], the strategy of changing the types directly may not work. However, it is still possible to provide backwards-compatible types, using the combination of [downlevel-dts] and [typesVersions]. (In some cases, this may also require some manual tweaking of types, but this should be rare for most addons.)
 
-- [downlevel-dts] allows you to take a `.d.ts` file which is not valid for an earlier version of TypeScript (e.g. the changes to class field emit mentioned in [<b>Breaking Changes</b>](#breaking-changes)), and emit a version which *is* compatible with that version. Specifically: it currently generates types compatible with TypeScript 3.4.[[see note 2](#notes)]
-- [typesVersions] allow you to specify a specific set of type definitions (which may consist of one or more `.d.ts` files) which correspond to a specific TypeScript version
+- The [`downlevel-dts`][downlevel-dts] tool allows you to take a `.d.ts` file which is not valid for an earlier version of TypeScript (e.g. the changes to class field emit mentioned in [<b>Breaking Changes</b>](#breaking-changes)), and emit a version which *is* compatible with that version. It supports targeting all TypeScript versions later than 3.4.
+
+- TypeScript supports using the [`typesVersions`][typesVersions] key in a `package.json` file to specify a specific set of type definitions (which may consist of one or more `.d.ts` files) which correspond to a specific TypeScript version.
 
 [downlevel-dts]: https://github.com/sandersn/downlevel-dts
 [typesVersions]: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-1.html#version-selection-with-typesversions
 
-The recommended flow will be as follows:[[see note 2](#notes)]
+The recommended flow would be as follows:
 
 1.  Add `downlevel-dts`, `npm-run-all`, and `rimraf`  to your dev dependencies:
 
@@ -453,42 +464,55 @@ The recommended flow will be as follows:[[see note 2](#notes)]
     yarn add --dev downlevel-dts npm-run-all rimraf
     ```
 
-2.  Update the `scripts` key in `package.json`  to generate downleveled types generated by running `downlevel-dts` on the output of `ember-cli-typescript`'s  `ts:precompile` command, and to clean up the results after publication:
+2.  Create a script to downlevel the types to all supported TypeScript versions:
+
+    ```sh
+    # scripts/downlevel.sh
+    npm run downlevel-dts . --to 3.7 ts3.7
+    npm run downlevel-dts . --to 3.8 ts3.8
+    npm run downlevel-dts . --to 3.9 ts3.9
+    npm run downlevel-dts . --to 4.0 ts4.0
+    ```
+
+3.  Update the `scripts` key in `package.json`  to generate downleveled types generated by running `downlevel-dts` on the output of `ember-cli-typescript`'s  `ts:precompile` command, and to clean up the results after publication:
 
     ```diff
     {
       "scripts": {
     -   "prepublishOnly": "ember ts:precompile",
     +   "prepublish:types": "ember ts:precompile",
-    +   "prepublish:downlevel": "downlevel-dts . ts3.4",
+    +   "prepublish:downlevel": "./scripts/downlevel.sh",
     +   "prepublishOnly": "run-s prepublish:types prepublish:downlevel",
     -   "postpublish": "ember ts:clean",
     +   "clean:ts": "ember ts:clean",
-    +   "clean:downlevel": "rimraf ./ts3.4",
+    +   "clean:downlevel": "rimraf ./ts3.7 ./ts3.8 ./ts3.9 ./ts4.0",
     +   "clean": "npm-run-all --aggregate-output --parallel clean:*",
     +   "postpublish": "npm run clean",
       }
     }
     ```
 
-3.  Add a `typesVersions` key to `package.json`, with the following contents, where instead of `3.9` the addon should always supply the current maximum supported TypeScript version:
+4.  Add a `typesVersions` key to `package.json`, with the following contents:
 
     ```json
     {
       "types": "index.d.ts",
       "typesVersions": {
-        "<3.9": { "*": ["ts3.4/*"] }
+        "3.7": { "*": ["ts3.7/*"] },
+        "3.8": { "*": ["ts3.8/*"] },
+        "3.9": { "*": ["ts3.9/*"] },
+        "4.0": { "*": ["ts4.0/*"] },
       }
     }
     ```
 
     This will tell TypeScript how to use the types generated during `ember ts:precompile`. Note that we explicitly include the `types` key so TypeScript will fall back to the defaults for 3.9 and higher.
 
-4.  If using the `files` key in `package.json` to specify files to include (unusual but not impossible for TypeScript-authored addons), add `ts3.4` to the list of entries.
+5.  If using the `files` key in `package.json` to specify files to include (unusual but not impossible for TypeScript-authored addons), add each of the output directories (`ts3.7`, `ts3.8`, `ts3.9`, `ts4.0`) to the list of entries.
 
 Now consumers using older versions of TypeScript will be buffered from the breaking changes in type definition emit.
 
-(Noting the complexity of this work, the community may want to invest in tooling to automate support for managing dependencies, downleveling, and type tests. However, the core constraints of this RFC do not depend on such tooling existing, and the exact requirements of those tools will emerge organically as the community begins implementing this RFC's recommendations.)
+If the community adopts this practice broadly we will want to invest in tooling to automate support for managing dependencies, downleveling, and type tests. However, the core constraints of this RFC do not depend on such tooling existing, and the exact requirements of those tools will emerge organically as the community begins implementing this RFC's recommendations.
 
 ##### Opt-in future types
 
@@ -684,11 +708,3 @@ Ember CLI has many of the same constraints that ember-source and ember-data do: 
 Any publication of types for Ember CLI would therefore require *either* that it exactly match the policy of Ember and Ember Data, *or* that Ember CLI drop lockstep versioning with Ember and Ember Data -- or possibly other options not considered here.
 
 As with the core addons, making either of these changes is substantially beyond the remit of this RFC.
-
-## Notes
-
-1.  TypeScript's core team argues that *every* change to the compiler is a breaking change, and that SemVer is therefore meaningless. We do not agree with this characterization, but are also uninterested in arguing it. This RFC takes the TypeScript team's position as a given.
-
-2.  This is *not* optimal: we would prefer to be able to supply types specific to each supported version, rather than downleveling everything to a lowest-common denominator of 3.4. If [the upstream issue][downlevel-dts-36] which prevents us from being more granular is resolved, this RFC will be amended and docs and any blueprints updated to support that more granular resolution.
-
-[downlevel-dts-36]: https://github.com/sandersn/downlevel-dts/issues/36
