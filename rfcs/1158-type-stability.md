@@ -373,6 +373,8 @@ In practice, this suggests two key considerations around type bugs:
 
 Additionally, once a TypeScript version has been added to an addon's list of supported versions, dropping it constitutes a breaking change, because it has the same kind of impact on users of the addon as dropping support for a version of Ember, Ember CLI, or Node. Whatever the reason for dropping a previously-supported TypeScript release, addons should publish a new major version.
 
+However, bug fix/patch releases to TypeScript (as described above under [Bug fixes](#bug-fixes)) qualify for bug fix releases for libraries. For example, if a library initially publishes support for TypeScript 4.5.0, but a critical bug is discovered and fixed in 4.5.1, the library may drop support for 4.5.0. Dropping support does not require publishing a new release, only documenting the change.
+
 ### Tooling
 
 To successfully use TypeScript, we need to be able to *detect* breaking changes (whether from our own changes or from TypeScript itself) and to *mitigate* them.
