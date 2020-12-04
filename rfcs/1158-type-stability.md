@@ -22,42 +22,43 @@ Introduce an addon-focused policy for supported versions of TypeScript which is 
 
 - [Motivation](#motivation)
 - [Detailed design](#detailed-design)
-  - [Background: TypeScript and Semantic Versioning](#background-typescript-and-semantic-versioning)
-  - [Defining breaking changes](#defining-breaking-changes)
-    - [Definitions](#definitions)
-    - [Breaking changes](#breaking-changes)
-      - [Symbols](#symbols)
-      - [Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes)
-      - [Functions](#functions)
-    - [Non-breaking changes](#non-breaking-changes)
-      - [Symbols](#symbols-1)
-      - [Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes-1)
-      - [Functions](#functions-1)
-    - [Bug fixes](#bug-fixes)
-    - [Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions)
-  - [Tooling](#tooling)
-    - [Detect breaking changes in types](#detect-breaking-changes-in-types)
-    - [Mitigate breaking changes](#mitigate-breaking-changes)
-      - [Avoiding user constructability](#avoiding-user-constructability)
-      - [Updating types to maintain compatibility](#updating-types-to-maintain-compatibility)
-      - ["Downleveling" types](#downleveling-types)
-      - [Opt-in future types](#opt-in-future-types)
-    - [Matching exports to public API](#matching-exports-to-public-api)
-  - [Policy for supported TypeScript versions](#policy-for-supported-typescript-versions)
-    - [Supporting new versions](#supporting-new-versions)
-    - [Dropping TypeScript versions](#dropping-typescript-versions)
-    - [Documenting supported versions](#documenting-supported-versions)
-  - [Summary](#summary)
+    - [Background: TypeScript and Semantic Versioning](#background-typescript-and-semantic-versioning)
+    - [Defining breaking changes](#defining-breaking-changes)
+        - [Definitions](#definitions)
+        - [Breaking changes](#breaking-changes)
+            - [Symbols](#symbols)
+            - [Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes)
+            - [Functions](#functions)
+        - [Non-breaking changes](#non-breaking-changes)
+            - [Symbols](#symbols-1)
+            - [Interfaces, Type Aliases, and Classes](#interfaces-type-aliases-and-classes-1)
+            - [Functions](#functions-1)
+        - [Bug fixes](#bug-fixes)
+        - [Dropping support for previously-supported versions](#dropping-support-for-previously-supported-versions)
+    - [Tooling](#tooling)
+        - [Detect breaking changes in types](#detect-breaking-changes-in-types)
+        - [Mitigate breaking changes](#mitigate-breaking-changes)
+            - [Avoiding user constructability](#avoiding-user-constructability)
+            - [Updating types to maintain compatibility](#updating-types-to-maintain-compatibility)
+            - ["Downleveling" types](#downleveling-types)
+            - [Opt-in future types](#opt-in-future-types)
+        - [Matching exports to public API](#matching-exports-to-public-api)
+    - [Policy for supported TypeScript versions](#policy-for-supported-typescript-versions)
+        - [Supporting new versions](#supporting-new-versions)
+        - [Dropping TypeScript versions](#dropping-typescript-versions)
+        - [Documenting supported versions](#documenting-supported-versions)
+    - [Summary](#summary)
 - [How we teach this](#how-we-teach-this)
 - [Drawbacks](#drawbacks)
 - [Alternatives](#alternatives)
-  - [No policy](#no-policy)
-  - [Decouple TypeScript support from Ember's LTS cycle](#decouple-typescript-support-from-embers-lts-cycle)
-  - [Use an alternative to `downlevel-dts`](#use-an-alternative-to-downlevel-dts)
+    - [No policy](#no-policy)
+    - [Decouple TypeScript support from Ember's LTS cycle](#decouple-typescript-support-from-embers-lts-cycle)
+    - [Use an alternative to `downlevel-dts`](#use-an-alternative-to-downlevel-dts)
 - [Unresolved questions](#unresolved-questions)
-- [Appendix: Core Addons and Ember CLI](#appendix-core-addons-and-ember-cli)
-  - [Core addons](#core-addons)
-  - [Ember CLI](#ember-cli)
+- [Appendix A: Core Addons and Ember CLI](#appendix-a-core-addons-and-ember-cli)
+    - [Core addons](#core-addons)
+    - [Ember CLI](#ember-cli)
+- [Appendix B: Existing Implementations](#appendix-b-existing-implementations)
 
 ## Motivation
 
@@ -783,7 +784,7 @@ As noted above in [<b>"Downleveling" types</b>](#downleveling-types), the long-t
 
 -   Given the prevalence of QUnit in the Ember community, the Jest/Mocha-like `expectType` assertions may seem out of place in some addons. Should we write an `assert-type` library akin to `expect-type`, with assertions like `assertType<SomeType>().equal<{ count: number }>()`?
 
-## Appendix: Core Addons and Ember CLI
+## Appendix A: Core Addons and Ember CLI
 
 This RFC is intended to be the first step toward formally supporting TypeScript as a first-class citizen. However, there are additional concerns to address for the core components of Ember: `ember-source`, `ember-data`, and `ember-cli`.
 
@@ -804,3 +805,11 @@ Ember CLI has many of the same constraints that ember-source and ember-data do: 
 Any publication of types for Ember CLI would therefore require *either* that it exactly match the policy of Ember and Ember Data, *or* that Ember CLI drop lockstep versioning with Ember and Ember Data -- or possibly other options not considered here.
 
 As with the core addons, making either of these changes is substantially beyond the remit of this RFC.
+
+## Appendix B: Existing Implementations
+
+The recommendations in this RFC have been full implemented in [`ember-modifier`][ember-modifier] and partly implemented in [`ember-concurrency`][ember-concurrency]. `ember-modifier` publishes types generated from runtime code. `ember-concurrency` supplies a standalone type definition file. Since the implementations in early summer 2020, no known issues have emerged, and the experience of implementing earlier versions of the recommendations from this RFC were incorporated into the final form of this RFC.
+
+There are, to the best of our knowledge, no other major adopters of these recommendations, and no similar such recommendations in the TypeScript ecosystem at large.
+
+[ember-concurrency]: https://github.com/machty/ember-concurrency
