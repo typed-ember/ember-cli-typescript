@@ -763,11 +763,13 @@ This is a perfectly reasonable decision, and in fact some addons may choose to t
 
 ### Use an alternative to `downlevel-dts`
 
-As noted above in [<b>"Downleveling" types</b>](#downleveling-types), `downlevel-dts` currently only generates types for TypeScript 3.4, with no ability to generate targeted types. As such, there are two other approaches we might take to 
+As noted above in [<b>"Downleveling" types</b>](#downleveling-types), the long-term support for `downlevel-dts` is unknown as of yet, and there is a maintenance risk accordingly. As such, there are three other approaches we might take to the risk of incompatible type emit.
 
 1.  **Build our own tool.** While this is probably doable -- `downlevel-dts` is not especially large or complicated -- it is additional maintenance burden, and is not aligned with the TypeScript team's own efforts. It is, as such, not *preferable*. However, if the TypeScript team is unwilling to maintain a more granular tool, this may be appropriate, and it would likely see wide uptake across the broader TypeScript ecosystem, as its utility is obvious.
 
 2.  **Manually generate downleveled types.** This is possible, but very difficult: it requires addon authors to deeply understand the semantics of changes between TypeScript versions, rather than simply allowing a tool to manage it automatically. In practice, we expect that addon authors would choose *not* to downlevel their types because of the complexity involved, and instead either to just wait to adopt *new* TypeScript versions for a longer period of time or to drop support for *older* versions much more rapidly than this RFC proposes, with all the attendant downsides of either.
+
+3.  **Do not bother with downleveling.** We could instead simply cut breaking changes whenever the TypeScript compiler creates backwards-incompatible changes. This is likely to cause considerable (and mostly-unnecessary) churn in the ecosystem, but it matches what most of the *rest* of the TypeScript ecosystem does.
 
 ## Unresolved questions
 
