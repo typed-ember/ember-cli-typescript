@@ -411,9 +411,9 @@ The current options include:
 
     -   It is relatively young, having been created only about a year ago, and therefore having existed for only 5 TypeScript releases. While its track record is good so far, there is not yet evidence of how it would deal with serious breaking changes like those introduce in TypeScript 3.5.
 
-    -   BBecause the assertions are implemented as type definitions, the library is subject to the same risk of compiler breakage as the types it is testing.
+    -   Because the assertions are implemented as type definitions, the library is subject to the same risk of compiler breakage as the types it is testing.
 
-At present, `expect-type` seems to be the best option, and several libraries in the Ember ecosystem are already using `expect-type`. However, for the purposes of *this* RFC, we do not make a specific recommendation about which library to use. The tradeoffs above are offered to help authors make an informed choice in this space, and can be integrated into documentation is this RFC is accepted. Future Ember or Typed Ember RFCs may specify a default to be installed with Ember apps and addons generated in TypeScript.
+At present, `expect-type` seems to be the best option, and several libraries in the Ember ecosystem are already using `expect-type` (see [**Appendix B**](#appendix-b-existing-implementations)). However, for the purposes of *this* RFC, we do not make a specific recommendation about which library to use. The tradeoffs above are offered to help authors make an informed choice in this space, and can be integrated into documentation is this RFC is accepted. Future Ember or Typed Ember RFCs may specify a default to be installed with Ember apps and addons generated in TypeScript.
 
 Users should add one of these libraries and generate a set of tests corresponding to their public API. These tests should be written is such a way as to test the imported API as consumers will consume the library. For example, type tests should not import using relative paths, but using the absolute paths at which the types should resolve, just as consumers would. 
 
