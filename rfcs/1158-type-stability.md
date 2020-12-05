@@ -451,6 +451,10 @@ For types where it is useful to publish an interface for end users, but where us
 
 -   Export a nominal-like version of the type, using `export type` with a class with a private field:
 
+    <details>
+
+    <summary>implementation of a nominal-like class in TS</summary>
+
     ```ts
     class Person {
       // 1.  The private brand means this cannot be constructed other than the
@@ -485,6 +489,8 @@ For types where it is useful to publish an interface for end users, but where us
       return new Person(name, age);
     }
     ```
+
+    </details>
 
     This *cannot* be constructed outside the module. Note that it may be useful to provide corresponding test helpers for scenarios like this, since users cannot safely provide their own mocks.
 
