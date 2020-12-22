@@ -4,10 +4,10 @@ Building addons in TypeScript offers many of the same benefits as building apps 
 
 ## Key Differences from Apps
 
-To process `.ts` files, `ember-cli-typescript` [registers a set of Babel plugins](https://devblogs.microsoft.com/typescript/typescript-and-babel-7/) so that Babel knows how to strip away TypeScript-specific syntax. This means that `ember-cli-typescript` operates according to the same set of rules as other preprocessors when used by other addons.
+To process `.ts` files, `ember-cli-typescript` tells Ember CLI to [register a set of Babel plugins](https://devblogs.microsoft.com/typescript/typescript-and-babel-7/) so that Babel knows how to strip away TypeScript-specific syntax. This means that `ember-cli-typescript` operates according to the same set of rules as other preprocessors when used by other addons.
 
- - Like other addons that preprocess source files, **`ember-cli-typescript` must be in your addon's `dependencies`, not `devDependencies`**.
- - Because addons have no control over how files in `app/` are transpiled, **you cannot have `.ts` files in your addon's `app/` folder**.
+* Like other addons that preprocess source files, **`ember-cli-typescript` must be in your addon's `dependencies`, not `devDependencies`**.
+* Because addons have no control over how files in `app/` are transpiled, **you cannot have `.ts` files in your addon's `app/` folder**.
 
 ## Publishing
 
@@ -32,7 +32,8 @@ When you do this for a TypeScript addon, the source files will be picked up in t
 You could run `ember ts:precompile` in your addon any time you change a file, but for development a simpler option is to temporarily update the `paths` configuration in the host application so that it knows how to resolve types from your linked addon.
 
 Add entries for `<addon-name>` and `<addon-name>/*` in your `tsconfig.json` like so:
-```js
+
+```javascript
 compilerOptions: {
   // ...other options
   paths: {
@@ -55,7 +56,7 @@ compilerOptions: {
 
 Note that the `in-repo-addon` blueprint should automatically add these entries if you have `ember-cli-typescript-blueprints` installed when you run it.
 
-```js
+```javascript
 compilerOptions: {
   // ...other options
   paths: {
