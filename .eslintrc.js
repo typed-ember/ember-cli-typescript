@@ -6,7 +6,7 @@ module.exports = {
     ecmaVersion: 2017,
     sourceType: 'module',
   },
-  plugins: ['ember', '@typescript-eslint'],
+  plugins: ['ember', '@typescript-eslint', 'prettier'],
   extends: ['eslint:recommended', 'plugin:ember/recommended', 'prettier/@typescript-eslint'],
   env: {
     browser: true,
