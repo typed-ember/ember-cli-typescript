@@ -27,7 +27,7 @@
 
 ## Documentation
 
-This README focuses on basic information about setting up and using the addon. For more details, see [the documentation](https://typed-ember.github.io/ember-cli-typescript/versions/master/), which includes:
+This README focuses on basic information about setting up and using the addon. For more details, see [the documentation](https://docs.ember-cli-typescript.com), which includes:
 
 - troubleshooting tips
 - a walkthrough for using TypeScript with Ember effectively
