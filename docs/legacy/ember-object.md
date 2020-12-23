@@ -28,7 +28,7 @@ The [Ember Atlas](https://emberatlas.com) includes guides for migrating [from cl
 
 ### Failure modes
 
-You often need to define `this` in actions hashes, computd properties, etc. That in turn often leads to problems with self-referential `this`: TypeScript simply cannot figure out how to stop recursing through the definitions of the type.
+You often need to define `this` in actions hashes, computed properties, etc. That in turn often leads to problems with self-referential `this`: TypeScript simply cannot figure out how to stop recursing through the definitions of the type.
 
 Additionally, even when you get past the endlessly-recursive type definition problems, when enough mixins are resolved TypeScript will occasionally just give up because it cannot resolve the property or method you're interested in across the many shared base classes.
 
