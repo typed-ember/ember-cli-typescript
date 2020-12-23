@@ -6,10 +6,9 @@ We do _not_ cover general usage of Ember; instead, we assume that as background 
 
 ## Outline
 
-* [Controllers](./controllers.md)
-* [Services](./services.md)
-* [Overview: Ember](./overview.md)
-* [Testing](./testing.md)
 * [Components](./components.md)
-* [Helpers](./helpers.md)
+* [Services](./services.md)
 * [Routes](./routes.md)
+* [Controllers](./controllers.md)
+* [Helpers](./helpers.md)
+* [Testing](./testing.md)
