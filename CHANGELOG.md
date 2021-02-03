@@ -6,6 +6,36 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [4.1.0] - 2021-02-03
+
+### Added ⭐️
+
+- Install @types/ember packages separately via blueprint ([#1383])
+
+### Documentation 📖
+
+- Octane and much polish and clarification ([#935])
+- Fix working with ember outline links ([#1394])
+- Docs fixes ([#1395])
+- Fix typos in the Ember Routes docs ([#1400])
+
+### Under the hood 🚗
+
+- Fix qunit types conflict ([#1344])
+- Bump @types/ember-qunit & @types/qunit to resolve types conflict ([#1380])
+- Fix commitlint action config ([#1388])
+- Dependency updates ([4.1.0-deps-bumps])
+
+[#935]: https://github.com/typed-ember/ember-cli-typescript/pull/935
+[#1344]: https://github.com/typed-ember/ember-cli-typescript/pull/1344
+[#1380]: https://github.com/typed-ember/ember-cli-typescript/pull/1380
+[#1383]: https://github.com/typed-ember/ember-cli-typescript/pull/1383
+[#1388]: https://github.com/typed-ember/ember-cli-typescript/pull/1388
+[#1394]: https://github.com/typed-ember/ember-cli-typescript/pull/1394
+[#1395]: https://github.com/typed-ember/ember-cli-typescript/pull/1395
+[#1400]: https://github.com/typed-ember/ember-cli-typescript/pull/1400
+[4.1.0-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-09-02T17%3A55%3A00-0400..2021-02-03T16%3A00%3A00-0500+chore%28deps%29+in%3Atitle+sort%3Aupdated-asc+
+
 ## [4.0.0] - 2020-09-02
 
 ### Breaking 💥
@@ -735,7 +765,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.1.0...HEAD
+[4.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.4...v4.0.0
 [4.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0-alpha.1...v4.0.0-rc.1
 <!--
