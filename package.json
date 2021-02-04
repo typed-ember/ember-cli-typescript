@@ -72,7 +72,7 @@
     "@types/got": "9.6.11",
     "@types/mocha": "8.0.4",
     "@types/node": "14.14.8",
-    "@types/qunit": "2.9.6",
+    "@types/qunit": "2.11.1",
     "@types/resolve": "1.17.1",
     "@types/semver": "7.3.4",
     "@typescript-eslint/eslint-plugin": "4.8.1",
