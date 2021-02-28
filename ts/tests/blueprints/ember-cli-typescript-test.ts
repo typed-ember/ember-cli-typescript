@@ -57,6 +57,10 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-typescript-blueprints');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__adapter');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__model');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__serializer');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__store');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
@@ -103,6 +107,10 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(pkgJson.devDependencies).to.not.include.all.keys('ember-cli-typescript');
     expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__adapter');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__model');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__serializer');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__store');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
