@@ -2,7 +2,7 @@
 
 Ember Data models are normal TypeScript classes, but with properties decorated to define how the model represents an API resource and relationships to other resources. The decorators the library supplies "just work" with TypeScript at runtime, but require type annotations to be useful with TypeScript.
 
-For an overview of using Ember's decorators with TypeScript, see our overview.
+For details about decorator usage, see [our overview of how Ember's decorators work with TypeScript](../ts/decorators.md).
 
 ## `@attr`
 
