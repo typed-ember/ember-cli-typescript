@@ -18,7 +18,7 @@ export default class MyRoute extends Route {
 }
 ```
 
-This inconsistency will be solved in the future. For now, this workaround gets the job done, and also shows the way to using this information to provide the type of the route's model to other consumers: see [Working with Route Models](routes.md) for details!
+This inconsistency will be solved in the future. For now, this workaround gets the job done, and also shows the way to using this information to provide the type of the route's model to other consumers: see [Working with Route Models](../cookbook/working-with-route-models.md) for details!
 
 ```typescript
 import Route from '@ember/routing/route';
