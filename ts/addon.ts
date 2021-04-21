@@ -48,6 +48,25 @@ export default addon({
     return `${__dirname}/blueprints`;
   },
 
+  /**
+   * We implement a custom `cacheKeyForTree` here to prevent `ember-engines`
+   * from deduping this addon. This fixes a bug between `ember-cli-typescript`,
+   * `ember-engines` dedupe, and `ember-cli-babel`. `ember-cli-babel` uses the
+   * existence of `ember-cli-typescript` as a dependency to determine whether
+   * to process `*.ts` files; however, `ember-engines` dedupe is _stateful_
+   * so it's possible for `ember-cli-typescript` to not be a dependency when
+   * `ember-cli-babel` is running.
+   *
+   * For more info on `ember-engines` dedupe logic:
+   * https://github.com/ember-engines/ember-engines/blob/master/packages/ember-engines/lib/utils/deeply-non-duplicated-addon.js#L35
+   *
+   * For more info on how `ember-cli-babel` determines whether to process `*.ts`:
+   * https://github.com/babel/ember-cli-babel/blob/master/lib/babel-options-util.js#L407
+   */
+  cacheKeyForTree() {
+    return null;
+  },
+
   serverMiddleware({ app, options }) {
     if (!options || !options.path) {
       debug('Installing typecheck server middleware');
