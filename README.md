@@ -182,7 +182,7 @@ We have a channel (**`#e-typescript`**) on the [Ember Community Discord server](
 
 ### 📚 Issues With Ember Type Definitions
 
-If you've found that some of the Ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](https://ember-cli-typescript.com/docs#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
+If you've found that some of the Ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](https://docs.ember-cli-typescript.com/installation#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
 
 If you don't find an answer, please [open an enhancement request or bug report in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose).
 
