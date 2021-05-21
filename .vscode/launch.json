@@ -11,7 +11,9 @@
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
         "-r", "register-ts-node",
-        "-f", "generates .d.ts files when addon and package names do not match",
+        "-f", "Acceptance: ember-cli-typescript generator",
+        "-f", "basic app",
+        "-t", "1000000",
         "ts/tests/**/*.{ts,js}"
       ],
       "internalConsoleOptions": "openOnSessionStart"

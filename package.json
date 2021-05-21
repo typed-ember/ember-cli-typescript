@@ -35,8 +35,7 @@
     "ci:test:app": "ember test",
     "ci:test:node": "mocha --recursive js/tests",
     "prepublishOnly": "yarn tsc --noEmit false --project ts",
-    "postpublish": "rimraf js",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -u"
+    "postpublish": "rimraf js"
   },
   "dependencies": {
     "ansi-to-html": "^0.6.6",
@@ -51,8 +50,6 @@
     "walk-sync": "^2.2.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "11.0.0",
-    "@commitlint/config-conventional": "11.0.0",
     "@ember/optional-features": "2.0.0",
     "@glimmer/component": "^1.0.0-beta.3",
     "@glimmer/tracking": "^1.0.0-beta.3",
@@ -82,8 +79,6 @@
     "broccoli-plugin": "4.0.3",
     "capture-console": "1.0.1",
     "co": "4.6.0",
-    "commitlint-azure-pipelines-cli": "1.0.3",
-    "conventional-changelog-cli": "2.1.1",
     "ember-cli": "3.22.0",
     "ember-cli-app-version": "4.0.0",
     "ember-cli-babel": "7.23.0",
@@ -112,7 +107,6 @@
     "fixturify": "2.1.0",
     "got": "11.8.0",
     "handlebars": "4.7.7",
-    "husky": "4.3.0",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
     "loader.js": "4.7.0",
@@ -138,11 +132,6 @@
     "before": [
       "broccoli-watcher"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "prettier": {
     "printWidth": 100,
