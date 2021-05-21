@@ -19,7 +19,7 @@ The type returned by the `@attr` decorator is whatever [Transform](https://api.e
 So, for example, you might write a class like this:
 
 ```typescript
-import Model, { attr } from '@ember-data/object';
+import Model, { attr } from '@ember-data/model';
 import CustomType from '../transforms/custom-transform';
 
 export default class User extends Model {
@@ -44,7 +44,7 @@ The _safest_ type you can write for an Ember Data model, therefore, leaves every
 One way to make this safer is to supply a default value using the `defaultValue` on the options hash for the attribute:
 
 ```typescript
-import Model, { attr } from '@ember-data/object';
+import Model, { attr } from '@ember-data/model';
 
 export default class User extends Model {
   @attr()
