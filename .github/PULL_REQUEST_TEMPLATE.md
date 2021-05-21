@@ -1,10 +1,9 @@
-<!-- Thanks for submitting a pull request! 🎉 -->
+<!--
 
-<!-- Please note that commit messages need to follow the [Conventional Commits](https://www.conventionalcommits.org) format.
+Thanks for submitting a pull request! 🎉
 
-For example:
-test: fix node tests when run locally with ts-node
+Please include a link to a GitHub issue if one exists.
+
+If you don't hear from a maintainer within a few days, please feel free to ping us here or in #e-typescript on Discord!
 
 -->
-
-<!-- Also, please include a link to a github issue if one exists. -->
