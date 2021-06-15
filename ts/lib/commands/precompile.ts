@@ -40,7 +40,7 @@ export default command({
         // Capture a string with stdout and stderr interleaved for error reporting
         all: true,
       });
-    } catch (e) {
+    } catch (e: any) {
       fs.removeSync(outDir);
       console.error(`\n${e.all}\n`);
       throw e;
