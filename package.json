@@ -38,7 +38,7 @@
     "postpublish": "rimraf js"
   },
   "dependencies": {
-    "ansi-to-html": "^0.6.6",
+    "ansi-to-html": "^0.6.15",
     "broccoli-stew": "^3.0.0",
     "debug": "^4.0.0",
     "execa": "^4.0.0",

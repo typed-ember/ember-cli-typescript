@@ -15,7 +15,7 @@ const getEmberPort = (() => {
 
 interface EmberCliOptions {
   args?: string[];
-  env?: Record<string, string>;
+  env?: Record<string, string> | undefined;
 }
 
 export default class SkeletonApp {
@@ -77,7 +77,7 @@ export default class SkeletonApp {
     process.off('beforeExit', this.cleanupTempDir);
   }
 
-  _ember({ args, env }: EmberCliOptions) {
+  _ember({ args, env = {} }: EmberCliOptions) {
     let ember = require.resolve('ember-cli/bin/ember');
     return execa.node(ember, args, { cwd: this.root, all: true, env });
   }
