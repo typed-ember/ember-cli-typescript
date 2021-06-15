@@ -6,12 +6,15 @@ import helpers from 'ember-cli-blueprint-test-helpers/helpers';
 import chaiHelpers from 'ember-cli-blueprint-test-helpers/chai';
 import Blueprint from 'ember-cli/lib/models/blueprint';
 
+import { setupPublishedVersionStashing } from '../helpers/stash-published-version';
 import ects from '../../blueprints/ember-cli-typescript/index';
 
 const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
 
 describe('Acceptance: ember-cli-typescript generator', function () {
+  setupPublishedVersionStashing(this);
+
   helpers.setupTestHooks(this, {
     disabledTasks: ['addon-install', 'bower-install'],
   });
