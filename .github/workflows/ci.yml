@@ -90,6 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test-locked-deps]
     strategy:
+      fail-fast: false
       matrix:
         deps:
           - ember-cli@latest
