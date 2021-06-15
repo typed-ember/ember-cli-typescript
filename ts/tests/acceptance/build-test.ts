@@ -101,7 +101,7 @@ describe('Acceptance: build', function () {
     try {
       await app.build();
       expect.fail('Build should have failed');
-    } catch (error) {
+    } catch (error: any) {
       expect(error.all).to.include(`Cannot find module 'nonexistent'`);
     }
   });
