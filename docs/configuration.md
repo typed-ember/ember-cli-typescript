@@ -20,7 +20,7 @@ npm uninstall ember-cli-typescript-blueprints
 
 ## `tsconfig.json`
 
-We generate a good default [`tsconfig.json`](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json), which will usually make everything _Just Work™_. In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file.
+We generate a good default [`tsconfig.json`](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprint-files/ember-cli-typescript/tsconfig.json), which will usually make everything _Just Work™_. In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file.
 
 However, there are a few things worth noting if you're already familiar with TypeScript and looking to make further or more advanced customizations (but _most_ users can just ignore this section!):
 
@@ -46,5 +46,5 @@ const app = new EmberApp(defaults, {
 
 (Note that this _will_ noticeably slow down your app rebuilds.)
 
-If you're updating from an older version of the addon, you may also need to update your `tsconfig.json`. (Current versions generate the correct config at installation.) Either run `ember generate ember-cli-typescript` or verify you have the same sourcemap settings in your `tscsonfig.json` that appear in [the blueprint](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprints/ember-cli-typescript/files/tsconfig.json).
+If you're updating from an older version of the addon, you may also need to update your `tsconfig.json`. (Current versions generate the correct config at installation.) Either run `ember generate ember-cli-typescript` or verify you have the same sourcemap settings in your `tscsonfig.json` that appear in [the blueprint](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprint-files/ember-cli-typescript/tsconfig.json).
 
