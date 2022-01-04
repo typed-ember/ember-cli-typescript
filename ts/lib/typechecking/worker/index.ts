@@ -8,6 +8,8 @@ import {
   CompilerOptions,
   WatchOfConfigFile,
   WatchCompilerHostOfConfigFile,
+  SolutionBuilderWithWatchHost,
+  SolutionBuilder,
 } from 'typescript';
 
 const debug = logger('ember-cli-typescript:typecheck-worker');
@@ -31,10 +33,14 @@ export default class TypecheckWorker {
   private lastSettledStatus = this.status;
   private typecheckTimeout?: NodeJS.Timer;
 
-  private projectRoot!: string;
-  private ts!: typeof import('typescript');
-  private watch!: WatchOfConfigFile<SemanticDiagnosticsBuilderProgram>;
-  private compilerOptions!: CompilerOptions;
+  // SAFETY: these are configured during the `start` call, which in turn is run
+  // after construction but *before* anything else happens.
+  private declare projectRoot: string;
+  private declare ts: typeof import('typescript');
+  private declare watch:
+    | WatchOfConfigFile<SemanticDiagnosticsBuilderProgram>
+    | SolutionBuilder<SemanticDiagnosticsBuilderProgram>;
+  private declare compilerOptions: CompilerOptions;
 
   /**
    * Begin project typechecking, loading TypeScript from the given project root.
@@ -42,6 +48,13 @@ export default class TypecheckWorker {
   public start(projectRoot: string) {
     this.projectRoot = projectRoot;
     this.ts = this.loadTypeScript();
+
+    // In the case of a composite project
+    if (this.compilerOptions.composite) {
+      this.watch = this.ts.createSolutionBuilderWithWatch(this.buildCompositeHost(), [], {}, {});
+      return;
+    }
+
     this.watch = this.ts.createWatchProgram(this.buildWatchHost());
     this.compilerOptions = this.watch.getProgram().getCompilerOptions();
   }
@@ -129,13 +142,25 @@ export default class TypecheckWorker {
       () => {}
     );
 
-    return this.patchCompilerHostMethods(host);
+    return this.patchWatchCompilerHostMethods(host);
+  }
+
+  private buildCompositeHost() {
+    let host = this.ts.createSolutionBuilderWithWatchHost(
+      this.ts.sys,
+      this.ts.createSemanticDiagnosticsBuilderProgram,
+      // Pass noop functions for reporters because we want to print our own output
+      () => {},
+      () => {},
+      () => {}
+    );
+    return this.patchSolutionBuilderWatchCompilerHostMethods(host);
   }
 
   // The preferred means of being notified when things happen in the compiler is
   // overriding methods and then calling the original. See the TypeScript wiki:
   // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
-  private patchCompilerHostMethods(
+  private patchWatchCompilerHostMethods(
     host: WatchCompilerHostOfConfigFile<SemanticDiagnosticsBuilderProgram>
   ) {
     let { watchFile, watchDirectory, afterProgramCreate = () => {} } = host;
@@ -179,6 +204,55 @@ export default class TypecheckWorker {
       process.nextTick(() => this.didTypecheck(program.getSemanticDiagnostics()));
 
       return afterProgramCreate.call(host, program);
+    };
+
+    return host;
+  }
+  // The preferred means of being notified when things happen in the compiler is
+  // overriding methods and then calling the original. See the TypeScript wiki:
+  // https://github.com/Microsoft/TypeScript/wiki/Using-the-Compiler-API
+  private patchSolutionBuilderWatchCompilerHostMethods(
+    host: SolutionBuilderWithWatchHost<SemanticDiagnosticsBuilderProgram>
+  ) {
+    let { watchFile, watchDirectory, afterProgramEmitAndDiagnostics } = host;
+
+    // Intercept tsc's `watchFile` to also invoke `mayTypecheck()` when a watched file changes
+    host.watchFile = (path, callback, pollingInterval?) => {
+      return watchFile.call(
+        host,
+        path,
+        (filePath: string, eventKind: FileWatcherEventKind) => {
+          this.mayTypecheck(filePath);
+          return callback(filePath, eventKind);
+        },
+        pollingInterval
+      );
+    };
+
+    // Intercept tsc's `watchDirectory` callback to also invoke `mayTypecheck()` when a
+    // file is added or removed in a watched directory.
+    host.watchDirectory = (path, callback, recursive?) => {
+      return watchDirectory.call(
+        host,
+        path,
+        (filePath: string) => {
+          this.mayTypecheck(filePath);
+          return callback(filePath);
+        },
+        recursive
+      );
+    };
+
+    // Intercept `afterProgramEmitAndDiagnostics` to confirm when a suspected
+    // typecheck is happening and schedule the new diagnostics to be emitted.
+    // This is *analogous* to `afterProgramCreate` in a "watch" program build,
+    // but for incremental builds.
+    host.afterProgramEmitAndDiagnostics = (program) => {
+      this.willTypecheck();
+
+      process.nextTick(() => this.didTypecheck(program.getSemanticDiagnostics()));
+
+      return afterProgramEmitAndDiagnostics?.call(host, program);
     };
 
     return host;
