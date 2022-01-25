@@ -122,6 +122,7 @@
   "resolutions": {
     "@types/ember": "3.16.6",
     "@types/ember__string": "3.16.1",
+    "@types/qunit": "2.11.3",
     "hawk": "7"
   },
   "engines": {
