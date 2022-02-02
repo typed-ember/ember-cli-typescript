@@ -40,6 +40,7 @@ declare module 'ember-cli/lib/models/addon' {
     serverMiddleware(options: { app: Application; options?: TaskOptions }): void | Promise<void>;
     testemMiddleware(app: Application, options?: TaskOptions): void;
     setupPreprocessorRegistry(type: 'self' | 'parent', registry: PreprocessRegistry): void;
+    moduleName(): string;
   }
 }
 
