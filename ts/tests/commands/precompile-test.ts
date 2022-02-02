@@ -115,4 +115,37 @@ describe('Acceptance: ts:precompile command', function () {
       expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
     });
   });
+
+  it('generates .d.ts files for components when addon and moduleName do not match', function () {
+    fs.ensureDirSync('addon/components');
+    fs.writeFileSync(
+      'addon/components/my-component.ts',
+      `export const testString: string = 'hello';`
+    );
+    fs.ensureDirSync('addon-test-support');
+    fs.writeFileSync(
+      'addon-test-support/test-file.ts',
+      `export const anotherTestString: string = 'hello';`
+    );
+    fs.writeFileSync(
+      'index.js',
+      `module.exports = { name: '@foo/my-addon', moduleName() { return 'my-addon'; } };`
+    );
+
+    const pkg = fs.readJSONSync('package.json');
+    pkg.name = '@foo/my-addon'; // addon `moduleName()` is `my-addon`
+    fs.writeJSONSync('package.json', pkg);
+
+    return ember(['ts:precompile']).then(() => {
+      const componentDecl = file('components/my-component.d.ts');
+      expect(componentDecl).to.exist;
+      expect(componentDecl.content.trim()).to.equal(`export declare const testString: string;`);
+
+      const testSupportDecl = file('test-support/test-file.d.ts');
+      expect(testSupportDecl).to.exist;
+      expect(testSupportDecl.content.trim()).to.equal(
+        `export declare const anotherTestString: string;`
+      );
+    });
+  });
 });
