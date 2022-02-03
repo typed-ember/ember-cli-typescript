@@ -1,8 +1,9 @@
-import Component from '@ember/component';
-import { equal } from '@ember/object/computed';
+import Component from '@glimmer/component';
 
 import * as constants from '../lib/some-const';
 
-export default Component.extend({
-  poke: equal('ha', constants.CHANGE),
-});
+export default class JsImportingTs extends Component {
+  get poke() {
+    return constants.CHANGE === 'ha';
+  }
+}

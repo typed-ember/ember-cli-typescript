@@ -1,5 +1,5 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  someValue: 'from component',
-});
+export default class TestOne extends Component {
+  someValue = 'from component';
+}
