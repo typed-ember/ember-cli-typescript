@@ -1,4 +1,5 @@
 import * as fs from 'fs-extra';
+import * as path from 'path';
 import { hook } from 'capture-console';
 import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
 import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
@@ -109,6 +110,13 @@ describe('Acceptance: ts:precompile command', function () {
     pkg.name = '@foo/my-addon'; // addon `name` is `my-addon`
     fs.writeJSONSync('package.json', pkg);
 
+    // CAUTION! HACKY CODE AHEAD!
+    // The ember blueprint helper stays in the same node process, so require
+    // keeps any previously read files cached. We need to clear out these
+    // caches so it picks up the changes properly.
+    delete require.cache[path.join(process.cwd(), 'index.js')];
+    delete require.cache[path.join(process.cwd(), 'package.json')];
+
     return ember(['ts:precompile']).then(() => {
       const declaration = file('test-support/test-file.d.ts');
       expect(declaration).to.exist;
@@ -135,6 +143,13 @@ describe('Acceptance: ts:precompile command', function () {
     const pkg = fs.readJSONSync('package.json');
     pkg.name = '@foo/my-addon'; // addon `moduleName()` is `my-addon`
     fs.writeJSONSync('package.json', pkg);
+
+    // CAUTION! HACKY CODE AHEAD!
+    // The ember blueprint helper stays in the same node process, so require
+    // keeps any previously read files cached. We need to clear out these
+    // caches so it picks up the changes properly.
+    delete require.cache[path.join(process.cwd(), 'index.js')];
+    delete require.cache[path.join(process.cwd(), 'package.json')];
 
     return ember(['ts:precompile']).then(() => {
       const componentDecl = file('components/my-component.d.ts');
