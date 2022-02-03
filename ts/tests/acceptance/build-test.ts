@@ -160,9 +160,7 @@ function isExpressionStatement(stmt: Statement | ModuleDeclaration): stmt is Exp
   return stmt.type === 'ExpressionStatement';
 }
 
-function isSpecialCallExpression(
-  expr: Expression
-): expr is CallExpression & {
+function isSpecialCallExpression(expr: Expression): expr is CallExpression & {
   arguments: [Literal, Expression, ClassExpression];
 } {
   return (
