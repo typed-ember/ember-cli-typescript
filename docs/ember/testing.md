@@ -260,7 +260,7 @@ This is a decent test, and TypeScript actually makes the experience of writing c
 To inform TypeScript about this, we need to tell it that the type of `this` in each test assertion includes the `user` property, of type `User`. We’ll start by importing the `TestContext` defined by Ember’s test helpers, and extending it:
 
 ```typescript
-import { TestContext } from 'ember-test-helpers';
+import { TestContext } from '@ember/test-helpers';
 
 import User from 'app/types/user';
 
@@ -282,9 +282,8 @@ Putting it all together, this is what our updated test definition would look lik
 ```typescript
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { render, TestContext } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { TestContext } from 'ember-test-helpers';
 
 import User from 'app/types/user';
 
