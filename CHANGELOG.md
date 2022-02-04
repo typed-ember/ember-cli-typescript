@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [5.0.0] - 2021-02-04
+
+### Changed 💥
+
+This now requires Node 12+! That's the only technically *breaking* change.
+
+- Update types & ember to 4.x([#1472])
+
+### Fixed 🔧
+
+- Fix type of `locationType` for Ember v4 ([#1466])
+
+### Documentation 📖
+
+- docs: fix links to tsconfig.json blueprint ([#1445])
+- `ember-test-helpers` -> `@ember/test-helpers` ([#1473])
+
+### Under the hood 🚗
+
+- Update .npmignore to ignore .github and test folders ([#1460])
+
+[#1445]: https://github.com/typed-ember/ember-cli-typescript/pull/1445
+[#1460]: https://github.com/typed-ember/ember-cli-typescript/pull/1460
+[#1466]: https://github.com/typed-ember/ember-cli-typescript/pull/1466
+[#1472]: https://github.com/typed-ember/ember-cli-typescript/pull/1472
+[#1473]: https://github.com/typed-ember/ember-cli-typescript/pull/1473
+
 ## [4.2.1] - 2021-06-17
 
 This is a republish of 4.2.0 without the accidentally included 500+ MB of debugging copies of node_modules.
@@ -816,7 +843,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.1...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.2...HEAD
+[4.2.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.1...v4.2.2
 [4.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.0...v4.2.1
 [4.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...v4.1.0
