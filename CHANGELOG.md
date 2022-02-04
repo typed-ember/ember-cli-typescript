@@ -6,6 +6,87 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [4.2.1] - 2021-06-17
+
+This is a republish of 4.2.0 without the accidentally included 500+ MB of debugging copies of node_modules.
+
+## [4.2.0] - 2021-06-15
+
+### Added ⭐️
+
+- Install @types/ember-data__* when ember-data is found ([#1411])
+
+### Changed 💥
+
+- update option noEmitOnError to true ([#1415])
+
+### Documentation 📖
+
+- Update Broccoli URL ([#1409])
+- Improve sentence about declare modifier ([#1414])
+- Link to decorator usage doc from ED-models doc ([#1404])
+- Fix link to doc "working with route models" ([#1418])
+- Fix typo [in services docs] ([#1421])
+- @ember-data/object is not a thing ([#1429])
+- Update README.md ([#1425])
+
+### Under the hood 🚗
+
+- Fix qunit types... again ([#1401])
+- Rip out commitlint from CI ([#1430])
+- CI updates ([#1434])
+- Bump y18n from 3.2.1 to 3.2.2 ([#1420])
+- Bump underscore from 1.10.2 to 1.13.1 ([#1426])
+- Bump handlebars from 4.7.6 to 4.7.7 ([#1427])
+- Bump lodash from 4.17.20 to 4.17.21 ([#1428])
+
+[#1401]: https://github.com/typed-ember/ember-cli-typescript/pull/1401
+[#1404]: https://github.com/typed-ember/ember-cli-typescript/pull/1404
+[#1409]: https://github.com/typed-ember/ember-cli-typescript/pull/1409
+[#1411]: https://github.com/typed-ember/ember-cli-typescript/pull/1411
+[#1414]: https://github.com/typed-ember/ember-cli-typescript/pull/1414
+[#1415]: https://github.com/typed-ember/ember-cli-typescript/pull/1415
+[#1418]: https://github.com/typed-ember/ember-cli-typescript/pull/1418
+[#1420]: https://github.com/typed-ember/ember-cli-typescript/pull/1420
+[#1421]: https://github.com/typed-ember/ember-cli-typescript/pull/1421
+[#1425]: https://github.com/typed-ember/ember-cli-typescript/pull/1425
+[#1426]: https://github.com/typed-ember/ember-cli-typescript/pull/1426
+[#1427]: https://github.com/typed-ember/ember-cli-typescript/pull/1427
+[#1428]: https://github.com/typed-ember/ember-cli-typescript/pull/1428
+[#1429]: https://github.com/typed-ember/ember-cli-typescript/pull/1429
+[#1430]: https://github.com/typed-ember/ember-cli-typescript/pull/1430
+[#1434]: https://github.com/typed-ember/ember-cli-typescript/pull/1434
+
+## [4.1.0] - 2021-02-03
+
+### Added ⭐️
+
+- Install @types/ember packages separately via blueprint ([#1383])
+
+### Documentation 📖
+
+- Octane and much polish and clarification ([#935])
+- Fix working with ember outline links ([#1394])
+- Docs fixes ([#1395])
+- Fix typos in the Ember Routes docs ([#1400])
+
+### Under the hood 🚗
+
+- Fix qunit types conflict ([#1344])
+- Bump @types/ember-qunit & @types/qunit to resolve types conflict ([#1380])
+- Fix commitlint action config ([#1388])
+- Dependency updates ([4.1.0-deps-bumps])
+
+[#935]: https://github.com/typed-ember/ember-cli-typescript/pull/935
+[#1344]: https://github.com/typed-ember/ember-cli-typescript/pull/1344
+[#1380]: https://github.com/typed-ember/ember-cli-typescript/pull/1380
+[#1383]: https://github.com/typed-ember/ember-cli-typescript/pull/1383
+[#1388]: https://github.com/typed-ember/ember-cli-typescript/pull/1388
+[#1394]: https://github.com/typed-ember/ember-cli-typescript/pull/1394
+[#1395]: https://github.com/typed-ember/ember-cli-typescript/pull/1395
+[#1400]: https://github.com/typed-ember/ember-cli-typescript/pull/1400
+[4.1.0-deps-bumps]: https://github.com/typed-ember/ember-cli-typescript/pulls?q=is%3Apr+is%3Amerged+base%3Amaster+merged%3A2020-09-02T17%3A55%3A00-0400..2021-02-03T16%3A00%3A00-0500+chore%28deps%29+in%3Atitle+sort%3Aupdated-asc+
+
 ## [4.0.0] - 2020-09-02
 
 ### Breaking 💥
@@ -735,7 +816,10 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 * Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.1...HEAD
+[4.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.0...v4.2.1
+[4.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.1.0...v4.2.0
+[4.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.4...v4.0.0
 [4.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0-alpha.1...v4.0.0-rc.1
 <!--

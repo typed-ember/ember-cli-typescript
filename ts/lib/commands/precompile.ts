@@ -40,7 +40,7 @@ export default command({
         // Capture a string with stdout and stderr interleaved for error reporting
         all: true,
       });
-    } catch (e) {
+    } catch (e: any) {
       fs.removeSync(outDir);
       console.error(`\n${e.all}\n`);
       throw e;
@@ -53,8 +53,9 @@ export default command({
     // addon name from its package name, we use the addon name, since that is
     // how it will be written for imports.
     let addon = this.project.addons.find((addon) => addon.root === this.project.root);
-    if (addon && addon.name !== packageName) {
-      packageName = addon.name;
+    if (addon) {
+      let addonName = addon.moduleName ? addon.moduleName() : addon.name;
+      packageName = addonName;
     }
 
     let createdFiles = copyDeclarations(pathRoots, paths, packageName, this.project.root);

@@ -1,0 +1,293 @@
+# Using TypeScript With Ember Effectively
+
+## Incremental adoption
+
+If you are porting an existing app to TypeScript, you can install this addon and migrate your files incrementally by changing their extensions from `.js` to `.ts`. As TypeScript starts to find errors (and it usually does!), make sure to celebrate your wins—even if they're small!—with your team, especially if some people are not convinced yet. We would also love to hear your stories!
+
+Some specific tips for success on the technical front:
+
+First, use the _strictest_ strictness settings that our typings allow (currently all strictness settings except `strictFunctionTypes`). While it may be tempting to start with the _loosest_ strictness settings and then to tighten them down as you go, this will actually mean that "getting your app type-checking" will become a repeated process—getting it type-checking with every new strictness setting you enable—rather than something you do just once.
+
+The full recommended _strictness_ settings in your `"compilerOptions"` hash:
+
+```json
+{
+  "noImplicitAny": true,
+  "noImplicitThis": true,
+  "alwaysStrict": true,
+  "strictNullChecks": true,
+  "strictPropertyInitialization": true,
+  "noFallthroughCasesInSwitch": true,
+  "noUnusedLocals": true,
+  "noUnusedParameters": true,
+  "noImplicitReturns": true,
+  "noUncheckedIndexedAccess": true,
+}
+```
+
+A good approach is to start at your "leaf" files (the ones that don't import anything else from your app, only Ember types) and then work your way back inward toward the most core types that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update _tons_ of other places in your app) when you type them later in the process.
+
+Finally, leave `"noEmitOnError": true` (the default) in the `"compilerOptions"` hash in your `tsconfig.json`. This will fail your build if you have type errors, which gives you the fastest feedback as you add types.
+
+![example of a build error during live reload](https://user-images.githubusercontent.com/108688/38774630-7d9224d4-403b-11e8-8dbc-87dad977a4c4.gif)
+
+## What about missing types?
+
+There are two schools of thought on how to handle things you don't have types for as you go:
+
+* Liberally use `any` for them and come back and fill them in later. This will let you do the strictest strictness settings but with an escape hatch that lets you say "We will come back to this when we have more idea how to handle it." This approach lets you move faster, but means you will still have lots of runtime type errors: `any` just turns the type-checker *off* for anything touching those modules. You’ll have to come back later and clean those up, and you’ll likely have more difficult refactorings to do at that time.
+
+* Go more slowly, but write down at least minimally accurate types as you go. (This is easier if you follow the leaves-first strategy recommended above.) This is much slower going, and can feel harder because you can’t just skip over things. Once you complete the work for any given module, though, you can be confident that everything is solid and you won’t have to revisit it in the future.
+
+There is an inherent tradeoff between these two approaches; which works best will depend on your team and your app.
+
+## Install other types!
+
+You'll want to use other type definitions as much as possible. The first thing you should do, for example, is install the types for your testing framework of choice: `@types/ember-mocha` or `@types/ember-qunit`. Beyond that, look for types from other addons: it will mean writing `any` a lot less and getting a lot more help both from your editor and from the compiler.
+
+_Where can I find types?_ Some addons will ship them with their packages, and work out of the box. For others, you can search for them on [Definitely Typed](https://github.com/DefinitelyTyped/DefinitelyTyped), or on npm under the `@types` namespace. (In the future we hope to maintain a list of known types; keep your eyes open!)
+
+## The `types` directory
+
+During installation, we create a `types` directory in the root of your application and add a `"paths"` mapping that includes that directory in any type lookups TypeScript tries to do. This is convenient for a few things:
+
+* global types for your package (see the next section)
+* writing types for third-party/`vendor` packages which do not have any types
+* developing types for an addon which you intend to upstream later
+
+These are all fallbacks, of course, you should use the types supplied directly with a package
+
+### Global types for your package
+
+At the root of your application or addon, we include a `types/<your app>` directory with an `index.d.ts` file in it. Anything which is part of your application but which must be declared globally can go in this file. For example, if you have data attached to the `Window` object when the page is loaded (for bootstrapping or whatever other reason), this is a good place to declare it.
+
+In the case of applications (but not for addons), we also automatically include declarations for Ember's prototype extensions in this `index.d.ts` file, with the `Array` prototype extensions enabled and the `Function` prototype extensions commented out. You should configure them to match your own config (which we cannot check during installation). If you are [disabling Ember's prototype extensions](https://guides.emberjs.com/v2.18.0/configuring-ember/disabling-prototype-extensions/), you can remove these declarations entirely; we include them because they're enabled in most Ember applications today.
+
+### Environment configuration typings
+
+Along with the @types/ files mentioned above, ember-cli-typescript adds a starter interface for `config/environment.js` in `app/config/environment.d.ts`. This interface will likely require some changes to match your app.
+
+We install this file because the actual `config/environment.js` is (a) not actually identical with the types as you inherit them in the content of an application, but rather a superset of what an application has access to, and (b) not in a the same location as the path at which you look it up. The actual `config/environment.js` file executes in Node during the build, and Ember CLI writes its result as `<my-app>/config/environment` into your build for consumption at runtime.
+
+## String-keyed lookups
+
+Ember makes heavy use of string-based APIs to allow for a high degree of dynamicism. With some limitations, you can nonetheless use TypeScript very effectively to get auto-complete/IntelliSense as well as to accurately type-check your applications.
+
+A few of the most common speed-bumps are listed here to help make this easier:
+
+### Nested keys in `get` or `set`
+
+In general, `this.get` and `this.set` will work as you'd expect _if_ you're doing lookups only a single layer deep. Things like `this.get('a.b.c')` don't (and can't ever!) type-check; see the blog posts for a more detailed discussion of why.
+
+The workaround is simply to do one of two things:
+
+1. **The type-safe approach.** This _will_ typecheck, but is both ugly and only works \*if there are no `null`s or `undefined`s along the way. If `nested` is `null` at runtime, this will crash!
+
+   ```typescript
+   import { get } from '@ember/object';
+
+   // -- Type-safe but ugly --//
+   get(get(get(someObject, 'deeply'), 'nested'), 'key');
+   ```
+
+2. **Using `// @ts-ignore`.** This will _not do any type-checking_, but is useful for the cases where you are intentionally checking a path which may be `null` or `undefined` anywhere long it.
+
+   ```typescript
+   // @ts-ignore
+   get(someObject, 'deeply.nested.key');
+   ```
+
+   It's usually best to include an explanation of _why_ you're ignoring a lookup!
+
+### Service and controller injections
+
+Ember does service and controller lookups with the `inject` functions at runtime, using the name of the service or controller being injected up as the default value—a clever bit of metaprogramming that makes for a nice developer experience. TypeScript cannot do this, because the name of the service or controller to inject isn't available at compile time in the same way.
+
+The officially supported method for injections with TypeScript uses _decorators_.
+
+```typescript
+// my-app/services/my-session.ts
+import Service from '@ember/service';
+import RSVP from 'rsvp';
+
+export default class MySession extends Service {
+  login(email: string, password: string): RSVP.Promise<string> {
+    // login and return the confirmation message
+  }
+}
+
+declare module '@ember/service' {
+  interface Registry {
+    'my-session': MySession;
+  }
+}
+```
+
+Then we can use the service as we usually would with a decorator, but adding a type annotation to it so TypeScript knows what it's looking at:
+
+```typescript
+// my-app/components/user-profile.ts
+import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+
+import MySession from 'my-app/services/my-session';
+
+export default class UserProfile extends Component {
+  @service declare mySession: MySession;
+
+  login(email: string, password: string) {
+    this.mySession.login(email, password);
+  }
+}
+```
+
+Note that we need the `MySession` type annotation this way, but we _don't_ need the string lookup (unless we're giving the service a different name than the usual on the class, as in Ember injections in general). Without the type annotation, the type of `session` would just be `any`. This is because decorators are not allowed to modify the types of whatever they decorate. As a result, we wouldn't get any type-checking on that `session.login` call, and we wouldn't get any auto-completion either. Which would be really sad and take away a lot of the reason we're using TypeScript in the first place!
+
+Also notice [the `declare` property modifier](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#the-usedefineforclassfields-flag-and-the-declare-property-modifier). This tells TypeScript that the property will be configured by something outside the class (in this case, the decorator), and guarantees it emits spec-compliant JavaScript.
+
+(This also holds true for all other service injections, computed property macros, and Ember Data model attributes and relationships.)
+
+### Earlier Ember versions
+
+A couple notes for consumers on earlier Ember versions:
+
+On Ember versions **earlier than 3.1**, you'll want to wrap your service type in [`ComputedProperty`](https://www.emberjs.com/api/ember/release/classes/ComputedProperty), because [native ES5 getters](https://github.com/emberjs/rfcs/blob/master/text/0281-es5-getters.md) are not available there, which means that instead of accessing the service via `this.mySession`, you would have to access it as `this.get('mySession')` or `get(this, 'mySession')`.
+
+On Ember versions **earlier than 3.6**, you may encounter problems when providing type definitions like this:
+
+```typescript
+import Component from '@ember/component';
+
+export default class UserProfile extends Component {
+  username?: string;
+}
+```
+
+When invoked via a template `{{user-profile username='example123'}}`, you would expect that `username` would have the value of `example123`, however prior to the native class feature released in Ember `3.6`, this will result in `username` being undefined.
+
+For users who remain on Ember versions below `3.6`, please use [https://github.com/pzuraq/ember-native-class-polyfill](https://github.com/pzuraq/ember-native-class-polyfill)
+
+### Ember Data lookups
+
+We use the same basic approach for Ember Data type lookups with string keys as we do for service or controller injections. As a result, once you add the module and interface definitions for each model, serializer, and adapter in your app, you will automatically get type-checking and autocompletion and the correct return types for functions like `findRecord`, `queryRecord`, `adapterFor`, `serializerFor`, etc. No need to try to write out those (admittedly kind of hairy!) types; just write your Ember Data calls like normal and everything _should_ just work.
+
+The declarations and changes you need to add to your existing files are:
+
+* Models
+
+  ```typescript
+  import Model from '@ember-data/model';
+
+  export default class UserMeta extends Model {}
+
+  declare module 'ember-data/types/registries/model' {
+    export default interface ModelRegistry {
+      'user-meta': UserMeta;
+    }
+  }
+  ```
+
+* Adapters
+
+  ```typescript
+  import Adapter from '@ember-data/adapter';
+
+  export default class UserMeta extends Adapter {}
+
+  declare module 'ember-data/types/registries/adapter' {
+    export default interface AdapterRegistry {
+      'user-meta': UserMeta;
+    }
+  }
+  ```
+
+* Serializers
+
+  ```typescript
+  import Serializer from '@ember-data/serializer';
+
+  export default class UserMeta extends Serializer {}
+
+  declare module 'ember-data/types/registries/serializer' {
+    export default interface SerializerRegistry {
+      'user-meta': UserMeta;
+    }
+  }
+  ```
+
+* Transforms
+
+  ```typescript
+  import Transform from '@ember-data/serializer/transform';
+
+  export default class ColorTransform extends Transform {}
+
+  declare module 'ember-data/types/registries/transform' {
+    export default interface TransformRegistry {
+      color: ColorTransform;
+    }
+  }
+  ```
+
+#### Opt-in unsafety
+
+Also notice that unlike with service and controller injections, there is no unsafe fallback method by default, because there isn't an argument-less variant of the functions to use as there is for `Service` and `Controller` injection. If for some reason you want to opt _out_ of the full type-safe lookup for the strings you pass into methods like `findRecord`, `adapterFor`, and `serializerFor`, you can add these declarations somewhere in your project:
+
+```typescript
+import Model from '@ember-data/model';
+import Adapter from '@ember-data/adapter';
+import Serializer from '@ember-data/serializer';
+
+declare module 'ember-data/types/registries/model' {
+  export default interface ModelRegistry {
+    [key: string]: Model;
+  }
+}
+declare module 'ember-data/types/registries/adapter' {
+  export default interface AdapterRegistry {
+    [key: string]: Adapter;
+  }
+}
+declare module 'ember-data/types/registries/serializer' {
+  export default interface SerializerRegistry {
+    [key: string]: Serializer;
+  }
+}
+```
+
+However, we _**strongly**_ recommend that you simply take the time to add the few lines of declarations to each of your `Model`, `Adapter`, and `Serializer` instances instead. It will save you time in even the short run!
+
+#### Fixing the Ember Data `error TS2344` problem
+
+If you're developing an Ember app or addon and _not_ using Ember Data (and accordingly not even have the Ember Data types installed), you may see an error like this and be confused:
+
+```text
+node_modules/@types/ember-data/index.d.ts(920,56): error TS2344: Type 'any' does not satisfy the constraint 'never'.
+```
+
+This happens because the types for Ember's _test_ tooling includes the types for Ember Data because the `this` value in several of Ember's test types can include a reference to the Ember Data `Store` class.
+
+**The fix:** add a declaration like this in a new file named `ember-data.d.ts` in your `types` directory:
+
+```typescript
+declare module 'ember-data/types/registries/model' {
+  export default interface ModelRegistry {
+    [key: string]: unknown;
+  }
+}
+```
+
+This works because (a) we include things in your types directory automatically and (b) TypeScript will merge this module and interface declaration with the main definitions for Ember Data from DefinitelyTyped behind the scenes.
+
+If you're developing an addon and concerned that this might affect consumers, it won't. Your types directory will never be referenced by consumers at all!
+
+### Class property setup errors
+
+Some common stumbling blocks for people switching to ES6 classes from the traditional EmberObject setup:
+
+* `Assertion Failed: InjectedProperties should be defined with the inject computed property macros.` – You've written `someService = inject()` in an ES6 class body in Ember 3.1+. Replace it with the `.extend` approach or by using decorators\(`@service` or `@controller`) as discussed [above](using-ts-effectively.md#service-and-controller-injections). Because computed properties of all sorts, including injections, must be set up on a prototype, _not_ on an instance, if you try to use class properties to set up injections, computed properties, the action hash, and so on, you will see this error.
+* `Assertion Failed: Attempting to lookup an injected property on an object without a container, ensure that the object was instantiated via a container.` – You failed to pass `...arguments` when you called `super` in e.g. a component class `constructor`. Always do `super(...arguments)`, not just `super()`, in your `constructor`.
+
+## Type definitions outside `node_modules/@types`
+
+By default, the TypeScript compiler loads all type definitions found in `node_modules/@types`. If the type defs you need are not found there and are not supplied in the root of the package you're referencing, you can register a custom value in `paths` in the `tsconfig.json` file. See the [tsconfig.json docs](http://www.typescriptlang.org/docs/handbook/compiler-options.html#compiler-options) for details.

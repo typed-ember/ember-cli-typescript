@@ -25,7 +25,6 @@ For addons which do not have types shipped with the addon directly, you may be f
 * `@types/ember-data`
 * `@types/ember-mocha`
 * `@types/ember-qunit`
-* `@types/ember-test-helpers`
-* `@types/ember-testing-helpers`
+* `@types/ember__test-helpers`
 * `@types/ember`
 * `@types/rsvp`

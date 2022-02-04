@@ -101,7 +101,7 @@ describe('Acceptance: build', function () {
     try {
       await app.build();
       expect.fail('Build should have failed');
-    } catch (error) {
+    } catch (error: any) {
       expect(error.all).to.include(`Cannot find module 'nonexistent'`);
     }
   });
@@ -160,9 +160,7 @@ function isExpressionStatement(stmt: Statement | ModuleDeclaration): stmt is Exp
   return stmt.type === 'ExpressionStatement';
 }
 
-function isSpecialCallExpression(
-  expr: Expression
-): expr is CallExpression & {
+function isSpecialCallExpression(expr: Expression): expr is CallExpression & {
   arguments: [Literal, Expression, ClassExpression];
 } {
   return (

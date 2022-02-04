@@ -6,6 +6,8 @@
     "noEmitOnError": true,
     "inlineSourceMap": true,
     "inlineSources": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
       "dummy/tests/*": [
@@ -33,5 +35,8 @@
   },
   "include": [
     "tests"
+  ],
+  "exclude": [
+    "tests/dummy/app/snippets"
   ]
 }

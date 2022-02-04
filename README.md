@@ -27,7 +27,7 @@
 
 ## Documentation
 
-This README focuses on basic information about setting up and using the addon. For more details, see [the documentation](https://typed-ember.github.io/ember-cli-typescript/versions/master/), which includes:
+This README focuses on basic information about setting up and using the addon. For more details, see [the documentation](https://docs.ember-cli-typescript.com), which includes:
 
 - troubleshooting tips
 - a walkthrough for using TypeScript with Ember effectively
@@ -89,7 +89,7 @@ ember install ember-decorators@^3.1.0 @ember-decorators/babel-transforms@^3.1.0
 
 #### Update ember-decorators
 
-Follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms dependency.
+If you're on a version of Ember before 3.10, follow the same process of deduplication, reinstallation, and re-deduplication as described for ember-cli-babel above for ember-decorators. This will get you the latest version of ember-decorators and, importantly, its @ember-decorators/babel-transforms dependency.
 
 #### Update ember-cli-typescript
 
@@ -182,7 +182,7 @@ We have a channel (**`#e-typescript`**) on the [Ember Community Discord server](
 
 ### 📚 Issues With Ember Type Definitions
 
-If you've found that some of the Ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](https://ember-cli-typescript.com/docs#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
+If you've found that some of the Ember type information is missing things, or is incorrect in some way, please first ensure you're using the latest version of the [packages this addon installs](https://docs.ember-cli-typescript.com/installation#other-packages-this-addon-installs). Although [StackOverflow](https://stackoverflow.com/questions/tagged/ember.js+typescript) and [Discuss](https://discuss.emberjs.com/search?q=typescript) are not the advised places to report problems, you may find an answer there.
 
 If you don't find an answer, please [open an enhancement request or bug report in this project](https://github.com/typed-ember/ember-cli-typescript/issues/new/choose).
 
