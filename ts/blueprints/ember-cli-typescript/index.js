@@ -174,6 +174,10 @@ module.exports = {
 
     if (this._has('ember-data')) {
       packages.push('@types/ember-data');
+      packages.push('@types/ember-data__adapter');
+      packages.push('@types/ember-data__model');
+      packages.push('@types/ember-data__serializer');
+      packages.push('@types/ember-data__store');
     }
 
     if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {

@@ -2,7 +2,7 @@
 
 Ember Data models are normal TypeScript classes, but with properties decorated to define how the model represents an API resource and relationships to other resources. The decorators the library supplies "just work" with TypeScript at runtime, but require type annotations to be useful with TypeScript.
 
-For an overview of using Ember's decorators with TypeScript, see our overview.
+For details about decorator usage, see [our overview of how Ember's decorators work with TypeScript](../ts/decorators.md).
 
 ## `@attr`
 
@@ -19,7 +19,7 @@ The type returned by the `@attr` decorator is whatever [Transform](https://api.e
 So, for example, you might write a class like this:
 
 ```typescript
-import Model, { attr } from '@ember-data/object';
+import Model, { attr } from '@ember-data/model';
 import CustomType from '../transforms/custom-transform';
 
 export default class User extends Model {
@@ -44,7 +44,7 @@ The _safest_ type you can write for an Ember Data model, therefore, leaves every
 One way to make this safer is to supply a default value using the `defaultValue` on the options hash for the attribute:
 
 ```typescript
-import Model, { attr } from '@ember-data/object';
+import Model, { attr } from '@ember-data/model';
 
 export default class User extends Model {
   @attr()

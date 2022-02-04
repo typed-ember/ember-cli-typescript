@@ -6,7 +6,7 @@ As a result, there are three important points that apply to _all_ decorator usag
 
 1. Whenever using a decorator to declare a class field the framework sets up for you, you should mark it with `declare`. That includes all service and controller injections as well as all Ember Data attributes and relationships.
 
-   Normally, TypeScript determines whether a property is definitely not `null` or `undefined` by checking what you do in the constructor. In the case of service injections, controller injections, or Ember Data model decorations, though, TypeScript does not have visibility into how instances of the class are _initialized_. The `declare` annotation informs TypeScript that something outside its
+   Normally, TypeScript determines whether a property is definitely not `null` or `undefined` by checking what you do in the constructor. In the case of service injections, controller injections, or Ember Data model decorations, though, TypeScript does not have visibility into how instances of the class are _initialized_. The `declare` annotation informs TypeScript that a declaration is defined somewhere else, outside its scope.
 
 2. For Ember Data Models, you will need to use the optional `?` operator on field declarations if the field is optional \(`?`\). See the Ember Data section of the guide for more details!
 
@@ -18,4 +18,3 @@ For examples, see the detailed discussions of the two main places decorators are
 
 * [Services](../ember/services.md)
 * [Ember Data Models](../ember-data/models.md)
-

@@ -6,12 +6,15 @@ import helpers from 'ember-cli-blueprint-test-helpers/helpers';
 import chaiHelpers from 'ember-cli-blueprint-test-helpers/chai';
 import Blueprint from 'ember-cli/lib/models/blueprint';
 
+import { setupPublishedVersionStashing } from '../helpers/stash-published-version';
 import ects from '../../blueprints/ember-cli-typescript/index';
 
 const expect = chaiHelpers.expect;
 const file = chaiHelpers.file;
 
 describe('Acceptance: ember-cli-typescript generator', function () {
+  setupPublishedVersionStashing(this);
+
   helpers.setupTestHooks(this, {
     disabledTasks: ['addon-install', 'bower-install'],
   });
@@ -57,6 +60,10 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-typescript-blueprints');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__adapter');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__model');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__serializer');
+    expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__store');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');
@@ -103,6 +110,10 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(pkgJson.devDependencies).to.not.include.all.keys('ember-cli-typescript');
     expect(pkgJson.devDependencies).to.not.have.any.keys('ember-data');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__adapter');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__model');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__serializer');
+    expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-data__store');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-qunit');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-qunit', '@types/qunit');
     expect(pkgJson.devDependencies).to.not.have.any.keys('@types/ember-mocha', '@types/mocha');

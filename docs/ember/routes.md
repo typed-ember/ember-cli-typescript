@@ -34,5 +34,19 @@ export default class MyRoute extends Route {
 }
 ```
 
-The `Resolved<T>` utility type takes in any type, and if the type is a `Promise` it transforms the type into whatever the `Promise` resolves to; otherwise it just returns the same type. As we saw above, `ReturnType` gets us the return type of the function. So our final `MyRouteModel` type takes the return type from our `model` hook, and uses the `Resolved` type to get the type the promise will resolve to—that is, exactly the type we will have available as `@model` in the template and as `this.model` on a controller. This in turn allows us to use
+The `Resolved<T>` utility type takes in any type, and if the type is a `Promise` it transforms the type into whatever the `Promise` resolves to; otherwise it just returns the same type. (If you’re using TypeScript 4.5 or later, you can use the built-in `Awaited<T>` type, which does the same thing but more robustly: it also handles nested promises.) As we saw above, `ReturnType` gets us the return type of the function. So our final `MyRouteModel` type takes the return type from our `model` hook, and uses the `Resolved` type to get the type the promise will resolve to—that is, exactly the type we will have available as `@model` in the template and as `this.model` on a controller.&#x20;
 
+This in turn allows us to use the route class to define the type of the model on an associated controller.
+
+```typescript
+import Controller from '@ember/controller';
+import type { MyRouteModel } from '../routes/my-route';
+
+export default class MyController extends Controller {
+  declare model?: MyRouteModel;
+
+  // ...
+}
+```
+
+Notice here that the `model` is declared as optional. That’s intentional: the `model` for a given controller is _not_ set when the controller is constructed (that actually happens _either_ when the page corresponding to the controller is created _or_ the first time a `<LinkTo>` which links to that page is rendered). Instead, the `model` is set on the controller when the corresponding route is successfully entered, via its `setupController` hook.

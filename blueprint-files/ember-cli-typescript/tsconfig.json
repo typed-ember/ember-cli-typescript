@@ -13,7 +13,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noEmitOnError": false,
+    "noEmitOnError": true,
     "noEmit": true,
     "inlineSourceMap": true,
     "inlineSources": true,
