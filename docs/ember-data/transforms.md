@@ -1,11 +1,11 @@
 # Transforms
 
-`DS.attr` defines an attribute on a [DS.Model](https://guides.emberjs.com/release/models/defining-models/).
+In Ember Data, `attr` defines an attribute on a [Model](https://guides.emberjs.com/release/models/defining-models/).
 By default, attributes are passed through as-is, however you can specify an
 optional type to have the value automatically transformed.
 Ember Data ships with four basic transform types: `string`, `number`, `boolean` and `date`.
 
-You can define your own transforms by subclassing [DS.Transform](https://guides.emberjs.com/release/models/defining-models/#toc_custom-transforms).
+You can define your own transforms by subclassing [Transform](https://guides.emberjs.com/release/models/defining-models/#toc_custom-transforms).
 Ember Data transforms are normal TypeScript classes.
 The return type of `deserialize` method becomes type of the model class property.
 
