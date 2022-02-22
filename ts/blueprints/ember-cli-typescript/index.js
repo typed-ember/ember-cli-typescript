@@ -6,7 +6,7 @@ const path = require('path');
 const APP_DECLARATIONS = `import Ember from 'ember';
 
 declare global {
-  interface Array<T> extends Ember.ArrayPrototypeExtensions<T> {}
+  interface Array<T> extends Ember.ArrayPrototypeExtensions<T> {} // eslint-disable-line @typescript-eslint/no-empty-interface
   // interface Function extends Ember.FunctionPrototypeExtensions {}
 }
 
@@ -233,7 +233,7 @@ module.exports = {
     if (scripts[type] && scripts[type] !== script) {
       this.ui.writeWarnLine(
         `Found a pre-existing \`${type}\` script in your package.json. ` +
-          `By default, ember-cli-typescript expects to run \`${script}\` in this hook.`
+        `By default, ember-cli-typescript expects to run \`${script}\` in this hook.`
       );
       return;
     }
