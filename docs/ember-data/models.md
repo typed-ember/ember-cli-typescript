@@ -58,7 +58,17 @@ export default class User extends Model {
 }
 ```
 
-## `@belongsTo`
+## Relationships
+
+Relationships between models in Ember Data rely on importing the related models, like `import User from './user';`. This, naturally, can cause a recursive loop, as `/app/models/post.ts` imports `User` from `/app/models/user.ts`, and `/app/models/user.ts` imports `Post` from `/app/models/post.ts`. Recursive importing triggers an [`import/no-cycle`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-cycle.md) error from eslint. 
+
+To avoid these errors, use of [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html), available since TypeScript 3.8:
+
+```ts
+import type User from './user';
+```
+
+### `@belongsTo`
 
 The type returned by the `@belongsTo` decorator depends on whether the relationship is `{ async: true }` \(which it is by default\).
 
@@ -68,9 +78,9 @@ The type returned by the `@belongsTo` decorator depends on whether the relations
 So, for example, you might define a class like this:
 
 ```typescript
-import Model, { belongsTo, AsyncBelongsTo } from '@ember-data/model';
-import User from './user';
-import Site from './site';
+import Model, { belongsTo, type AsyncBelongsTo } from '@ember-data/model';
+import type User from './user';
+import type Site from './site';
 
 export default class Post extends Model {
   @belongsTo('user')
@@ -88,7 +98,7 @@ These are _type_-safe to define as always present, that is to leave off the `?` 
 
 Note, however, that this type-safety is not a guarantee of there being no runtime error: you still need to uphold the contract for non-async relationships \(that is: loading the data first, or side-loading it with the request\) to avoid throwing an error!
 
-## `@hasMany`
+### `@hasMany`
 
 The type returned by the `@hasMany` decorator depends on whether the relationship is `{ async: true }` \(which it is by default\).
 
@@ -98,9 +108,9 @@ The type returned by the `@hasMany` decorator depends on whether the relationshi
 So, for example, you might define a class like this:
 
 ```typescript
-import Model, { hasMany, AsyncHasMany, SyncHasMany } from '@ember-data/model';
-import Comment from './comment';
-import User from './user';
+import Model, { hasMany, type AsyncHasMany, type SyncHasMany } from '@ember-data/model';
+import type Comment from './comment';
+import type User from './user';
 
 export default class Thread extends Model {
   @hasMany('comment')
