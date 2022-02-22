@@ -6,7 +6,7 @@ For details about decorator usage, see [our overview of how Ember's decorators w
 
 ## `@attr`
 
-The type returned by the `@attr` decorator is whatever [Transform](https://api.emberjs.com/ember-data/release/classes/Transform) is applied via the invocation.
+The type returned by the `@attr` decorator is whatever [Transform](https://api.emberjs.com/ember-data/release/classes/Transform) is applied via the invocation. See [our overview of Transforms for more information](./transforms.md).
 
 * If you supply no argument to `@attr`, the value is passed through without transformation.
 * If you supply one of the built-in transforms, you will get back a corresponding type:
@@ -70,22 +70,21 @@ import type User from './user';
 
 ### `@belongsTo`
 
-The type returned by the `@hasMany` decorator depends on whether the relationship is `{ async: true }` \(which it is by default\).
+The type returned by the `@belongsTo` decorator depends on whether the relationship is `{ async: true }` \(which it is by default\).
 
-* If the value is `true`, the type you should use is `DS.PromiseObject<Model>`, where `Model` is the type of the model you are creating a relationship to.
+* If the value is `true`, the type you should use is `AsyncBelongsTo<Model>`, where `Model` is the type of the model you are creating a relationship to.
 * If the value is `false`, the type is `Model`, where `Model` is the type of the model you are creating a relationship to.
 
 So, for example, you might define a class like this:
 
 ```typescript
-import Model, { belongsTo } from '@ember-data/model';
-import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
+import Model, { belongsTo, type AsyncBelongsTo } from '@ember-data/model';
 import type User from './user';
 import type Site from './site';
 
 export default class Post extends Model {
   @belongsTo('user')
-  declare user: DS.PromiseObject<User>;
+  declare user: AsyncBelongsTo<User>;
 
   @belongsTo('site', { async: false })
   declare site: Site;
@@ -94,7 +93,7 @@ export default class Post extends Model {
 
 These are _type_-safe to define as always present, that is to leave off the `?` optional marker:
 
-* accessing an async relationship will always return a `PromiseObject`, which itself may or may not ultimately resolve to a value—depending on the API response—but will always be present itself.
+* accessing an async relationship will always return an `AsyncBelongsTo<Model>` object, which itself may or may not ultimately resolve to a value—depending on the API response—but will always be present itself.
 * accessing a non-async relationship which is known to be associated but has not been loaded will trigger an error, so all access to the property will be safe _if_ it resolves at all.
 
 Note, however, that this type-safety is not a guarantee of there being no runtime error: you still need to uphold the contract for non-async relationships \(that is: loading the data first, or side-loading it with the request\) to avoid throwing an error!
@@ -103,32 +102,24 @@ Note, however, that this type-safety is not a guarantee of there being no runtim
 
 The type returned by the `@hasMany` decorator depends on whether the relationship is `{ async: true }` \(which it is by default\).
 
-* If the value is `true`, the type you should use is `DS.PromiseManyArray<Model>`, where `Model` is the type of the model you are creating a relationship to.
-* If the value is `false`, the type is `EmberArray<Model>`, where `Model` is the type of the model you are creating a relationship to.
+* If the value is `true`, the type you should use is `AsyncHasMany<Model>`, where `Model` is the type of the model you are creating a relationship to.
+* If the value is `false`, the type is `SyncHasMany<Model>`, where `Model` is the type of the model you are creating a relationship to.
 
 So, for example, you might define a class like this:
 
 ```typescript
-import Model, { hasMany } from '@ember-data/model';
-import EmberArray from '@ember/array';
-import DS from 'ember-data'; // NOTE: this is a workaround, see discussion below!
+import Model, { hasMany, type AsyncHasMany, type SyncHasMany } from '@ember-data/model';
 import type Comment from './comment';
 import type User from './user';
 
 export default class Thread extends Model {
   @hasMany('comment')
-  declare comment: DS.PromiseManyArray<Comment>;
+  declare comment: AsyncHasMany<Comment>;
 
   @hasMany('user', { async: false })
-  declare participants: EmberArray<User>;
+  declare participants: SyncHasMany<User>;
 }
 ```
 
 The same basic rules about the safety of these lookups as with `@belongsTo` apply to these types. The difference is just that in `@hasMany` the resulting types are _arrays_ rather than single objects.
-
-## Importing `PromiseObject` and `PromiseManyArray`
-
-There is no public import path in the [Ember Data Packages](https://emberjs.github.io/rfcs/0395-ember-data-packages.html) API for the `PromiseObject` and `PromiseManyArray` types. These types are slowly being disentangled from Ember Data and will eventually be removed. However, until they are, we need a way to refer to them. For _now_, the best option is to refer to them via the legacy `DS` import.
-
-In the future, they will become unnecesary, as the types will simply be `Promise<Model>` and `Promise<Array<Model>>`.
 
