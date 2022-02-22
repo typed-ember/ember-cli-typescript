@@ -236,7 +236,7 @@ module.exports = {
     if (scripts[type] && scripts[type] !== script) {
       this.ui.writeWarnLine(
         `Found a pre-existing \`${type}\` script in your package.json. ` +
-        `By default, ember-cli-typescript expects to run \`${script}\` in this hook.`
+          `By default, ember-cli-typescript expects to run \`${script}\` in this hook.`
       );
       return;
     }
