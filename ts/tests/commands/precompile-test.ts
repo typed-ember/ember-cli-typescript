@@ -1,8 +1,11 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import { EOL } from 'os';
 import { hook } from 'capture-console';
 import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
 import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
+import ts from 'typescript';
+
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 
@@ -26,7 +29,9 @@ describe('Acceptance: ts:precompile command', function () {
 
     let declaration = file('test-file.d.ts');
     expect(declaration).to.exist;
-    expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+    expect(declaration.content.trim()).to.equal(
+      `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
+    );
   });
 
   it('generates nothing from the app tree', async () => {
@@ -63,7 +68,7 @@ describe('Acceptance: ts:precompile command', function () {
       fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
 
       let pkg = fs.readJsonSync('package.json');
-      let tsconfig = fs.readJSONSync('tsconfig.json');
+      let tsconfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config;
       tsconfig.include.push('src');
       tsconfig.compilerOptions.paths[`${pkg.name}/src/*`] = ['src/*'];
       fs.writeJSONSync('tsconfig.json', tsconfig);
@@ -72,7 +77,9 @@ describe('Acceptance: ts:precompile command', function () {
 
       let declaration = file('src/test-file.d.ts');
       expect(declaration).to.exist;
-      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      expect(declaration.content.trim()).to.equal(
+        `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
+      );
     });
   });
 
@@ -85,7 +92,7 @@ describe('Acceptance: ts:precompile command', function () {
       );
 
       let pkg = fs.readJsonSync('package.json');
-      let tsconfig = fs.readJSONSync('tsconfig.json');
+      let tsconfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config;
       tsconfig.include.push('src');
       tsconfig.compilerOptions.paths[`${pkg.name}/*`] = ['addon-test-support/*'];
       fs.writeJSONSync('tsconfig.json', tsconfig);
@@ -94,7 +101,9 @@ describe('Acceptance: ts:precompile command', function () {
 
       let declaration = file('test-file.d.ts');
       expect(declaration).to.exist;
-      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      expect(declaration.content.trim()).to.equal(
+        `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
+      );
     });
   });
 
@@ -120,7 +129,9 @@ describe('Acceptance: ts:precompile command', function () {
     return ember(['ts:precompile']).then(() => {
       const declaration = file('test-support/test-file.d.ts');
       expect(declaration).to.exist;
-      expect(declaration.content.trim()).to.equal(`export declare const testString: string;`);
+      expect(declaration.content.trim()).to.equal(
+        `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
+      );
     });
   });
 
@@ -154,12 +165,14 @@ describe('Acceptance: ts:precompile command', function () {
     return ember(['ts:precompile']).then(() => {
       const componentDecl = file('components/my-component.d.ts');
       expect(componentDecl).to.exist;
-      expect(componentDecl.content.trim()).to.equal(`export declare const testString: string;`);
+      expect(componentDecl.content.trim()).to.equal(
+        `export declare const testString: string;${EOL}//# sourceMappingURL=my-component.d.ts.map`
+      );
 
       const testSupportDecl = file('test-support/test-file.d.ts');
       expect(testSupportDecl).to.exist;
       expect(testSupportDecl.content.trim()).to.equal(
-        `export declare const anotherTestString: string;`
+        `export declare const anotherTestString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
       );
     });
   });
