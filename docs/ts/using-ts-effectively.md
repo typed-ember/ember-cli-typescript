@@ -29,7 +29,7 @@ The full recommended _strictness_ settings in your `"compilerOptions"` hash (whi
 }
 ```
 
-A good approach is to start at your "leaf" modules (the ones that don't import anything else from your app, only Ember or third-party types) and then work your way back inward toward the most core moduels that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update _tons_ of other places in your app) when you type them later in the process.
+A good approach is to start at your "leaf" modules (the ones that don't import anything else from your app, only Ember or third-party types) and then work your way back inward toward the most core modules that are used everywhere. Often the highest-value modules are your Ember Data models and any core services that are used everywhere else in the app – and those are also the ones that tend to have the most cascading effects (having to update _tons_ of other places in your app) when you type them later in the process.
 
 Finally, leave `"noEmitOnError": true` (the default) in the `"compilerOptions"` hash in your `tsconfig.json`. This will fail your build if you have type errors, which gives you the fastest feedback as you add types.
 
