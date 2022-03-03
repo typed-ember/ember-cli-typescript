@@ -2,6 +2,19 @@ import fs from 'fs-extra';
 
 const PACKAGE_PATH = 'node_modules/ember-cli-typescript';
 
+function isNodeError(e: unknown): e is NodeJS.ErrnoException {
+  // Not full-proof but good enough for our purposes.
+  return e instanceof Error && 'code' in e;
+}
+
+function handleError(e: unknown) {
+  // Ignore the case where we just don't have the files to move. (And hope this
+  // works correctly?)
+  if (!isNodeError(e) || e.code !== 'ENOENT') {
+    throw e;
+  }
+}
+
 /**
  * We have assorted devDependencies that themselves depend on `ember-cli-typescript`.
  * This means we have a published copy of the addon present in `node_modules` normally,
@@ -12,10 +25,19 @@ const PACKAGE_PATH = 'node_modules/ember-cli-typescript';
  */
 export function setupPublishedVersionStashing(hooks: Mocha.Suite): void {
   hooks.beforeAll(async () => {
-    await fs.move(PACKAGE_PATH, `${PACKAGE_PATH}.published`);
+    fs.move(PACKAGE_PATH, `${PACKAGE_PATH}.published`).catch();
+    try {
+      await fs.move(PACKAGE_PATH, `${PACKAGE_PATH}.published`);
+    } catch (e: unknown) {
+      handleError(e);
+    }
   });
 
   hooks.afterAll(async () => {
-    await fs.move(`${PACKAGE_PATH}.published`, PACKAGE_PATH);
+    try {
+      await fs.move(`${PACKAGE_PATH}.published`, PACKAGE_PATH);
+    } catch (e) {
+      handleError(e);
+    }
   });
 }
