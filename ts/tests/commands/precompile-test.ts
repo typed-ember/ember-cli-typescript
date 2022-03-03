@@ -1,9 +1,11 @@
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import { EOL } from 'os';
 import { hook } from 'capture-console';
 import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
 import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
 import ts from 'typescript';
+
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 
@@ -28,7 +30,7 @@ describe('Acceptance: ts:precompile command', function () {
     let declaration = file('test-file.d.ts');
     expect(declaration).to.exist;
     expect(declaration.content.trim()).to.equal(
-      `export declare const testString: string;\n//# sourceMappingURL=test-file.d.ts.map`
+      `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
     );
   });
 
@@ -76,7 +78,7 @@ describe('Acceptance: ts:precompile command', function () {
       let declaration = file('src/test-file.d.ts');
       expect(declaration).to.exist;
       expect(declaration.content.trim()).to.equal(
-        `export declare const testString: string;\n//# sourceMappingURL=test-file.d.ts.map`
+        `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
       );
     });
   });
@@ -100,7 +102,7 @@ describe('Acceptance: ts:precompile command', function () {
       let declaration = file('test-file.d.ts');
       expect(declaration).to.exist;
       expect(declaration.content.trim()).to.equal(
-        `export declare const testString: string;\n//# sourceMappingURL=test-file.d.ts.map`
+        `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
       );
     });
   });
@@ -128,7 +130,7 @@ describe('Acceptance: ts:precompile command', function () {
       const declaration = file('test-support/test-file.d.ts');
       expect(declaration).to.exist;
       expect(declaration.content.trim()).to.equal(
-        `export declare const testString: string;\n//# sourceMappingURL=test-file.d.ts.map`
+        `export declare const testString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
       );
     });
   });
@@ -164,13 +166,13 @@ describe('Acceptance: ts:precompile command', function () {
       const componentDecl = file('components/my-component.d.ts');
       expect(componentDecl).to.exist;
       expect(componentDecl.content.trim()).to.equal(
-        `export declare const testString: string;\n//# sourceMappingURL=my-component.d.ts.map`
+        `export declare const testString: string;${EOL}//# sourceMappingURL=my-component.d.ts.map`
       );
 
       const testSupportDecl = file('test-support/test-file.d.ts');
       expect(testSupportDecl).to.exist;
       expect(testSupportDecl.content.trim()).to.equal(
-        `export declare const anotherTestString: string;\n//# sourceMappingURL=test-file.d.ts.map`
+        `export declare const anotherTestString: string;${EOL}//# sourceMappingURL=test-file.d.ts.map`
       );
     });
   });
