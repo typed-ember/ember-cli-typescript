@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
+    "target": "ES2021",
+    "module": "ES2020",
     "moduleResolution": "node",
 
     // Trying to check Ember apps and addons with `allowJs: true` is a recipe
@@ -20,18 +20,21 @@
 
     // Interop: these are viral and will require anyone downstream of your
     // package to *also* set them to true. If you *must* enable them to consume
-    // an upstream package, you should
+    // an upstream package, you should document that for downstream consumers to
+    // be aware of.
+    //
+    // These *are* safe for apps to enable, since they do not *have* downstream
+    // consumers; but leaving them off is still preferred when possible, since
+    // it makes it easier to switch between apps and addons and have the same
+    // rules for what can be imported and how.
     "allowSyntheticDefaultImports": false,
     "esModuleInterop": false,
 
     // --- Lint-style rules
 
-    // You should feel free to change these, especially if you are already
-    // covering them via linting (e.g. with @typescript-eslint).
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
+    // TypeScript also supplies some lint-style checks; nearly all of them are
+    // better handled by ESLint with the `@typescript-eslint`. This one is more
+    // like a safety check, though, so we leave it on.
     "noPropertyAccessFromIndexSignature": true,
 
     // --- Compilation/integration settings

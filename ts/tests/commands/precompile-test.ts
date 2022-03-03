@@ -3,6 +3,7 @@ import * as path from 'path';
 import { hook } from 'capture-console';
 import ember from 'ember-cli-blueprint-test-helpers/lib/helpers/ember';
 import blueprintHelpers from 'ember-cli-blueprint-test-helpers/helpers';
+import ts from 'typescript';
 const setupTestHooks = blueprintHelpers.setupTestHooks;
 const emberNew = blueprintHelpers.emberNew;
 
@@ -63,8 +64,8 @@ describe('Acceptance: ts:precompile command', function () {
       fs.writeFileSync('src/test-file.ts', `export const testString: string = 'hello';`);
 
       let pkg = fs.readJsonSync('package.json');
-      let tsconfig = fs.readJSONSync('tsconfig.json');
-      tsconfig.include.push('src');
+      let tsconfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config;
+      tsconfig.tsconfig.include.push('src');
       tsconfig.compilerOptions.paths[`${pkg.name}/src/*`] = ['src/*'];
       fs.writeJSONSync('tsconfig.json', tsconfig);
 
@@ -85,7 +86,7 @@ describe('Acceptance: ts:precompile command', function () {
       );
 
       let pkg = fs.readJsonSync('package.json');
-      let tsconfig = fs.readJSONSync('tsconfig.json');
+      let tsconfig = ts.readConfigFile('tsconfig.json', ts.sys.readFile).config;
       tsconfig.include.push('src');
       tsconfig.compilerOptions.paths[`${pkg.name}/*`] = ['addon-test-support/*'];
       fs.writeJSONSync('tsconfig.json', tsconfig);
