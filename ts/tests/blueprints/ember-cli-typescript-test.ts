@@ -5,6 +5,7 @@ import path from 'path';
 import helpers from 'ember-cli-blueprint-test-helpers/helpers';
 import chaiHelpers from 'ember-cli-blueprint-test-helpers/chai';
 import Blueprint from 'ember-cli/lib/models/blueprint';
+import ts from 'typescript';
 
 import { setupPublishedVersionStashing } from '../helpers/stash-published-version';
 import ects from '../../blueprints/ember-cli-typescript/index';
@@ -71,7 +72,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     const tsconfig = file('tsconfig.json');
     expect(tsconfig).to.exist;
 
-    const tsconfigJson = JSON.parse(tsconfig.content);
+    const tsconfigJson = ts.parseConfigFileTextToJson('tsconfig.json', tsconfig.content).config;
     expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
       'my-app/tests/*': ['tests/*'],
       'my-app/*': ['app/*'],
@@ -121,7 +122,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     const tsconfig = file('tsconfig.json');
     expect(tsconfig).to.exist;
 
-    const tsconfigJson = JSON.parse(tsconfig.content);
+    const tsconfigJson = ts.parseConfigFileTextToJson('tsconfig.json', tsconfig.content).config;
     expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
       'dummy/tests/*': ['tests/*'],
       'dummy/*': ['tests/dummy/app/*', 'app/*'],
@@ -197,7 +198,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     const tsconfig = file('tsconfig.json');
     expect(tsconfig).to.exist;
 
-    const json = JSON.parse(tsconfig.content);
+    const json = ts.parseConfigFileTextToJson('tsconfig.json', tsconfig.content).config;
     expect(json.compilerOptions.paths).to.deep.equal({
       'my-app/tests/*': ['tests/*'],
       'my-app/*': ['app/*', 'lib/my-addon-1/app/*', 'lib/my-addon-2/app/*'],
@@ -243,7 +244,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     const tsconfig = file('tsconfig.json');
     expect(tsconfig).to.exist;
 
-    const json = JSON.parse(tsconfig.content);
+    const json = ts.parseConfigFileTextToJson('tsconfig.json', tsconfig.content).config;
     expect(json.compilerOptions.paths).to.deep.equal({
       'my-app/tests/*': ['tests/*'],
       'my-app/mirage/*': ['mirage/*'],
@@ -269,7 +270,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     const tsconfig = file('tsconfig.json');
     expect(tsconfig).to.exist;
 
-    const json = JSON.parse(tsconfig.content);
+    const json = ts.parseConfigFileTextToJson('tsconfig.json', tsconfig.content).config;
     expect(json.compilerOptions.paths).to.deep.equal({
       'dummy/tests/*': ['tests/*'],
       'dummy/mirage/*': ['tests/dummy/mirage/*'],
