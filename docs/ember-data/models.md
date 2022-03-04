@@ -114,7 +114,7 @@ import type User from './user';
 
 export default class Thread extends Model {
   @hasMany('comment')
-  declare comment: AsyncHasMany<Comment>;
+  declare comments: AsyncHasMany<Comment>;
 
   @hasMany('user', { async: false })
   declare participants: SyncHasMany<User>;
