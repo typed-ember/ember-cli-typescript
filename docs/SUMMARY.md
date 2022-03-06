@@ -18,6 +18,7 @@
   * [Testing](ember/testing.md)
 * [Working With Ember Data](ember-data/README.md)
   * [Models](ember-data/models.md)
+  * [Transforms](ember-data/transforms.md)
 * [Cookbook](cookbook/README.md)
   * [Working with route models](cookbook/working-with-route-models.md)
 * [Working With Ember Classic](legacy/README.md)
