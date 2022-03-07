@@ -11,9 +11,9 @@ The type returned by the `@attr` decorator is whatever [Transform](https://api.e
 * If you supply no argument to `@attr`, the value is passed through without transformation.
 * If you supply one of the built-in transforms, you will get back a corresponding type:
   * `@attr('string')` → `string`
-  * `@attr(number)` → `number`, 
+  * `@attr('number')` → `number`
   * `@attr('boolean')` → `boolean`
-  * `@attr'date')` → `Date`
+  * `@attr('date')` → `Date`
 * If you supply a custom transform, you will get back the type returned by your transform.
 
 So, for example, you might write a class like this:
@@ -24,7 +24,7 @@ import CustomType from '../transforms/custom-transform';
 
 export default class User extends Model {
   @attr()
-  name?:  string;
+  declare name?:  string;
 
   @attr('number')
   declare age: number;
@@ -62,7 +62,7 @@ export default class User extends Model {
 
 Relationships between models in Ember Data rely on importing the related models, like `import User from './user';`. This, naturally, can cause a recursive loop, as `/app/models/post.ts` imports `User` from `/app/models/user.ts`, and `/app/models/user.ts` imports `Post` from `/app/models/post.ts`. Recursive importing triggers an [`import/no-cycle`](https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-cycle.md) error from eslint. 
 
-To avoid these errors, use of [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html), available since TypeScript 3.8:
+To avoid these errors, use [type-only imports](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-8.html), available since TypeScript 3.8:
 
 ```ts
 import type User from './user';
