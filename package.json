@@ -1,19 +1,21 @@
 {
   "name": "ember-cli-typescript",
-  "version": "5.0.0",
-  "description": "Allow ember apps to use typescript files.",
+  "version": "5.1.0",
+  "description": "Allow Ember apps to use TypeScript files.",
   "keywords": [
     "ember-addon",
     "typescript"
   ],
   "repository": "https://github.com/typed-ember/ember-cli-typescript.git",
   "license": "MIT",
-  "author": "Chris Krycho <chris@chriskrycho.com> (http://www.chriskrycho.com)",
+  "author": "Chris Krycho <hello@chriskrycho.com> (https://www.chriskrycho.com)",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "contributors": [
+    "James C. Davis",
+    "Dan Freeman",
     "Marius Seritan",
     "David Gardiner",
     "Philip Bjorge"
