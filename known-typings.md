@@ -5,7 +5,7 @@ course find many other modules with their own typings out there.)
 
 Don't see an addon you use listed here? You might be the one to write them! Check
 out [this blog post] or [this quest issue] for tips on how to do it, and feel free
-to ask for help in the `#e-typescript` channel on the [Ember Community Discord server].
+to ask for help in the `#topic-typescript` channel on the [Ember Community Discord server].
 
 [this blog post]: http://www.chriskrycho.com/2017/typing-your-ember-part-5.html
 [this quest issue]: https://github.com/typed-ember/ember-typings/issues/14
