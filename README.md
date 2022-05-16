@@ -178,7 +178,7 @@ When seeking help, you should first consider what you need, and which aspect of 
 
 ### 💬 Getting Started
 
-We have a channel (**`#e-typescript`**) on the [Ember Community Discord server](https://discordapp.com/invite/zT3asNS) where you can ask about getting started, good resources for self-directed learning and more.
+We have a channel (**`#topic-typescript`**) on the [Ember Community Discord server](https://discordapp.com/invite/zT3asNS) where you can ask about getting started, good resources for self-directed learning and more.
 
 ### 📚 Issues With Ember Type Definitions
 
