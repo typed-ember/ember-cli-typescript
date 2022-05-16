@@ -534,7 +534,7 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 
 * Addons can no longer use `.ts` in app, because an addon's `app` directory gets merged with and uses the *host's* (i.e. the other addon or app's) preprocessors, and we cannot guarantee the host has TS support. Note that in-repo-addons will continue to work for in-repo addons because of the app build works with the host's (i.e. the app's, not the addon's) preprocessors.
 
-* Apps need to use `.js` for overrides in app, since the different file extension means apps no long consistently "win" over addon versions (a limitation of how Babel + app merging interact) – note that this won’t be a problem with Module Unification apps
+* Apps need to use `.js` for overrides in app, since the different file extension means apps no longer consistently "win" over addon versions (a limitation of how Babel + app merging interact) – note that this won’t be a problem with Module Unification apps
 
 ### Fixed
 

@@ -93,7 +93,7 @@ If you choose to make the upgrade manually with yarn or npm, here are the steps 
 Since we now integrate in a more traditional way into Ember CLI's build pipeline, there are two changes required for addons using TypeScript.
 
 * Addons can no longer use `.ts` in `app`, because an addon's `app` directory gets merged with and uses the _host's_ \(i.e. the other addon or app's\) preprocessors, and we cannot guarantee the host has TS support. Note that `.ts` will continue to work for in-repo addons because the app build works with the host's \(i.e. the app's, not the addon's\) preprocessors.
-* Similarly, apps must use `.js` to override addon defaults in `app`, since the different file extension means apps no long consistently "win" over addon versions \(a limitation of how Babel + app merging interact\).
+* Similarly, apps must use `.js` to override addon defaults in `app`, since the different file extension means apps no longer consistently "win" over addon versions \(a limitation of how Babel + app merging interact\).
 
 ### Account for TS → Babel issues
 
@@ -144,7 +144,7 @@ Any place where a type annotation overrides a _getter_
      Notably, this is not a problem for Glimmer components, so migrating to Octane will also help!
 
 * `const enum` is not supported at all. You will need to replace all uses of `const enum` with simply `enum` or constants.
-* Using ES5 getters or settings with `this` type annotations is not supported through at least Babel 7.3. However, they should also be unnecessary with ES6 classes, so you can simply _remove_ the `this` type annotation.
+* Using ES5 getters or setters with `this` type annotations is not supported through at least Babel 7.3. However, they should also be unnecessary with ES6 classes, so you can simply _remove_ the `this` type annotation.
 * Trailing commas after rest function parameters \(`function foo(...bar[],) {}`\) are disallowed by the ECMAScript spec, so Babel also disallows them.
 * Re-exports of types have to be disambiguated to be _types_, rather than values. Neither of these will work:
 

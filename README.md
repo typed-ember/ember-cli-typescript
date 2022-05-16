@@ -143,7 +143,7 @@ Since we now integrate in a more traditional way into Ember CLI's build pipeline
 
 - Addons can no longer use `.ts` in `app`, because an addon's `app` directory gets merged with and uses the *host's* (i.e. the other addon or app's) preprocessors, and we cannot guarantee the host has TS support. Note that `.ts` will continue to work for in-repo addons because the app build works with the host's (i.e. the app's, not the addon's) preprocessors.
 
-- Similarly, apps must use `.js` to override addon defaults in `app`, since the different file extension means apps no long consistently "win" over addon versions (a limitation of how Babel + app merging interact).
+- Similarly, apps must use `.js` to override addon defaults in `app`, since the different file extension means apps no longer consistently "win" over addon versions (a limitation of how Babel + app merging interact).
 
 ##### Account for TS → Babel issues
 
@@ -151,7 +151,7 @@ ember-cli-typescript v2 uses Babel to compile your code, and the TypeScript comp
 
 - `const enum` is not supported at all. You will need to replace all uses of `const enum` with simply `enum` or constants.
 
-- Using ES5 getters or settings with `this` type annotations is not supported through at least Babel 7.3. However, they should also be unnecessary with ES6 classes, so you can simply *remove* the `this` type annotation.
+- Using ES5 getters or setters with `this` type annotations is not supported through at least Babel 7.3. However, they should also be unnecessary with ES6 classes, so you can simply *remove* the `this` type annotation.
 
 - Trailing commas after rest function parameters (`function foo(...bar[],) {}`) are disallowed by the ECMAScript spec, so Babel also disallows them.
 
