@@ -81,7 +81,7 @@ for inclusion by ember-cli-typescript.
 * RFCs that are candidates for inclusion will enter a "final comment period"
 lasting 7 days. The beginning of this period will be signaled with a comment
 and tag on the RFC's pull request. Furthermore, the Typed Ember team will post
-in Discord in `#e-typescript` and `#news-and-announcements`.
+in Discord in `#topic-typescript` and `#news-and-announcements`.
 * An RFC can be modified based upon feedback from the Typed Ember team and
 the community. Significant modifications may trigger a new final comment period.
 * An RFC may be rejected by the team after public discussion has settled and
