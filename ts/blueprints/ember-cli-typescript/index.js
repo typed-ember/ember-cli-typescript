@@ -148,6 +148,7 @@ module.exports = {
 
     let packages = [
       'typescript',
+      '@tsconfig/ember',
       'ember-cli-typescript-blueprints',
       '@types/ember-resolver',
       '@types/ember__test-helpers',
