@@ -60,6 +60,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(pkgJson.scripts.postpack).to.be.undefined;
     expect(pkgJson.devDependencies).to.include.all.keys('ember-cli-typescript-blueprints');
     expect(pkgJson.devDependencies).to.include.all.keys('ember-data');
+    expect(pkgJson.devDependencies).to.include.all.keys('@tsconfig/ember');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__adapter');
     expect(pkgJson.devDependencies).to.include.all.keys('@types/ember-data__model');
@@ -73,14 +74,12 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(tsconfig).to.exist;
 
     const tsconfigJson = ts.parseConfigFileTextToJson('tsconfig.json', tsconfig.content).config;
+    expect(tsconfigJson.extends).to.equal('@tsconfig/ember/tsconfig.json');
     expect(tsconfigJson.compilerOptions.paths).to.deep.equal({
       'my-app/tests/*': ['tests/*'],
       'my-app/*': ['app/*'],
       '*': ['types/*'],
     });
-
-    expect(tsconfigJson.compilerOptions.inlineSourceMap).to.equal(true);
-    expect(tsconfigJson.compilerOptions.inlineSources).to.equal(true);
 
     expect(tsconfigJson.include).to.deep.equal(['app/**/*', 'tests/**/*', 'types/**/*']);
 

@@ -1099,6 +1099,11 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
+"@tsconfig/ember@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@tsconfig/ember/-/ember-1.0.0.tgz#e982a5d47b03bb0ac5a93d011596f8520e046d96"
+  integrity sha512-2FXPaVQLJxDHzfkHYVH2R3YC62/e1/k3kQ/1KyzET8/MhJoJeL9F+wmPxASm8v2QYBj8Ct+COS+ZTknrfJ/SAQ==
+
 "@typed-ember/renovate-config@1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@typed-ember/renovate-config/-/renovate-config-1.2.1.tgz#2e964c03a60df375a5a67aad9ef7d84911101a1c"
@@ -7415,9 +7420,11 @@ imurmurhash@^0.1.4:
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
   version "0.0.0"
+  uid ""
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
   version "0.0.0"
+  uid ""
 
 indent-string@^4.0.0:
   version "4.0.0"
