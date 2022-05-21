@@ -150,6 +150,7 @@ module.exports = {
       'typescript',
       '@tsconfig/ember',
       'ember-cli-typescript-blueprints',
+      '@types/ember',
       '@types/ember-resolver',
       '@types/ember__test-helpers',
       '@types/ember__object',
