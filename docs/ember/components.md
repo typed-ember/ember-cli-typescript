@@ -4,19 +4,21 @@
 New to Ember or the Octane edition specifically? You may want to read [the Ember Guides’ material on `Component`s](https://guides.emberjs.com/release/components/) first!
 {% endhint %}
 
-Glimmer Components are defined in one of three ways: with templates only, with a template and a backing class, or with only a backing class \(i.e. a `yield`-only component\). When using a backing class, you get a first-class experience using TypeScript! Unfortunately, we don’t yet support type-checking for templates, but we hope to build that out eventually. Don’t let that stop you, though: types in your component classes make for a great experience, so let’s dig in and see how it works in practice.
+Glimmer Components are defined in one of three ways: with templates only, with a template and a backing class, or with only a backing class \(i.e. a `yield`-only component\). When using a backing class, you get a first-class experience using TypeScript! Furthermore, when used with [Glint](https://typed-ember.gitbook.io/glint/), the typing you provide for your components provides guidance for type-checking your handlebars templates. So let’s dig in and see how it works in practice.
 
 ## A simple component
 
-A _very_ simple Glimmer component which lets you change the count of a value might look like this:
+A _very_ simple Glimmer component, `Counter`, which lets you change the count of a value might look like this:
 
-```text
+```hbs
+{{! /app/components/counter.hbs }}
 <button {{on "click" this.minus}}>&minus;</button>
 {{this.count}}
 <button {{on "click" this.plus}}>+</button>
 ```
 
 ```typescript
+/* /app/components/counter.ts */
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -34,162 +36,237 @@ export default class Counter extends Component {
 }
 ```
 
-Notice that there are no type declarations here – but this _is_ actually a well-typed component. The type of `count` is `number`, and if we accidentally wrote something like `this.count = "hello"` the compiler would give us an error.
+Notice that though there are no type declarations here, this _is_ actually a well-typed component. The type of `count` is `number`, and if we accidentally wrote something like `this.count = "hello"` the compiler would give us an error.
 
-## Adding arguments
+## Component Signature
 
-So far so good, but of course most components aren’t quite this simple! Instead, they’re invoked by other templates and they can invoke other components themselves in their own templates.
+So far so good, but most components aren't quite this simple! As of [RFC 0748](https://emberjs.github.io/rfcs/0748-glimmer-component-signature.html), Glimmer components have a specific `Signature` that defines:
 
-Glimmer components can receive both _arguments_ and _attributes_ when they are invoked. When you are working with a component’s backing class, you have access to the arguments but _not_ to the attributes. The arguments are passed to the constructor, and then available as `this.args` on the component instance afterward. Let’s imagine a component which just logs the names of its arguments when it is first constructed:
+* What _arguments_, if any, the component accepts and expects
+* What _blocks_, if any, the component accepts and expects
+* What kind of `Element` the component provides for attributes and modifiers
+
+These three categories, encapsulated as `Args`, `Blocks`, and `Element` fields, make up a Glimmer component's `Signature`. None of the categories is required. As such, the most basic Glimmer component can be typed like this:
 
 ```typescript
+/* /app/components/my-component.ts */
 import Component from '@glimmer/component';
 
-const log = console.log.bind(console);
+interface MyComponentSignature {}
 
-export default class ArgsDisplay extends Component {
-  constructor(owner: unknown, args: {}) {
-    super(owner, args);
-
-    Object.keys(args).forEach(log);
-  }
-}
+export default class MyComponent extends Component<MyComponentSignature> {}
 ```
 
-{% hint style="info" %}
-If you’re used to the classic Ember Object model, there are two important differences in the constructor itself:
+We'll explore `Args`, `Blocks`, and `Element` fields below.
 
-* we use `super` instead of `this._super`
-* we _must_ call `super` before we do anything else with `this`, because in a subclass `this` is set up by running the superclass's constructor first \(as implied by [the JavaScript spec](https://tc39.es/ecma262/#sec-runtime-semantics-classdefinitionevaluation)\)
-{% endhint %}
+## Adding arguments with the `Args` field
 
-Notice that we have to start by calling `super` with `owner` and `args`. This may be a bit different from what you’re used to in Ember or other frameworks, but is normal for sub-classes in TypeScript today. If the compiler just accepted any `...arguments`, a lot of potentially _very_ unsafe invocations would go through. So, instead of using `...arguments`, we explicitly pass the _specific_ arguments and make sure their types match up with what the super-class expects.
+Glimmer components receive arguments and then expose them as `this.args` within the component's backing class. Given a `MyButton` component invoked like this:
 
-{% hint style="info" %}
-This might change in the future! If TypeScript eventually adds [support for “variadic kinds”](https://github.com/Microsoft/TypeScript/issues/5453), using `...arguments` could become safe.
-{% endhint %}
+```hbs
+<MyButton @type="submit" @text="Submit!" @clickHandler={{this.handleClick}} class="button-primary"/>
+```
 
-The types for `owner` here and `args` line up with what the `constructor` for Glimmer components expect. The `owner` is specified as `unknown` because this is a detail we explicitly _don’t_ need to know about. The `args` are `{}` because a Glimmer component _always_ receives an object containing its arguments, even if the caller didn’t pass anything: then it would just be an empty object.
-
-`{}` is an empty object type – all objects extend from it, but there will be no properties on it. This is distinct from the `object` type, which the TypeScript docs describe as:
-
-> any thing that is not `number`, `string`, `boolean`, `symbol`, `null`, or `undefined`.
-
-If we used `object`, we could end up with TypeScript thinking `args` were an array, or a `Set`, or anything else that isn’t a primitive. Since we have `{}`, we _know_ that it's an object.
-
-{% hint style="info" %}
-For some further details, check out [this blog post](https://mariusschulz.com/blog/the-object-type-in-typescript).
-{% endhint %}
-
-The `args` passed to a Glimmer Component [are available on `this`](https://github.com/glimmerjs/glimmer.js/blob/2f840309f013898289af605abffe7aee7acc6ed5/packages/%40glimmer/component/src/component.ts#L12), so we could change our definition to return the names of the arguments from a getter:
+We can see that it receives three arguments, `type`, `text`, and `clickHandler`. In this example, `class` is an _attribute_, not an _argument_, and Glimmer handles attributes through the `Element` part of the signature, as detailed below. The three arguments are all available in the backing class as `this.args.type`, `this.args.text`, and `this.args.clickHandler`. And these three can be typed in our component's signature:
 
 ```typescript
+/* /app/components/my-button.ts */
 import Component from '@glimmer/component';
 
-export default class ArgsDisplay extends Component {
-  get argNames(): string[] {
-    return Object.keys(this.args);
-  }
+interface MyButtonComponentSignature {
+  Args: {
+    type?: 'submit' | 'reset' | 'button';
+    text?: string;
+    clickHandler?: () => void;
+  };
 }
+
+export default class MyButtonComponent extends Component<MyButtonComponentSignature> {}
 ```
 
-```text
-<p>The names of the <code>@args</code> are:</p>
-<ul>
-  {{#each this.argNames as |argName|}}
-    <li>{{argName}}</li>
-  {{/each}}
-</ul>
+```hbs
+{{! /app/components/my-button.hbs }}
+<button type={{@type}} ...attributes>
+  {{@text}}
+</button>
 ```
 
-### Understanding `args`
-
-Now, looking at that bit of code, you might be wondering how it knows what the type of `this.args` is. In the `constructor` version, we explicitly _named_ the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
+Note that this example does not do anything with `@clickHandler`. Similarly, though the arguments are marked as optional in the signature, in practice, Ember is relying on them. If someone neglected to include a `clickHandler`, in fact, and so `undefined` was passed to an `{{on "click"}}` modifier, the app would crash. Let's use some getters to toughen up this component:
 
 ```typescript
-export default class Component<Args extends {} = {}> {
-  readonly args: Args;
-
-  constructor(owner: unknown, args: Args);
-}
-```
-
-{% hint style="info" %}
-Not sure what’s up with `<Args>` _at all_? We highly recommend the [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
-{% endhint %}
-
-The type signature for Component, with `Args extends {} = {}`, means that the component _always_ has a property named `args` —
-
-* with the type `Args`
-* which can be anything that extends the type `{}` – an object
-* and _defaults_ to being just an empty object – `= {}`
-
-This is analogous to the type of `Array` : since you can have an array of `string` , or an array of `number` or an array of `SomeFancyObject` , the type of array is `Array<T>` , where `T` is the type of thing in the array, which TypeScript normally figures out for you automatically at compile time:
-
-```typescript
-let a = [1, 2, 3];  // Array<number>
-let b = ["hello", "goodbye"]; // Array<string>
-```
-
-In the case of the Component, we have the types the way we do so that you can’t accidentally define `args` as a string, or `undefined` , or whatever: it _has_ to be an object. Thus, `Component<Args extends {}>` . But we also want to make it so that you can just write `extends Component` , so that needs to have a default value. Thus, `Component<Args extends {} = {}>`.
-
-### Giving `args` a type
-
-Now let’s put this to use. Imagine we’re constructing a user profile component which displays the user’s name and optionally an avatar and bio. The template might look something like this:
-
-```text
-<div class='user-profile' ...attributes>
-  {{#if this.avatar}}
-    <img src={{this.avatar}} class='user-profile__avatar'>
-  {{/if}}
-  <p class='user-profile__bio'>{{this.userInfo}}</p>
-</div>
-```
-
-Then we could capture the types for the profile with an interface representing the _arguments_:
-
-```typescript
+/* /app/components/my-button.ts */
 import Component from '@glimmer/component';
-import { generateUrl } from '../lib/generate-avatar';
+import { action } from '@ember/object';
 
-interface User {
-  name: string;
-  avatar?: string;
-  bio?: string;
+interface MyButtonComponentSignature {
+  Args: {
+    type?: 'submit' | 'reset' | 'button';
+    text?: string;
+    clickHandler?: () => void;
+  };
 }
 
-export default class UserProfile extends Component<User> {
-  get userInfo(): string {
-    return this.args.bio ? `${this.args.name} ${this.args.bio}` : this.args.name;
+export default class MyButtonComponent extends Component<MyButtonComponentSignature> {
+  get type() {
+    return this.args.type ?? 'button';
   }
 
-  get avatar(): string {
-    return this.args.avatar ?? generateUrl();
+  get text() {
+    return this.args.text ?? 'Default Button Label';
+  }
+
+  @action handleClick() {
+    this.args.clickHandler();
   }
 }
 ```
 
-Assuming the default `tsconfig.json` settings \(with `strictNullChecks: true`\), this wouldn't type-check if we didn't _check_ whether the `bio` argument were set.
+```hbs
+{{! /app/components/my-button.hbs }}
+<button type={{this.type}} {{on "click" this.handleClick}}>
+  {{this.text}}
+</button>
+```
 
-## Generic subclasses
+The `Args` field can host any kind of type. For example, components are often passed a `@model` argument. If you know that the component is being passed an Ember Data `User` model through the `@model` argument, you could type the component like this:
 
-If you'd like to make your _own_ component subclass-able, you need to make it generic as well.
+```typescript
+/* /app/components/user-profile-widget.ts */
+import Component from '@glimmer/component';
+import type User from 'my-app-name/models/user';
+
+interface UserProfileWidgetComponentSignature {
+  Args: {
+    model?: User;
+  };
+}
+
+export default class UserProfileWidgetComponent extends Component<UserProfileWidgetComponentSignature> {}
+```
+
+## Adding blocks with the `Blocks` field
+
+Glimmer components in Ember receive not only arguments and attributes, [but they can also receive blocks](https://guides.emberjs.com/release/components/block-content/) . The default component template in Ember, for example, is nothing more than `{{yield}}`, which yields the `default` block back to the template that invoked the component. When typing a Glimmer component, then, we can type the blocks and the parameters sent to each block.
+
+Building on the example in the Ember guides, Assume you want to create a `BlogPost` component that nevertheless allows the developer to change the HTML on a case-by-case basis. Given a template like:
+
+```hbs
+{{! /app/components/blog-post.hbs}}
+<article>
+  <header>
+    <h1>{{@post.title}}</h1>
+    <h2>by {{@post.author}}</h2>
+  </header>
+
+    {{yield @post.body}}
+
+</article>
+```
+
+The component could then be invoked like this:
+
+```hbs
+{{! /app/templates/blog/post.hbs}}
+<BlogPost @post={{@model}} as |postBody|>
+  <img alt="" role="presentation" src="./blog-logo.png">
+
+  {{postBody}}
+</BlogPost>
+```
+
+We could then type this component:
+
+```typescript
+/* /app/components/blog-post.ts */
+import Component from '@glimmer/component';
+import type Post from 'my-app-name/models/post';
+
+interface BlogPostComponentSignature {
+  Args: {
+    post: Post;
+  };
+  Blocks: {
+    default: [postBody: string];
+  }
+}
+
+export default class BlogPostComponent extends Component<BlogPostComponentSignature> {}
+```
+
+Named blocks, invoked with `{{yield to="someName"}}` are typed exactly as the `default` block in the `Blocks` field, but with, in this example, `someName` as the key. Additionally, any added block parameters would be added to the array, like `default: [postBody?: string, postAuthor?: string]`. If the block yields no parameters, then the array of parameters is simply empty, so simply `{{yield}}` would be typed as `default: []` within the `Blocks` field.
+
+Working with blocks—and especially named blocks—is a new pattern for many Ember users, so we recommend reading [the Ember Guide to block content](https://guides.emberjs.com/release/components/block-content/) as well as the [API documentation for glimmer components](https://api.emberjs.com/ember/release/modules/@glimmer%2Fcomponent).
+
+## Directing the DOM with `Element`
+
+As mentioned above, the _attributes_ a Glimmer component receives (such as `class`) are not handled by the `Args` field. Those attributes, instead, are collected and provided to the component as the `...attributes` splattributes. What kind of DOM element (if any) will receive the splattributes is indicated by the `Element` member of the component `Signature`.
+
+This holds true for modifiers as well. In fact, a component `Signature` with no `Element` or with `Element: null` indicates that its component does not accept HTML attributes and modifiers at all. The `MyButton` component from above, then, needs to be amended:
+
+```typescript
+/* /app/components/my-button.ts */
+import Component from '@glimmer/component';
+
+interface MyButtonComponentSignature {
+  Args: {
+    type?: 'submit' | 'reset' | 'button';
+    text?: string;
+    clickHandler?: () => void;
+  };
+  Element: HTMLButtonElement;
+}
+
+// ...
+```
+
+The DOM element indicated in `Element` is not necessarily the root element of the component. Rather, it indicates where `...attributes` will be spread. For example, the `<ResponsiveImage>` component from [ember-responsive-image](https://github.com/kaliber5/ember-responsive-image) provides a `<picture>` element with an `<img>` element inside. It's the latter element that receives `...attributes`, so the component's `Signature`'s `Element` field would be (and [is](https://github.com/kaliber5/ember-responsive-image/blob/master/addon/components/responsive-image.ts)) `HTMLImageElement`. 
+
+The `Element` member is of particular relevance for the modifiers that consumers can apply to a component. In a system using this information to provide typechecking, any modifiers applied to its component must be declared to accept the component's Element type (or a broader type) as its first parameter, or else produce a type error.
+
+A component with `Element: Element` can only be used with modifiers that accept any DOM element. Many existing modifiers in the Ember ecosystem, such as `{{on}}` and everything in [ember-render-modifiers](https://github.com/emberjs/ember-render-modifiers), fall into this bucket.
+
+A component with e.g. `Element: HTMLCanvasElement`, may be used with any general-purpose modifiers as described above as well as any modifiers that specifically expect to be attached to a `<canvas>`.
+
+A component whose `Element` type is a union of multiple possible elements can only be used with a modifier that is declared to accept all of those element types. This behavior is, in fact, the point—modifiers are essentially callbacks that receive the element they're attached to, and so the normal considerations for typing callback parameters apply.
+
+## Subclassing your own component
+
+If you'd like to make your *own* component subclass-able, you need to make it generic as well.
 
 {% hint style="warning" %}
 Are you sure you want to provide an inheritance-based API? Oftentimes, it's easier to maintain \(and involves less TypeScript hoop-jumping\) to use a compositional API instead. If you're sure, here's how!
 {% endhint %}
 
+Because the `Signature` has multiple fields, subclassing just, say, the `Args` field requires an additional step. So given a parent component:
+
 ```typescript
+/* /app/components/parent.ts */
 import Component from '@glimmer/component';
 
-export interface FancyInputArgs {
-  // ...
+interface ParentComponentSignature {
+  Element: Element;
+  Args: {
+    name?: string;
+  }
 }
 
-export default class FancyInput<Args extends FancyInputArgs = FancyInputArgs> extends Component<Args> {
-  // ...
-}
+export default class ParentComponent<S extends ParentComponentSignature> extends Component<S> {}
 ```
 
-Requiring that `Args extends FancyInputArgs` means that subclasses can have _more_ than these args, but not _fewer_. Specifying that the `Args = FancyInputArgs` means that they _default_ to just being `FancyInputArgs`, so users don't need to supply an explicit generic type parameter here unless they're adding more arguments to the class.
+The child component must first add its arguments to just the `Args` of the parent component and then extend the parent component's `Signature`:
+
+```typescript
+/* /app/components/child.ts */
+import ParentComponent, { ParentComponentSignature } from './parent';
+
+type ChildComponentSignatureArgs = ParentComponentSignature['Args'] & {
+  childName?: string;
+}
+
+interface ChildComponentSignature extends ParentComponentSignature {
+  Args: ChildComponentSignatureArgs;
+}
+
+export default class Childcomponent extends ParentComponent<ChildComponentSignature> {}
+```
 
