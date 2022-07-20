@@ -215,7 +215,7 @@ Now, with that setup out of the way, let’s get back to talking about the text 
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 import User from 'app/types/user';
 
@@ -283,7 +283,7 @@ Putting it all together, this is what our updated test definition would look lik
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, TestContext } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
+import { hbs } from 'ember-cli-htmlbars';
 
 import User from 'app/types/user';
 
