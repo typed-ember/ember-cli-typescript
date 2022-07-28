@@ -23,6 +23,7 @@ function buildTemplateDeclarations(projectName, layout) {
   const comment = '// Types for compiled templates';
   const moduleBody = `
   import { TemplateFactory } from 'htmlbars-inline-precompile';
+
   const tmpl: TemplateFactory;
   export default tmpl;
 `;
