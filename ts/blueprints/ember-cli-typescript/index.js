@@ -22,7 +22,7 @@ export {};`;
 function buildTemplateDeclarations(projectName, layout) {
   const comment = '// Types for compiled templates';
   const moduleBody = `
-  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  import { TemplateFactory } from 'ember-cli-htmlbars';
 
   const tmpl: TemplateFactory;
   export default tmpl;
@@ -171,7 +171,6 @@ module.exports = {
       '@types/ember__component',
       '@types/ember__routing',
       '@types/rsvp',
-      '@types/htmlbars-inline-precompile',
     ];
 
     if (this._has('@ember/jquery')) {
