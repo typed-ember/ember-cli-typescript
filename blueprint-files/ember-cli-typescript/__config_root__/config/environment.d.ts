@@ -1,5 +1,3 @@
-export default config;
-
 /**
  * Type declarations for
  *    import config from 'my-app/config/environment'
@@ -12,3 +10,5 @@ declare const config: {
   rootURL: string;
   APP: Record<string, unknown>;
 };
+
+export default config;
