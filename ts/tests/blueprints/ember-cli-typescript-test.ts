@@ -149,6 +149,7 @@ describe('Acceptance: ember-cli-typescript generator', function () {
     expect(globalTypes).to.exist;
     expect(globalTypes).to.include("declare module 'my-addon/templates/*'").to.include(`
   import { TemplateFactory } from 'htmlbars-inline-precompile';
+
   const tmpl: TemplateFactory;
   export default tmpl;
 `);
