@@ -16,18 +16,18 @@ Addons need to import templates from the associated `.hbs` file to bind to the l
 
 ```ts
 declare module '\*/template' {
-  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  import { TemplateFactory } from 'ember-cli-htmlbars';
   const template: TemplateFactory; export default template;
 }
 
 
 declare module 'app/templates/\*' {
-  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  import { TemplateFactory } from 'ember-cli-htmlbars';
   const template: TemplateFactory; export default template;
 }
 
 declare module 'addon/templates/\*' {
-  import { TemplateFactory } from 'htmlbars-inline-precompile';
+  import { TemplateFactory } from 'ember-cli-htmlbars';
   const template: TemplateFactory; export default template;
 }
 ```
@@ -42,14 +42,14 @@ import { action } from '@ember/object';
 
 export default class MyGame extends Component {
   @action turnWheel(degrees: number) {
-    // ... 
+    // ...
   }
-} 
+}
 ```
 
 ```hbs
 <button {{on "click" (fn this.turnWheel "potato")}}>
-Click Me 
+Click Me
 </button>
 ```
 
