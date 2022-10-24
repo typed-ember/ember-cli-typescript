@@ -6,6 +6,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [5.1.1] - 2022-09-06
+
+### Fixed 🔧
+
+- Use `ember-cli-htmlbars` rather than `htmlbars-inline-precompile` in blueprints ([#1519](https://github.com/typed-ember/ember-cli-typescript/pull/1519))
+- Fix `import/newline-after-import` lint violation in `global.d.ts` ([#1520](https://github.com/typed-ember/ember-cli-typescript/pull/1520))
+- Fix `no-use-before-define` lint violation in `environment.d.ts` ([#1521](https://github.com/typed-ember/ember-cli-typescript/pull/1521))
+- Add `@types/ember` to installed packages from blueprint ([#1508](https://github.com/typed-ember/ember-cli-typescript/pull/1508))
+- Update blueprint to use `@tsconfig/ember` ([#1507](https://github.com/typed-ember/ember-cli-typescript/pull/1507))
+- Clarify babel version error message ([#1500](https://github.com/typed-ember/ember-cli-typescript/pull/1500))
+
+### Documentation 📖
+
+- Update discord channel name, fix typos ([#1506](https://github.com/typed-ember/ember-cli-typescript/pull/1506))
+- Fix spelling resolveable -> resolvable ([#1504](https://github.com/typed-ember/ember-cli-typescript/pull/1504))
+
 ## [5.1.0] - 2021-04-20
 
 ### Added ⭐️
@@ -28,7 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ### Changed 💥
 
-This now requires Node 12+! That's the only technically *breaking* change.
+This now requires Node 12+! That's the only technically _breaking_ change.
 
 - Update types & ember to 4.x([#1472])
 
@@ -61,7 +77,7 @@ This is a republish of 4.2.0 without the accidentally included 500+ MB of debugg
 
 ### Added ⭐️
 
-- Install @types/ember-data__* when ember-data is found ([#1411])
+- Install @types/ember-data\_\_\* when ember-data is found ([#1411])
 
 ### Changed 💥
 
@@ -314,11 +330,11 @@ This is a republish of 4.2.0 without the accidentally included 500+ MB of debugg
 
 ### Breaking 💥
 
-- No longer adds the Babel class properties plugin. This is a *fix* for [#707], but it will break against ember-cli-babel versions before 7.7.
-- Removes support in the default blueprint for initializing new Module Unification projects, in line with [MU's removal][MU] from Ember's roadmap in favor of other directions. Existing MU projects should continue to build and typecheck according to the local `tsconfig.json`. ([#826](https://github.com/typed-ember/ember-cli-typescript/pull/826))
+- No longer adds the Babel class properties plugin. This is a _fix_ for [#707], but it will break against ember-cli-babel versions before 7.7.
+- Removes support in the default blueprint for initializing new Module Unification projects, in line with [MU's removal][mu] from Ember's roadmap in favor of other directions. Existing MU projects should continue to build and typecheck according to the local `tsconfig.json`. ([#826](https://github.com/typed-ember/ember-cli-typescript/pull/826))
 - Drops support for Node 6.
 
-[MU]: https://blog.emberjs.com/2019/03/11/update-on-module-unification-and-octane.html
+[mu]: https://blog.emberjs.com/2019/03/11/update-on-module-unification-and-octane.html
 [#623]: https://github.com/typed-ember/ember-cli-typescript/issues/623
 [#707]: https://github.com/typed-ember/ember-cli-typescript/issues/707
 
@@ -379,8 +395,7 @@ Thanks to everyone who opened/discovered an issue we fixed or PR we merged over 
 
 ## [2.0.0-rc.2] - 2019-01-07
 
-For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
-https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
+For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
 
 ### Fixed 🔧
 
@@ -420,8 +435,7 @@ Thanks to everyone who opened/discovered an issue we fixed or PR we merged in th
 
 ## What Changed?
 
-For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
-https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
+For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
 
 ### Fixed 🔧
 
@@ -439,7 +453,7 @@ https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
 
 ### Under the hood 🚗
 
-- Bumped *many* dependency versions.
+- Bumped _many_ dependency versions.
 - Set up Azure Pipelines configuration.
 - Updated internals to use TypeScript themselves.
 
@@ -461,10 +475,10 @@ Thanks to everyone who opened/discovered an issue we fixed or PR we merged in th
 
 ## What Changed?
 
-For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](
-https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
+For details on the changes since 1.x, see the [`2.0.0-beta.1` release notes](https://github.com/typed-ember/ember-cli-typescript/releases/tag/v2.0.0-beta.1).
 
 ### Fixed 🔧
+
 - Ensure consistency with `tsc` re: class property initialization order (#365)
 
 ## Upgrading ⚙️
@@ -483,76 +497,79 @@ Thanks to everyone who opened/discovered an issue we fixed or PR we merged in th
 ## [2.0.0-beta.2] - 2018-10-26
 
 ### Fixed
+
 - Ensure that ember-cli-typescript doesn't interfere with parallelizing the Babel transpilation process (#351)
 
 ## [2.0.0-beta.1] - 2018-10-25
 
-This is a major release with 💥 breaking changes 💥! However, most apps will compile with minimal (or no) changes! 🎉 They'll also tend to compile *much faster* in many cases. ⚡️
+This is a major release with 💥 breaking changes 💥! However, most apps will compile with minimal (or no) changes! 🎉 They'll also tend to compile _much faster_ in many cases. ⚡️
 
 We now use Babel 7's support for TypeScript to build apps and addons. Most of the horrible hacks we had to do before are now gone, and the error outputs you will see for type errors are much nicer as well. (As a particular note, we should work better with `ember-auto-import` now, since we're just part of the normal Broccoli/Babel pipeline Ember CLI uses.)
 
-***THIS IS A BETA!*** Please test this out in your apps! Please do *not* use this for your production apps!
+**_THIS IS A BETA!_** Please test this out in your apps! Please do _not_ use this for your production apps!
 
 ### Added
 
-* Much nicer reporting of type errors both in the console and in your browser
-* Type errors now use the "pretty" type error format stabilized in TypeScript 2.9
+- Much nicer reporting of type errors both in the console and in your browser
+- Type errors now use the "pretty" type error format stabilized in TypeScript 2.9
 
 ### Changed
 
-* We now build the application using Babel 7's TypeScript plugin. This has a few important limitations – some of them bugs (linked below); others are conscious decisions on the part of Babel. The changes:
-    - `const enum` types are unsupported. You should switch to constants or regular enums.
+- We now build the application using Babel 7's TypeScript plugin. This has a few important limitations – some of them bugs (linked below); others are conscious decisions on the part of Babel. The changes:
 
-    - trailing commas after rest function parameters (`function foo(...bar[],) {}`) are disallowed by the ECMAScript spec, so Babel also disallows them.
+  - `const enum` types are unsupported. You should switch to constants or regular enums.
 
-    - re-exports of types have to be disambiguated to be *types*, rather than values. Neither of these will work:
+  - trailing commas after rest function parameters (`function foo(...bar[],) {}`) are disallowed by the ECMAScript spec, so Babel also disallows them.
 
-      ```ts
-      export { FooType } from 'foo';
-      ```
-      ```ts
-      import { FooType } from 'foo';
-      export { FooType };
-      ```
+  - re-exports of types have to be disambiguated to be _types_, rather than values. Neither of these will work:
 
-      In both cases, Babel attempts to emit a *value* export, not just a *type* export, and fails because there is no actual value to emit. You can do this instead as a workaround:
+    ```ts
+    export { FooType } from 'foo';
+    ```
 
-      ```ts
-      import * as Foo from 'foo';
-      export type FooType = Foo.FooType;
-      ```
+    ```ts
+    import { FooType } from 'foo';
+    export { FooType };
+    ```
 
-    - `this` types in ES5 getters and setters are do not work ([babel/babel#8069](https://github.com/babel/babel/issues/8069))
+    In both cases, Babel attempts to emit a _value_ export, not just a _type_ export, and fails because there is no actual value to emit. You can do this instead as a workaround:
 
-    - destructuring of parameters in function signatures currently do not work ([babel/babel#8099](https://github.com/babel/babel/issues/8099))
+    ```ts
+    import * as Foo from 'foo';
+    export type FooType = Foo.FooType;
+    ```
 
-    Other bugs you should be aware of:
+  - `this` types in ES5 getters and setters are do not work ([babel/babel#8069](https://github.com/babel/babel/issues/8069))
 
-    - if an enum has a member with the same name as an imported type ([babel/babel#8881](https://github.com/babel/babel/issues/8881))
+  - destructuring of parameters in function signatures currently do not work ([babel/babel#8099](https://github.com/babel/babel/issues/8099))
 
-* `ember-cli-typescript` must be in `dependencies` instead of `devDependencies` for addons, since we now hook into the normal Broccoli + Babel build pipeline instead of doing an end-run around it
+  Other bugs you should be aware of:
 
-* Addons can no longer use `.ts` in app, because an addon's `app` directory gets merged with and uses the *host's* (i.e. the other addon or app's) preprocessors, and we cannot guarantee the host has TS support. Note that in-repo-addons will continue to work for in-repo addons because of the app build works with the host's (i.e. the app's, not the addon's) preprocessors.
+  - if an enum has a member with the same name as an imported type ([babel/babel#8881](https://github.com/babel/babel/issues/8881))
 
-* Apps need to use `.js` for overrides in app, since the different file extension means apps no longer consistently "win" over addon versions (a limitation of how Babel + app merging interact) – note that this won’t be a problem with Module Unification apps
+- `ember-cli-typescript` must be in `dependencies` instead of `devDependencies` for addons, since we now hook into the normal Broccoli + Babel build pipeline instead of doing an end-run around it
+
+- Addons can no longer use `.ts` in app, because an addon's `app` directory gets merged with and uses the _host's_ (i.e. the other addon or app's) preprocessors, and we cannot guarantee the host has TS support. Note that in-repo-addons will continue to work for in-repo addons because of the app build works with the host's (i.e. the app's, not the addon's) preprocessors.
+
+- Apps need to use `.js` for overrides in app, since the different file extension means apps no longer consistently "win" over addon versions (a limitation of how Babel + app merging interact) – note that this won’t be a problem with Module Unification apps
 
 ### Fixed
 
-* Type errors now show properly in the browser when running tests
+- Type errors now show properly in the browser when running tests
 
 ## [1.5.0] - 2018-10-25
 
 ### Fixed
 
-* We now provide better user feedback when installing ember-cli-typescript from a git version (i.e. for testing prereleases)
-* Updated to ember-cli-typescript-blueprints so types in generated files correctly match the latest Ember Data types
-* Updated to latest Ember CLI blueprint (as of 3.5.0)
+- We now provide better user feedback when installing ember-cli-typescript from a git version (i.e. for testing prereleases)
+- Updated to ember-cli-typescript-blueprints so types in generated files correctly match the latest Ember Data types
+- Updated to latest Ember CLI blueprint (as of 3.5.0)
 
 ## [1.4.4] - 2018-10-01
 
 ### Fixed
 
-* We no longer claim the absolute highest priority when ember-cli is selecting blueprints (see [#323])
+- We no longer claim the absolute highest priority when ember-cli is selecting blueprints (see [#323])
 
 [#323]: https://github.com/typed-ember/ember-cli-typescript/pull/323
 
@@ -560,307 +577,307 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds (see [#318])
+- We now correctly clean up the system temp directory we create during builds (see [#318])
 
 [#318]: https://github.com/typed-ember/ember-cli-typescript/issues/318
 
 ### Changed
 
-* We reference the Discord channel instead of Slack.
-* [Internal] We enabled writing code for this addon itself in TypeScript.
+- We reference the Discord channel instead of Slack.
+- [Internal] We enabled writing code for this addon itself in TypeScript.
 
 ## [1.4.2] - 2018-09-06
 
 ### Fixed
 
-* Ensure TS blueprints always take precedence over JS ones ([#253](https://github.com/typed-ember/ember-cli-typescript/pull/253))
+- Ensure TS blueprints always take precedence over JS ones ([#253](https://github.com/typed-ember/ember-cli-typescript/pull/253))
 
 ## [1.4.1] - 2018-09-05
 
 ### Fixed
 
-* Avoid warnings in Ember CLI 3.4+ about missing package directories for our in-repo testing addons ([#252](https://github.com/typed-ember/ember-cli-typescript/pull/252))
+- Avoid warnings in Ember CLI 3.4+ about missing package directories for our in-repo testing addons ([#252](https://github.com/typed-ember/ember-cli-typescript/pull/252))
 
 ### Changed
 
-* All blueprints for Ember and Ember Data entities now come from a standalone [ember-cli-typescript-blueprints](https://github.com/typed-ember/ember-cli-typescript-blueprints) package.
+- All blueprints for Ember and Ember Data entities now come from a standalone [ember-cli-typescript-blueprints](https://github.com/typed-ember/ember-cli-typescript-blueprints) package.
 
 ## [1.4.0] - 2018-08-07
 
 ### Fixed
 
-* Ignore `node_modules` hoisted above project root (e.g. yarn workspaces)
+- Ignore `node_modules` hoisted above project root (e.g. yarn workspaces)
 
 ### Added
 
-* Auto-install of [`@types/ember__test-helpers`](https://www.npmjs.com/package/@types/ember__test-helpers)
-* Initial support for [Module Unification](https://github.com/emberjs/rfcs/blob/master/text/0143-module-unification.md) (see [#199](https://github.com/typed-ember/ember-cli-typescript/pull/199) for what is/isn't supported in this release)
-* Support for building addons' `test-support` and `addon-test-support` directories
+- Auto-install of [`@types/ember__test-helpers`](https://www.npmjs.com/package/@types/ember__test-helpers)
+- Initial support for [Module Unification](https://github.com/emberjs/rfcs/blob/master/text/0143-module-unification.md) (see [#199](https://github.com/typed-ember/ember-cli-typescript/pull/199) for what is/isn't supported in this release)
+- Support for building addons' `test-support` and `addon-test-support` directories
 
 ## [1.3.4] - 2018-09-24
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
+- We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
 
 ## [1.3.3] - 2018-07-19
 
 ### Fixed
 
-* Watcher has been "de-simplified" to make it more consistent with how tsc's own watcher works and prevent rebuild issues.
-* `ember-cli-typescript` will now run after `ember-decorators`, ensuring that the `ember-cli-typescript` blueprints override `ember-decorators`'.
+- Watcher has been "de-simplified" to make it more consistent with how tsc's own watcher works and prevent rebuild issues.
+- `ember-cli-typescript` will now run after `ember-decorators`, ensuring that the `ember-cli-typescript` blueprints override `ember-decorators`'.
 
 ### Changed
 
-* Improved documentation regarding service injection.
+- Improved documentation regarding service injection.
 
 ### Added
 
-* Getting Help section to readme.
-* Github issue templates.
+- Getting Help section to readme.
+- Github issue templates.
 
 ## [1.3.2] - 2018-06-05
 
 ### Fixed
 
-* TypeScript 2.9 no longer causes infinite error loops and/or fails to trigger rebuilds.
+- TypeScript 2.9 no longer causes infinite error loops and/or fails to trigger rebuilds.
 
 ## [1.3.1] - 2018-05-14
 
 ### Fixed
 
-* No longer requires TypeScript before it has been installed.
-* Properly ignore the root across platforms.
+- No longer requires TypeScript before it has been installed.
+- Properly ignore the root across platforms.
 
 ## [1.3.0] - 2018-05-01
 
 ### Fixed
 
-* Simplified the file watching implementation, fixing some odd behavior when trees of files were deleted or moved all at once.
-* Synchronization between tsc and the broccoli build process has been improved, reducing spurious rebuilds.
-* TypeScript no longer churns on every change in the `tmp` directory.
-* Make sure ember-cli-typescript is a dev dependency when generating in-repo-addons, so their TypeScript gets built correctly.
-* Eliminated some lint errors in the build.
+- Simplified the file watching implementation, fixing some odd behavior when trees of files were deleted or moved all at once.
+- Synchronization between tsc and the broccoli build process has been improved, reducing spurious rebuilds.
+- TypeScript no longer churns on every change in the `tmp` directory.
+- Make sure ember-cli-typescript is a dev dependency when generating in-repo-addons, so their TypeScript gets built correctly.
+- Eliminated some lint errors in the build.
 
 ### Changed
 
-* Updated the generated `tsconfig.json` to use the maximum strictness we can with Ember's typings.
-* Clarified instructions for sourcemaps.
+- Updated the generated `tsconfig.json` to use the maximum strictness we can with Ember's typings.
+- Clarified instructions for sourcemaps.
 
 ### Added
 
-* The addon now supports failing the build when there are type errors, using `"noEmitOnError": true` in `tsconfig.json`.
+- The addon now supports failing the build when there are type errors, using `"noEmitOnError": true` in `tsconfig.json`.
 
 ## [1.2.2] - 2018-09-24
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
+- We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
 
 ## [1.2.1] - 2018-03-14
 
 ### Fixed
 
-* Blueprint now correctly adds ember-cli-typescript as a dependency, allowing TS to be merged into the regular app tree.
+- Blueprint now correctly adds ember-cli-typescript as a dependency, allowing TS to be merged into the regular app tree.
 
 ## [1.2.0] - 2018-03-05
 
 ### Added
 
-* Blueprint (and tests) to generate in-repo addons configured for TypeScript
-* Add `// @ts-ignore` component template import.
-* `-addon` blueprints for all the things to generate .ts files in `app/` in an addon.
+- Blueprint (and tests) to generate in-repo addons configured for TypeScript
+- Add `// @ts-ignore` component template import.
+- `-addon` blueprints for all the things to generate .ts files in `app/` in an addon.
 
 ### Changed
 
-* Improve instructions for setting up [Linked Addons](README.md#linking-addons) and [In-repo Addons](README.md#in-repo-addons).
+- Improve instructions for setting up [Linked Addons](README.md#linking-addons) and [In-repo Addons](README.md#in-repo-addons).
 
 ### Fixed
 
-* Addon components need to manually set their layout property to the imported compiled template.
-* The declaration file for the `<app-name>/config/environment` module now resolves correctly from app code. If you have a version of this file previously generated at `types/<app-name>/config/environment.d.ts`, you'll likely want to move it to `app/config/environment.d.ts`.
+- Addon components need to manually set their layout property to the imported compiled template.
+- The declaration file for the `<app-name>/config/environment` module now resolves correctly from app code. If you have a version of this file previously generated at `types/<app-name>/config/environment.d.ts`, you'll likely want to move it to `app/config/environment.d.ts`.
 
 ## [1.1.7] - 2018-09-24
 
 ### Fixed
 
-* We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
+- We now correctly clean up the system temp directory we create during builds. (Backported from 1.4.3; see [#318].)
 
 ## [1.1.6] - 2018-02-23
 
 ### Fixed
 
-* The blueprints provided by `ember-cli-typescript` now deterministically override the base ones from `ember-data` and `ember-source`.
-* Correct type declarations are installed out of the box based on what test framework is present.
-* A catch-all model registry is generated on installation to avoid the "error TS2344" problem.
+- The blueprints provided by `ember-cli-typescript` now deterministically override the base ones from `ember-data` and `ember-source`.
+- Correct type declarations are installed out of the box based on what test framework is present.
+- A catch-all model registry is generated on installation to avoid the "error TS2344" problem.
 
 ## [1.1.5] - 2018-02-20
 
 ### Fixed
 
-* Fixed a regression in 1.1.4 which caused in-repo-addons written in TypeScript not to work correctly.
-* Fixed the `tsconfig.json` blueprint to properly include the `types` directory.
+- Fixed a regression in 1.1.4 which caused in-repo-addons written in TypeScript not to work correctly.
+- Fixed the `tsconfig.json` blueprint to properly include the `types` directory.
 
 ## [1.1.4] - 2018-02-20
 
 ### Changed
 
-* The default `tsconfig.json` now includes inline source maps to support integrating with Babel sourcemaps, and the README has instructions for configuring Ember CLI's Babel integration.
+- The default `tsconfig.json` now includes inline source maps to support integrating with Babel sourcemaps, and the README has instructions for configuring Ember CLI's Babel integration.
 
 ### Fixed
 
-* TypeScript files in addon `app` trees now get compiled properly.
-* App files now correctly take precedence over any files of the same name earlier in the tree. (If you had a component with the same name as an addon-supplied component, for example, the addon version could override yours.)
+- TypeScript files in addon `app` trees now get compiled properly.
+- App files now correctly take precedence over any files of the same name earlier in the tree. (If you had a component with the same name as an addon-supplied component, for example, the addon version could override yours.)
 
 ## [1.1.3] - 2018-02-16
 
 ### Fixed
 
-* Fix default blueprint for `types/<my app>/index.d.ts`: add missing import and an export statement so ambient declarations work.
-* Add types to initializer and instance initializer blueprints.
-* Special-case handling for Mirage so that it works at all, and update generators so it works "out of the box".
-* Stop assuming the ember-cli-qunit version consumers have installed will be sufficiently high for our tests to pass.
+- Fix default blueprint for `types/<my app>/index.d.ts`: add missing import and an export statement so ambient declarations work.
+- Add types to initializer and instance initializer blueprints.
+- Special-case handling for Mirage so that it works at all, and update generators so it works "out of the box".
+- Stop assuming the ember-cli-qunit version consumers have installed will be sufficiently high for our tests to pass.
 
 ## [1.1.2] - 2018-02-13
 
 ### Fixed
 
-* _Actually_ resolve the problem of throwing when running generators if `ember-cli-version-checker` version too low: put it in `dependencies`.
+- _Actually_ resolve the problem of throwing when running generators if `ember-cli-version-checker` version too low: put it in `dependencies`.
 
 ## [1.1.1] - 2018-02-12
 
 ### Fixed
 
-* No longer throw when running generators if `ember-cli-version-checker` version too low by putting it in `peerDependencies`.
-* Clarified some parts of the README that misled people on handling certain errors.
+- No longer throw when running generators if `ember-cli-version-checker` version too low by putting it in `peerDependencies`.
+- Clarified some parts of the README that misled people on handling certain errors.
 
 ## [1.1.0] - 2018-02-12
 
 ### Added
 
-* **Generators:** `ember generate <blueprint>` now creates TypeScript files for you
-* **Support for addons:** we now precompile addon TypeScript so `ember-cli-typescript` and `typescript` itself can remain in `devDependencies` instead of `dependencies`, and addons can easily distribute compiled JavaScript with TypeScript type definition (`.d.ts`) files.
-* **Incremental compilation:** `ember serve` or `ember test --serve` now use TypeScript's `tsc --watch` mode to only rebuild what changed, so your builds should be much faster
+- **Generators:** `ember generate <blueprint>` now creates TypeScript files for you
+- **Support for addons:** we now precompile addon TypeScript so `ember-cli-typescript` and `typescript` itself can remain in `devDependencies` instead of `dependencies`, and addons can easily distribute compiled JavaScript with TypeScript type definition (`.d.ts`) files.
+- **Incremental compilation:** `ember serve` or `ember test --serve` now use TypeScript's `tsc --watch` mode to only rebuild what changed, so your builds should be much faster
 
 ### Fixed
 
-* `tsconfig.json` is no longer so annoyingly temperamental; you can largely do what you want with it
-* `ember serve` no longer triggers a full rebuild of all TypeScript files every time _any_ file in your project changes.
+- `tsconfig.json` is no longer so annoyingly temperamental; you can largely do what you want with it
+- `ember serve` no longer triggers a full rebuild of all TypeScript files every time _any_ file in your project changes.
 
 ## [1.0.6] - 2017-12-17
 
 ### Changed
 
-* Update to broccoli-typescript-compiler 2.1.1, for proper support for TS 2.6. This should make your build properly respect things like // @ts-ignore special comments.
+- Update to broccoli-typescript-compiler 2.1.1, for proper support for TS 2.6. This should make your build properly respect things like // @ts-ignore special comments.
 
 ## [1.0.5] - 2017-11-23
 
 ### Fixed
 
-* Updated the `tsconfig.json` blueprint to set the `noImplicitThis` option to `true`, improving experience around use of updated type definitions
+- Updated the `tsconfig.json` blueprint to set the `noImplicitThis` option to `true`, improving experience around use of updated type definitions
 
 ## [1.0.4] - 2017-11-13
 
 ### Changed
 
-* Updated broccoli-compiler-typescript
-* Updated package.json to always install latest version of type definitions
+- Updated broccoli-compiler-typescript
+- Updated package.json to always install latest version of type definitions
 
 ### Fixed
 
-* Fixed the default generated `environment.d.ts`
+- Fixed the default generated `environment.d.ts`
 
 ### Internal
 
-* Made everything [✨ Prettier ✨](https://prettier.io)
+- Made everything [✨ Prettier ✨](https://prettier.io)
 
 ## [1.0.3] - 2017-08-22
 
 ### Changed
 
-* TS info messages now go to `stdout` and TS error messages now properly go to `stderr`
-* Fixed a dead link in the README
+- TS info messages now go to `stdout` and TS error messages now properly go to `stderr`
+- Fixed a dead link in the README
 
 ## [1.0.2] - 2017-08-16
 
 ### Fixed
 
-* Updates the generated `tsconfig.json` to set `"modules": "ES6"` in the compiler options, so that codemods which operate on modules, like [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill/), will actually work. (Yes, this is 1.0.1, but done correctly.)
+- Updates the generated `tsconfig.json` to set `"modules": "ES6"` in the compiler options, so that codemods which operate on modules, like [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill/), will actually work. (Yes, this is 1.0.1, but done correctly.)
 
 ## [1.0.1] - 2017-08-16
 
 ### Changed
 
-* Updates the generated `tsconfig.json` to set `"modules": "ES6"` in the compiler options, so that codemods which operate on modules, like [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill/), will actually work.
+- Updates the generated `tsconfig.json` to set `"modules": "ES6"` in the compiler options, so that codemods which operate on modules, like [babel-plugin-ember-modules-api-polyfill](https://github.com/ember-cli/babel-plugin-ember-modules-api-polyfill/), will actually work.
 
 ## [1.0.0] - 2017-08-08
 
 ### Added
 
-* Include more type definitions in the default blueprint
-* Documentation of using `paths` (thanks @toranb!)
-* Supports in-repo addons, including in-repo Ember Engines
+- Include more type definitions in the default blueprint
+- Documentation of using `paths` (thanks @toranb!)
+- Supports in-repo addons, including in-repo Ember Engines
 
 ### Changed
 
-* Update to broccoli-compiler-typescript@2.0
-* Update Ember CLI and TypeScript (thanks @mfeckie!)
-* Match the `broccoli-typescript-compiler` option `throwOnError` with the `tsconfig.json` `noEmitOnError` option.
+- Update to broccoli-compiler-typescript@2.0
+- Update Ember CLI and TypeScript (thanks @mfeckie!)
+- Match the `broccoli-typescript-compiler` option `throwOnError` with the `tsconfig.json` `noEmitOnError` option.
 
 ### Fixed
 
-* Use `this.ui.write` instead of `console.log`.
-* Only process the tsconfig file once, instead of for every Broccoli tree (i.e. addons, the app, and the tests).
-* No longer pass the `allowJs` option to TypeScript, since Broccoli manages the tree so `.ts` and `.js` files for us.
+- Use `this.ui.write` instead of `console.log`.
+- Only process the tsconfig file once, instead of for every Broccoli tree (i.e. addons, the app, and the tests).
+- No longer pass the `allowJs` option to TypeScript, since Broccoli manages the tree so `.ts` and `.js` files for us.
 
 ### Internal
 
-* Run prettier on the codebase
+- Run prettier on the codebase
 
 ## [0.4.0] - 2017-05-03
 
 ### Changed
 
-* Updated the base type definitions in `app/config/environment.d.ts` to include the defaults generated when creating an Ember app (thanks, @luketheobscure!)
-* Updated the README with clearer installation instructions and notes on using the add-on to develop other add-ons
+- Updated the base type definitions in `app/config/environment.d.ts` to include the defaults generated when creating an Ember app (thanks, @luketheobscure!)
+- Updated the README with clearer installation instructions and notes on using the add-on to develop other add-ons
 
 ### Fixed
 
-* `ember serve` and `ember test` and `ember build` all work properly now, across platforms
-* builds are much faster on all platforms.
+- `ember serve` and `ember test` and `ember build` all work properly now, across platforms
+- builds are much faster on all platforms.
 
 ## [0.3.2] - 2017-04-22
 
 ### Fixed
 
-* Now properly installs on Windows.
+- Now properly installs on Windows.
 
 ## [0.3.1] - 2017-04-22
 
 ### Added
 
-* `tsconfig.json` blueprint now includes paths to resolve default Ember app structure imports
+- `tsconfig.json` blueprint now includes paths to resolve default Ember app structure imports
 
 ### Fixed
 
-* Resolved install bugs on macOS and Linux
+- Resolved install bugs on macOS and Linux
 
 ### Removed
 
-* All references to `local-types` in the codebase and blueprints, since `local-types` is not used by the addon and not a normal TypeScript file location
+- All references to `local-types` in the codebase and blueprints, since `local-types` is not used by the addon and not a normal TypeScript file location
 
 ## [0.3.0] - 2017-03-13
 
 ### Fixed
 
-* `tsconfig.json` blueprint now works for both the addon and editors
+- `tsconfig.json` blueprint now works for both the addon and editors
 
 ## [0.2.0] - 2016-12-17
 
 ### Added
 
-* Everything; the 0.2.0 release began by copying the implementation from [ember-cli-typify].
-* Basic, semi-working functionality.
+- Everything; the 0.2.0 release began by copying the implementation from [ember-cli-typify].
+- Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
 [unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.1.0...HEAD
@@ -871,18 +888,22 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 [4.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.4...v4.0.0
 [4.0.0-rc.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.0.0-alpha.1...v4.0.0-rc.1
+
 <!--
   This is correctly compared against v3.1.3 because it was released on a branch
   before v3.1.4 was released.
 -->
+
 [4.0.0-alpha.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...v4.0.0-alpha.1
 [3.1.4]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.3...v3.1.4
 [3.1.3]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.2...v3.1.3
 [3.1.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.1.1...v3.1.2
+
 <!--
   Note that 3.1.1 *intentionally* includes all the changes between 3.0.0 and
   3.1.1 and there is no entry for 3.1.0. This is because 3.1.0 was yanked.
 -->
+
 [3.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v3.0.0...v3.1.1
 [3.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.2...v3.0.0
 [2.0.2]: https://github.com/typed-ember/ember-cli-typescript/compare/v2.0.1...v2.0.2
