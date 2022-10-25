@@ -26,7 +26,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
+      - name: Install Node
+        uses: volta-cli/action@v4
       # https://github.com/expo/expo-github-action/issues/20#issuecomment-541676895
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
@@ -48,9 +49,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
       - name: Install Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '^14'
+        uses: volta-cli/action@v4
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Prepare CI Environment
@@ -67,7 +66,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
+      - name: Install Node
+        uses: volta-cli/action@v4
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
@@ -94,7 +94,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-      - uses: volta-cli/action@v1
+      - name: Install Node
+        uses: volta-cli/action@v4
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
