@@ -6,6 +6,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [5.2.0] - 2022-10-25
+
+### Added ⭐️
+
+- Include `@types/ember__destroyable` when running the default blueprint ([#1526](https://github.com/typed-ember/ember-cli-typescript/pull/1526)), [@bertdeblock](https://github.com/bertdeblock)
+- Remove blueprints package ([#1509](https://github.com/typed-ember/ember-cli-typescript/pull/1509)), [@NullVoxPopuli](https://github.com/NullVoxPopuli)
+
+### Fixed 🔧
+
+- Fix `import/newline-after-import` lint violation in `global.d.ts` ([#1520](https://github.com/typed-ember/ember-cli-typescript/pull/1520)), [@bmish](https://github.com/bmish)
+- Fix no-use-before-define lint violation in environment.d.ts ([#1521](https://github.com/typed-ember/ember-cli-typescript/pull/1521)), [@bmish](https://github.com/bmish)
+
+### Documentation 📖
+
+- Update `testing.md` to refer to `ember-cli-htmlbars` instead of `ember-cli-htmlbars-inline-precompile` ([#1517](https://github.com/typed-ember/ember-cli-typescript/pull/1517)), [@ChristopheTiet](https://github.com/ChristopheTiet)
+- docs: use prepack and postpack instead of prepublishOnly and postpublish ([#1527](https://github.com/typed-ember/ember-cli-typescript/pull/1527)), [@bertdeblock](https://github.com/bertdeblock)
+- Reflect the introduction of Component Signatures ([#1530](https://github.com/typed-ember/ember-cli-typescript/pull/1530)), [@rooman](https://github.com/roomman)
+
+### Under the hood 🚗
+
+- Update `@types` dependencies to latest ([#1531](https://github.com/typed-ember/ember-cli-typescript/pull/1531)), [@bertdeblock](https://github.com/bertdeblock) and [@chriskrycho](https://github.com/chriskrycho)
+
 ## [5.1.1] - 2022-09-06
 
 ### Fixed 🔧
@@ -880,7 +902,9 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 - Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.1.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.2.0...HEAD
+[5.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.1.1...v5.2.0
+[5.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.1.0...v5.1.1
 [5.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.0.0...v5.1.0
 [5.0.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.1...v5.0.0
 [4.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v4.2.0...v4.2.1
