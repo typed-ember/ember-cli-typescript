@@ -107,7 +107,7 @@
     "eslint-plugin-prettier": "4.0.0",
     "esprima": "4.0.1",
     "fixturify": "2.1.0",
-    "got": "11.8.0",
+    "got": "11.8.5",
     "handlebars": "4.7.7",
     "in-repo-a": "link:tests/dummy/lib/in-repo-a",
     "in-repo-b": "link:tests/dummy/lib/in-repo-b",
