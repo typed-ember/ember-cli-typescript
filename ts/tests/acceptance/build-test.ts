@@ -63,7 +63,7 @@ describe('Acceptance: build', function () {
       'skeleton-app/app',
       `
       _exports.foo = void 0;
-      var foo = 'hello';
+      const foo = 'hello';
       _exports.foo = foo;
     `
     );
