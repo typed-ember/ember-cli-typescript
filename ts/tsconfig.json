@@ -21,5 +21,9 @@
       ]
     },
     "esModuleInterop": true,
+    // We *really* don't want this on, but our hand is forced somewhat at the
+    // moment: the types for `console-ui` are correct for consuming `inquirer`
+    // in the pre-Node16 world, but
+    "skipLibCheck": true
   }
 }
