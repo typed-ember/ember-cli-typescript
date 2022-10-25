@@ -126,6 +126,35 @@ export default class ArgsDisplay extends Component<ArgsDisplaySignature> {
   {{/each}}
 </ul>
 ```
+### Understanding `args`
+
+Looking at that example above, Typescript knows what types `this.args` has, but how? In the `constructor` version, we explicitly _named_ the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
+
+```typescript 
+ export default class Component {
+   args: Readonly<Args>;
+   constructor(owner: unknown, args: Args);
+ }
+ ```
+
+{% hint style="info" %}
+Not sure what’s up with `<Args>` or `<S>` _at all_? We highly recommend the [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
+{% endhint %}
+
+The type signature for Component, with `Args extends {} = {}`, means that the component _always_ has a property named `args` —
+
+* with the type `Args`
+* which can be anything that extends the type `{}` – an object
+* and _defaults_ to being just an empty object – `= {}`
+
+This is analogous to the type of `Array` : since you can have an array of `string` , or an array of `number` or an array of `SomeFancyObject` , the type of array is `Array<T>` , where `T` is the type of thing in the array, which TypeScript normally figures out for you automatically at compile time:
+
+```typescript
+let a = [1, 2, 3];  // Array<number>
+let b = ["hello", "goodbye"]; // Array<string>
+```
+
+In the case of the Component, we have the types the way we do so that you can’t accidentally define `args` as a string, or `undefined` , or whatever: it _has_ to be an object. Thus, `Component<Args extends {}>` . But we also want to make it so that you can just write `extends Component` , so that needs to have a default value. Thus, `Component<Args extends {} = {}>`.
 
 ## Generic subclasses
 
