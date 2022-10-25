@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "es2019",
+    "module": "Node16",
+    "moduleResolution": "node16",
     "allowJs": true,
     "noEmitOnError": true,
     "noEmit": true,

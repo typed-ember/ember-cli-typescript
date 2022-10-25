@@ -1,4 +1,4 @@
-import SkeletonApp from '../helpers/skeleton-app';
+import SkeletonApp from '../helpers/skeleton-app.mjs';
 import chai from 'ember-cli-blueprint-test-helpers/chai';
 import * as esprima from 'esprima';
 import {

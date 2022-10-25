@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2019",
     "allowJs": false,
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "noEmitOnError": true,
     "inlineSourceMap": true,
     "inlineSources": true,

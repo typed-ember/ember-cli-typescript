@@ -72,7 +72,7 @@ module.exports = {
 
     // all TypeScript files
     {
-      files: ['**/*.ts'],
+      files: ['**/*.{ts,cts,mts}'],
       rules: {
         // These are covered by tsc
         'no-undef': 'off',
