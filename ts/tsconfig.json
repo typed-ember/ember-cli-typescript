@@ -23,7 +23,10 @@
     "esModuleInterop": true,
     // We *really* don't want this on, but our hand is forced somewhat at the
     // moment: the types for `console-ui` are correct for consuming `inquirer`
-    // in the pre-Node16 world, but
+    // in the pre-Node16 world, but don't interoperate correctly when consumed
+    // by a CJS-default package in the TS Node16+ world *and* consume an ESM
+    // package. Our path forward there is to update `console-ui` to publish a
+    // dual-mode package with types and runtime code to support it.
     "skipLibCheck": true
   }
 }
