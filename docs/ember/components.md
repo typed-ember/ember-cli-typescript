@@ -126,19 +126,21 @@ export default class ArgsDisplay extends Component<ArgsDisplaySignature> {
   {{/each}}
 </ul>
 ```
+
 ### Understanding `args`
 
-Looking at that example above, Typescript knows what types `this.args` has, but how? In the `constructor` version, we explicitly _named_ the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
+Now, looking at that bit of code, you might be wondering how it knows what the type of `this.args` is. In the `constructor` version, we explicitly _named_ the type of the `args` argument. Here, it seems to just work automatically. This works because the type definition for a Glimmer component looks roughly like this:
 
-```typescript 
- export default class Component {
-   args: Readonly<Args>;
-   constructor(owner: unknown, args: Args);
- }
- ```
+```typescript
+export default class Component<Args extends {} = {}> {
+  readonly args: Args;
+
+  constructor(owner: unknown, args: Args);
+}
+```
 
 {% hint style="info" %}
-Not sure what’s up with `<Args>` or `<S>` _at all_? We highly recommend the [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
+Not sure what’s up with `<Args>` _at all_? We highly recommend the [TypeScript Deep Dive](https://basarat.gitbooks.io/typescript/) book’s [chapter on generics ](https://basarat.gitbooks.io/typescript/docs/types/generics.html) to be quite helpful in understanding this part.
 {% endhint %}
 
 The type signature for Component, with `Args extends {} = {}`, means that the component _always_ has a property named `args` —
@@ -155,6 +157,44 @@ let b = ["hello", "goodbye"]; // Array<string>
 ```
 
 In the case of the Component, we have the types the way we do so that you can’t accidentally define `args` as a string, or `undefined` , or whatever: it _has_ to be an object. Thus, `Component<Args extends {}>` . But we also want to make it so that you can just write `extends Component` , so that needs to have a default value. Thus, `Component<Args extends {} = {}>`.
+
+### Giving `args` a type
+
+Now let’s put this to use. Imagine we’re constructing a user profile component which displays the user’s name and optionally an avatar and bio. The template might look something like this:
+
+```text
+<div class='user-profile' ...attributes>
+  {{#if this.avatar}}
+    <img src={{this.avatar}} class='user-profile__avatar'>
+  {{/if}}
+  <p class='user-profile__bio'>{{this.userInfo}}</p>
+</div>
+```
+
+Then we could capture the types for the profile with an interface representing the _arguments_:
+
+```typescript
+import Component from '@glimmer/component';
+import { generateUrl } from '../lib/generate-avatar';
+
+interface User {
+  name: string;
+  avatar?: string;
+  bio?: string;
+}
+
+export default class UserProfile extends Component<User> {
+  get userInfo(): string {
+    return this.args.bio ? `${this.args.name} ${this.args.bio}` : this.args.name;
+  }
+
+  get avatar(): string {
+    return this.args.avatar ?? generateUrl();
+  }
+}
+```
+
+Assuming the default `tsconfig.json` settings \(with `strictNullChecks: true`\), this wouldn't type-check if we didn't _check_ whether the `bio` argument were set.
 
 ## Generic subclasses
 
@@ -177,4 +217,3 @@ export default class FancyInput<Args extends FancyInputArgs = FancyInputArgs> ex
 ```
 
 Requiring that `Args extends FancyInputArgs` means that subclasses can have _more_ than these args, but not _fewer_. Specifying that the `Args = FancyInputArgs` means that they _default_ to just being `FancyInputArgs`, so users don't need to supply an explicit generic type parameter here unless they're adding more arguments to the class.
-
