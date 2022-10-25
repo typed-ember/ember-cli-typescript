@@ -14,7 +14,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "../js",
-    "typeRoots": ["../node_modules/@types", "types"],
-    "esModuleInterop": true
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "./types/*"
+      ]
+    },
+    "esModuleInterop": true,
   }
 }
