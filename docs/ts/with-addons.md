@@ -54,8 +54,6 @@ compilerOptions: {
 
 [In-repo addons](https://ember-cli.com/extending/#detailed-list-of-blueprints-and-their-use) work in much the same way as linked ones. Their `.ts` files are managed automatically by `ember-cli-typescript` in their `dependencies`, and you can ensure imports resolve correctly from the host by adding entries in `paths` in the base `tsconfig.json` file.
 
-Note that the `in-repo-addon` blueprint should automatically add these entries if you have `ember-cli-typescript-blueprints` installed when you run it.
-
 ```javascript
 compilerOptions: {
   // ...other options
