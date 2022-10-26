@@ -1,5 +1,7 @@
 import SkeletonApp from '../helpers/skeleton-app.mjs';
-import chai from 'ember-cli-blueprint-test-helpers/chai';
+// @ts-ignore -- we're not going to iterate on this, so there's no point in
+// working on adding types for it.
+import chai from 'ember-cli-blueprint-test-helpers/chai.js';
 import * as esprima from 'esprima';
 import {
   ExpressionStatement,
