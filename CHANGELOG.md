@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [Unreleased]
 
+## [5.2.1] - 2022-10-26
+
+- Add back missing function expected from `ember-cli-typescript-blueprints` [#1537](https://github.com/typed-ember/ember-cli-typescript/pull/1537), ([@dfreeman](https://github.com/dfreeman))
+
 ## [5.2.0] - 2022-10-25
 
 ### Added ⭐️
@@ -902,7 +906,8 @@ We now use Babel 7's support for TypeScript to build apps and addons. Most of th
 - Basic, semi-working functionality.
 
 [ember-cli-typify]: https://github.com/winding-lines/ember-cli-typify
-[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.2.0...HEAD
+[unreleased]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.2.1...HEAD
+[5.2.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.2.0...v5.2.1
 [5.2.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.1.1...v5.2.0
 [5.1.1]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.1.0...v5.1.1
 [5.1.0]: https://github.com/typed-ember/ember-cli-typescript/compare/v5.0.0...v5.1.0
