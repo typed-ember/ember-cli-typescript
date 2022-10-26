@@ -78,8 +78,7 @@ module.exports = {
         2
       ).replace(/\n/g, '\n  '),
       pathsFor: (dasherizedName) => {
-        // We need to wait to use this module until `ember-cli-typescript-blueprints` has been installed
-        let updatePathsForAddon = require('ember-cli-typescript-blueprints/lib/utilities/update-paths-for-addon');
+        let updatePathsForAddon = require('./update-paths-for-addon');
         let appName = isAddon ? 'dummy' : dasherizedName;
         let paths = {
           [`${appName}/tests/*`]: ['tests/*'],
