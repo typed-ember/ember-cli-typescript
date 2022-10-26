@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) a
 
 ## [5.2.1] - 2022-10-26
 
+### Fixed 🔧
+
 - Add back missing function expected from `ember-cli-typescript-blueprints` [#1537](https://github.com/typed-ember/ember-cli-typescript/pull/1537), ([@dfreeman](https://github.com/dfreeman))
 
 ## [5.2.0] - 2022-10-25
