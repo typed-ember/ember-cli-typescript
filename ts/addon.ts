@@ -124,7 +124,7 @@ export default addon({
     let walkSync = require('walk-sync') as typeof import('walk-sync');
     let files = new Set(walkSync(directory, ['**/*.{js,ts}']));
 
-    let collisions = [];
+    let collisions: string[] = [];
     for (let file of files) {
       if (file.endsWith('.js') && files.has(file.replace(/\.js$/, '.ts'))) {
         collisions.push(file.replace(/\.js$/, '.{js,ts}'));

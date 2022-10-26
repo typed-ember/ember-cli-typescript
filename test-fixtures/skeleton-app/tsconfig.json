@@ -1,13 +1,26 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "target": "ES2021",
     "allowJs": false,
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "noEmitOnError": true,
     "baseUrl": ".",
     "paths": {
-      "skeleton-app/*": ["app/*"]
-    }
+      "skeleton-app/*": [
+        "app/*"
+      ]
+    },
+    // We *really* don't want this on, but our hand is forced somewhat at the
+    // moment: the types for `console-ui` are correct for consuming `inquirer`
+    // in the pre-Node16 world, but don't interoperate correctly when consumed
+    // by a CJS-default package in the TS Node16+ world *and* consume an ESM
+    // package. Our path forward there is to update `console-ui` to publish a
+    // dual-mode package with types and runtime code to support it.
+    //
+    // NOTE TO READERS: this is *only* required because of a very specific bit
+    // of weird wiring in our test harness; it will *not* affect normal apps.
+    "skipLibCheck": true
   },
   "include": [
     "app"

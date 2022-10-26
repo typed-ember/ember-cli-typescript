@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "target": "es2019",
+    "module": "Node16",
+    "moduleResolution": "node16",
     "allowJs": true,
     "noEmitOnError": true,
     "noEmit": true,
@@ -14,7 +14,19 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "../js",
-    "typeRoots": ["../node_modules/@types", "types"],
-    "esModuleInterop": true
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "./types/*"
+      ]
+    },
+    "esModuleInterop": true,
+    // We *really* don't want this on, but our hand is forced somewhat at the
+    // moment: the types for `console-ui` are correct for consuming `inquirer`
+    // in the pre-Node16 world, but don't interoperate correctly when consumed
+    // by a CJS-default package in the TS Node16+ world *and* consume an ESM
+    // package. Our path forward there is to update `console-ui` to publish a
+    // dual-mode package with types and runtime code to support it.
+    "skipLibCheck": true
   }
 }

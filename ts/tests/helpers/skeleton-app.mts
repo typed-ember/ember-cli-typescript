@@ -1,12 +1,20 @@
 import fs from 'fs-extra';
-import path from 'path';
+import path from 'node:path';
+import got from 'got';
 import execa from 'execa';
 import { EventEmitter } from 'events';
-import got from 'got';
+
 import debugLib from 'debug';
 import rimraf from 'rimraf';
 
 const debug = debugLib('skeleton-app');
+
+// Workaround for CSJ -> ESM transition.
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const require = createRequire(import.meta.url);
 
 const getEmberPort = (() => {
   let lastPort = 4210;
@@ -25,7 +33,7 @@ export default class SkeletonApp {
   root = path.join(process.cwd(), `test-skeleton-app-${Math.random().toString(36).slice(2)}`);
 
   constructor() {
-    fs.mkdirpSync(this.root);
+    fs.mkdirSync(this.root);
     fs.copySync(`${__dirname}/../../../test-fixtures/skeleton-app`, this.root);
     process.on('beforeExit', this.cleanupTempDir);
   }

@@ -4,7 +4,7 @@ import os from 'os';
 import fs from 'fs-extra';
 import path from 'path';
 import copyDeclarations from '../../lib/utilities/copy-declarations';
-import * as fixturify from 'fixturify';
+import fixturify from 'fixturify';
 
 describe('Unit: copyDeclarations', function () {
   it('copies generated declarations for the correct package', function () {
@@ -127,7 +127,7 @@ function runCopy(options: {
   packageName: string;
   pathRoots?: string[];
   paths: Record<string, string[]>;
-  input: fixturify.Directory;
+  input: fixturify.DirJSON;
 }) {
   let tmpdir = `${os.tmpdir()}/e-c-tests`;
   let inputBaseDir = `${tmpdir}/compiled`;
