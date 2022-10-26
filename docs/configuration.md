@@ -1,23 +1,5 @@
 # Configuration
 
-## Blueprints
-
-By default, ember-cli-typescript installs the [ember-cli-typescript-blueprints](https://github.com/typed-ember/ember-cli-typescript-blueprints) package so that you can use Ember's generators like normal, but with all the special sauce you need for things to work nicely throughout your system with TypeScript.
-
-If you want to stick with the normal JavaScript blueprints—say, because your team isn't ready to dive into the deep end with making _everything_ TypeScript yet—you can simply uninstall the blueprints package.
-
-With yarn:
-
-```bash
-yarn remove ember-cli-typescript-blueprints
-```
-
-With npm:
-
-```bash
-npm uninstall ember-cli-typescript-blueprints
-```
-
 ## `tsconfig.json`
 
 We generate a good default [`tsconfig.json`](https://github.com/typed-ember/ember-cli-typescript/blob/master/blueprint-files/ember-cli-typescript/tsconfig.json), which will usually make everything _Just Work™_. In general, you may customize your TypeScript build process as usual using the `tsconfig.json` file.
