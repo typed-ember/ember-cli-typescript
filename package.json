@@ -121,7 +121,8 @@
     "typescript": "4.5.5"
   },
   "resolutions": {
-    "hawk": "7"
+    "hawk": "7",
+    "ember-cli-typescript": "link:."
   },
   "engines": {
     "node": ">= 12.*"
