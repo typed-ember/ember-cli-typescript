@@ -28,7 +28,7 @@ const app = new EmberApp(defaults, {
 
 (Note that this _will_ noticeably slow down your app rebuilds.)
 
-If you are using [Embroider](https://github.com/embroider-build/embroider), you might need to inlcude [devtool](https://webpack.js.org/configuration/devtool/) in your webpack configuration:
+If you are using [Embroider](https://github.com/embroider-build/embroider), you might need to include [devtool](https://webpack.js.org/configuration/devtool/) in your webpack configuration:
 
 ```ts
 return require('@embroider/compat').compatBuild(app, Webpack, {
