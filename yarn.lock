@@ -5257,9 +5257,9 @@ decode-named-character-reference@^1.0.0:
     character-entities "^2.0.0"
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha512-hjf+xovcEn31w/EUYdTXQh/8smFL/dzYjohQGEIgjyNavaJfBY2p5F527Bo1VPATxv0VYTUC2bOcXvqFwk78Og==
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 decompress-response@^3.3.0:
   version "3.3.0"
@@ -5809,15 +5809,12 @@ ember-cli-test-loader@^2.2.0:
 
 ember-cli-typescript@3.0.0:
   version "0.0.0"
-  uid ""
 
 ember-cli-typescript@^2.0.2:
   version "0.0.0"
-  uid ""
 
 "ember-cli-typescript@link:.":
   version "0.0.0"
-  uid ""
 
 ember-cli-uglify@3.0.0:
   version "3.0.0"
@@ -8447,12 +8444,10 @@ imurmurhash@^0.1.4:
   integrity sha512-JmXMZ6wuvDmLiHEml9ykzqO6lwFbof0GG4IkcGaENdCRDDmMVnny7s5HsIgHCbaq0w2MyPhDqkhTUgS2LU2PHA==
 
 "in-repo-a@link:tests/dummy/lib/in-repo-a":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 "in-repo-b@link:tests/dummy/lib/in-repo-b":
-  version "0.0.0"
-  uid ""
+  version "1.0.0"
 
 indent-string@^4.0.0:
   version "4.0.0"
