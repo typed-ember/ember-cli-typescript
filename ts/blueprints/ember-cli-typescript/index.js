@@ -147,7 +147,6 @@ module.exports = {
       'typescript',
       'ember-cli-typescript-blueprints',
       '@types/ember-resolver',
-      '@types/ember__test-helpers',
       '@types/ember__object',
       '@types/ember__service',
       '@types/ember__controller',

@@ -26,7 +26,6 @@ We install all of the following packages at their current "latest" value, :
 * `@types/ember__*` – `@types/ember__object` for `@ember/object` etc.
 * `@types/ember-data__*` – `@types/ember-data__model` for `@ember-data/model` etc.
 * `@types/rsvp`
-* `@types/ember__test-helpers`
 
 ## Files this addon generates
 
