@@ -107,14 +107,14 @@ Services can also be loaded from the dependency injection container manually:
 
 ```typescript
 import Component from '@glimmer/component';
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 import { action } from '@ember/object';
 
 import ShoppingCartService from 'my-app/services/shopping-cart';
 
 export default class CartContentsComponent extends Component {
   get cart() {
-    return getOwner(this).lookup('service:shopping-cart') as ShoppingCartService;
+    return getOwner(this)?.lookup('service:shopping-cart') as ShoppingCartService;
   }
 
   @action
