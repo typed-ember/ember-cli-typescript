@@ -151,7 +151,6 @@ module.exports = {
       '@tsconfig/ember',
       '@types/ember',
       '@types/ember-resolver',
-      '@types/ember__test-helpers',
       '@types/ember__object',
       '@types/ember__service',
       '@types/ember__controller',
