@@ -13,6 +13,7 @@ To get started, check out the instructions in [Getting Started: Installation](./
 * If you're totally new to using TypeScript with Ember, start with [TypeScript and Ember](./ts/README.md).
 * Once you have a good handle on the basics, you can dive into the guides to working with the APIs specific to [Ember](./ember/README.md) and [Ember Data](./ember-data/README.md).
 * If you're working with legacy (pre-Octane) Ember and TypeScript together, you should read [the Legacy Guide](./legacy/README.md).
+* Looking for type-checking in Glimmer templates? Check out [Glint](https://typed-ember.gitbook.io/glint/).
 
 ## Why TypeScript?
 
