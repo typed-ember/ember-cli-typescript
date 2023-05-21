@@ -184,7 +184,6 @@ module.exports = {
     }
 
     if (this._has('ember-cli-qunit') || this._has('ember-qunit')) {
-      packages.push('@types/ember-qunit');
       packages.push('@types/qunit');
     }
 
