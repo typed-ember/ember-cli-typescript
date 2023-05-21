@@ -155,7 +155,6 @@ module.exports = {
       '@types/ember__service',
       '@types/ember__controller',
       '@types/ember__destroyable',
-      '@types/ember__string',
       '@types/ember__template',
       '@types/ember__polyfills',
       '@types/ember__utils',
