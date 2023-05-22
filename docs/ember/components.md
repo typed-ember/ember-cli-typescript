@@ -75,7 +75,7 @@ export interface ArgsDisplaySignature {
 }
 
 export default class ArgsDisplay extends Component<ArgsDisplaySignature> {
-  constructor(owner: unknown, args: ArgsDisplaySignature['Args]) {
+  constructor(owner: unknown, args: ArgsDisplaySignature['Args']) {
     super(owner, args);
 
     Object.keys(args).forEach(log);
