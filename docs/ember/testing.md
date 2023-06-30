@@ -335,3 +335,11 @@ If you’ve been around TypeScript a little, and you look up the type of the `Te
 
 There are still a couple things to be careful about here, however. First, we didn’t specify that the `this.user` property was _optional_. That means that TypeScript won’t complain if you do `this.user` _before_ assigning to it. Second, every test in our module gets the same `Context`. Depending on what you’re doing, that may be fine, but you may end up needing to define multiple distinct test context extensions. If you _do_ end up needing to define a bunch of different test context extension, that may be a sign that this particular set of tests is doing too much. That in turn is probably a sign that this particular _component_ is doing too much!
 
+### QUnit Dom for Component tests
+When writing [Component Tests](https://guides.emberjs.com/release/testing/testing-components/), you will use lots of `assert.dom()` calls.  
+Out of the box, Typescript will complain that `Property 'dom' does not exist on type 'Assert'.`.  
+
+This can be fixed by importing `qunit-dom` in your test module:  
+```typescript
+import 'qunit-dom';
+```
