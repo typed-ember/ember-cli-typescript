@@ -39,7 +39,7 @@ export default class CoordinatePointTransform extends Transform {
 import Model, { attr } from '@ember-data/model';
 import { CoordinatePoint } from 'agwa-data/transforms/coordinate-point';
 
-declare module 'ember-data/types/registries/transform' {
+declare module 'ember-data/types/registries/model' {
   export default interface ModelRegistry {
     cursor: Cursor;
   }
