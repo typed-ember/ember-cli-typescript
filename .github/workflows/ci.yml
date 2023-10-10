@@ -101,7 +101,9 @@ jobs:
       - name: Install Dependencies
         run: yarn install
       - name: Prepare CI Environment
-        run: yarn ember try:one ${{matrix.deps}} --skip-cleanup --- echo 'setup'
+        run: |
+          yarn prepublishOnly
+          yarn ember try:one ${{matrix.deps}} --skip-cleanup --- echo 'setup'
       - name: Ember App Tests
         run: yarn ci:test:app
       - name: Node Tests
