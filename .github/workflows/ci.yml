@@ -72,6 +72,8 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
         run: yarn install --no-lockfile
+      - name: Diff lockfile for debugging, in case things go wrong
+        run: git diff
       - name: Prepare CI Environment
         run: yarn ci:prepare
       - name: Ember App Tests
