@@ -72,8 +72,6 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
         run: yarn install --no-lockfile
-      - name: Diff lockfile for debugging, in case things go wrong
-        run: git diff
       - name: Prepare CI Environment
         run: yarn ci:prepare
       - name: Ember App Tests
@@ -89,10 +87,10 @@ jobs:
       fail-fast: false
       matrix:
         deps:
-          - ember-cli@latest
-          - ember-cli@beta
-          - typescript@latest
-          - typescript@next
+          - ember-cli-release
+          - ember-cli-beta
+          - typescript-release
+          - typescript-beta
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -101,9 +99,9 @@ jobs:
       - name: Raise Watched File Limit
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Install Dependencies
-        run: yarn add --dev ${{ matrix.deps }}
+        run: yarn install
       - name: Prepare CI Environment
-        run: yarn ci:prepare
+        run: yarn ember try:one ${{matrix.deps}} --skip-cleanup --- echo 'setup'
       - name: Ember App Tests
         run: yarn ci:test:app
       - name: Node Tests
