@@ -7,7 +7,6 @@ module.exports = async function () {
     'ember-qunit': '^7.0.0',
     'ember-resolver': '^11.0.0',
     'ember-auto-import': '^2.3.0',
-    'ember-cli': '^5.1.0',
     'ember-maybe-import-regenerator': null,
   };
 
