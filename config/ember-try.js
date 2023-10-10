@@ -1,3 +1,5 @@
+const getChannelUrl = require('ember-source-channel-url');
+
 module.exports = {
   useYarn: true,
   command: 'yarn ci:test',
@@ -29,6 +31,7 @@ module.exports = {
       npm: {
         devDependencies: {
           'ember-cli': 'latest',
+          'ember-source': await getChannelUrl('release'),
         },
       },
     },
@@ -37,6 +40,7 @@ module.exports = {
       npm: {
         devDependencies: {
           'ember-cli': 'beta',
+          'ember-source': await getChannelUrl('beta'),
         },
       },
     },
