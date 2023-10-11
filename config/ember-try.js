@@ -9,6 +9,7 @@ module.exports = async function () {
     'ember-qunit': '^8.0.0',
     'ember-resolver': '^11.0.0',
     'ember-auto-import': '^2.3.0',
+    webpack: '^5.88.2',
     'ember-cli-dependency-checker': null,
     'ember-maybe-import-regenerator': null,
     'ember-cli-app-version': null,
