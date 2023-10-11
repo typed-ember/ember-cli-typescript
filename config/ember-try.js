@@ -13,6 +13,14 @@ module.exports = async function () {
     'ember-maybe-import-regenerator': null,
     'ember-cli-app-version': null,
   };
+  const ember5Env = {
+    EMBER_OPTIONAL_FEATURES: JSON.stringify({
+      'application-template-wrapper': false,
+      'default-async-observers': true,
+      'template-only-glimmer-components': true,
+      'jquery-integration': false,
+    }),
+  };
 
   return {
     useYarn: true,
@@ -42,7 +50,9 @@ module.exports = async function () {
       },
       {
         name: 'ember-cli-release',
+        env: { ...ember5Env },
         npm: {
+          ember: { edition: 'octane' },
           devDependencies: {
             'ember-cli': 'latest',
             'ember-source': await getChannelUrl('release'),
@@ -52,7 +62,9 @@ module.exports = async function () {
       },
       {
         name: 'ember-cli-beta',
+        env: { ...ember5Env },
         npm: {
+          ember: { edition: 'octane' },
           devDependencies: {
             'ember-cli': 'beta',
             'ember-source': await getChannelUrl('beta'),
