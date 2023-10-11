@@ -99,6 +99,7 @@
     "ember-qunit": "4.6.0",
     "ember-resolver": "8.0.2",
     "ember-source": "~3.28.0",
+    "ember-source-channel-url": "^3.0.0",
     "ember-try": "1.4.0",
     "eslint": "8.7.0",
     "eslint-config-prettier": "8.3.0",
