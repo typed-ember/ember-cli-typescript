@@ -13,6 +13,7 @@ module.exports = async function () {
     'ember-cli-dependency-checker': null,
     'ember-maybe-import-regenerator': null,
     'ember-cli-app-version': null,
+    qunit: '^2.20.0',
   };
 
   return {
