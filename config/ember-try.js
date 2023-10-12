@@ -4,10 +4,12 @@ module.exports = async function () {
   const ember5Deps = {
     '@ember/string': '^3.1.1',
     '@ember/test-helpers': '^3.2.0',
+    '@types/ember__test-helpers': null,
     'ember-cli-htmlbars': '^6.3.0',
     'ember-cli-babel': '^8.0.0',
     'ember-qunit': '^8.0.0',
     'ember-resolver': '^11.0.0',
+    '@types/ember-resolver': null,
     'ember-auto-import': '^2.3.0',
     webpack: '^5.88.2',
     'ember-cli-dependency-checker': null,
