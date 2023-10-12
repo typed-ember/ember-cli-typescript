@@ -40,7 +40,6 @@
     "postpublish": "rimraf js"
   },
   "dependencies": {
-    "ember-auto-import": "^2.6.3",
     "ansi-to-html": "^0.6.15",
     "broccoli-stew": "^3.0.0",
     "debug": "^4.0.0",
@@ -53,6 +52,7 @@
     "walk-sync": "^2.2.0"
   },
   "devDependencies": {
+    "ember-auto-import": "^2.6.3",
     "@ember/optional-features": "2.0.0",
     "@ember/test-helpers": "^2.9.4",
     "@glimmer/component": "^1.1.2",
@@ -98,7 +98,7 @@
     "ember-export-application-global": "2.0.1",
     "ember-load-initializers": "2.1.2",
     "ember-maybe-import-regenerator": "0.1.6",
-    "ember-qunit": "^6.0.0",
+    "ember-qunit": "^5.0.0",
     "ember-resolver": "8.0.2",
     "ember-source": "~3.28.0",
     "ember-source-channel-url": "^3.0.0",
