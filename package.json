@@ -40,6 +40,7 @@
     "postpublish": "rimraf js"
   },
   "dependencies": {
+    "ember-auto-import": "^2.6.3",
     "ansi-to-html": "^0.6.15",
     "broccoli-stew": "^3.0.0",
     "debug": "^4.0.0",
@@ -83,7 +84,6 @@
     "broccoli-plugin": "4.0.3",
     "capture-console": "1.0.1",
     "co": "4.6.0",
-    "ember-auto-import": "^2.6.3",
     "ember-cli": "^4.8.0",
     "ember-cli-app-version": "4.0.0",
     "ember-cli-babel": "7.23.0",
