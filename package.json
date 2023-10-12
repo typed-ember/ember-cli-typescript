@@ -129,7 +129,8 @@
   },
   "resolutions": {
     "hawk": "7",
-    "ember-cli-typescript": "link:."
+    "ember-cli-typescript": "link:.",
+    "ember-auto-import": "^2.6.3"
   },
   "engines": {
     "node": ">= 12.*"
