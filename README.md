@@ -1,3 +1,142 @@
+# MAINTENANCE MODE
+
+ember-cli-typescript will no logner be updated unless necesary  - ec-ts is no longer needed and all available features are configurable in userland.
+
+See the official TypeScript docs on the ember guides website here: https://guides.emberjs.com/release/typescript/ 
+This section of the docs has details for getting started with TypeScript, beyond what is laid out here.
+
+With every release, we output the `--typescript` output of new ember apps to this StackBlitz: https://stackblitz.com/github/ember-cli/editor-output/tree/stackblitz-app-output-typescript
+
+## How to use TypeScript without `ember-cli-typescript`?
+
+In the [ember-cli-babel](https://github.com/emberjs/ember-cli-babel#enabling-typescript-transpilation) docs, it mention that in your `ember-cli-build.js`, you can specify:
+```js
+'ember-cli-babel': {
+  enableTypeScriptTransform: true,
+},
+```
+
+For v1 addons, this would be specified in the node-land `index.js`:
+```js
+module.exports = {
+  name: require('package').name,
+  options: {
+    'ember-cli-babel': {
+      enableTypeScriptTransform: true
+    }
+  }
+}
+```
+
+## What about for v2 addons?
+
+The [V2 Addon Blueprint](https://github.com/embroider-build/addon-blueprint) does not use nor need ember-cli-typescript, nor any of its features.
+
+## What tsconfig.json should be used?
+
+The official blueprints for apps and v1 addons (as of 2023-12-06) specifies:
+
+<details><summary>for apps</summary>
+
+```jsonc
+{
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "compilerOptions": {
+    // The combination of `baseUrl` with `paths` allows Ember's classic package
+    // layout, which is not resolvable with the Node resolution algorithm, to
+    // work with TypeScript.
+    "baseUrl": ".",
+    "paths": {
+      "<%= name %>/tests/*": ["tests/*"],
+      "<%= name %>/*": ["app/*"],
+      "*": ["types/*"]
+    }
+  }
+}
+```
+
+
+
+</details>
+
+<details><summary>For v1 addons</summary>
+  
+```jsonc
+{
+  "extends": "@tsconfig/ember/tsconfig.json",
+  "compilerOptions": {
+    // The combination of `baseUrl` with `paths` allows Ember's classic package
+    // layout, which is not resolvable with the Node resolution algorithm, to
+    // work with TypeScript.
+    "baseUrl": ".",
+    "paths": {
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
+      "<%= addonName %>": ["addon"],
+      "<%= addonName %>/*": ["addon/*"],
+      "<%= addonName %>/test-support": ["addon-test-support"],
+      "<%= addonName %>/test-support/*": ["addon-test-support/*"],
+      "*": ["types/*"]
+    }
+  }
+}
+```
+
+</details>
+
+## What `@types/*` packages do I install?
+
+<details><summary>if you're using ember-data</summary>
+
+```
+"@types/ember": "^4.0.8",
+"@types/ember-data": "^4.4.13",
+"@types/ember-data__adapter": "^4.0.4",
+"@types/ember-data__model": "^4.0.3",
+"@types/ember-data__serializer": "^4.0.4",
+"@types/ember-data__store": "^4.0.5",
+"@types/ember__application": "^4.0.9",
+"@types/ember__array": "^4.0.7",
+"@types/ember__component": "^4.0.19",
+"@types/ember__controller": "^4.0.9",
+"@types/ember__debug": "^4.0.6",
+"@types/ember__destroyable": "^4.0.3",
+"@types/ember__engine": "^4.0.8",
+"@types/ember__error": "^4.0.4",
+"@types/ember__helper": "^4.0.4",
+"@types/ember__modifier": "^4.0.7",
+"@types/ember__object": "^4.0.9",
+"@types/ember__owner": "^4.0.7",
+"@types/ember__polyfills": "^4.0.4",
+"@types/ember__routing": "^4.0.17",
+"@types/ember__runloop": "^4.0.7",
+"@types/ember__service": "^4.0.6",
+"@types/ember__string": "^3.16.3",
+"@types/ember__template": "^4.0.4",
+"@types/ember__test": "^4.0.4",
+"@types/ember__utils": "^4.0.5",
+"@types/qunit": "^2.19.7",
+"@types/rsvp": "^4.0.6",
+```
+
+</details>
+
+<details><summary>if you're not using ember-data</summary>
+
+You can use ember's built in types, so you only need the following:
+
+```
+"@types/qunit": "^2.19.7",
+"@types/rsvp": "^4.0.6",
+```
+
+Note that ember-data will eventually ship their own types, and allow _everyone_ to remove all the DT types.
+
+</details>
+
+
+-----------------------------
+
 <center><h1>ember-cli-typescript</h1></center>
 
 <center>Use TypeScript in your Ember 2.x and 3.x apps!</center>
