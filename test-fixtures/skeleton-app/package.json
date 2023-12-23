@@ -1,13 +1,15 @@
 {
   "name": "skeleton-app",
   "devDependencies": {
+    "ember-auto-import": "*",
     "ember-cli": "*",
     "ember-cli-htmlbars": "*",
     "ember-cli-babel": "*",
     "ember-source": "*",
     "ember-qunit": "*",
     "loader.js": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "webpack": "*"
   },
   "ember-addon": {
     "paths": [".."]
