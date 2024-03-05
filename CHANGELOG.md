@@ -4,7 +4,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [5.3.0] - 2024-03-05
+
+### Changed 💥
+
+- [#1570](https://github.com/typed-ember/ember-cli-typescript/pull/1570) Use the current Node LTS ([@chriskrycho](https://github.com/chriskrycho))
+- [#1533](https://github.com/typed-ember/ember-cli-typescript/pull/1533) Update to use Node 14+ (drop support for Node 12) ([@chriskrycho](https://github.com/chriskrycho))
+
+### Added ⭐️
+
+- [#1569](https://github.com/typed-ember/ember-cli-typescript/pull/1569) Loosen version check against ember-cli-babel ([@chriskrycho](https://github.com/chriskrycho))
+
+### Fixed 🔧
+
+- [#1537](https://github.com/typed-ember/ember-cli-typescript/pull/1537) Airlift `updatePathsForAddon` from the blueprints package ([@dfreeman](https://github.com/dfreeman))
+
+### Under the hood 🚗
+
+- [#1577](https://github.com/typed-ember/ember-cli-typescript/pull/1577) Upgrade release-it packages ([@gitKrystan](https://github.com/gitKrystan))
+- [#1536](https://github.com/typed-ember/ember-cli-typescript/pull/1536) Set up release-it for publishing ([@chriskrycho](https://github.com/chriskrycho))
+- [#1535](https://github.com/typed-ember/ember-cli-typescript/pull/1535) Fix tests on current Ember CLI ([@chriskrycho](https://github.com/chriskrycho))
+- [#1534](https://github.com/typed-ember/ember-cli-typescript/pull/1534) Use volta action v4 for all targets ([@chriskrycho](https://github.com/chriskrycho))
 
 ## [5.2.1] - 2022-10-26
 
