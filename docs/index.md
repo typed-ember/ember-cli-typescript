@@ -1,3 +1,15 @@
+{% hint style="success" %}
+
+-------------------
+
+## TypeScript docs have moved! 🎉
+
+This documentation is now hosted on the ember guides website here: [Using TypeScript with Ember](https://guides.emberjs.com/release/typescript/)
+
+-----------------
+
+{% endhint %}
+
 # ember-cli-typescript
 
 This guide is designed to help you get up and running with TypeScript in an Ember app.
